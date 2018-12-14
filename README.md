@@ -1,4 +1,4 @@
-# acp-front
+# acp-admin
 ###### v1.0.0 [版本更新日志](doc/version_history.md)
 使用vue全家桶(Vue+Vue-router+Vuex+axios)、iview样式库构建的前端项目。该项目是前后端分离架构中的“前端部分”
 
@@ -58,7 +58,7 @@ cnpm install -g @vue/cli
 ## 二、全新创建工程
 ##### （一）命令创建
 ``` bash
-vue create acp-front
+vue create acp-admin
 ```
 ##### （二）WebStorm 创建
 ![create images](doc/images/webstorm-create.png)
