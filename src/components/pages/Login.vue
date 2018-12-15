@@ -14,24 +14,26 @@
         </div>
         <div>
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-position="right" :label-width="80">
-            <FormItem label="用户名" prop="name">
-              <Input v-model="formValidate.name" type="text" placeholder="请输入姓名"/>
+            <FormItem :label="text.username" prop="username">
+              <Input v-model="formValidate.username" type="text" :placeholder="text.usernamePlaceholder"/>
             </FormItem>
-            <FormItem label="密码" prop="password">
-              <Input v-model="formValidate.password" type="password" placeholder="请输入密码"
+            <FormItem :label="text.password" prop="password">
+              <Input v-model="formValidate.password" type="password"
+                     :placeholder="text.passwordPlaceholder"
                      @keyup.native.enter="handleSubmit('formValidate')"/>
             </FormItem>
             <FormItem style="margin-bottom: 0;">
-              <CheckboxGroup v-model="formValidate.remember">
-                <Checkbox label="记住我"></Checkbox>
-              </CheckboxGroup>
+              <Checkbox v-model="formValidate.remember">
+                {{text.rememberMe}}
+              </Checkbox>
             </FormItem>
           </Form>
         </div>
         <div slot="footer">
-          <Button type="primary" size="large" long :loading="modal_loading" @click="handleSubmit('formValidate')">登录
+          <Button type="primary" size="large" long :loading="modal_loading" @click="handleSubmit('formValidate')">
+            {{$t('loginForm.buttons.login')}}
           </Button>
-          <small style="text-align: center;display:block">©copyright by ZhangBin</small>
+          <small style="text-align: center;display:block">{{copyright}}</small>
         </div>
       </Modal>
     </div>
@@ -45,18 +47,27 @@
       return {
         title: this.$store.state.app.appName,
         version: this.$store.state.app.appVersion,
+        copyright: this.$store.state.app.copyright,
+        text: {
+          username: this.$i18n.t('loginForm.username'),
+          usernamePlaceholder: this.$i18n.t('loginForm.usernamePlaceholder'),
+          password: this.$i18n.t('loginForm.password'),
+          passwordPlaceholder: this.$i18n.t('loginForm.passwordPlaceholder'),
+          rememberMe: this.$i18n.t('loginForm.rememberMe')
+        },
         loginModal: true,
         modal_loading: false,
         formValidate: {
-          name: '',
-          password: ''
+          username: this.$store.state.app.username,
+          password: '',
+          remember: this.$store.state.app.remember
         },
         ruleValidate: {
-          name: [
-            { required: true, message: '姓名不能为空', trigger: 'blur' }
+          username: [
+            { required: true, message: this.$i18n.t('loginForm.usernameValidate'), trigger: 'blur' }
           ],
           password: [
-            { required: true, message: '密码错误', trigger: 'blur' }
+            { required: true, message: this.$i18n.t('loginForm.passwordValidate'), trigger: 'blur' }
           ]
         }
       }
@@ -64,21 +75,21 @@
     methods: {
       handleSubmit (name) {
         this.$refs[name].validate((valid) => {
-          this.modal_loading = true
-          setTimeout(() => {
-            this.modal_loading = false
-            if (valid) {
-              this.$Message.success('登录成功!')
-              this.$store.commit('SET_TOKEN', this.formValidate.password)
-              this.$router.push('/index')
-            } else {
-              this.$Message.error('表单验证失败!')
-              this.$Notice.warning({
-                title: '登录提示',
-                desc: '用户名/密码 随意输入...'
-              })
-            }
-          }, 2000)
+          if (valid) {
+            this.modal_loading = true
+            setTimeout(() => {
+              this.modal_loading = false
+              this.$Message.success(this.$i18n.t('messages.loginSuccess'))
+              // this.$store.commit('SET_TOKEN', this.formValidate.password)
+              if (this.formValidate.remember) {
+                this.$store.commit('SET_USERNAME', this.formValidate.username)
+              } else {
+                this.$store.commit('SET_USERNAME', '')
+              }
+              this.$store.commit('SET_REMEMBER', this.formValidate.remember)
+              // this.$router.push('/')
+            }, 2000)
+          }
         })
       }
     }

@@ -16,11 +16,24 @@ let lang = Cookies.get('lang')
 if (!lang || !langInfo.langArrays.includes(lang)) {
   lang = langInfo.defaultLang
 }
+let lock = Cookies.get('lock')
+if (!lock) {
+  lock = '0' // 默认不锁
+}
+let lockPage = Cookies.get('lockPage')
+if (!lockPage) {
+  lockPage = '/index' // 锁屏前的页面
+}
+let remember = false
+if (Cookies.get('remember') === 'true') {
+  remember = true
+}
 Cookies.set('lang', lang)
 export default {
   state: {
     appName: 'Acp-Admin',
-    appVersion: '1.0',
+    appVersion: '1.0.0',
+    copyright: 'Copyright © 2018 by ZhangBin',
     i18n: new VueI18n({
       locale: lang,
       messages: langInfo.messages
@@ -29,12 +42,14 @@ export default {
       opened: !+Cookies.get('sidebarStatus'),
       minOpen: false // 小屏时菜单状态
     },
+    username: Cookies.get('username'),
+    remember: remember,
     langList: langList,
     langMessages: langInfo.messages,
     lang: lang,
     token: Cookies.get('token'),
-    lock: '0', // 默认不锁
-    lockPage: '/index' // 锁屏前的页面
+    lock: lock,
+    lockPage: lockPage
   },
   mutations: {
     /**
@@ -63,6 +78,14 @@ export default {
     OPEN_SLIDEBAR: state => {
       Cookies.set('sidebarStatus', 1)
       state.sidebar.opened = true
+    },
+    SET_USERNAME: (state, payload) => {
+      state.username = payload
+      Cookies.set('username', payload)
+    },
+    SET_REMEMBER: (state, payload) => {
+      state.remember = payload === 'true'
+      Cookies.set('remember', payload)
     },
     /**
      * 设置语言
