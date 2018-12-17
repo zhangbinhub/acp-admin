@@ -31,9 +31,11 @@ if (Cookies.get('remember') === 'true') {
 Cookies.set('lang', lang)
 export default {
   state: {
-    appName: 'Acp-Admin',
-    appVersion: '1.0.0',
-    copyright: 'Copyright © 2018 by ZhangBin',
+    appInfo: {
+      appName: 'Acp-Admin',
+      appVersion: '1.0.0',
+      copyright: 'Copyright © 2018 by ZhangBin'
+    },
     i18n: new VueI18n({
       locale: lang,
       messages: langInfo.messages
@@ -42,14 +44,24 @@ export default {
       opened: !+Cookies.get('sidebarStatus'),
       minOpen: false // 小屏时菜单状态
     },
-    username: Cookies.get('username'),
-    remember: remember,
-    langList: langList,
-    langMessages: langInfo.messages,
-    lang: lang,
-    token: Cookies.get('token'),
-    lock: lock,
-    lockPage: lockPage
+    lang: {
+      langList: langList,
+      langMessages: langInfo.messages,
+      lang: lang
+    },
+    request: {
+      client_id: 'test',
+      client_secret: 'test'
+    },
+    userInfo: {
+      username: Cookies.get('username'),
+      remember: remember,
+      token: Cookies.get('token'),
+      tokenType: Cookies.get('token_type'),
+      scope: Cookies.get('scope'),
+      lock: lock,
+      lockPage: lockPage
+    }
   },
   mutations: {
     /**
@@ -79,32 +91,40 @@ export default {
       Cookies.set('sidebarStatus', 1)
       state.sidebar.opened = true
     },
-    SET_USERNAME: (state, payload) => {
-      state.username = payload
-      Cookies.set('username', payload)
-    },
-    SET_REMEMBER: (state, payload) => {
-      state.remember = payload === 'true'
-      Cookies.set('remember', payload)
-    },
     /**
      * 设置语言
      */
     SET_LANG: (state, payload) => {
-      state.lang = payload
+      state.lang.lang = payload
       Cookies.set('lang', payload)
       state.i18n.locale = payload
     },
+    SET_USERNAME: (state, payload) => {
+      state.userInfo.username = payload
+      Cookies.set('username', payload)
+    },
+    SET_REMEMBER: (state, payload) => {
+      state.userInfo.remember = payload === 'true'
+      Cookies.set('remember', payload)
+    },
     SET_TOKEN: (state, payload) => {
-      state.token = payload
+      state.userInfo.token = payload
       Cookies.set('token', payload)
     },
+    SET_TOKEN_TYPE: (state, payload) => {
+      state.userInfo.tokenType = payload
+      Cookies.set('token_type', payload)
+    },
+    SET_SCOPE: (state, payload) => {
+      state.userInfo.scope = payload
+      Cookies.set('scope', payload)
+    },
     SET_LOCK: (state, payload) => {
-      state.lock = payload
+      state.userInfo.lock = payload
       Cookies.set('lock', payload)
     },
     SET_LOCK_PAGE: (state, payload) => {
-      state.lockPage = payload
+      state.userInfo.lockPage = payload
       Cookies.set('lockPage', payload)
     }
   },

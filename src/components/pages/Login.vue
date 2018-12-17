@@ -45,9 +45,9 @@
     name: 'login',
     data () {
       return {
-        title: this.$store.state.app.appName,
-        version: this.$store.state.app.appVersion,
-        copyright: this.$store.state.app.copyright,
+        title: this.$store.state.app.appInfo.appName,
+        version: this.$store.state.app.appInfo.appVersion,
+        copyright: this.$store.state.app.appInfo.copyright,
         text: {
           username: this.$i18n.t('loginForm.username'),
           usernamePlaceholder: this.$i18n.t('loginForm.usernamePlaceholder'),
@@ -58,9 +58,9 @@
         loginModal: true,
         modal_loading: false,
         formValidate: {
-          username: this.$store.state.app.username,
+          username: this.$store.state.app.userInfo.username,
           password: '',
-          remember: this.$store.state.app.remember
+          remember: this.$store.state.app.userInfo.remember
         },
         ruleValidate: {
           username: [
@@ -74,21 +74,30 @@
     },
     methods: {
       handleSubmit (name) {
-        this.$refs[name].validate((valid) => {
+        const currObj = this
+        currObj.$refs[name].validate((valid) => {
           if (valid) {
-            this.modal_loading = true
-            setTimeout(() => {
-              this.modal_loading = false
-              this.$Message.success(this.$i18n.t('messages.loginSuccess'))
-              // this.$store.commit('SET_TOKEN', this.formValidate.password)
-              if (this.formValidate.remember) {
-                this.$store.commit('SET_USERNAME', this.formValidate.username)
-              } else {
-                this.$store.commit('SET_USERNAME', '')
+            currObj.modal_loading = true
+            currObj.$api.request.login(currObj.formValidate.username, currObj.formValidate.password).then(res => {
+              if (res) {
+                currObj.modal_loading = false
+                currObj.$Message.success(currObj.$i18n.t('messages.loginSuccess'))
+                currObj.$store.commit('SET_TOKEN', res.data.access_token)
+                currObj.$store.commit('SET_TOKEN_TYPE', res.data.token_type)
+                currObj.$store.commit('SET_SCOPE', res.data.scope)
+                if (currObj.formValidate.remember) {
+                  currObj.$store.commit('SET_USERNAME', currObj.formValidate.username)
+                } else {
+                  currObj.$store.commit('SET_USERNAME', '')
+                }
+                currObj.$store.commit('SET_REMEMBER', currObj.formValidate.remember)
+                currObj.$router.push('/')
               }
-              this.$store.commit('SET_REMEMBER', this.formValidate.remember)
-              // this.$router.push('/')
-            }, 2000)
+            }).catch(() => {
+                currObj.modal_loading = false
+                currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
+              }
+            )
           }
         })
       }

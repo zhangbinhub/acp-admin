@@ -7,6 +7,7 @@ import router from './router'
 import 'iview/dist/styles/iview.css'
 import iView from 'iview'
 import './plugins/plugin-axios.js'
+import api from './api/Apis'
 
 import './assets/styles/layout/layout.less'
 
@@ -35,6 +36,12 @@ Vue.use(iView, {
     if (value !== null && value !== undefined) return value
     return ''
   }
+})
+Vue.use(api, {
+  notice: Vue.prototype.$Notice,
+  i18n: i18n,
+  http: Vue.prototype.$http,
+  store: store
 })
 new Vue({
   router,

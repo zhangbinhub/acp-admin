@@ -4,7 +4,9 @@ const messages = Object.assign(twLocale, {
   langName: '繁體中文',
   messages: {
     loginSuccess: '登錄成功',
-    loginFailed: '用戶名或密碼錯誤'
+    loginFailed: '登錄失敗',
+    loginInvalid: '用戶名或密碼錯誤',
+    requestFailed: '請求失敗'
   },
   loginForm: {
     username: '用戶名',

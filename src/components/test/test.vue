@@ -23,8 +23,8 @@
     name: 'test',
     data () {
       return {
-        langList: this.$store.state.app.langList,
-        model1: this.$store.state.app.lang
+        langList: this.$store.state.app.lang.langList,
+        model1: this.$store.state.app.lang.lang
       }
     },
     methods: {

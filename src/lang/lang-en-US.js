@@ -4,7 +4,9 @@ const messages = Object.assign(enLocale, {
   langName: 'English',
   messages: {
     loginSuccess: 'Login successfully',
-    loginFailed: 'username and password do not match'
+    loginFailed: 'Login failed',
+    loginInvalid: 'username and password do not match',
+    requestFailed: 'Requesst failed'
   },
   loginForm: {
     username: 'username',

@@ -9,7 +9,7 @@ const router = new Router({
   mode: 'history'
 })
 router.beforeEach((to, from, next) => {
-  document.title = store.state.app.appName
+  document.title = store.state.app.appInfo.appName
   next()
 })
 export default router
