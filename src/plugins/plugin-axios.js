@@ -4,8 +4,10 @@ import VueAxios from 'vue-axios'
 
 let axiosInstance = Axios.create({
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/json;charset=UTF-8'
   },
-  baseURL: 'http://127.0.0.1:8770'
+  baseURL: 'http://127.0.0.1:8770',
+  timeout: 10000
 })
+
 Vue.use(VueAxios, axiosInstance)

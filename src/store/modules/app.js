@@ -22,7 +22,7 @@ if (!lock) {
 }
 let lockPage = Cookies.get('lockPage')
 if (!lockPage) {
-  lockPage = '/index' // 锁屏前的页面
+  lockPage = '/' // 锁屏前的页面
 }
 let remember = false
 if (Cookies.get('remember') === 'true') {
@@ -126,6 +126,18 @@ export default {
     SET_LOCK_PAGE: (state, payload) => {
       state.userInfo.lockPage = payload
       Cookies.set('lockPage', payload)
+    },
+    LOGIN_OUT: state => {
+      state.userInfo.token = ''
+      state.userInfo.tokenType = ''
+      state.userInfo.scope = ''
+      state.userInfo.lock = '0'
+      state.userInfo.lockPage = '/'
+      Cookies.delete('token')
+      Cookies.delete('token_type')
+      Cookies.delete('scope')
+      Cookies.delete('lock')
+      Cookies.delete('lockPage')
     }
   },
   actions: {

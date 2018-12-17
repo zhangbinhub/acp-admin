@@ -41,7 +41,9 @@ Vue.use(api, {
   notice: Vue.prototype.$Notice,
   i18n: i18n,
   http: Vue.prototype.$http,
-  store: store
+  store: store,
+  router: router,
+  loading: Vue.prototype.$Loading
 })
 new Vue({
   router,

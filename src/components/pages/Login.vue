@@ -15,12 +15,12 @@
         <div>
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-position="right" :label-width="80">
             <FormItem :label="text.username" prop="username">
-              <Input v-model="formValidate.username" type="text" :placeholder="text.usernamePlaceholder"/>
+              <i-input v-model="formValidate.username" type="text" :placeholder="text.usernamePlaceholder"/>
             </FormItem>
             <FormItem :label="text.password" prop="password">
-              <Input v-model="formValidate.password" type="password"
-                     :placeholder="text.passwordPlaceholder"
-                     @keyup.native.enter="handleSubmit('formValidate')"/>
+              <i-input v-model="formValidate.password" type="password"
+                       :placeholder="text.passwordPlaceholder"
+                       @keyup.native.enter="handleSubmit('formValidate')"/>
             </FormItem>
             <FormItem style="margin-bottom: 0;">
               <Checkbox v-model="formValidate.remember">
