@@ -7,7 +7,7 @@ import router from './router'
 import 'iview/dist/styles/iview.css'
 import iView from 'iview'
 import './plugins/plugin-axios.js'
-import api from './api/Apis'
+import api from './api'
 
 import './assets/styles/layout/layout.less'
 

@@ -1,5 +1,5 @@
-import base from './Apis'
+import comm from './ApiComm'
 import ApiLists from './ApiLists'
 
-const Apis = Object.assign(base, base, ApiLists)
-export default Apis
+comm.request = ApiLists
+export default comm
