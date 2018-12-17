@@ -11,13 +11,15 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.meta.requireAuth) {
     if (!store.state.app.userInfo.token) {
+      store.commit('LOGIN_OUT')
       router.replace({
         path: '/login',
         query: { redirect: to.fullPath }
       })
     }
+  } else {
+    document.title = store.state.app.appInfo.appName
+    next()
   }
-  document.title = store.state.app.appInfo.appName
-  next()
 })
 export default router

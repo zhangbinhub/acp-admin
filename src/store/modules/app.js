@@ -133,11 +133,11 @@ export default {
       state.userInfo.scope = ''
       state.userInfo.lock = '0'
       state.userInfo.lockPage = '/'
-      Cookies.delete('token')
-      Cookies.delete('token_type')
-      Cookies.delete('scope')
-      Cookies.delete('lock')
-      Cookies.delete('lockPage')
+      Cookies.remove('token')
+      Cookies.remove('token_type')
+      Cookies.remove('scope')
+      Cookies.remove('lock')
+      Cookies.remove('lockPage')
     }
   },
   actions: {
