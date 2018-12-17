@@ -91,7 +91,11 @@
                   currObj.$store.commit('SET_USERNAME', '')
                 }
                 currObj.$store.commit('SET_REMEMBER', currObj.formValidate.remember)
-                currObj.$router.push('/')
+                let redirectPath = '/'
+                if (currObj.$router.currentRoute.query.redirect) {
+                  redirectPath = currObj.$router.currentRoute.query.redirect
+                }
+                currObj.$router.replace(redirectPath)
               }
             }).catch(() => {
                 currObj.modal_loading = false

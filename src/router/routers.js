@@ -23,6 +23,9 @@ export default [
     path: '/',
     name: 'home',
     component: () => import('@/components/views/Home.vue'),
+    meta: {
+      requireAuth: true
+    },
     children: []
   },
   {
