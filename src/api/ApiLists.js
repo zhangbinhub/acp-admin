@@ -3,7 +3,7 @@ import Qs from 'qs'
 
 export default {
   login: (username, password) => {
-    return ApiComm.$http.post('/api/oauth/token', {
+    return ApiComm.$http.post('/oauth/token', {
       grant_type: 'password',
       username: username,
       password: password
