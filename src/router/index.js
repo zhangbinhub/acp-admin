@@ -5,8 +5,8 @@ import store from '../store'
 
 Vue.use(Router)
 const router = new Router({
-  routes,
-  mode: 'history'
+  mode: 'history',
+  routes
 })
 router.beforeEach((to, from, next) => {
   if (to.meta.requireAuth) {
@@ -17,9 +17,8 @@ router.beforeEach((to, from, next) => {
         query: { redirect: to.fullPath }
       })
     }
-  } else {
-    document.title = store.state.app.appInfo.appName
-    next()
   }
+  document.title = store.state.app.appInfo.appName
+  next()
 })
 export default router
