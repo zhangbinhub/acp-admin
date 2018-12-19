@@ -50,8 +50,8 @@ export default {
       lang: lang
     },
     request: {
-      client_id: 'test',
-      client_secret: 'test'
+      client_id: 'a993e842-0338-11e9-a67b-d8c49792dd7b',
+      client_secret: 'E0D3024D-9A22-41EE-AC0F-FC6B56E367AE'
     },
     userInfo: {
       username: Cookies.get('username'),

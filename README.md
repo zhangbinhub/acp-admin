@@ -51,7 +51,11 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org
 ``` bash
 cnpm install webpack -g
 ```
-##### （四）安装全局 vue-cli 脚手架
+##### （四）安装升级插件
+```bash
+npm install -g npm-check-updates
+```
+##### （五）安装全局 vue-cli 脚手架
 ``` bash
 cnpm install -g @vue/cli
 ```
@@ -63,8 +67,14 @@ vue create acp-admin
 ##### （二）WebStorm 创建
 ![create images](doc/images/webstorm-create.png)
 
-## 三、安装所有依赖插件
+## 三、依赖插件
+##### （一）安装
 ``` bash
+npm install
+```
+##### （二）更新
+``` bash
+ncu -a
 npm install
 ```
 ## 四、开发
