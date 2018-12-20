@@ -81,21 +81,25 @@
             currObj.$api.request.login(currObj.formValidate.username, currObj.formValidate.password).then(res => {
               if (res) {
                 currObj.modal_loading = false
-                currObj.$Message.success(currObj.$i18n.t('messages.loginSuccess'))
-                currObj.$store.commit('SET_TOKEN', res.data.access_token)
-                currObj.$store.commit('SET_TOKEN_TYPE', res.data.token_type)
-                currObj.$store.commit('SET_SCOPE', res.data.scope)
-                if (currObj.formValidate.remember) {
-                  currObj.$store.commit('SET_USERNAME', currObj.formValidate.username)
+                if (res.data.access_token) {
+                  currObj.$Message.success(currObj.$i18n.t('messages.loginSuccess'))
+                  currObj.$store.commit('SET_TOKEN', res.data.access_token)
+                  currObj.$store.commit('SET_TOKEN_TYPE', res.data.token_type)
+                  currObj.$store.commit('SET_SCOPE', res.data.scope)
+                  if (currObj.formValidate.remember) {
+                    currObj.$store.commit('SET_USERNAME', currObj.formValidate.username)
+                  } else {
+                    currObj.$store.commit('SET_USERNAME', '')
+                  }
+                  currObj.$store.commit('SET_REMEMBER', currObj.formValidate.remember)
+                  let redirectPath = '/'
+                  if (currObj.$router.currentRoute.params.redirect) {
+                    redirectPath = currObj.$router.currentRoute.params.redirect
+                  }
+                  currObj.$router.replace(redirectPath)
                 } else {
-                  currObj.$store.commit('SET_USERNAME', '')
+                  currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
                 }
-                currObj.$store.commit('SET_REMEMBER', currObj.formValidate.remember)
-                let redirectPath = '/'
-                if (currObj.$router.currentRoute.query.redirect) {
-                  redirectPath = currObj.$router.currentRoute.query.redirect
-                }
-                currObj.$router.replace(redirectPath)
               }
             }).catch(() => {
                 currObj.modal_loading = false

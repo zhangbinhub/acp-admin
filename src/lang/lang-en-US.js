@@ -23,6 +23,7 @@ const messages = Object.assign(enLocale, {
   errorPage: {
     message404: 'Page not found',
     description404: '',
+    message500: 'Internal Server Error',
     buttons: {
       back: 'back',
       home: 'home'

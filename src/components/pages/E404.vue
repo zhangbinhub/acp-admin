@@ -136,7 +136,7 @@
 </style>
 <script>
   export default {
-    name: '404',
+    name: 'E404',
     methods: {
       goBack () {
         this.$router.go(-1)

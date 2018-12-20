@@ -56,8 +56,14 @@ const ApiComm = {
   redirectLogin: () => {
     ApiComm.$store.commit('LOGIN_OUT')
     ApiComm.$router.replace({
-      path: '/login',
-      query: { redirect: ApiComm.$router.currentRoute.fullPath }
+      name: 'login',
+      params: { redirect: ApiComm.$router.currentRoute.fullPath }
+    })
+  },
+  redirectE500: (errorMsg) => {
+    ApiComm.$router.replace({
+      name: 'E500',
+      params: { msg: errorMsg }
     })
   },
   request: {}

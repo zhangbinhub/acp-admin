@@ -13,8 +13,8 @@ router.beforeEach((to, from, next) => {
     if (!store.state.app.userInfo.token) {
       store.commit('LOGIN_OUT')
       router.replace({
-        path: '/login',
-        query: { redirect: to.fullPath }
+        name: 'login',
+        params: { redirect: to.fullPath }
       })
     }
   }

@@ -11,12 +11,12 @@ export default [
   },
   {
     path: '/404',
-    name: '404',
+    name: 'E404',
     component: () => import('@/components/pages/E404.vue')
   },
   {
     path: '/500',
-    name: '500',
+    name: 'E500',
     component: () => import('@/components/pages/E500.vue')
   },
   {
