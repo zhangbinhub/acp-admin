@@ -19,6 +19,14 @@ const messages = Object.assign(twLocale, {
     buttons: {
       login: '登錄'
     }
+  },
+  errorPage: {
+    message404: '頁面找不到',
+    description404: '衆裏尋他千百度 驀然回首 那人卻在燈火闌珊處',
+    buttons: {
+      back: '返回',
+      home: '主頁'
+    }
   }
 })
 

@@ -19,6 +19,14 @@ const messages = Object.assign(enLocale, {
     buttons: {
       login: 'login'
     }
+  },
+  errorPage: {
+    message404: 'Page not found',
+    description404: '',
+    buttons: {
+      back: 'back',
+      home: 'home'
+    }
   }
 })
 
