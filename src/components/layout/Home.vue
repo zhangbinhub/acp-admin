@@ -6,7 +6,7 @@
                  @on-select="turnToPage"
                  :menu-list="menuList" :open-names="openedNames" :theme="menuTheme">
         <div :class="`logo-con logo-con-${menuTheme}`">
-          <img v-show="!isCollapsed" :src="maxLogo" alt=""/>
+          <img v-show="!isCollapsed" :src="mianLogo" alt=""/>
           <img v-show="isCollapsed" :src="minLogo" alt=""/>
         </div>
       </side-menu>
@@ -43,8 +43,10 @@
   import ABackTop from './a-back-top'
   import Fullscreen from './fullscreen'
   import Language from './language'
-  import minLogo from '@/assets/images/logo/logo-main-min.jpg'
-  import maxLogo from '@/assets/images/logo/logo-main.jpg'
+  import minLogo from '@/assets/images/logo/logo.png'
+  import maxLogoDark from '@/assets/images/logo/logo-main-dark.png'
+  import maxLogoLight from '@/assets/images/logo/logo-main-light.png'
+
   import './Home.less'
   import { getOpenedNamesByActiveName } from '@/libs/tools'
 
@@ -63,7 +65,6 @@
       return {
         openedNames: [],
         minLogo,
-        maxLogo,
         isFullscreen: false
       }
     },
@@ -81,6 +82,9 @@
       },
       isCollapsed () {
         return !this.$store.state.app.sidebar.opened
+      },
+      mianLogo () {
+        return this.$store.state.app.appInfo.menuTheme === 'dark' ? maxLogoDark : maxLogoLight
       },
       tagNavList () {
         return this.$store.state.app.tagNavList
