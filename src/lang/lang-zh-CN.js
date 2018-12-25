@@ -7,6 +7,7 @@ const messages = Object.assign(zhLocale, {
     loginSuccess: '登录成功',
     loginFailed: '登录失败',
     loginInvalid: '用户名或密码错误',
+    logoutConfirm: '确认退出当前系统吗？',
     requestFailed: '请求失败'
   },
   pageTitle: {
@@ -14,14 +15,20 @@ const messages = Object.assign(zhLocale, {
     E404: '404',
     E500: '500',
     login: '登录',
-    home: '首页'
+    home: '首页',
+    personalInformation: '个人信息维护'
   },
   common: {
     exit: '退出'
   },
+  dialog: {
+    confirm: '请确认'
+  },
   home: {
     fullScreen: '全屏',
-    exitFullScreen: '退出全屏'
+    exitFullScreen: '退出全屏',
+    personalInformation: '个人信息',
+    logout: '退出登录'
   },
   loginForm: {
     username: '用户名',

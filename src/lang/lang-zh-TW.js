@@ -7,6 +7,7 @@ const messages = Object.assign(twLocale, {
     loginSuccess: '登錄成功',
     loginFailed: '登錄失敗',
     loginInvalid: '用戶名或密碼錯誤',
+    logoutConfirm: '確認退出當前系統嗎？',
     requestFailed: '請求失敗'
   },
   pageTitle: {
@@ -14,14 +15,20 @@ const messages = Object.assign(twLocale, {
     E404: '404',
     E500: '500',
     login: '登錄',
-    home: '首頁'
+    home: '首頁',
+    personalInformation: '個人信息維護'
   },
   common: {
     exit: '退出'
   },
+  dialog: {
+    confirm: '請確認'
+  },
   home: {
     fullScreen: '全屏',
-    exitFullScreen: '退出全屏'
+    exitFullScreen: '退出全屏',
+    personalInformation: '個人信息',
+    logout: '退出登錄'
   },
   loginForm: {
     username: '用戶名',

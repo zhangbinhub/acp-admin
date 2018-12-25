@@ -61,9 +61,14 @@ const ApiComm = {
     })
   },
   redirectE500: (errorMsg) => {
-    ApiComm.$router.replace({
+    ApiComm.$router.push({
       name: 'E500',
       params: { msg: errorMsg }
+    })
+  },
+  redirectPersonalInformation: () => {
+    ApiComm.$router.push({
+      name: 'personal_information'
     })
   },
   request: {}

@@ -1,16 +1,12 @@
 <template>
   <div class="user-avator-dropdown">
     <Dropdown @on-click="handleClick">
-      <Badge :dot="!!messageUnreadCount">
-        <Avatar :src="userAvator"/>
-      </Badge>
+      <Avatar v-if="userAvator && userAvator !== ''" :src="userAvator"/>
+      <Avatar v-else icon="ios-person"/>
       <Icon :size="18" type="md-arrow-dropdown"></Icon>
       <DropdownMenu slot="list">
-        <DropdownItem name="message">
-          消息中心
-          <Badge style="margin-left: 10px" :count="messageUnreadCount"></Badge>
-        </DropdownItem>
-        <DropdownItem name="logout">退出登录</DropdownItem>
+        <DropdownItem name="personalInformation">{{$t('home.personalInformation')}}</DropdownItem>
+        <DropdownItem name="logout">{{$t('home.logout')}}</DropdownItem>
       </DropdownMenu>
     </Dropdown>
   </div>
@@ -18,7 +14,6 @@
 
 <script>
   import './user.less'
-  import { mapActions } from 'vuex'
 
   export default {
     name: 'User',
@@ -26,35 +21,28 @@
       userAvator: {
         type: String,
         default: ''
-      },
-      messageUnreadCount: {
-        type: Number,
-        default: 0
       }
     },
     methods: {
-      ...mapActions([
-        'handleLogOut'
-      ]),
       logout () {
-        // this.handleLogOut().then(() => {
-        //   this.$router.push({
-        //     name: 'oauth'
-        //   })
-        // })
-      },
-      message () {
-        this.$router.push({
-          name: 'message_page'
+        this.$Modal.confirm({
+          title: this.$i18n.t('dialog.confirm'),
+          content: '<p>' + this.$i18n.t('messages.logoutConfirm') + '</p>',
+          onOk: () => {
+            this.$api.redirectLogin()
+          }
         })
+      },
+      personalInformation () {
+        this.$api.redirectPersonalInformation()
       },
       handleClick (name) {
         switch (name) {
           case 'logout':
             this.logout()
             break
-          case 'message':
-            this.message()
+          case 'personalInformation':
+            this.personalInformation()
             break
         }
       }

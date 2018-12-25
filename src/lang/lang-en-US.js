@@ -7,6 +7,7 @@ const messages = Object.assign(enLocale, {
     loginSuccess: 'Login successfully',
     loginFailed: 'Login failed',
     loginInvalid: 'username and password do not match',
+    logoutConfirm: 'Confirm to logout current system ?',
     requestFailed: 'Requesst failed'
   },
   pageTitle: {
@@ -14,14 +15,20 @@ const messages = Object.assign(enLocale, {
     E404: '404',
     E500: '500',
     login: 'login',
-    home: 'home'
+    home: 'home',
+    personalInformation: 'Personal Information Configure'
   },
   common: {
     exit: 'Exit'
   },
+  dialog: {
+    confirm: 'Please confirm'
+  },
   home: {
     fullScreen: 'FullScreen',
-    exitFullScreen: 'Exit FullScreen'
+    exitFullScreen: 'Exit FullScreen',
+    personalInformation: 'Personal Information',
+    logout: 'logout'
   },
   loginForm: {
     username: 'username',
@@ -32,7 +39,7 @@ const messages = Object.assign(enLocale, {
     passwordValidate: 'Password cannot be empty',
     rememberMe: 'Remember me',
     buttons: {
-      login: 'oauth'
+      login: 'login'
     }
   },
   errorPage: {
