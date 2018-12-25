@@ -93,7 +93,7 @@
         return ''
       },
       userName () {
-        return ''
+        return this.$store.state.app.userInfo.customerName
       },
       cacheList () {
         // return ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
