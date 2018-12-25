@@ -2,7 +2,7 @@
   <Layout style="height: 100%" class="home">
     <Sider hide-trigger collapsible :width="220" :collapsed-width="64" v-model="isCollapsed" class="left-sider"
            :style="{overflow: 'hidden'}">
-      <side-menu :accordion="true" ref="sideMenu" :active-name="$route.name" :collapsed="isCollapsed"
+      <side-menu :accordion="true" ref="sideMenu" :active-name="$router.currentRoute.fullPath" :collapsed="isCollapsed"
                  @on-select="turnToPage"
                  :menu-list="menuList" :open-names="openedNames" :theme="menuTheme">
         <div :class="`logo-con logo-con-${menuTheme}`">
@@ -48,7 +48,7 @@
   import maxLogoLight from '@/assets/images/logo/logo-main-light.png'
 
   import './Home.less'
-  import { getOpenedNamesByActiveName } from '@/libs/tools'
+  import { getOpenedNamesByActiveName, findMenuByPath } from '@/libs/tools'
 
   export default {
     name: 'Home',
@@ -72,7 +72,7 @@
       this.$api.request.getMenus().then((res) => {
         if (res && !res.data.error_description) {
           this.$store.commit('SET_MENU_LIST', res.data)
-          this.openedNames = getOpenedNamesByActiveName(this.$route.name, this)
+          this.openedNames = getOpenedNamesByActiveName(this.$router.currentRoute.fullPath, this)
         }
       })
     },
@@ -110,25 +110,30 @@
       }
     },
     methods: {
-      turnToPage (route) {
-        let { name, params, query } = {}
-        if (typeof route === 'string') {
-          name = route
-        } else {
-          name = route.name
-          params = route.params
-          query = route.query
+      // stirng | route
+      turnToPage (obj) {
+        let { name, params, query } = { name: '' }
+        if (typeof obj === 'string') { // string
+          name = obj
+        } else { // route
+          name = obj.name
+          params = obj.params
+          query = obj.query
         }
-        if (name.indexOf('isTurnByHref_') > -1) {
-          window.open(name.split('_')[1])
-          return
-        }
-        if (name.startsWith('/')) {
-          this.$router.push({
-            path: name,
-            params: params,
-            query: query
-          })
+        if (name.startsWith('/') || name.toLowerCase().startsWith('http')) {
+          const menu = findMenuByPath(name, this.$store.state.app.userInfo.menuList)
+          switch (menu.opentype) {
+            case 0: // 内嵌模式
+              this.$router.push(menu.path)
+              break
+            case 1: // 对话框模式
+              break
+            case 2: // 打开新页面
+              window.open(menu.path)
+              break
+            default:
+              this.$router.push(menu.path)
+          }
         } else {
           this.$router.push({
             name: name,

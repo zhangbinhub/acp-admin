@@ -47,16 +47,8 @@ export default [
       }
     }, {
       path: '/demo4',
-      name: 'demo_demo2_demo4',
-      component: () => import('@/components/views/Demo8.vue'),
-      meta: {
-        keepAlive: false,
-        requireAuth: true
-      }
-    }, {
-      path: '/demo8',
-      name: 'demo8',
-      component: () => import('@/components/views/Demo8.vue'),
+      name: 'demo4',
+      component: () => import('@/components/views/Demo4.vue'),
       meta: {
         keepAlive: false,
         requireAuth: true

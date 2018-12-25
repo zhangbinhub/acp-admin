@@ -25,6 +25,30 @@ const findFullMenuByPath = (path, menuList) => {
 }
 
 /**
+ * 根据 path 获取菜单
+ * @param path
+ * @param menuList
+ * @returns Object
+ */
+export const findMenuByPath = (path, menuList) => {
+  let result
+  for (let menu of menuList) {
+    if (menu.path === path) {
+      result = menu
+      break
+    } else {
+      if (menu.children && menu.children.length > 0) {
+        result = findMenuByPath(path, menu.children)
+        if (result) {
+          break
+        }
+      }
+    }
+  }
+  return result
+}
+
+/**
  * 根据菜单名称，获取全路径名称数组
  * @param name
  * @param vm

@@ -136,7 +136,7 @@ export const menuList = () => {
           'name': '用户配置',
           'opentype': 0,
           'parentid': '003b45ad-0355-11e9-a67b-d8c49792dd7b',
-          'path': 'userconfig',
+          'path': '/userconfig',
           'sort': 0
         },
         {
@@ -150,7 +150,7 @@ export const menuList = () => {
           'name': '机构配置',
           'opentype': 0,
           'parentid': '003b45ad-0355-11e9-a67b-d8c49792dd7b',
-          'path': 'orgconfig',
+          'path': '/orgconfig',
           'sort': 1
         }]
     },
@@ -178,7 +178,7 @@ export const menuList = () => {
           'name': '上传',
           'opentype': 0,
           'parentid': '003bee73-0355-11e9-a67b-d8c49792dd7b',
-          'path': 'demo_upload',
+          'path': '/demo_upload',
           'sort': 0
         },
         {
@@ -205,7 +205,7 @@ export const menuList = () => {
               'name': 'demo4',
               'opentype': 0,
               'parentid': '003c227f-0355-11e9-a67b-d8c49792dd72',
-              'path': 'demo_demo2_demo4',
+              'path': '/demo4?name=123',
               'sort': 2
             },
             {
@@ -219,7 +219,7 @@ export const menuList = () => {
               'name': 'demo5',
               'opentype': 0,
               'parentid': '003c227f-0355-11e9-a67b-d8c49792dd72',
-              'path': 'demo_demo2_demo5',
+              'path': '/demo5',
               'sort': 2
             },
             {
@@ -233,7 +233,7 @@ export const menuList = () => {
               'name': '很长很长的菜单名称，测试显示效果',
               'opentype': 0,
               'parentid': '003c227f-0355-11e9-a67b-d8c49792dd72',
-              'path': 'demo_demo2_demo6',
+              'path': '/demo6',
               'sort': 2
             }
           ]
@@ -260,9 +260,9 @@ export const menuList = () => {
               'enabled': true,
               'icon_type': 'md-funnel',
               'name': 'demo7',
-              'opentype': 0,
+              'opentype': 2,
               'parentid': '003c227f-0355-11e9-a67b-d8c49792dd73',
-              'path': 'demo_demo3_demo7',
+              'path': 'http://www.baidu.com',
               'sort': 2
             }
           ]
@@ -280,7 +280,7 @@ export const menuList = () => {
       'name': 'demo8',
       'opentype': 0,
       'parentid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-      'path': 'demo8',
+      'path': '/demo4?name=888',
       'sort': 2
     }
   ]
