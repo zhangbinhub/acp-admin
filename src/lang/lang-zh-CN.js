@@ -1,12 +1,20 @@
 import zhLocale from 'iview/src/locale/lang/zh-CN'
 
 const messages = Object.assign(zhLocale, {
+  lang: '语言',
   langName: '简体中文',
   messages: {
     loginSuccess: '登录成功',
     loginFailed: '登录失败',
     loginInvalid: '用户名或密码错误',
     requestFailed: '请求失败'
+  },
+  pageTitle: {
+    test: '测试',
+    E404: '404',
+    E500: '500',
+    login: '登录',
+    home: '首页'
   },
   loginForm: {
     username: '用户名',

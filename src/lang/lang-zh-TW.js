@@ -1,12 +1,20 @@
 import twLocale from 'iview/src/locale/lang/zh-TW'
 
 const messages = Object.assign(twLocale, {
+  lang: '語言',
   langName: '繁體中文',
   messages: {
     loginSuccess: '登錄成功',
     loginFailed: '登錄失敗',
     loginInvalid: '用戶名或密碼錯誤',
     requestFailed: '請求失敗'
+  },
+  pageTitle: {
+    test: '測試',
+    E404: '404',
+    E500: '500',
+    login: '登錄',
+    home: '首頁'
   },
   loginForm: {
     username: '用戶名',

@@ -1,12 +1,20 @@
 import enLocale from 'iview/src/locale/lang/en-US'
 
 const messages = Object.assign(enLocale, {
+  lang: 'Lang',
   langName: 'English',
   messages: {
     loginSuccess: 'Login successfully',
     loginFailed: 'Login failed',
     loginInvalid: 'username and password do not match',
     requestFailed: 'Requesst failed'
+  },
+  pageTitle: {
+    test: 'test',
+    E404: '404',
+    E500: '500',
+    login: 'oauth',
+    home: 'home'
   },
   loginForm: {
     username: 'username',
@@ -17,7 +25,7 @@ const messages = Object.assign(enLocale, {
     passwordValidate: 'Password cannot be empty',
     rememberMe: 'Remember me',
     buttons: {
-      login: 'login'
+      login: 'oauth'
     }
   },
   errorPage: {

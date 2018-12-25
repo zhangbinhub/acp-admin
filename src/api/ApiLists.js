@@ -30,5 +30,8 @@ export default {
         return data
       }]
     })
+  },
+  getMenus: () => {
+    return ApiComm.$http.get('/oauth/menu')
   }
 }

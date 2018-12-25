@@ -16,14 +16,6 @@ let lang = Cookies.get('lang')
 if (!lang || !langInfo.langArrays.includes(lang)) {
   lang = langInfo.defaultLang
 }
-let lock = Cookies.get('lock')
-if (!lock) {
-  lock = '0' // 默认不锁
-}
-let lockPage = Cookies.get('lockPage')
-if (!lockPage) {
-  lockPage = '/' // 锁屏前的页面
-}
 let remember = false
 if (Cookies.get('remember') === 'true') {
   remember = true
@@ -34,15 +26,15 @@ export default {
     appInfo: {
       appName: 'Acp-Admin',
       appVersion: '1.0.0',
-      copyright: 'Copyright © 2018 by ZhangBin'
+      copyright: 'Copyright © 2018 by ZhangBin',
+      menuTheme: 'dark' // dark and light
     },
     i18n: new VueI18n({
       locale: lang,
       messages: langInfo.messages
     }),
     sidebar: {
-      opened: !+Cookies.get('sidebarStatus'),
-      minOpen: false // 小屏时菜单状态
+      opened: Cookies.get('sidebarStatus') !== '0'
     },
     lang: {
       langList: langList,
@@ -59,33 +51,13 @@ export default {
       token: Cookies.get('token'),
       tokenType: Cookies.get('token_type'),
       scope: Cookies.get('scope'),
-      lock: lock,
-      lockPage: lockPage
+      menuList: []
     }
   },
   mutations: {
-    /**
-     * 菜单的缩展
-     */
-    TOGGLE_SIDEBAR: state => {
-      let winWidth = document.documentElement.clientWidth
-      if (winWidth <= 600) {
-        state.sidebar.minOpen = !state.sidebar.minOpen
-        state.sidebar.opened = false
-        Cookies.set('sidebarStatus', 0)
-      } else {
-        if (state.sidebar.opened) {
-          Cookies.set('sidebarStatus', 1)
-        } else {
-          Cookies.set('sidebarStatus', 0)
-        }
-        state.sidebar.opened = !state.sidebar.opened
-      }
-    },
     CLOSE_SLIDEBAR: state => {
       Cookies.set('sidebarStatus', 0)
       state.sidebar.opened = false
-      state.sidebar.minOpen = false
     },
     OPEN_SLIDEBAR: state => {
       Cookies.set('sidebarStatus', 1)
@@ -119,30 +91,16 @@ export default {
       state.userInfo.scope = payload
       Cookies.set('scope', payload)
     },
-    SET_LOCK: (state, payload) => {
-      state.userInfo.lock = payload
-      Cookies.set('lock', payload)
-    },
-    SET_LOCK_PAGE: (state, payload) => {
-      state.userInfo.lockPage = payload
-      Cookies.set('lockPage', payload)
-    },
     LOGIN_OUT: state => {
       state.userInfo.token = ''
       state.userInfo.tokenType = ''
       state.userInfo.scope = ''
-      state.userInfo.lock = '0'
-      state.userInfo.lockPage = '/'
       Cookies.remove('token')
       Cookies.remove('token_type')
       Cookies.remove('scope')
-      Cookies.remove('lock')
-      Cookies.remove('lockPage')
-    }
-  },
-  actions: {
-    ToggleSideBar: ({ commit }) => {
-      commit('TOGGLE_SIDEBAR')
+    },
+    SET_MENU_LIST: (state, payload) => {
+      state.userInfo.menuList = payload
     }
   }
 }
