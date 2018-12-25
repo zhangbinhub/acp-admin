@@ -47,6 +47,7 @@ export default {
     },
     userInfo: {
       customerName: '',
+      avatorImg: '',
       username: Cookies.get('username'),
       remember: remember,
       token: Cookies.get('token'),

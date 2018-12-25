@@ -89,8 +89,7 @@
         return this.$store.state.app.tagRouter
       },
       userAvator () {
-        // return this.$store.state.user.avatorImgPath
-        return ''
+        return this.$store.state.app.userInfo.avatorImg
       },
       userName () {
         return this.$store.state.app.userInfo.customerName
