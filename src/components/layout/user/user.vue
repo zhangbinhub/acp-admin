@@ -5,8 +5,10 @@
       <Avatar v-else icon="ios-person"/>
       <Icon :size="18" type="md-arrow-dropdown"></Icon>
       <DropdownMenu slot="list">
-        <DropdownItem name="personalInformation">{{$t('home.personalInformation')}}</DropdownItem>
-        <DropdownItem name="logout">{{$t('home.logout')}}</DropdownItem>
+        <DropdownItem v-if="customerName && customerName !== ''" name="personalInformation">{{customerName}}
+        </DropdownItem>
+        <DropdownItem v-else name="personalInformation">{{$t('home.personalInformation')}}</DropdownItem>
+        <DropdownItem name="logout" divided>{{$t('home.logout')}}</DropdownItem>
       </DropdownMenu>
     </Dropdown>
   </div>
@@ -18,6 +20,10 @@
   export default {
     name: 'User',
     props: {
+      customerName: {
+        type: String,
+        default: ''
+      },
       userAvator: {
         type: String,
         default: ''

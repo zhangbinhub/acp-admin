@@ -14,7 +14,7 @@
     <Layout>
       <Header class="header-con">
         <header-bar :collapsed="isCollapsed" @on-coll-change="handleCollapsedChange">
-          <user :user-avator="userAvator"/>
+          <user :user-avator="userAvator" :customer-name="userName"/>
           <language style="margin-right: 10px;" :lang="localLang"/>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </header-bar>
@@ -92,6 +92,9 @@
         // return this.$store.state.user.avatorImgPath
         return ''
       },
+      userName () {
+        return ''
+      },
       cacheList () {
         // return ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
         return []
@@ -147,7 +150,7 @@
     },
     watch: {
       '$route' (newRoute) {
-        const { name, query, params, meta } = newRoute
+        // const { name, query, params, meta } = newRoute
         // this.addTag({
         //   route: { name, query, params, meta },
         //   type: 'push'

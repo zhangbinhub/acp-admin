@@ -46,6 +46,7 @@ export default {
       client_secret: 'E0D3024D-9A22-41EE-AC0F-FC6B56E367AE'
     },
     userInfo: {
+      customerName: '',
       username: Cookies.get('username'),
       remember: remember,
       token: Cookies.get('token'),
