@@ -42,14 +42,10 @@
       }
     },
     mounted () {
-      // window.addEventListener('scroll', this.handleScroll, false)
-      // window.addEventListener('resize', this.handleScroll, false)
       on(this.containerEle, 'scroll', this.handleScroll)
       on(this.containerEle, 'resize', this.handleScroll)
     },
     beforeDestroy () {
-      // window.removeEventListener('scroll', this.handleScroll, false)
-      // window.removeEventListener('resize', this.handleScroll, false)
       off(this.containerEle, 'scroll', this.handleScroll)
       off(this.containerEle, 'resize', this.handleScroll)
     },

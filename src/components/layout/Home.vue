@@ -123,11 +123,19 @@
           window.open(name.split('_')[1])
           return
         }
-        this.$router.push({
-          name,
-          params,
-          query
-        })
+        if (name.startsWith('/')) {
+          this.$router.push({
+            path: name,
+            params: params,
+            query: query
+          })
+        } else {
+          this.$router.push({
+            name: name,
+            params: params,
+            query: query
+          })
+        }
       },
       handleCollapsedChange (state) {
         if (state) {
