@@ -13,8 +13,15 @@ const messages = Object.assign(enLocale, {
     test: 'test',
     E404: '404',
     E500: '500',
-    login: 'oauth',
+    login: 'login',
     home: 'home'
+  },
+  common: {
+    exit: 'Exit'
+  },
+  home: {
+    fullScreen: 'FullScreen',
+    exitFullScreen: 'Exit FullScreen'
   },
   loginForm: {
     username: 'username',

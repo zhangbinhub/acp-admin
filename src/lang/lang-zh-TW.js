@@ -16,6 +16,13 @@ const messages = Object.assign(twLocale, {
     login: '登錄',
     home: '首頁'
   },
+  common: {
+    exit: '退出'
+  },
+  home: {
+    fullScreen: '全屏',
+    exitFullScreen: '退出全屏'
+  },
   loginForm: {
     username: '用戶名',
     usernamePlaceholder: '請輸入用戶名',
