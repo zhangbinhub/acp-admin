@@ -11,21 +11,21 @@ import api from './api'
 import './assets/styles/layout/layout.less'
 import './mock'
 
-Vue.config.productionTip = false
 // 响应式布局
-let winWidth = document.documentElement.clientWidth
-if (winWidth <= 600) {
-  store.commit('CLOSE_SLIDEBAR')
-} else {
-  store.commit('OPEN_SLIDEBAR')
-}
-window.onresize = function () {
-  winWidth = document.documentElement.clientWidth
-  if (winWidth <= 600) {
+const autoWidth = () => {
+  const winWidth = document.documentElement.clientWidth
+  if (winWidth <= 756) {
     store.commit('CLOSE_SLIDEBAR')
   } else {
     store.commit('OPEN_SLIDEBAR')
   }
+}
+
+Vue.config.productionTip = false
+
+autoWidth()
+window.onresize = function () {
+  autoWidth()
 }
 
 // 加载 iView ，并启用 i18n
