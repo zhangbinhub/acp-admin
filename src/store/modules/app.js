@@ -48,6 +48,7 @@ export default {
     userInfo: {
       customerName: '',
       avatorImg: '',
+      userObj: {},
       username: Cookies.get('username'),
       remember: remember,
       token: Cookies.get('token'),
@@ -97,12 +98,25 @@ export default {
       state.userInfo.token = ''
       state.userInfo.tokenType = ''
       state.userInfo.scope = ''
+      state.userInfo.menuList = []
+      state.userInfo.customerName = ''
+      state.userInfo.avatorImg = ''
+      state.userInfo.userObj = {}
       Cookies.remove('token')
       Cookies.remove('token_type')
       Cookies.remove('scope')
     },
     SET_MENU_LIST: (state, payload) => {
       state.userInfo.menuList = payload
+    },
+    SET_CUSTOMER_NAME: (state, payload) => {
+      state.userInfo.customerName = payload
+    },
+    SET_AVATOR_IMG: (state, payload) => {
+      state.userInfo.avatorImg = payload
+    },
+    SET_USER_OBJ: (state, payload) => {
+      state.userInfo.userObj = payload
     }
   }
 }

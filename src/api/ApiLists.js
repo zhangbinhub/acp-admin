@@ -32,6 +32,9 @@ export default {
       }]
     })
   },
+  getUserInfo: () => {
+    return ApiComm.$http.get('/oauth/userinfo')
+  },
   getMenus: () => {
     return ApiComm.$http.get('/oauth/menulist')
   }

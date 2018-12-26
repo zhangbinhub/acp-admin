@@ -69,7 +69,13 @@
       }
     },
     created () {
-      // TODO: 获取用户信息
+      this.$api.request.getUserInfo().then((res) => {
+        if (res && !res.data.error_description) {
+          this.$store.commit('SET_CUSTOMER_NAME', res.data.name)
+          this.$store.commit('SET_AVATOR_IMG', res.data.portrait)
+          this.$store.commit('SET_USER_OBJ', res.data)
+        }
+      })
       this.$api.request.getMenus().then((res) => {
         if (res && !res.data.error_description) {
           this.$store.commit('SET_MENU_LIST', res.data)
@@ -128,10 +134,7 @@
             case 0: // 内嵌模式
               this.$router.push(menu.path)
               break
-            case 1: // 对话框模式
-              // TODO: 对话框中打开页面
-              break
-            case 2: // 打开新页面
+            case 1: // 打开新页面
               window.open(menu.path)
               break
             default:
