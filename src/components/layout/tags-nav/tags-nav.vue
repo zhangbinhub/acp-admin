@@ -48,6 +48,7 @@
 </template>
 
 <script>
+  // TODO: 调试
   export default {
     name: 'TagsNav',
     props: {
@@ -157,10 +158,10 @@
         this.$nextTick(() => {
           this.refsTag = this.$refs.tagsPageOpened
           // this.refsTag.forEach((item, index) => {
-            // if (routeEqual(route, item.$attrs['data-route-item'])) {
-            //   let tag = this.refsTag[index].$el
-            //   this.moveToView(tag)
-            // }
+          // if (routeEqual(route, item.$attrs['data-route-item'])) {
+          //   let tag = this.refsTag[index].$el
+          //   this.moveToView(tag)
+          // }
           // })
         })
       },

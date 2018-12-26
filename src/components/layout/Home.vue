@@ -69,6 +69,7 @@
       }
     },
     created () {
+      // TODO: 获取用户信息
       this.$api.request.getMenus().then((res) => {
         if (res && !res.data.error_description) {
           this.$store.commit('SET_MENU_LIST', res.data)
@@ -99,6 +100,7 @@
         return this.$store.state.app.userInfo.customerName
       },
       cacheList () {
+        // TODO
         // return ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
         return []
       },
@@ -127,6 +129,7 @@
               this.$router.push(menu.path)
               break
             case 1: // 对话框模式
+              // TODO: 对话框中打开页面
               break
             case 2: // 打开新页面
               window.open(menu.path)
@@ -150,6 +153,7 @@
         }
       },
       handleCloseTag (res, type, route) {
+        // TODO
         // if (type === 'all') {
         //   this.turnToPage(this.$config.homeName)
         // } else if (routeEqual(this.$route, route)) {
@@ -164,22 +168,11 @@
         this.turnToPage(item)
       }
     },
-    watch: {
-      '$route' (newRoute) {
-        // const { name, query, params, meta } = newRoute
-        // this.addTag({
-        //   route: { name, query, params, meta },
-        //   type: 'push'
-        // })
-        // this.setBreadCrumb(newRoute)
-        // this.setTagNavList(getNewTagList(this.tagNavList, newRoute))
-        this.$refs.sideMenu.updateOpenName(newRoute.name)
-      }
-    },
     mounted () {
       /**
        * @description 初始化设置面包屑导航和标签导航
        */
+      // TODO
       // this.setTagNavList()
       // this.setHomeRoute(routers)
       // this.addTag({

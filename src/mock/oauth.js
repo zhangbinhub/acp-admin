@@ -202,7 +202,7 @@ export const menuList = () => {
               'dialogw': 0,
               'enabled': true,
               'icon_type': 'md-funnel',
-              'name': 'demo4',
+              'name': '普通页面',
               'opentype': 0,
               'parentid': '003c227f-0355-11e9-a67b-d8c49792dd72',
               'path': '/demo4?name=123',
@@ -233,7 +233,7 @@ export const menuList = () => {
               'name': '很长很长的菜单名称，测试显示效果',
               'opentype': 0,
               'parentid': '003c227f-0355-11e9-a67b-d8c49792dd72',
-              'path': '/demo6',
+              'path': '/demo4?name=long%20long%20ago',
               'sort': 2
             }
           ]
@@ -246,26 +246,11 @@ export const menuList = () => {
           'dialogw': 0,
           'enabled': true,
           'icon_type': 'md-funnel',
-          'name': 'demo3',
-          'opentype': 0,
+          'name': '页面跳转',
+          'opentype': 2,
           'parentid': '003bee73-0355-11e9-a67b-d8c49792dd7b',
-          'sort': 2,
-          'children': [
-            {
-              'id': '003c227f-0355-11e9-a67b-d8c49792dd77',
-              'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-              'covert': false,
-              'dialogh': 0,
-              'dialogw': 0,
-              'enabled': true,
-              'icon_type': 'md-funnel',
-              'name': 'demo7',
-              'opentype': 2,
-              'parentid': '003c227f-0355-11e9-a67b-d8c49792dd73',
-              'path': 'http://www.baidu.com',
-              'sort': 2
-            }
-          ]
+          'path': 'http://www.baidu.com',
+          'sort': 2
         }
       ]
     },
