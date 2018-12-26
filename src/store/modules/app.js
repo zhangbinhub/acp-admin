@@ -27,7 +27,7 @@ export default {
       appName: 'Acp-Admin',
       appVersion: '1.0.0',
       copyright: 'Copyright © 2018 by ZhangBin',
-      menuTheme: 'dark' // dark and light
+      theme: 'dark' // dark and light
     },
     i18n: new VueI18n({
       locale: lang,

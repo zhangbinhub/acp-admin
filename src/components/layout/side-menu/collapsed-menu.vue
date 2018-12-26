@@ -3,7 +3,7 @@
             :transfer="isRoot" :placement="placement">
     <a class="drop-menu-a" type="text" @mouseover="handleMousemove($event, children)"
        :style="{textAlign: !hideTitle ? 'left' : ''}">
-      <Icon :type="parentItem.icon_type" :size="rootIconSize" :color="textColor"></Icon>
+      <Icon :type="parentItem.icon_type" :size="rootIconSize"></Icon>
       <span class="menu-title" v-if="!hideTitle">{{ parentItem.name }}</span>
       <Icon style="float: right;" v-if="!hideTitle" type="ios-arrow-forward" :size="iconSize"/>
     </a>
@@ -30,7 +30,6 @@
         default: () => {
         }
       },
-      theme: String,
       hideTitle: {
         type: Boolean,
         default: false
@@ -56,9 +55,6 @@
     computed: {
       children () {
         return this.parentItem.children
-      },
-      textColor () {
-        return this.theme === 'dark' ? '#fff' : '#495060'
       }
     },
     methods: {

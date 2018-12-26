@@ -22,8 +22,7 @@
         type: Object,
         default: () => {
         }
-      },
-      theme: String
+      }
     }
   }
 </script>

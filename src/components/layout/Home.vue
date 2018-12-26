@@ -1,12 +1,12 @@
 <template>
-  <Layout style="height: 100%" class="home">
+  <Layout style="height: 100%" :class="`home home-${theme}`">
     <Sider hide-trigger collapsible :width="220" :collapsed-width="64" v-model="isCollapsed" class="left-sider"
            :style="{overflow: 'hidden'}">
       <side-menu :accordion="true" ref="sideMenu" :active-name="$router.currentRoute.fullPath" :collapsed="isCollapsed"
                  @on-select="turnToPage"
-                 :menu-list="menuList" :open-names="openedNames" :theme="menuTheme">
-        <div :class="`logo-con logo-con-${menuTheme}`">
-          <img v-show="!isCollapsed" :src="mianLogo" alt=""/>
+                 :menu-list="menuList" :open-names="openedNames" :theme="theme">
+        <div class="logo-con">
+          <img v-show="!isCollapsed" :src="mainLogo" alt=""/>
           <img v-show="isCollapsed" :src="minLogo" alt=""/>
         </div>
       </side-menu>
@@ -43,9 +43,6 @@
   import ABackTop from './a-back-top'
   import Fullscreen from './fullscreen'
   import Language from './language'
-  import minLogo from '@/assets/images/logo/logo.png'
-  import maxLogoDark from '@/assets/images/logo/logo-main-dark.png'
-  import maxLogoLight from '@/assets/images/logo/logo-main-light.png'
 
   import './Home.less'
   import { getOpenedNamesByActiveName, findMenuByPath } from '@/libs/tools'
@@ -64,11 +61,11 @@
     data () {
       return {
         openedNames: [],
-        minLogo,
         isFullscreen: false
       }
     },
     created () {
+      // TODO: light 背景样式，底部 copyright
       this.$api.request.getUserInfo().then((res) => {
         if (res && !res.data.error_description) {
           this.$store.commit('SET_CUSTOMER_NAME', res.data.name)
@@ -84,14 +81,17 @@
       })
     },
     computed: {
-      menuTheme () {
-        return this.$store.state.app.appInfo.menuTheme
+      theme () {
+        return this.$store.state.app.appInfo.theme
       },
       isCollapsed () {
         return !this.$store.state.app.sidebar.opened
       },
-      mianLogo () {
-        return this.$store.state.app.appInfo.menuTheme === 'dark' ? maxLogoDark : maxLogoLight
+      minLogo () {
+        return require('@/assets/images/logo/logo.png')
+      },
+      mainLogo () {
+        return require('@/assets/images/logo/logo-main-' + this.$store.state.app.appInfo.theme + '.png')
       },
       tagNavList () {
         return this.$store.state.app.tagNavList
