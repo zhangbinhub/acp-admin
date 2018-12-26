@@ -23,6 +23,7 @@ const ApiComm = {
       return config
     }, error => {
       ApiComm.$loading.error()
+      ApiComm.errorProcess(error)
       return Promise.reject(error)
     })
 
@@ -34,17 +35,47 @@ const ApiComm = {
       ApiComm.$loading.error()
       if (error.response) {
         switch (error.response.status) {
+          case 400:
+            if (!error.config.headers.Process400 || error.config.headers.Process400 !== 'false') {
+              ApiComm.errorProcess(error)
+            }
+            break
           case 401:
             ApiComm.redirectLogin()
+            return
+          case 500:
+            let errorMsg = 'Internal System Error'
+            if (error.response.data) {
+              if (typeof error.response.data === 'string') {
+                errorMsg = String(error.response.data)
+              } else {
+                if (error.response.data.error_description) {
+                  errorMsg = error.response.data.error_description
+                } else {
+                  errorMsg = error.response.data.message
+                }
+              }
+            }
+            ApiComm.redirectE500(errorMsg)
+            return
         }
+        return Promise.reject(error)
       }
-      return Promise.reject(error)
+      ApiComm.errorProcess(error)
     })
   },
   errorProcess: function (error, title) {
     let errorMessage = ''
     if (error.response) {
-      errorMessage = error.response.data.error_description
+      if (typeof error.response.data === 'string') {
+        errorMessage = String(error.response.data)
+      } else {
+        if (error.response.data.error_description) {
+          errorMessage = error.response.data.error_description
+        } else {
+          errorMessage = error.response.data.message
+        }
+      }
     } else {
       errorMessage = error
     }
@@ -66,7 +97,7 @@ const ApiComm = {
       params: { msg: errorMsg }
     })
   },
-  redirectPersonalInformation: () => {
+  gotoPersonalInformation: () => {
     ApiComm.$router.push({
       name: 'personal_information'
     })

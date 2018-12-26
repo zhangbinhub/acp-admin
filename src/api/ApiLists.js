@@ -19,7 +19,8 @@ export default {
       password: password
     }, {
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Process400': 'false'
       },
       auth: {
         username: ApiComm.$store.state.app.request.client_id,
@@ -32,6 +33,6 @@ export default {
     })
   },
   getMenus: () => {
-    return ApiComm.$http.get('/oauth/menu')
+    return ApiComm.$http.get('/oauth/menulist')
   }
 }

@@ -9,4 +9,4 @@ Mock.setup({
 
 Mock.mock(/\/oauth\/token/, /post/i, login)
 Mock.mock(/\/oauth\/userinfo/, /get/i, userInfo)
-Mock.mock(/\/oauth\/menu/, /get/i, menuList)
+Mock.mock(/\/oauth\/menulist/, /get/i, menuList)

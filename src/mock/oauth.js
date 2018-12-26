@@ -1,272 +1,156 @@
 export const login = () => {
   return {
-    'access_token': '91c37cb7-1868-45c3-9edd-475a236f0c28',
+    'access_token': '678c72ef-10ee-465d-ab9c-3b23bb772f11',
     'token_type': 'bearer',
-    'expires_in': 119,
-    'scope': 'ALL',
-    'refresh_token': '3748bdd7-198c-4902-8322-0172954e0631'
+    'refresh_token': '8bc90b1f-7bac-4d72-a24f-1e0dc9e84562',
+    'expires_in': 86399,
+    'scope': 'ALL'
   }
+  // return { 'error': 'invalid_grant', 'error_description': 'Bad credentials' }
 }
 
 export const userInfo = () => {
-  return {
-    'id': '0048dfe5-0355-11e9-a67b-d8c49792dd7b',
-    'name': '超级管理员',
-    'loginno': 'admin',
-    'mobile': '13888888888',
-    'levels': 0,
-    'enabled': true,
-    'sort': 0,
-    'organization_set': [],
-    'role_set': [
-      {
-        'id': '003cf0c0-0355-11e9-a67b-d8c49792dd7b',
-        'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-        'name': '超级管理员',
-        'code': 'ADMIN',
-        'levels': 0,
-        'sort': 0,
-        'menu_set': [
-          {
-            'id': '003b45ad-0355-11e9-a67b-d8c49792dd7b',
-            'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-            'name': '系统配置',
-            'icon_type': 'fa-cogs',
-            'icon_color': '#1b992f',
-            'path': '',
-            'parentid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-            'enabled': true,
-            'covert': false,
-            'opentype': 0,
-            'dialog_w': 0,
-            'dialog_h': 0,
-            'sort': 0
-          },
-          {
-            'id': '003b82f7-0355-11e9-a67b-d8c49792dd7b',
-            'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-            'name': '用户配置',
-            'icon_type': 'fa-users',
-            'icon_color': '#354ab8',
-            'path': '/view/page/user/user',
-            'parentid': '003b45ad-0355-11e9-a67b-d8c49792dd7b',
-            'enabled': true,
-            'covert': false,
-            'opentype': 0,
-            'dialog_w': 0,
-            'dialog_h': 0,
-            'sort': 1
-          },
-          {
-            'id': '003bb880-0355-11e9-a67b-d8c49792dd7b',
-            'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-            'name': '机构配置',
-            'icon_type': 'fa-deviantart',
-            'icon_color': '#354ab8',
-            'path': '/view/page/department/department',
-            'parentid': '003b45ad-0355-11e9-a67b-d8c49792dd7b',
-            'enabled': true,
-            'covert': false,
-            'opentype': 0,
-            'dialog_w': 0,
-            'dialog_h': 0,
-            'sort': 2
-          },
-          {
-            'id': '003bee73-0355-11e9-a67b-d8c49792dd7b',
-            'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-            'name': 'demo',
-            'icon_type': 'fa-cogs',
-            'icon_color': '#1b992f',
-            'path': '',
-            'parentid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-            'enabled': true,
-            'covert': false,
-            'opentype': 0,
-            'dialog_w': 0,
-            'dialog_h': 0,
-            'sort': 0
-          },
-          {
-            'id': '003c227f-0355-11e9-a67b-d8c49792dd7b',
-            'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-            'name': '上传',
-            'icon_type': 'fa-users',
-            'icon_color': '#354ab8',
-            'path': '/view/page/demo/upload?_type=0',
-            'parentid': '003bee73-0355-11e9-a67b-d8c49792dd7b',
-            'enabled': true,
-            'covert': true,
-            'opentype': 0,
-            'dialog_w': 0,
-            'dialog_h': 0,
-            'sort': 1
-          }
-        ],
-        'module_set': [],
-        'module_func_set': []
-      }
-    ]
-  }
+  return {}
 }
 
 export const menuList = () => {
-  return [
-    {
-      'id': '003b45ad-0355-11e9-a67b-d8c49792dd7b',
-      'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-      'covert': false,
-      'dialogh': 0,
-      'dialogw': 0,
+  return [{
+    'id': '98b91dc2-08e2-11e9-b347-d8c49792dd7b',
+    'appid': '98b51358-08e2-11e9-b347-d8c49792dd7b',
+    'name': '系统配置',
+    'icon_type': 'md-settings',
+    'parentid': '98b51358-08e2-11e9-b347-d8c49792dd7b',
+    'enabled': true,
+    'covert': false,
+    'opentype': 0,
+    'dialog_w': 0,
+    'dialog_h': 0,
+    'sort': 0,
+    'children': [{
+      'id': '98b950c4-08e2-11e9-b347-d8c49792dd7b',
+      'appid': '98b51358-08e2-11e9-b347-d8c49792dd7b',
+      'name': '用户配置',
+      'icon_type': 'md-people',
+      'path': '/userconfig',
+      'parentid': '98b91dc2-08e2-11e9-b347-d8c49792dd7b',
       'enabled': true,
-      'icon_type': 'md-settings',
-      'name': '系统配置',
-      'opentype': 0,
-      'parentid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-      'sort': 0,
-      'children': [
-        {
-          'id': '003b82f7-0355-11e9-a67b-d8c49792dd7b',
-          'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-          'covert': false,
-          'dialogh': 0,
-          'dialogw': 0,
-          'enabled': true,
-          'icon_type': 'md-people',
-          'name': '用户配置',
-          'opentype': 0,
-          'parentid': '003b45ad-0355-11e9-a67b-d8c49792dd7b',
-          'path': '/userconfig',
-          'sort': 0
-        },
-        {
-          'id': '003bb880-0355-11e9-a67b-d8c49792dd7b',
-          'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-          'covert': false,
-          'dialogh': 0,
-          'dialogw': 0,
-          'enabled': true,
-          'icon_type': 'md-git-network',
-          'name': '机构配置',
-          'opentype': 0,
-          'parentid': '003b45ad-0355-11e9-a67b-d8c49792dd7b',
-          'path': '/orgconfig',
-          'sort': 1
-        }]
-    },
-    {
-      'id': '003bee73-0355-11e9-a67b-d8c49792dd7b',
-      'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
       'covert': false,
-      'dialogh': 0,
-      'dialogw': 0,
-      'enabled': true,
-      'icon_type': 'ios-apps',
-      'name': 'demo',
       'opentype': 0,
-      'parentid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
+      'dialog_w': 0,
+      'dialog_h': 0,
       'sort': 1,
-      'children': [
-        {
-          'id': '003c227f-0355-11e9-a67b-d8c49792dd7b',
-          'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-          'covert': false,
-          'dialogh': 0,
-          'dialogw': 0,
-          'enabled': true,
-          'icon_type': 'md-cloud-upload',
-          'name': '上传',
-          'opentype': 0,
-          'parentid': '003bee73-0355-11e9-a67b-d8c49792dd7b',
-          'path': '/demo_upload',
-          'sort': 0
-        },
-        {
-          'id': '003c227f-0355-11e9-a67b-d8c49792dd72',
-          'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-          'covert': false,
-          'dialogh': 0,
-          'dialogw': 0,
-          'enabled': true,
-          'icon_type': 'md-funnel',
-          'name': 'demo2',
-          'opentype': 0,
-          'parentid': '003bee73-0355-11e9-a67b-d8c49792dd7b',
-          'sort': 1,
-          'children': [
-            {
-              'id': '003c227f-0355-11e9-a67b-d8c49792dd74',
-              'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-              'covert': false,
-              'dialogh': 0,
-              'dialogw': 0,
-              'enabled': true,
-              'icon_type': 'md-funnel',
-              'name': '普通页面',
-              'opentype': 0,
-              'parentid': '003c227f-0355-11e9-a67b-d8c49792dd72',
-              'path': '/demo4?name=123',
-              'sort': 2
-            },
-            {
-              'id': '003c227f-0355-11e9-a67b-d8c49792dd75',
-              'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-              'covert': false,
-              'dialogh': 0,
-              'dialogw': 0,
-              'enabled': true,
-              'icon_type': 'md-funnel',
-              'name': 'demo5',
-              'opentype': 0,
-              'parentid': '003c227f-0355-11e9-a67b-d8c49792dd72',
-              'path': '/demo5',
-              'sort': 2
-            },
-            {
-              'id': '003c227f-0355-11e9-a67b-d8c49792dd76',
-              'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-              'covert': false,
-              'dialogh': 0,
-              'dialogw': 0,
-              'enabled': true,
-              'icon_type': 'md-funnel',
-              'name': '很长很长的菜单名称，测试显示效果',
-              'opentype': 0,
-              'parentid': '003c227f-0355-11e9-a67b-d8c49792dd72',
-              'path': '/demo4?name=long%20long%20ago',
-              'sort': 2
-            }
-          ]
-        },
-        {
-          'id': '003c227f-0355-11e9-a67b-d8c49792dd73',
-          'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-          'covert': false,
-          'dialogh': 0,
-          'dialogw': 0,
-          'enabled': true,
-          'icon_type': 'md-funnel',
-          'name': '页面跳转',
-          'opentype': 2,
-          'parentid': '003bee73-0355-11e9-a67b-d8c49792dd7b',
-          'path': 'http://www.baidu.com',
-          'sort': 2
-        }
-      ]
-    },
-    {
-      'id': '003c227f-0355-11e9-a67b-d8c49792dd78',
-      'appid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-      'covert': false,
-      'dialogh': 0,
-      'dialogw': 0,
+      'children': []
+    }, {
+      'id': '98b979f6-08e2-11e9-b347-d8c49792dd7b',
+      'appid': '98b51358-08e2-11e9-b347-d8c49792dd7b',
+      'name': '机构配置',
+      'icon_type': 'md-git-network',
+      'path': '/orgconfig',
+      'parentid': '98b91dc2-08e2-11e9-b347-d8c49792dd7b',
       'enabled': true,
-      'icon_type': 'logo-angular',
-      'name': 'demo8',
+      'covert': false,
       'opentype': 0,
-      'parentid': '0036ef2d-0355-11e9-a67b-d8c49792dd7b',
-      'path': '/demo4?name=888',
-      'sort': 2
-    }
-  ]
+      'dialog_w': 0,
+      'dialog_h': 0,
+      'sort': 2,
+      'children': []
+    }]
+  }, {
+    'id': '98b9b050-08e2-11e9-b347-d8c49792dd7b',
+    'appid': '98b51358-08e2-11e9-b347-d8c49792dd7b',
+    'name': 'demo',
+    'icon_type': 'ios-apps',
+    'parentid': '98b51358-08e2-11e9-b347-d8c49792dd7b',
+    'enabled': true,
+    'covert': true,
+    'opentype': 0,
+    'dialog_w': 0,
+    'dialog_h': 0,
+    'sort': 1,
+    'children': [{
+      'id': '98b9dd62-08e2-11e9-b347-d8c49792dd7b',
+      'appid': '98b51358-08e2-11e9-b347-d8c49792dd7b',
+      'name': '上传',
+      'icon_type': 'md-cloud-upload',
+      'path': '/demo_upload',
+      'parentid': '98b9b050-08e2-11e9-b347-d8c49792dd7b',
+      'enabled': true,
+      'covert': true,
+      'opentype': 0,
+      'dialog_w': 0,
+      'dialog_h': 0,
+      'sort': 0,
+      'children': []
+    }, {
+      'id': '98ba08c2-08e2-11e9-b347-d8c49792dd7b',
+      'appid': '98b51358-08e2-11e9-b347-d8c49792dd7b',
+      'name': '多级菜单',
+      'icon_type': 'md-funnel',
+      'path': '',
+      'parentid': '98b9b050-08e2-11e9-b347-d8c49792dd7b',
+      'enabled': true,
+      'covert': true,
+      'opentype': 0,
+      'dialog_w': 0,
+      'dialog_h': 0,
+      'sort': 1,
+      'children': [{
+        'id': '98ba3b15-08e2-11e9-b347-d8c49792dd7b',
+        'appid': '98b51358-08e2-11e9-b347-d8c49792dd7b',
+        'name': '普通页面',
+        'icon_type': 'md-funnel',
+        'path': '/demo4?name=123',
+        'parentid': '98ba08c2-08e2-11e9-b347-d8c49792dd7b',
+        'enabled': true,
+        'covert': true,
+        'opentype': 0,
+        'dialog_w': 0,
+        'dialog_h': 0,
+        'sort': 0,
+        'children': []
+      }, {
+        'id': '98ba76d9-08e2-11e9-b347-d8c49792dd7b',
+        'appid': '98b51358-08e2-11e9-b347-d8c49792dd7b',
+        'name': '很长很长的菜单名称用以测试显示效果',
+        'icon_type': 'md-funnel',
+        'path': '/demo4?name=long%20long%20ago',
+        'parentid': '98ba08c2-08e2-11e9-b347-d8c49792dd7b',
+        'enabled': true,
+        'covert': true,
+        'opentype': 0,
+        'dialog_w': 0,
+        'dialog_h': 0,
+        'sort': 1,
+        'children': []
+      }]
+    }, {
+      'id': '98baaa35-08e2-11e9-b347-d8c49792dd7b',
+      'appid': '98b51358-08e2-11e9-b347-d8c49792dd7b',
+      'name': '页面跳转',
+      'icon_type': 'md-funnel',
+      'path': 'http://www.baidu.com',
+      'parentid': '98b9b050-08e2-11e9-b347-d8c49792dd7b',
+      'enabled': true,
+      'covert': true,
+      'opentype': 2,
+      'dialog_w': 0,
+      'dialog_h': 0,
+      'sort': 2,
+      'children': []
+    }]
+  }, {
+    'id': '98baf71b-08e2-11e9-b347-d8c49792dd7b',
+    'appid': '98b51358-08e2-11e9-b347-d8c49792dd7b',
+    'name': '名称很长的对话框页面',
+    'icon_type': 'md-funnel',
+    'path': '/demo4?name=in%20dialog',
+    'parentid': '98b51358-08e2-11e9-b347-d8c49792dd7b',
+    'enabled': true,
+    'covert': true,
+    'opentype': 1,
+    'dialog_w': 800,
+    'dialog_h': 500,
+    'sort': 2,
+    'children': []
+  }]
 }

@@ -79,8 +79,8 @@
           if (valid) {
             currObj.modal_loading = true
             currObj.$api.request.login(currObj.formValidate.username, currObj.formValidate.password).then(res => {
+              currObj.modal_loading = false
               if (res) {
-                currObj.modal_loading = false
                 if (res.data.access_token) {
                   currObj.$Message.success(currObj.$i18n.t('messages.loginSuccess'))
                   currObj.$store.commit('SET_TOKEN', res.data.access_token)

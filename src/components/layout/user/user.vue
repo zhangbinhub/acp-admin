@@ -40,7 +40,7 @@
         })
       },
       personalInformation () {
-        this.$api.redirectPersonalInformation()
+        this.$api.gotoPersonalInformation()
       },
       handleClick (name) {
         switch (name) {

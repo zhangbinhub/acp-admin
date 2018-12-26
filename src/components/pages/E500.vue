@@ -1,5 +1,5 @@
 <template>
-  <div class="e404">
+  <div class="e500">
     <svg width="380px" height="500px" viewBox="0 0 837 1045" version="1.1" xmlns="http://www.w3.org/2000/svg"
          xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
       <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
@@ -29,7 +29,7 @@
   </div>
 </template>
 <style scoped>
-  .e404 {
+  .e500 {
     background-color: #404040;
     width: 100%;
     height: 100%
