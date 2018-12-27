@@ -25,10 +25,15 @@
             <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>
           </div>
           <Content class="content-wrapper">
-            <keep-alive :include="cacheList">
-              <router-view/>
-            </keep-alive>
-            <ABackTop :height="100" :bottom="80" :right="50" container=".content-wrapper"></ABackTop>
+            <div class="content-sticker">
+              <keep-alive :include="cacheList">
+                <router-view/>
+              </keep-alive>
+              <ABackTop :height="100" :bottom="80" :right="50" container=".content-wrapper"></ABackTop>
+            </div>
+            <Footer class="content-footer">
+              <small style="text-align: center;">{{copyright}}</small>
+            </Footer>
           </Content>
         </Layout>
       </Content>
@@ -60,6 +65,7 @@
     },
     data () {
       return {
+        copyright: this.$store.state.app.appInfo.copyright,
         openedNames: [],
         isFullscreen: false
       }

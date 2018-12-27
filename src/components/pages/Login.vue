@@ -33,7 +33,7 @@
           <Button type="primary" size="large" long :loading="modal_loading" @click="handleSubmit('formValidate')">
             {{$t('loginForm.buttons.login')}}
           </Button>
-          <small style="text-align: center;display:block">{{copyright}}</small>
+          <small style="text-align: center;display: block;margin-top: 10px;">{{copyright}}</small>
         </div>
       </Modal>
     </div>

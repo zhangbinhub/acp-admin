@@ -42,9 +42,28 @@
   }
 
   .content-wrapper {
-    padding: 18px;
     height: ~"calc(100% - 80px)";
     overflow: auto;
+
+    .content-sticker {
+      padding: 18px;
+      height: auto;
+      min-height: ~"calc(100% - 40px)";
+    }
+
+    .content-footer {
+      height: 40px;
+      width: 100%;
+      text-align: center;
+      line-height: 40px;
+      color: #ABA498;
+      font-size: 12px;
+      background: #fafafa;
+      border-top: 1px solid #E7E7E7;
+      position: relative;
+      padding: 0;
+    }
+
   }
 
 }
