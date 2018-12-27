@@ -92,7 +92,7 @@
                     currObj.$store.commit('SET_USERNAME', '')
                   }
                   currObj.$store.commit('SET_REMEMBER', currObj.formValidate.remember)
-                  let redirectPath = '/'
+                  let redirectPath = this.$store.state.app.appInfo.homePath
                   if (currObj.$router.currentRoute.params.redirect) {
                     redirectPath = currObj.$router.currentRoute.params.redirect
                   }

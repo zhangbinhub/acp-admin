@@ -3,8 +3,7 @@
     <Sider hide-trigger collapsible :width="220" :collapsed-width="64" v-model="isCollapsed" class="left-sider"
            :style="{overflow: 'hidden'}">
       <side-menu :accordion="true" ref="sideMenu" :active-name="$router.currentRoute.fullPath" :collapsed="isCollapsed"
-                 @on-select="turnToPage"
-                 :menu-list="menuList" :open-names="openedNames" :theme="theme">
+                 @on-select="turnToPage" :menu-list="menuList" :open-names="openedNames" :theme="theme">
         <div class="logo-con">
           <img v-show="!isCollapsed" :src="mainLogo" alt=""/>
           <img v-show="isCollapsed" :src="minLogo" alt=""/>
@@ -13,7 +12,8 @@
     </Sider>
     <Layout>
       <Header class="header-con">
-        <header-bar :collapsed="isCollapsed" @on-coll-change="handleCollapsedChange">
+        <header-bar :collapsed="isCollapsed" :full-path="$router.currentRoute.fullPath" :menu-list="menuList"
+                    @on-coll-change="handleCollapsedChange">
           <user :user-avator="userAvator" :customer-name="userName"/>
           <language style="margin-right: 10px;" :lang="localLang"/>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>

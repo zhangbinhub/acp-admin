@@ -142,7 +142,7 @@
         this.$router.go(-1)
       },
       goHome () {
-        this.$router.replace('/')
+        this.$router.replace(this.$store.state.app.appInfo.homePath)
       }
     }
   }
