@@ -14,7 +14,7 @@ import './mock'
 // 响应式布局
 const autoWidth = () => {
   const winWidth = document.documentElement.clientWidth
-  if (winWidth <= 756) {
+  if (winWidth <= store.state.app.appInfo.minWidth) {
     store.commit('CLOSE_SLIDEBAR')
   } else {
     store.commit('OPEN_SLIDEBAR')
