@@ -4,7 +4,7 @@
  * @param menuList
  * @returns {Array}
  */
-const findFullMenuByPath = (path, menuList) => {
+export const findFullMenuByPath = (path, menuList) => {
   let result = []
   for (let menu of menuList) {
     if (menu.path === path) {

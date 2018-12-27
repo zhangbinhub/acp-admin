@@ -70,13 +70,6 @@
     methods: {
       handleSelect (path) {
         this.$emit('on-select', path)
-      },
-      updateOpenName (name) {
-        if (name === '' || name === 'home') {
-          this.openedNames = []
-        } else {
-          this.openedNames = getOpenedNamesByActiveName(name, this)
-        }
       }
     },
     watch: {
