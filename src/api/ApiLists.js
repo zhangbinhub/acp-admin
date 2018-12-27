@@ -23,8 +23,8 @@ export default {
         'Process400': 'false'
       },
       auth: {
-        username: ApiComm.$store.state.app.request.client_id,
-        password: ApiComm.$store.state.app.request.client_secret
+        username: ApiComm.$store.state.app.appInfo.client_id,
+        password: ApiComm.$store.state.app.appInfo.client_secret
       },
       transformRequest: [function (data) {
         data = Qs.stringify(data)

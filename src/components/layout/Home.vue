@@ -71,7 +71,6 @@
       }
     },
     created () {
-      // TODO: light 背景样式，底部 copyright
       this.$api.request.getUserInfo().then((res) => {
         if (res && !res.data.error_description) {
           this.$store.commit('SET_CUSTOMER_NAME', res.data.name)
