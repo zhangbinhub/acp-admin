@@ -6,8 +6,8 @@
           <Icon :size="18" type="ios-close-circle-outline"/>
         </Button>
         <DropdownMenu slot="list">
-          <DropdownItem name="close-all">关闭所有</DropdownItem>
-          <DropdownItem name="close-others">关闭其他</DropdownItem>
+          <DropdownItem name="close-all">{{$t('home.closeAll')}}</DropdownItem>
+          <DropdownItem name="close-others">{{$t('home.closeOther')}}</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     </div>
@@ -48,6 +48,7 @@
 </template>
 
 <script>
+  import { findMenuByPath } from '@/libs/tools'
   // TODO: 调试
   export default {
     name: 'TagsNav',

@@ -28,7 +28,9 @@ const messages = Object.assign(enLocale, {
     fullScreen: 'FullScreen',
     exitFullScreen: 'Exit FullScreen',
     personalInformation: 'Personal Information',
-    logout: 'logout'
+    logout: 'logout',
+    closeAll: 'Close All',
+    closeOther: 'Close Other'
   },
   loginForm: {
     usernamePlaceholder: 'Please enter your username',

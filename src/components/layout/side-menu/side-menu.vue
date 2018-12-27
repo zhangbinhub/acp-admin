@@ -17,13 +17,13 @@
     <div class="menu-area menu-collapsed" v-show="collapsed" :list="menuList">
       <template v-for="item in menuList">
         <collapsed-menu v-if="item.children && item.children.length > 0" @on-click="handleSelect" :hide-title="true"
-                        :root-icon-size="20" :icon-size="16" :parent-item="item" :is-root="true"
+                        :root-icon-size="30" :icon-size="16" :parent-item="item" :is-root="true"
                         :key="`drop-menu-${item.id}`"></collapsed-menu>
         <Tooltip transfer v-else :content="item.name"
                  placement="right" :key="`drop-menu-${item.id}`">
           <a @click="handleSelect(item.path)" class="drop-menu-a"
              :style="{textAlign: 'center'}">
-            <Icon :type="item.icon_type" :size="20"></Icon>
+            <Icon :type="item.icon_type" :size="30"></Icon>
           </a>
         </Tooltip>
       </template>

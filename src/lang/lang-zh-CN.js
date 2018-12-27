@@ -28,7 +28,9 @@ const messages = Object.assign(zhLocale, {
     fullScreen: '全屏',
     exitFullScreen: '退出全屏',
     personalInformation: '个人信息',
-    logout: '退出登录'
+    logout: '退出登录',
+    closeAll: '关闭所有',
+    closeOther: '关闭其他'
   },
   loginForm: {
     usernamePlaceholder: '请输入用户名',

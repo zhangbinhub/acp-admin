@@ -13,7 +13,7 @@
     <Layout>
       <Header class="header-con">
         <header-bar :collapsed="isCollapsed" :full-path="$router.currentRoute.fullPath" :menu-list="menuList"
-                    @on-coll-change="handleCollapsedChange">
+                    :mini="isMini" @on-coll-change="handleCollapsedChange">
           <user :user-avator="userAvator" :customer-name="userName"/>
           <language style="margin-right: 10px;" :lang="localLang"/>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
@@ -82,6 +82,9 @@
       },
       isCollapsed () {
         return !this.$store.state.app.sidebar.opened
+      },
+      isMini () {
+        return this.$store.state.app.isMini
       },
       minLogo () {
         return require('@/assets/images/logo/logo.png')
@@ -172,7 +175,7 @@
           this.$store.commit('OPEN_SLIDEBAR')
         }
       },
-      handleCloseTag (res, type, route) {
+      handleCloseTag (list, type, route) {
         // TODO
         // if (type === 'all') {
         //   this.turnToPage(this.$config.homeName)

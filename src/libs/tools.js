@@ -28,7 +28,7 @@ export const findFullMenuByPath = (path, menuList) => {
  * 根据 path 获取菜单
  * @param path
  * @param menuList
- * @param isFullPath = false
+ * @param isFullPath = true
  * @returns Object
  */
 export const findMenuByPath = (path, menuList, isFullPath = true) => {

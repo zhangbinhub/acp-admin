@@ -2,17 +2,41 @@
   user-select: none;
 
   .menu-area {
+    width: ~"calc(100% + 18px)";
     overflow-x: hidden;
     overflow-y: scroll;
     left: 0;
     bottom: 0;
-    right: -17px;
+    margin-right: -18px;
     position: absolute;
     top: 64px;
+
+    .ivu-menu-vertical {
+      margin-right: -18px;
+    }
   }
 
   .menu-collapsed {
     padding-top: 10px;
+
+    //@media (min-width: 756px) {
+    //  .ivu-dropdown {
+    //    width: 100%;
+    //  }
+    //
+    //  .ivu-tooltip {
+    //    width: 100%;
+    //  }
+    //}
+    //@media (max-width: 756px) {
+    //  .ivu-dropdown {
+    //    width: ~"calc(100% - 18px)";
+    //  }
+    //
+    //  .ivu-tooltip {
+    //    width: ~"calc(100% - 18px)";
+    //  }
+    //}
 
     .ivu-dropdown {
       width: 100%;
@@ -46,7 +70,7 @@
 
   a.drop-menu-a {
     display: inline-block;
-    padding: 6px 15px;
+    padding: 10px 15px;
     width: 100%;
     text-align: center;
     color: #495060;

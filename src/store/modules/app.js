@@ -27,6 +27,7 @@ export default {
     appInfo: appInfo,
     cacheList: [],
     tagNavList: [],
+    isMini: false,
     i18n: new VueI18n({
       locale: lang,
       messages: langInfo.messages
@@ -63,8 +64,8 @@ export default {
     SET_CACHE_LIST: (state, payload) => {
       state.cacheList = payload
     },
-    SET_TAG_NAV_LIST: (state, payload) => {
-      state.tagNavList = payload
+    SET_MINI: (state, payload) => {
+      state.isMini = payload
     },
     /**
      * 设置语言

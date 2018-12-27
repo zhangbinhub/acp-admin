@@ -16,8 +16,10 @@ const autoWidth = () => {
   const winWidth = document.documentElement.clientWidth
   if (winWidth <= store.state.app.appInfo.minWidth) {
     store.commit('CLOSE_SLIDEBAR')
+    store.commit('SET_MINI', true)
   } else {
     store.commit('OPEN_SLIDEBAR')
+    store.commit('SET_MINI', false)
   }
 }
 
