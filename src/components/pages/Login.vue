@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="bg">
-      <Modal class="login-modal" v-model="loginModal" width="360" :closable="false" :mask-closable="false">
+      <Modal class="login-modal" v-model="loginModal" width="300" :closable="false" :mask-closable="false">
         <div slot="header" style="text-align: center;">
           <h1 style="margin:10px;">
             <Row type="flex" justify="center" align="middle" style="text-align: center;">
@@ -13,12 +13,13 @@
           </h1>
         </div>
         <div>
-          <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-position="right" :label-width="80">
-            <FormItem :label="text.username" prop="username">
-              <i-input v-model="formValidate.username" type="text" :placeholder="text.usernamePlaceholder"/>
+          <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
+            <FormItem prop="username">
+              <i-input v-model="formValidate.username" type="text" prefix="md-person"
+                       :placeholder="text.usernamePlaceholder"/>
             </FormItem>
-            <FormItem :label="text.password" prop="password">
-              <i-input v-model="formValidate.password" type="password"
+            <FormItem prop="password">
+              <i-input v-model="formValidate.password" type="password" prefix="md-lock"
                        :placeholder="text.passwordPlaceholder"
                        @keyup.native.enter="handleSubmit('formValidate')"/>
             </FormItem>
@@ -49,9 +50,7 @@
         version: this.$store.state.app.appInfo.appVersion,
         copyright: this.$store.state.app.appInfo.copyright,
         text: {
-          username: this.$i18n.t('loginForm.username'),
           usernamePlaceholder: this.$i18n.t('loginForm.usernamePlaceholder'),
-          password: this.$i18n.t('loginForm.password'),
           passwordPlaceholder: this.$i18n.t('loginForm.passwordPlaceholder'),
           rememberMe: this.$i18n.t('loginForm.rememberMe')
         },

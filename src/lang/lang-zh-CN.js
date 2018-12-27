@@ -31,10 +31,8 @@ const messages = Object.assign(zhLocale, {
     logout: '退出登录'
   },
   loginForm: {
-    username: '用户名',
     usernamePlaceholder: '请输入用户名',
     usernameValidate: '用户名不能为空',
-    password: '密码',
     passwordPlaceholder: '请输入密码',
     passwordValidate: '密码不能为空',
     rememberMe: '记住我',

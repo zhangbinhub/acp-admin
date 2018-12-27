@@ -31,10 +31,8 @@ const messages = Object.assign(twLocale, {
     logout: '退出登錄'
   },
   loginForm: {
-    username: '用戶名',
     usernamePlaceholder: '請輸入用戶名',
     usernameValidate: '用戶名不能爲空',
-    password: '密碼',
     passwordPlaceholder: '請輸入密碼',
     passwordValidate: '密碼不能爲空',
     rememberMe: '記住我',

@@ -31,10 +31,8 @@ const messages = Object.assign(enLocale, {
     logout: 'logout'
   },
   loginForm: {
-    username: 'username',
     usernamePlaceholder: 'Please enter your username',
     usernameValidate: 'Username cannot be empty',
-    password: 'password',
     passwordPlaceholder: 'Please enter your password',
     passwordValidate: 'Password cannot be empty',
     rememberMe: 'Remember me',
