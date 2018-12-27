@@ -28,12 +28,26 @@ export const findFullMenuByPath = (path, menuList) => {
  * 根据 path 获取菜单
  * @param path
  * @param menuList
+ * @param isFullPath = false
  * @returns Object
  */
-export const findMenuByPath = (path, menuList) => {
+export const findMenuByPath = (path, menuList, isFullPath = true) => {
   let result
   for (let menu of menuList) {
-    if (menu.path === path) {
+    let matched = false
+    if (menu.path) {
+      const index = menu.path.indexOf('?')
+      if (isFullPath || (!isFullPath && index < 0)) {
+        if (menu.path === path) {
+          matched = true
+        }
+      } else if (!isFullPath && index > -1) {
+        if (menu.path.substring(0, index) === path) {
+          matched = true
+        }
+      }
+    }
+    if (matched) {
       result = menu
       break
     } else {

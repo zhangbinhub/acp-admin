@@ -25,6 +25,8 @@ Cookies.set('lang', lang)
 export default {
   state: {
     appInfo: appInfo,
+    cacheList: [],
+    tagNavList: [],
     i18n: new VueI18n({
       locale: lang,
       messages: langInfo.messages
@@ -57,6 +59,12 @@ export default {
     OPEN_SLIDEBAR: state => {
       Cookies.set('sidebarStatus', 1)
       state.sidebar.opened = true
+    },
+    SET_CACHE_LIST: (state, payload) => {
+      state.cacheList = payload
+    },
+    SET_TAG_NAV_LIST: (state, payload) => {
+      state.tagNavList = payload
     },
     /**
      * 设置语言

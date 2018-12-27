@@ -53,7 +53,7 @@
   import { getOpenedNamesByActiveName, findMenuByPath } from '@/libs/tools'
 
   export default {
-    name: 'Home',
+    name: 'home',
     components: {
       SideMenu,
       HeaderBar,
@@ -71,19 +71,10 @@
       }
     },
     created () {
-      this.$api.request.getUserInfo().then((res) => {
-        if (res && !res.data.error_description) {
-          this.$store.commit('SET_CUSTOMER_NAME', res.data.name)
-          this.$store.commit('SET_AVATOR_IMG', res.data.portrait)
-          this.$store.commit('SET_USER_OBJ', res.data)
-        }
-      })
-      this.$api.request.getMenus().then((res) => {
-        if (res && !res.data.error_description) {
-          this.$store.commit('SET_MENU_LIST', res.data)
-          this.openedNames = getOpenedNamesByActiveName(this.$router.currentRoute.fullPath, this)
-        }
-      })
+      // 向服务端请求数据并初始化到本地
+      this.initRemoteData()
+      // 本地初始化数据
+      this.initStoreData()
     },
     computed: {
       theme () {
@@ -101,9 +92,6 @@
       tagNavList () {
         return this.$store.state.app.tagNavList
       },
-      tagRouter () {
-        return this.$store.state.app.tagRouter
-      },
       userAvator () {
         return this.$store.state.app.userInfo.avatorImg
       },
@@ -111,9 +99,7 @@
         return this.$store.state.app.userInfo.customerName
       },
       cacheList () {
-        // TODO
-        // return ['ParentView', ...this.tagNavList.length ? this.tagNavList.filter(item => !(item.meta && item.meta.notCache)).map(item => item.name) : []]
-        return []
+        return this.$store.state.app.cacheList
       },
       menuList () {
         return this.$store.state.app.userInfo.menuList
@@ -123,6 +109,32 @@
       }
     },
     methods: {
+      initRemoteData () {
+        // 获取用户信息
+        this.$api.request.getUserInfo().then((res) => {
+          if (res && !res.data.error_description) {
+            this.$store.commit('SET_CUSTOMER_NAME', res.data.name)
+            this.$store.commit('SET_AVATOR_IMG', res.data.portrait)
+            this.$store.commit('SET_USER_OBJ', res.data)
+          }
+        })
+        // 获取菜单信息
+        this.$api.request.getMenus().then((res) => {
+          if (res && !res.data.error_description) {
+            this.$store.commit('SET_MENU_LIST', res.data)
+            this.openedNames = getOpenedNamesByActiveName(this.$router.currentRoute.fullPath, this)
+          }
+        })
+      },
+      initStoreData () {
+        // 初始化主页子路由缓存列表
+        const routeList = this.$router.options.routes
+          .filter(item => item.path === this.$store.state.app.appInfo.homePath)
+          .flatMap(item => item.children)
+          .filter(item => !item.meta.notCache)
+          .map(item => item.name)
+        this.$store.commit('SET_CACHE_LIST', routeList)
+      },
       // stirng | route
       turnToPage (obj) {
         let { name, params, query } = { name: '' }
@@ -175,26 +187,6 @@
       handleClick (item) {
         this.turnToPage(item)
       }
-    },
-    mounted () {
-      /**
-       * @description 初始化设置面包屑导航和标签导航
-       */
-      // TODO
-      // this.setTagNavList()
-      // this.setHomeRoute(routers)
-      // this.addTag({
-      //   route: this.$store.state.app.homeRoute
-      // })
-      // this.setBreadCrumb(this.$route)
-      // // 设置初始语言
-      // this.setLocal(this.$i18n.locale)
-      // 如果当前打开页面不在标签栏中，跳到homeName页
-      // if (!this.tagNavList.find(item => item.name === this.$route.name)) {
-      //   this.$router.push({
-      //     name: this.$config.homeName
-      //   })
-      // }
     }
   }
 </script>
