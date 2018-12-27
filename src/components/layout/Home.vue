@@ -1,6 +1,6 @@
 <template>
   <Layout style="height: 100%" :class="`home home-${theme}`">
-    <Sider hide-trigger collapsible :width="220" :collapsed-width="64" v-model="isCollapsed" class="left-sider"
+    <Sider hide-trigger collapsible :width="220" :collapsed-width="63" v-model="isCollapsed" class="left-sider"
            :style="{overflow: 'hidden'}">
       <side-menu :accordion="true" ref="sideMenu" :active-name="$router.currentRoute.fullPath" :collapsed="isCollapsed"
                  @on-select="turnToPage" :menu-list="menuList" :open-names="openedNames" :theme="theme">
