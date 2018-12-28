@@ -11,9 +11,6 @@
         </DropdownMenu>
       </Dropdown>
     </div>
-    <ul v-show="visible" :style="{left: contextMenuLeft + 'px', top: contextMenuTop + 'px'}" class="contextmenu">
-      <li v-for="(item, key) of menuList" @click="handleTagsOption(key)" :key="key">{{item}}</li>
-    </ul>
     <div class="btn-con left-btn">
       <Button type="text" @click="handleScroll(240)">
         <Icon :size="18" type="ios-arrow-back"/>
@@ -24,7 +21,7 @@
         <Icon :size="18" type="ios-arrow-forward"/>
       </Button>
     </div>
-    <div class="scroll-outer" ref="scrollOuter" @DOMMouseScroll="handlescroll" @mousewheel="handlescroll">
+    <div class="scroll-outer" ref="scrollOuter" @DOMMouseScroll="handleScrollMouse" @mousewheel="handleScrollMouse">
       <div ref="scrollBody" class="scroll-body" :style="{left: tagBodyLeft + 'px'}">
         <transition-group name="taglist-moving-animation">
           <Tag
@@ -36,7 +33,7 @@
             :data-route-item="item"
             @on-close="handleClose(item)"
             @click.native="handleClick(item)"
-            :closable="item.name !== $config.homeName"
+            :closable="item.name !== this.$store.state.app.appInfo.homePath"
             :color="isCurrentTag(item) ? 'primary' : 'default'"
             @contextmenu.prevent.native="contextMenu(item, $event)"
           >{{ showTitleInside(item) }}
@@ -59,7 +56,12 @@
         default () {
           return []
         }
-      }
+      },
+      menuList: {
+        type: Array,
+        default: () => []
+      },
+      fullPath: String
     },
     data () {
       return {
@@ -67,23 +69,12 @@
         rightOffset: 40,
         outerPadding: 4,
         contextMenuLeft: 0,
-        contextMenuTop: 0,
-        visible: false,
-        menuList: {
-          others: '关闭其他',
-          all: '关闭所有'
-        }
-      }
-    },
-    computed: {
-      currentRouteObj () {
-        const { name, params, query } = this.value
-        return { name, params, query }
+        contextMenuTop: 0
       }
     },
     methods: {
-      handlescroll (e) {
-        var type = e.type
+      handleScrollMouse (e) {
+        const type = e.type
         let delta = 0
         if (type === 'DOMMouseScroll' || type === 'mousewheel') {
           delta = (e.wheelDelta) ? e.wheelDelta : -(e.detail || 0) * 40
@@ -97,9 +88,7 @@
           this.tagBodyLeft = Math.min(0, this.tagBodyLeft + offset)
         } else {
           if (outerWidth < bodyWidth) {
-            if (this.tagBodyLeft < -(bodyWidth - outerWidth)) {
-              this.tagBodyLeft = this.tagBodyLeft
-            } else {
+            if (this.tagBodyLeft >= -(bodyWidth - outerWidth)) {
               this.tagBodyLeft = Math.max(this.tagBodyLeft + offset, outerWidth - bodyWidth)
             }
           } else {
@@ -136,8 +125,7 @@
         return ''
       },
       isCurrentTag (item) {
-        // return routeEqual(this.currentRouteObj, item)
-        return false
+        return this.fullPath === item.path
       },
       moveToView (tag) {
         const outerWidth = this.$refs.scrollOuter.offsetWidth
@@ -182,13 +170,6 @@
     watch: {
       '$route' (to) {
         this.getTagElementByName(to)
-      },
-      visible (value) {
-        if (value) {
-          document.body.addEventListener('click', this.closeMenu)
-        } else {
-          document.body.removeEventListener('click', this.closeMenu)
-        }
       }
     },
     mounted () {

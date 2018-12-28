@@ -43,6 +43,9 @@ const ApiComm = {
           case 401:
             ApiComm.redirectLogin()
             return
+          case 403:
+            error.response.data.error_description = ApiComm.$i18n.t('messages.failed403')
+            break
           case 500:
             let errorMsg = 'Internal System Error'
             if (error.response.data) {

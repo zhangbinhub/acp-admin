@@ -22,7 +22,8 @@
       <Content class="home-content-con">
         <Layout class="home-layout-con">
           <div class="tag-nav-wrapper">
-            <tags-nav :value="$route" @input="handleClick" :list="tagNavList" @on-close="handleCloseTag"/>
+            <tags-nav :full-path="$router.currentRoute.fullPath" :menu-list="menuList" :list="tagNavList"
+                      @input="handleClick" @on-close="handleCloseTag"/>
           </div>
           <Content class="content-wrapper">
             <div class="content-sticker">
@@ -120,14 +121,20 @@
             this.$store.commit('SET_AVATOR_IMG', res.data.portrait)
             this.$store.commit('SET_USER_OBJ', res.data)
           }
-        })
+        }).catch((error) => {
+            this.$api.errorProcess(error)
+          }
+        )
         // 获取菜单信息
         this.$api.request.getMenus().then((res) => {
           if (res && !res.data.error_description) {
             this.$store.commit('SET_MENU_LIST', res.data)
             this.openedNames = getOpenedNamesByActiveName(this.$router.currentRoute.fullPath, this)
           }
-        })
+        }).catch((error) => {
+            this.$api.errorProcess(error)
+          }
+        )
       },
       initStoreData () {
         // 初始化主页子路由缓存列表
@@ -150,15 +157,19 @@
         }
         if (name.startsWith('/') || name.toLowerCase().startsWith('http')) {
           const menu = findMenuByPath(name, this.$store.state.app.userInfo.menuList)
-          switch (menu.opentype) {
-            case 0: // 内嵌模式
-              this.$router.push(menu.path)
-              break
-            case 1: // 打开新页面
-              window.open(menu.path)
-              break
-            default:
-              this.$router.push(menu.path)
+          if (menu) {
+            switch (menu.opentype) {
+              case 0: // 内嵌模式
+                this.$router.push(menu.path)
+                break
+              case 1: // 打开新页面
+                window.open(menu.path)
+                break
+              default:
+                this.$router.push(menu.path)
+            }
+          } else {
+            this.$router.push(name)
           }
         } else {
           this.$router.push({
@@ -175,17 +186,12 @@
           this.$store.commit('OPEN_SLIDEBAR')
         }
       },
-      handleCloseTag (list, type, route) {
-        // TODO
-        // if (type === 'all') {
-        //   this.turnToPage(this.$config.homeName)
-        // } else if (routeEqual(this.$route, route)) {
-        //   if (type !== 'others') {
-        //     const nextRoute = getNextRoute(this.tagNavList, route)
-        //     this.$router.push(nextRoute)
-        //   }
-        // }
-        // this.setTagNavList(res)
+      handleCloseTag (type, nextPath) {
+        if (type === 'all') {
+          this.turnToPage(this.$store.state.app.appInfo.homePath)
+        } else if (type !== 'others') {
+          this.turnToPage(nextPath)
+        }
       },
       handleClick (item) {
         this.turnToPage(item)

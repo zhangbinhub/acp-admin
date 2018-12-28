@@ -8,7 +8,8 @@ const messages = Object.assign(twLocale, {
     loginFailed: '登錄失敗',
     loginInvalid: '用戶名或密碼錯誤',
     logoutConfirm: '確認退出當前系統嗎？',
-    requestFailed: '請求失敗'
+    requestFailed: '請求失敗',
+    failed403: '請求被拒絕，可能沒有權限，請聯繫系統管理員'
   },
   pageTitle: {
     test: '測試',
