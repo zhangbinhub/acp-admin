@@ -51,7 +51,13 @@
   import Language from './language'
 
   import './Home.less'
-  import { getOpenedNamesByActiveName, findMenuByPath } from '@/libs/tools'
+  import {
+    getOpenedNamesByActiveName,
+    findMenuByPath,
+    getTagNavListFromLocalstorage,
+    setTagNavListInLocalstorage,
+    updateTagNavList
+  } from '@/libs/tools'
 
   export default {
     name: 'home',
@@ -112,6 +118,15 @@
         return this.$store.state.app.lang.lang
       }
     },
+    watch: {
+      '$route' (newRoute) {
+        const newTagNavList = updateTagNavList(this.tagNavList, this.menuList, newRoute)
+        if (newTagNavList && newTagNavList.length > 0) {
+          setTagNavListInLocalstorage(newTagNavList)
+          this.$store.commit('SET_TAG_NAV_LIST', newTagNavList)
+        }
+      }
+    },
     methods: {
       initRemoteData () {
         // 获取用户信息
@@ -144,6 +159,17 @@
           .filter(item => !item.meta.notCache)
           .map(item => item.name)
         this.$store.commit('SET_CACHE_LIST', routeList)
+
+        // 初始化标签导航列表
+        let tagNavList = getTagNavListFromLocalstorage()
+        if (tagNavList.length === 0) {
+          tagNavList.push({
+            isHome: true,
+            path: this.$store.state.app.appInfo.homePath
+          })
+          setTagNavListInLocalstorage(tagNavList)
+        }
+        this.$store.commit('SET_TAG_NAV_LIST', tagNavList)
       },
       // stirng | route
       turnToPage (obj) {
@@ -186,11 +212,15 @@
           this.$store.commit('OPEN_SLIDEBAR')
         }
       },
-      handleCloseTag (type, nextPath) {
+      handleCloseTag (tagList, type, nextPath) {
+        setTagNavListInLocalstorage(tagList)
+        this.$store.commit('SET_TAG_NAV_LIST', tagList)
         if (type === 'all') {
           this.turnToPage(this.$store.state.app.appInfo.homePath)
         } else if (type !== 'others') {
-          this.turnToPage(nextPath)
+          if (this.$route.fullPath !== nextPath) {
+            this.turnToPage(nextPath)
+          }
         }
       },
       handleClick (item) {

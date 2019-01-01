@@ -16,6 +16,9 @@
         <Icon :size="18" type="ios-arrow-back"/>
       </Button>
     </div>
+    <ul v-show="visible" :style="{left: contextMenuLeft + 'px', top: contextMenuTop + 'px'}" class="contextmenu">
+      <li v-for="(item, key) of contextMenuList" @click="handleTagsOption(key)" :key="key">{{item}}</li>
+    </ul>
     <div class="btn-con right-btn">
       <Button type="text" @click="handleScroll(-240)">
         <Icon :size="18" type="ios-arrow-forward"/>
@@ -29,11 +32,11 @@
             v-for="(item, index) in list"
             ref="tagsPageOpened"
             :key="`tag-nav-${index}`"
-            :name="item.name"
+            :name="item.path"
             :data-route-item="item"
             @on-close="handleClose(item)"
             @click.native="handleClick(item)"
-            :closable="item.name !== this.$store.state.app.appInfo.homePath"
+            :closable="!item.isHome"
             :color="isCurrentTag(item) ? 'primary' : 'default'"
             @contextmenu.prevent.native="contextMenu(item, $event)"
           >{{ showTitleInside(item) }}
@@ -45,8 +48,6 @@
 </template>
 
 <script>
-  import { findMenuByPath } from '@/libs/tools'
-  // TODO: 调试
   export default {
     name: 'TagsNav',
     props: {
@@ -69,7 +70,13 @@
         rightOffset: 40,
         outerPadding: 4,
         contextMenuLeft: 0,
-        contextMenuTop: 0
+        contextMenuTop: 0,
+        visible: false,
+        contextMenuList: {
+          others: this.$i18n.t('home.closeOther'),
+          all: this.$i18n.t('home.closeAll')
+        },
+        homePath: this.$store.state.app.appInfo.homePath
       }
     },
     methods: {
@@ -98,31 +105,41 @@
       },
       handleTagsOption (type) {
         if (type.includes('all')) {
-          // 关闭所有，除了home
-          let res = this.list.filter(item => item.name === this.$config.homeName)
+          const res = this.list.filter(item => item.path === this.$store.state.app.appInfo.homePath)
           this.$emit('on-close', res, 'all')
         } else if (type.includes('others')) {
-          // 关闭除当前页和home页的其他页
-          // let res = this.list.filter(item => routeEqual(this.currentRouteObj, item) || item.name === this.$config.homeName)
-          // this.$emit('on-close', res, 'others', this.currentRouteObj)
-          // setTimeout(() => {
-          //   this.getTagElementByName(this.currentRouteObj.name)
-          // }, 100)
+          const res = this.list.filter(item => item.path === this.fullPath || item.path === this.$store.state.app.appInfo.homePath)
+          this.$emit('on-close', res, 'others')
         }
+        this.focusTagElementByFullPath(this.fullPath)
       },
       handleClose (current) {
-        this.close(current)
+        this.close(current.path)
       },
-      close (route) {
-        // let res = this.list.filter(item => !routeEqual(route, item))
-        // this.$emit('on-close', res, undefined, route)
+      close (path) {
+        const res = this.list.filter(item => item.path !== path)
+        const currIndex = this.list.findIndex(item => item.path === path)
+        let nextPath = this.$store.state.app.appInfo.homePath
+        if (currIndex === this.list.length - 1) {
+          nextPath = this.list[this.list.length - 2].path
+        } else {
+          nextPath = this.list[currIndex + 1].path
+        }
+        this.$emit('on-close', res, undefined, nextPath)
       },
       handleClick (item) {
-        this.$emit('input', item)
+        this.$emit('input', item.path)
       },
       showTitleInside (item) {
-        // return showTitle(item, this)
-        return ''
+        if (item.isHome) {
+          return this.$i18n.t('pageTitle.home')
+        } else {
+          if (item.meta.title) {
+            return this.$i18n.t(item.meta.title)
+          } else {
+            return item.name
+          }
+        }
       },
       isCurrentTag (item) {
         return this.fullPath === item.path
@@ -143,19 +160,19 @@
           this.tagBodyLeft = -(tag.offsetLeft - (outerWidth - this.outerPadding - tag.offsetWidth))
         }
       },
-      getTagElementByName (route) {
+      focusTagElementByFullPath (fullPath) {
         this.$nextTick(() => {
-          this.refsTag = this.$refs.tagsPageOpened
-          // this.refsTag.forEach((item, index) => {
-          // if (routeEqual(route, item.$attrs['data-route-item'])) {
-          //   let tag = this.refsTag[index].$el
-          //   this.moveToView(tag)
-          // }
-          // })
-        })
+            this.refsTag = this.$refs.tagsPageOpened
+            this.refsTag.forEach((item, index) => {
+              if (item.$attrs['data-route-item'].path === fullPath) {
+                this.moveToView(this.refsTag[index].$el)
+              }
+            })
+          }
+        )
       },
       contextMenu (item, e) {
-        if (item.name === this.$config.homeName) {
+        if (item.isHome) {
           return
         }
         this.visible = true
@@ -169,13 +186,18 @@
     },
     watch: {
       '$route' (to) {
-        this.getTagElementByName(to)
+        this.focusTagElementByFullPath(to.fullPath)
+      },
+      visible (value) {
+        if (value) {
+          document.body.addEventListener('click', this.closeMenu)
+        } else {
+          document.body.removeEventListener('click', this.closeMenu)
+        }
       }
     },
     mounted () {
-      setTimeout(() => {
-        this.getTagElementByName(this.$route)
-      }, 200)
+      this.focusTagElementByFullPath(this.fullPath)
     }
   }
 </script>

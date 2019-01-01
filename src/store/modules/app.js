@@ -64,6 +64,9 @@ export default {
     SET_CACHE_LIST: (state, payload) => {
       state.cacheList = payload
     },
+    SET_TAG_NAV_LIST: (state, payload) => {
+      state.tagNavList = payload
+    },
     SET_MINI: (state, payload) => {
       state.isMini = payload
     },

@@ -161,3 +161,28 @@ export const findNodeUpperByClasses = (ele, classes) => {
     }
   }
 }
+
+/**
+ * @description 本地存储和获取标签导航列表
+ */
+export const setTagNavListInLocalstorage = list => {
+  localStorage.tagNaveList = JSON.stringify(list)
+}
+
+export const getTagNavListFromLocalstorage = () => {
+  const list = localStorage.tagNaveList
+  return list ? JSON.parse(list) : []
+}
+
+export const updateTagNavList = (tagNavList, menuList, route) => {
+  const fullPath = route.fullPath
+  if (!tagNavList.find(tagNav => tagNav.path === fullPath)) {
+    const menu = findMenuByPath(fullPath, menuList)
+    tagNavList.push({
+      name: menu ? menu.name : route.name,
+      path: fullPath,
+      meta: route.meta
+    })
+    return tagNavList
+  }
+}
