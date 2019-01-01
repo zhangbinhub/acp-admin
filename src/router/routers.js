@@ -43,7 +43,6 @@ export default [
       meta: {
         title: 'pageTitle.home',
         notCache: true,
-        keepAlive: false,
         requireAuth: true
       }
     }, {
@@ -51,8 +50,7 @@ export default [
       name: 'demo4',
       component: () => import('@/components/views/Demo4.vue'),
       meta: {
-        // notCache: true,
-        keepAlive: false,
+        notCache: true,
         requireAuth: true
       }
     }]

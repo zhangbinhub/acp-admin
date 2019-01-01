@@ -29,7 +29,7 @@
         <transition-group name="taglist-moving-animation">
           <Tag
             type="dot"
-            v-for="(item, index) in list"
+            v-for="(item, index) in tagList"
             ref="tagsPageOpened"
             :key="`tag-nav-${index}`"
             :name="item.path"
@@ -79,6 +79,11 @@
         homePath: this.$store.state.app.appInfo.homePath
       }
     },
+    computed: {
+      tagList () {
+        return this.list
+      }
+    },
     methods: {
       handleScrollMouse (e) {
         const type = e.type
@@ -110,8 +115,8 @@
         } else if (type.includes('others')) {
           const res = this.list.filter(item => item.path === this.fullPath || item.path === this.$store.state.app.appInfo.homePath)
           this.$emit('on-close', res, 'others')
+          this.focusTagElementByFullPath(this.fullPath)
         }
-        this.focusTagElementByFullPath(this.fullPath)
       },
       handleClose (current) {
         this.close(current.path)
@@ -163,11 +168,13 @@
       focusTagElementByFullPath (fullPath) {
         this.$nextTick(() => {
             this.refsTag = this.$refs.tagsPageOpened
-            this.refsTag.forEach((item, index) => {
-              if (item.$attrs['data-route-item'].path === fullPath) {
-                this.moveToView(this.refsTag[index].$el)
-              }
-            })
+            if (this.refsTag && this.refsTag.length > 0) {
+              this.refsTag.forEach((item, index) => {
+                if (item.$attrs['data-route-item'].path === fullPath) {
+                  this.moveToView(this.refsTag[index].$el)
+                }
+              })
+            }
           }
         )
       },

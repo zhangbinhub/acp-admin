@@ -120,11 +120,7 @@
     },
     watch: {
       '$route' (newRoute) {
-        const newTagNavList = updateTagNavList(this.tagNavList, this.menuList, newRoute)
-        if (newTagNavList && newTagNavList.length > 0) {
-          setTagNavListInLocalstorage(newTagNavList)
-          this.$store.commit('SET_TAG_NAV_LIST', newTagNavList)
-        }
+        this.updateTagList(this.tagNavList, this.menuList, newRoute)
       }
     },
     methods: {
@@ -145,6 +141,7 @@
           if (res && !res.data.error_description) {
             this.$store.commit('SET_MENU_LIST', res.data)
             this.openedNames = getOpenedNamesByActiveName(this.$router.currentRoute.fullPath, this)
+            this.updateTagList(this.$store.state.app.tagNavList, this.menuList, this.$route)
           }
         }).catch((error) => {
             this.$api.errorProcess(error)
@@ -167,9 +164,15 @@
             isHome: true,
             path: this.$store.state.app.appInfo.homePath
           })
-          setTagNavListInLocalstorage(tagNavList)
         }
         this.$store.commit('SET_TAG_NAV_LIST', tagNavList)
+      },
+      updateTagList (tagNavList, menuList, route) {
+        const newTagNavList = updateTagNavList(tagNavList, menuList, route)
+        if (newTagNavList && newTagNavList.length > 0) {
+          setTagNavListInLocalstorage(newTagNavList)
+          this.$store.commit('SET_TAG_NAV_LIST', newTagNavList)
+        }
       },
       // stirng | route
       turnToPage (obj) {
