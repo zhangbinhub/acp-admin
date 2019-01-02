@@ -3,7 +3,7 @@
     <Sider hide-trigger collapsible :width="220" :collapsed-width="63" v-model="isCollapsed" class="left-sider"
            :style="{overflow: 'hidden'}">
       <side-menu :accordion="true" ref="sideMenu" :active-name="fullPath" :collapsed="isCollapsed"
-                 @on-select="menuSelect" :menu-list="menuList" :open-names="openedNames" :theme="theme">
+                 @on-select="gotoPage" :menu-list="menuList" :open-names="openedNames" :theme="theme">
         <div class="logo-con">
           <img v-show="!isCollapsed" :src="mainLogo" alt=""/>
           <img v-show="isCollapsed" :src="minLogo" alt=""/>
@@ -177,9 +177,6 @@
           this.$store.commit('SET_TAG_NAV_LIST', newTagNavList)
         }
       },
-      menuSelect (path) {
-        this.turnToPage(path)
-      },
       /**
        * 页面跳转
        * @param obj 跳转参数 stirng | route
@@ -209,14 +206,6 @@
               } else {
                 this.gotoPage(obj)
               }
-            },
-            onCancel: () => {
-              this.$nextTick(() => {
-                // console.log('1---' + this.$refs.sideMenu.activeName)
-                // setTimeout(() => {
-                //   this.$refs.sideMenu.updateMenuStatus()
-                // }, 200)
-              })
             }
           })
           return false
@@ -276,18 +265,19 @@
             this.$store.commit('SET_TAG_NAV_LIST', tagList)
             return true
           })
-        } else if (type !== 'others') {
-          if (this.fullPath !== nextPath) {
-            this.turnToPage(nextPath, () => {
-              setTagNavListInLocalstorage(tagList)
-              this.$store.commit('SET_TAG_NAV_LIST', tagList)
-              return true
-            })
-          }
+        } else if (type !== 'others' && this.fullPath !== nextPath) {
+          this.turnToPage(nextPath, () => {
+            setTagNavListInLocalstorage(tagList)
+            this.$store.commit('SET_TAG_NAV_LIST', tagList)
+            return true
+          })
+        } else {
+          setTagNavListInLocalstorage(tagList)
+          this.$store.commit('SET_TAG_NAV_LIST', tagList)
         }
       },
       handleClick (item) {
-        this.turnToPage(item)
+        this.gotoPage(item)
       }
     }
   }

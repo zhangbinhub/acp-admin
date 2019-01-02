@@ -119,7 +119,11 @@
         }
       },
       handleClose (current) {
-        this.close(current.path)
+        if (current.path !== this.fullPath) {
+          this.handleClick(current)
+        } else {
+          this.close(current.path)
+        }
       },
       close (path) {
         const res = this.list.filter(item => item.path !== path)
