@@ -46,20 +46,20 @@ export default [
         requireAuth: true
       }
     }, {
+      path: '/demo4',
+      name: 'demo4',
+      component: () => import('@/components/views/demo/Demo4.vue'),
+      meta: {
+        notCache: true,
+        requireAuth: true,
+        withInput: true
+      }
+    }, {
       path: '/personalInformation',
       name: 'personal_information',
       component: () => import('@/components/views/PersonalInformation.vue'),
       meta: {
         title: 'pageTitle.personalInformation',
-        requireAuth: true,
-        withInput: true
-      }
-    }, {
-      path: '/demo4',
-      name: 'demo4',
-      component: () => import('@/components/views/Demo4.vue'),
-      meta: {
-        notCache: true,
         requireAuth: true,
         withInput: true
       }
