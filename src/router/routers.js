@@ -47,9 +47,10 @@ export default [
       }
     }, {
       path: '/personalInformation',
-      name: 'personalInformation',
-      component: () => import('@/components/views/Demo4.vue'),
+      name: 'personal_information',
+      component: () => import('@/components/views/PersonalInformation.vue'),
       meta: {
+        title: 'pageTitle.personalInformation',
         requireAuth: true,
         withInput: true
       }
@@ -58,7 +59,7 @@ export default [
       name: 'demo4',
       component: () => import('@/components/views/Demo4.vue'),
       meta: {
-        // notCache: true,
+        notCache: true,
         requireAuth: true,
         withInput: true
       }
