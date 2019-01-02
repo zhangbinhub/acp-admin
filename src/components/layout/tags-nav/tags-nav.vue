@@ -183,9 +183,6 @@
         )
       },
       contextMenu (item, e) {
-        if (item.isHome) {
-          return
-        }
         this.visible = true
         const offsetLeft = this.$el.getBoundingClientRect().left
         this.contextMenuLeft = e.clientX - offsetLeft + 10

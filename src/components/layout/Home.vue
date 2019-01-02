@@ -154,7 +154,7 @@
       initStoreData () {
         // 初始化主页子路由缓存列表
         const routeList = this.$router.options.routes
-          .filter(item => item.path === this.$store.state.app.appInfo.homePath)
+          .filter(item => item.name === 'home')
           .flatMap(item => item.children)
           .filter(item => !item.meta.notCache)
           .map(item => item.name)
