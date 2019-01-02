@@ -122,10 +122,10 @@
         if (current.path !== this.fullPath) {
           this.handleClick(current)
         } else {
-          this.close(current.path)
+          this.close(current.path, this.showTitleInside(current))
         }
       },
-      close (path) {
+      close (path, pageName) {
         const res = this.list.filter(item => item.path !== path)
         const currIndex = this.list.findIndex(item => item.path === path)
         let nextPath = this.$store.state.app.appInfo.homePath
@@ -134,7 +134,7 @@
         } else {
           nextPath = this.list[currIndex + 1].path
         }
-        this.$emit('on-close', res, undefined, nextPath)
+        this.$emit('on-close', res, undefined, nextPath, pageName)
       },
       handleClick (item) {
         this.$emit('input', item.path)

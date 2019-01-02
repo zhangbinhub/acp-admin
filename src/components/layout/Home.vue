@@ -181,8 +181,9 @@
        * 页面跳转
        * @param obj 跳转参数 stirng | route
        * @param beforeTurnFunc 跳转前执行的函数
+       * @param pageName 页面名称
        */
-      turnToPage (obj, beforeTurnFunc) {
+      turnToPage (obj, beforeTurnFunc, pageName) {
         let path = ''
         if (typeof obj === 'string') { // string
           path = obj
@@ -197,7 +198,8 @@
         if ((!menu || menu.opentype !== 1) && dataLose) {
           this.$Modal.confirm({
             title: this.$i18n.t('dialog.confirm'),
-            content: '<p>' + this.$i18n.t('messages.leavePage') + '</p>',
+            content: '<br/><p style="color: red">' + pageName + '</p><br/>' +
+              '<p>' + this.$i18n.t('messages.leavePage') + '</p>',
             onOk: () => {
               if (beforeTurnFunc && typeof beforeTurnFunc === 'function') {
                 if (beforeTurnFunc()) {
@@ -258,19 +260,19 @@
           this.$store.commit('OPEN_SLIDEBAR')
         }
       },
-      handleCloseTag (tagList, type, nextPath) {
+      handleCloseTag (tagList, type, nextPath, pageName) {
         if (type === 'all') {
           this.turnToPage(this.$store.state.app.appInfo.homePath, () => {
             setTagNavListInLocalstorage(tagList)
             this.$store.commit('SET_TAG_NAV_LIST', tagList)
             return true
-          })
+          }, pageName)
         } else if (type !== 'others' && this.fullPath !== nextPath) {
           this.turnToPage(nextPath, () => {
             setTagNavListInLocalstorage(tagList)
             this.$store.commit('SET_TAG_NAV_LIST', tagList)
             return true
-          })
+          }, pageName)
         } else {
           setTagNavListInLocalstorage(tagList)
           this.$store.commit('SET_TAG_NAV_LIST', tagList)
