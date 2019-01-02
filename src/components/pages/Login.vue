@@ -57,9 +57,9 @@
         loginModal: true,
         modal_loading: false,
         formValidate: {
-          username: this.$store.state.app.userInfo.username,
+          username: this.$store.state.app.user.username,
           password: '',
-          remember: this.$store.state.app.userInfo.remember
+          remember: this.$store.state.app.user.remember
         },
         ruleValidate: {
           username: [

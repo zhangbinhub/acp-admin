@@ -40,9 +40,7 @@ export default {
       langMessages: langInfo.messages,
       lang: lang
     },
-    userInfo: {
-      customerName: '',
-      avatorImg: '',
+    user: {
       userObj: {},
       username: Cookies.get('username'),
       remember: remember,
@@ -79,48 +77,42 @@ export default {
       state.i18n.locale = payload
     },
     SET_USERNAME: (state, payload) => {
-      state.userInfo.username = payload
+      state.user.username = payload
       Cookies.set('username', payload)
     },
     SET_REMEMBER: (state, payload) => {
-      state.userInfo.remember = payload === 'true'
+      state.user.remember = payload === 'true'
       Cookies.set('remember', payload)
     },
     SET_TOKEN: (state, payload) => {
-      state.userInfo.token = payload
+      state.user.token = payload
       Cookies.set('token', payload)
     },
     SET_TOKEN_TYPE: (state, payload) => {
-      state.userInfo.tokenType = payload
+      state.user.tokenType = payload
       Cookies.set('token_type', payload)
     },
     SET_SCOPE: (state, payload) => {
-      state.userInfo.scope = payload
+      state.user.scope = payload
       Cookies.set('scope', payload)
     },
     LOGIN_OUT: state => {
-      state.userInfo.token = ''
-      state.userInfo.tokenType = ''
-      state.userInfo.scope = ''
-      state.userInfo.menuList = []
-      state.userInfo.customerName = ''
-      state.userInfo.avatorImg = ''
-      state.userInfo.userObj = {}
+      state.user.token = ''
+      state.user.tokenType = ''
+      state.user.scope = ''
+      state.user.menuList = []
+      state.user.customerName = ''
+      state.user.avatorImg = ''
+      state.user.userObj = {}
       Cookies.remove('token')
       Cookies.remove('token_type')
       Cookies.remove('scope')
     },
     SET_MENU_LIST: (state, payload) => {
-      state.userInfo.menuList = payload
-    },
-    SET_CUSTOMER_NAME: (state, payload) => {
-      state.userInfo.customerName = payload
-    },
-    SET_AVATOR_IMG: (state, payload) => {
-      state.userInfo.avatorImg = payload
+      state.user.menuList = payload
     },
     SET_USER_OBJ: (state, payload) => {
-      state.userInfo.userObj = payload
+      state.user.userObj = payload
     }
   }
 }

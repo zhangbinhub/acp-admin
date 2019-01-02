@@ -69,7 +69,7 @@ export const findMenuByPath = (path, menuList, isFullPath = true) => {
  * @returns {Array}
  */
 export const getOpenedNamesByActiveName = (name, vm) => {
-  const fullMenus = findFullMenuByPath(name, vm.$store.state.app.userInfo.menuList)
+  const fullMenus = findFullMenuByPath(name, vm.$store.state.app.user.menuList)
   if (fullMenus.length > 0) {
     return fullMenus.map(item => (item.children && item.children.length > 0) ? item.id : item.path)
   } else {

@@ -17,8 +17,8 @@ const ApiComm = {
     // 请求拦截器
     this.$http.interceptors.request.use(config => {
       ApiComm.$loading.start()
-      if (ApiComm.$store.state.app.userInfo.token) {
-        config.headers.Authorization = `${ApiComm.$store.state.app.userInfo.tokenType} ${ApiComm.$store.state.app.userInfo.token}`
+      if (ApiComm.$store.state.app.user.token) {
+        config.headers.Authorization = `${ApiComm.$store.state.app.user.tokenType} ${ApiComm.$store.state.app.user.token}`
       }
       return config
     }, error => {

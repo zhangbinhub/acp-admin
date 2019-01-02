@@ -106,16 +106,16 @@
         return this.$store.state.app.tagNavList
       },
       userAvator () {
-        return this.$store.state.app.userInfo.avatorImg
+        return this.$store.state.app.user.userObj.portrait
       },
       userName () {
-        return this.$store.state.app.userInfo.customerName
+        return this.$store.state.app.user.userObj.name
       },
       cacheList () {
         return this.$store.state.app.cacheList
       },
       menuList () {
-        return this.$store.state.app.userInfo.menuList
+        return this.$store.state.app.user.menuList
       },
       localLang () {
         return this.$store.state.app.lang.lang
@@ -131,8 +131,6 @@
         // 获取用户信息
         this.$api.request.getUserInfo().then((res) => {
           if (res && !res.data.error_description) {
-            this.$store.commit('SET_CUSTOMER_NAME', res.data.name)
-            this.$store.commit('SET_AVATOR_IMG', res.data.portrait)
             this.$store.commit('SET_USER_OBJ', res.data)
           }
         }).catch((error) => {
@@ -190,7 +188,7 @@
         } else { // route
           path = obj.path
         }
-        const menu = findMenuByPath(path, this.$store.state.app.userInfo.menuList)
+        const menu = findMenuByPath(path, this.$store.state.app.user.menuList)
         let dataLose = false
         if (this.$route.meta) {
           dataLose = this.$route.meta.withInput && this.$route.meta.notCache
@@ -230,7 +228,7 @@
           query = obj.query
         }
         if (name.startsWith('/') || name.toLowerCase().startsWith('http')) {
-          const menu = findMenuByPath(name, this.$store.state.app.userInfo.menuList)
+          const menu = findMenuByPath(name, this.$store.state.app.user.menuList)
           if (menu) {
             switch (menu.opentype) {
               case 0: // 内嵌模式

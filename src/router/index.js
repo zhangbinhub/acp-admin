@@ -22,7 +22,7 @@ router.beforeEach((to, from, next) => {
     router.push('/404')
   } else {
     if (to.meta.requireAuth) {
-      if (!store.state.app.userInfo.token) {
+      if (!store.state.app.user.token) {
         store.commit('LOGIN_OUT')
         router.replace({
           name: 'login',
