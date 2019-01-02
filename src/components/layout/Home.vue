@@ -106,10 +106,10 @@
         return this.$store.state.app.tagNavList
       },
       userAvator () {
-        return this.$store.state.app.user.userObj.portrait
+        return this.$store.state.app.user.userInfo.portrait
       },
       userName () {
-        return this.$store.state.app.user.userObj.name
+        return this.$store.state.app.user.userInfo.name
       },
       cacheList () {
         return this.$store.state.app.cacheList
@@ -131,7 +131,7 @@
         // 获取用户信息
         this.$api.request.getUserInfo().then((res) => {
           if (res && !res.data.error_description) {
-            this.$store.commit('SET_USER_OBJ', res.data)
+            this.$store.commit('SET_USER_INFO', res.data)
           }
         }).catch((error) => {
             this.$api.errorProcess(error)

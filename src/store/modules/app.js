@@ -41,7 +41,7 @@ export default {
       lang: lang
     },
     user: {
-      userObj: {},
+      userInfo: {},
       username: Cookies.get('username'),
       remember: remember,
       token: Cookies.get('token'),
@@ -103,7 +103,7 @@ export default {
       state.user.menuList = []
       state.user.customerName = ''
       state.user.avatorImg = ''
-      state.user.userObj = {}
+      state.user.userInfo = {}
       Cookies.remove('token')
       Cookies.remove('token_type')
       Cookies.remove('scope')
@@ -111,8 +111,8 @@ export default {
     SET_MENU_LIST: (state, payload) => {
       state.user.menuList = payload
     },
-    SET_USER_OBJ: (state, payload) => {
-      state.user.userObj = payload
+    SET_USER_INFO: (state, payload) => {
+      state.user.userInfo = payload
     }
   }
 }
