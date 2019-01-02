@@ -51,7 +51,8 @@ export default [
       component: () => import('@/components/views/Demo4.vue'),
       meta: {
         notCache: true,
-        requireAuth: true
+        requireAuth: true,
+        withInput: true
       }
     }]
   },

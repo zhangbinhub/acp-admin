@@ -9,7 +9,8 @@ const messages = Object.assign(enLocale, {
     loginInvalid: 'username and password do not match',
     logoutConfirm: 'Confirm to logout current system ?',
     requestFailed: 'Requesst failed',
-    failed403: 'Request rejected, may not hava permission, please contact the system administrator'
+    failed403: 'Request rejected, may not hava permission, please contact the system administrator',
+    leavePage: 'The data entered on the current page will be lost. Are you sure to leave?'
   },
   pageTitle: {
     test: 'test',

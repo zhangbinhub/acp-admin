@@ -70,6 +70,12 @@
     methods: {
       handleSelect (path) {
         this.$emit('on-select', path)
+      },
+      updateMenuStatus () {
+        this.$nextTick(() => {
+          this.$refs.menu.updateOpened()
+          this.$refs.menu.updateActiveName()
+        })
       }
     },
     watch: {
@@ -87,10 +93,7 @@
         this.openedNames = newNames
       },
       openedNames () {
-        this.$nextTick(() => {
-          this.$refs.menu.updateOpened()
-          this.$refs.menu.updateActiveName()
-        })
+        this.updateMenuStatus()
       }
     }
   }

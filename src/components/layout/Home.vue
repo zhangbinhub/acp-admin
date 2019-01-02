@@ -2,8 +2,8 @@
   <Layout style="height: 100%" :class="`home home-${theme}`">
     <Sider hide-trigger collapsible :width="220" :collapsed-width="63" v-model="isCollapsed" class="left-sider"
            :style="{overflow: 'hidden'}">
-      <side-menu :accordion="true" ref="sideMenu" :active-name="$router.currentRoute.fullPath" :collapsed="isCollapsed"
-                 @on-select="turnToPage" :menu-list="menuList" :open-names="openedNames" :theme="theme">
+      <side-menu :accordion="true" ref="sideMenu" :active-name="fullPath" :collapsed="isCollapsed"
+                 @on-select="menuSelect" :menu-list="menuList" :open-names="openedNames" :theme="theme">
         <div class="logo-con">
           <img v-show="!isCollapsed" :src="mainLogo" alt=""/>
           <img v-show="isCollapsed" :src="minLogo" alt=""/>
@@ -12,7 +12,7 @@
     </Sider>
     <Layout>
       <Header class="header-con">
-        <header-bar :collapsed="isCollapsed" :full-path="$router.currentRoute.fullPath" :menu-list="menuList"
+        <header-bar :collapsed="isCollapsed" :full-path="fullPath" :menu-list="menuList"
                     :mini="isMini" @on-coll-change="handleCollapsedChange">
           <user :user-avator="userAvator" :customer-name="userName"/>
           <language style="margin-right: 10px;" :lang="localLang"/>
@@ -22,7 +22,7 @@
       <Content class="home-content-con">
         <Layout class="home-layout-con">
           <div class="tag-nav-wrapper">
-            <tags-nav :full-path="$router.currentRoute.fullPath" :menu-list="menuList" :list="tagNavList"
+            <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList"
                       @input="handleClick" @on-close="handleCloseTag"/>
           </div>
           <Content class="content-wrapper">
@@ -87,6 +87,9 @@
       theme () {
         return this.$store.state.app.appInfo.theme
       },
+      fullPath () {
+        return this.$route.fullPath
+      },
       isCollapsed () {
         return !this.$store.state.app.sidebar.opened
       },
@@ -140,7 +143,7 @@
         this.$api.request.getMenus().then((res) => {
           if (res && !res.data.error_description) {
             this.$store.commit('SET_MENU_LIST', res.data)
-            this.openedNames = getOpenedNamesByActiveName(this.$router.currentRoute.fullPath, this)
+            this.openedNames = getOpenedNamesByActiveName(this.fullPath, this)
             this.updateTagList(this.$store.state.app.tagNavList, this.menuList, this.$route)
           }
         }).catch((error) => {
@@ -174,8 +177,59 @@
           this.$store.commit('SET_TAG_NAV_LIST', newTagNavList)
         }
       },
-      // stirng | route
-      turnToPage (obj) {
+      menuSelect (path) {
+        this.turnToPage(path)
+      },
+      /**
+       * 页面跳转
+       * @param obj 跳转参数 stirng | route
+       * @param beforeTurnFunc 跳转前执行的函数
+       */
+      turnToPage (obj, beforeTurnFunc) {
+        let path = ''
+        if (typeof obj === 'string') { // string
+          path = obj
+        } else { // route
+          path = obj.path
+        }
+        const menu = findMenuByPath(path, this.$store.state.app.userInfo.menuList)
+        let dataLose = false
+        if (this.$route.meta) {
+          dataLose = this.$route.meta.withInput && this.$route.meta.notCache
+        }
+        if ((!menu || menu.opentype !== 1) && dataLose) {
+          this.$Modal.confirm({
+            title: this.$i18n.t('dialog.confirm'),
+            content: '<p>' + this.$i18n.t('messages.leavePage') + '</p>',
+            onOk: () => {
+              if (beforeTurnFunc && typeof beforeTurnFunc === 'function') {
+                if (beforeTurnFunc()) {
+                  this.gotoPage(obj)
+                }
+              } else {
+                this.gotoPage(obj)
+              }
+            },
+            onCancel: () => {
+              this.$nextTick(() => {
+                // console.log('1---' + this.$refs.sideMenu.activeName)
+                // setTimeout(() => {
+                //   this.$refs.sideMenu.updateMenuStatus()
+                // }, 200)
+              })
+            }
+          })
+          return false
+        }
+        if (beforeTurnFunc && typeof beforeTurnFunc === 'function') {
+          if (beforeTurnFunc()) {
+            this.gotoPage(obj)
+          }
+        } else {
+          this.gotoPage(obj)
+        }
+      },
+      gotoPage (obj) {
         let { name, params, query } = { name: '' }
         if (typeof obj === 'string') { // string
           name = obj
@@ -216,13 +270,19 @@
         }
       },
       handleCloseTag (tagList, type, nextPath) {
-        setTagNavListInLocalstorage(tagList)
-        this.$store.commit('SET_TAG_NAV_LIST', tagList)
         if (type === 'all') {
-          this.turnToPage(this.$store.state.app.appInfo.homePath)
+          this.turnToPage(this.$store.state.app.appInfo.homePath, () => {
+            setTagNavListInLocalstorage(tagList)
+            this.$store.commit('SET_TAG_NAV_LIST', tagList)
+            return true
+          })
         } else if (type !== 'others') {
-          if (this.$route.fullPath !== nextPath) {
-            this.turnToPage(nextPath)
+          if (this.fullPath !== nextPath) {
+            this.turnToPage(nextPath, () => {
+              setTagNavListInLocalstorage(tagList)
+              this.$store.commit('SET_TAG_NAV_LIST', tagList)
+              return true
+            })
           }
         }
       },

@@ -9,7 +9,8 @@ const messages = Object.assign(zhLocale, {
     loginInvalid: '用户名或密码错误',
     logoutConfirm: '确认退出当前系统吗？',
     requestFailed: '请求失败',
-    failed403: '请求被拒绝，可能没有权限，请联系系统管理员'
+    failed403: '请求被拒绝，可能没有权限，请联系系统管理员',
+    leavePage: '当前页面输入的数据将丢失，确认离开吗？'
   },
   pageTitle: {
     test: '测试',

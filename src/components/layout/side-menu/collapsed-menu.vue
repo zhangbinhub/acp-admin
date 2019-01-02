@@ -58,8 +58,8 @@
       }
     },
     methods: {
-      handleClick (name) {
-        this.$emit('on-click', name)
+      handleClick (path) {
+        this.$emit('on-click', path)
       },
       handleMousemove (event, children) {
         const { pageY } = event
