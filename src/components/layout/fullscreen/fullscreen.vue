@@ -68,6 +68,10 @@
         this.$emit('input', !this.value)
         this.$emit('on-change', !this.value)
       })
+      document.addEventListener('MSFullscreenChange', () => {
+        this.$emit('input', !this.value)
+        this.$emit('on-change', !this.value)
+      })
       this.$emit('input', isFullscreen)
     }
   }

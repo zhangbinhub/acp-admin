@@ -166,11 +166,11 @@ export const findNodeUpperByClasses = (ele, classes) => {
  * @description 本地存储和获取标签导航列表
  */
 export const setTagNavListInLocalstorage = list => {
-  localStorage.tagNaveList = JSON.stringify(list)
+  localStorage.AcpAdminTagNaveList = JSON.stringify(list)
 }
 
 export const getTagNavListFromLocalstorage = () => {
-  const list = localStorage.tagNaveList
+  const list = localStorage.AcpAdminTagNaveList
   return list ? JSON.parse(list) : []
 }
 
