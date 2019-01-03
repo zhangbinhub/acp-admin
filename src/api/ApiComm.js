@@ -87,6 +87,9 @@ const ApiComm = {
       desc: errorMessage
     })
   },
+  redirectHome: () => {
+    ApiComm.$router.replace(ApiComm.$store.state.app.appInfo.homePath)
+  },
   redirectLogin: () => {
     ApiComm.$store.commit('LOGIN_OUT')
     ApiComm.$router.replace({

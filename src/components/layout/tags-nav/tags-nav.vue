@@ -112,10 +112,10 @@
       },
       handleTagsOption (type) {
         if (type.includes('all')) {
-          const res = this.list.filter(item => item.path === this.$store.state.app.appInfo.homePath)
+          const res = this.list.filter(item => item.path === this.homePath)
           this.$emit('on-close', res, 'all')
         } else if (type.includes('others')) {
-          const res = this.list.filter(item => item.path === this.fullPath || item.path === this.$store.state.app.appInfo.homePath)
+          const res = this.list.filter(item => item.path === this.fullPath || item.path === this.homePath)
           this.$emit('on-close', res, 'others')
           this.focusTagElementByFullPath(this.fullPath)
         }
@@ -130,7 +130,7 @@
       close (path, pageName) {
         const res = this.list.filter(item => item.path !== path)
         const currIndex = this.list.findIndex(item => item.path === path)
-        let nextPath = this.$store.state.app.appInfo.homePath
+        let nextPath = this.homePath
         if (currIndex === this.list.length - 1) {
           nextPath = this.list[this.list.length - 2].path
         } else {

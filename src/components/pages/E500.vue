@@ -139,7 +139,7 @@
     name: 'E500',
     data () {
       return {
-        msg: this.$router.currentRoute.params.msg
+        msg: this.$route.params.msg
       }
     },
     methods: {
@@ -147,7 +147,7 @@
         this.$router.go(-1)
       },
       goHome () {
-        this.$router.replace(this.$store.state.app.appInfo.homePath)
+        this.$api.redirectHome()
       }
     }
   }

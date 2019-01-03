@@ -49,6 +49,7 @@
         title: this.$store.state.app.appInfo.appName,
         version: this.$store.state.app.appInfo.appVersion,
         copyright: this.$store.state.app.appInfo.copyright,
+        homePath: this.$store.state.app.appInfo.homePath,
         text: {
           usernamePlaceholder: this.$i18n.t('loginForm.usernamePlaceholder'),
           passwordPlaceholder: this.$i18n.t('loginForm.passwordPlaceholder'),
@@ -91,9 +92,9 @@
                     currObj.$store.commit('SET_USERNAME', '')
                   }
                   currObj.$store.commit('SET_REMEMBER', currObj.formValidate.remember)
-                  let redirectPath = this.$store.state.app.appInfo.homePath
-                  if (currObj.$router.currentRoute.params.redirect) {
-                    redirectPath = currObj.$router.currentRoute.params.redirect
+                  let redirectPath = this.homePath
+                  if (currObj.$route.params.redirect) {
+                    redirectPath = currObj.$route.params.redirect
                   }
                   currObj.$router.replace(redirectPath)
                 } else {

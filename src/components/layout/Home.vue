@@ -74,7 +74,8 @@
       return {
         copyright: this.$store.state.app.appInfo.copyright,
         openedNames: [],
-        isFullscreen: false
+        isFullscreen: false,
+        homePath: this.$store.state.app.appInfo.homePath
       }
     },
     created () {
@@ -163,7 +164,7 @@
         if (tagNavList.length === 0) {
           tagNavList.push({
             isHome: true,
-            path: this.$store.state.app.appInfo.homePath
+            path: this.homePath
           })
         }
         this.$store.commit('SET_TAG_NAV_LIST', tagNavList)
@@ -265,7 +266,7 @@
       },
       handleCloseTag (tagList, type, nextPath, pageName) {
         if (type === 'all') {
-          this.turnToPage(this.$store.state.app.appInfo.homePath, () => {
+          this.turnToPage(this.homePath, () => {
             setTagNavListInLocalstorage(tagList)
             this.$store.commit('SET_TAG_NAV_LIST', tagList)
             return true

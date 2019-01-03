@@ -26,10 +26,15 @@
         default: 14
       }
     },
+    data () {
+      return {
+        homePath: this.$store.state.app.appInfo.homePath
+      }
+    },
     computed: {
       list () {
         const breadCrumbList = findFullMenuByPath(this.fullPath, this.menuList)
-        if (breadCrumbList.length === 0 && this.fullPath !== this.$store.state.app.appInfo.homePath) {
+        if (breadCrumbList.length === 0 && this.fullPath !== this.homePath) {
           breadCrumbList.push({
             name: this.$route.meta.title ? this.$i18n.t(this.$route.meta.title) : this.$route.name,
             path: this.fullPath,
@@ -38,7 +43,7 @@
         }
         return [{
           name: this.$i18n.t('pageTitle.home'),
-          path: this.$store.state.app.appInfo.homePath,
+          path: this.homePath,
           icon_type: 'ios-home'
         }, ...breadCrumbList]
       }
