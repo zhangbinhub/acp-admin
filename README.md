@@ -59,7 +59,7 @@ npm install -g npm-check-updates
 ``` bash
 cnpm install -g @vue/cli
 ```
-## 二、全新创建工程
+## 二、全新创建工程（如使用本工程源码，可忽略此步骤）
 ##### （一）命令创建
 ``` bash
 vue create acp-admin

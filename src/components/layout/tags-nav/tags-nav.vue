@@ -72,16 +72,18 @@
         contextMenuLeft: 0,
         contextMenuTop: 0,
         visible: false,
-        contextMenuList: {
-          others: this.$i18n.t('home.closeOther'),
-          all: this.$i18n.t('home.closeAll')
-        },
         homePath: this.$store.state.app.appInfo.homePath
       }
     },
     computed: {
       tagList () {
         return this.list
+      },
+      contextMenuList () {
+        return {
+          others: this.$i18n.t('home.closeOther'),
+          all: this.$i18n.t('home.closeAll')
+        }
       }
     },
     methods: {
@@ -143,10 +145,12 @@
         if (item.isHome) {
           return this.$i18n.t('pageTitle.home')
         } else {
-          if (item.meta.title) {
+          if (item.name) {
+            return item.name
+          } else if (item.meta.title) {
             return this.$i18n.t(item.meta.title)
           } else {
-            return item.name
+            return item.routeName
           }
         }
       },

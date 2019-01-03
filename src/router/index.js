@@ -35,10 +35,10 @@ router.beforeEach((to, from, next) => {
 })
 router.afterEach(to => {
   let pageTitle = ''
-  if (to.meta.title) {
-    pageTitle = ' - ' + store.state.app.i18n.t(to.meta.title)
-  } else if (to.params.pageName) {
+  if (to.params.pageName) {
     pageTitle = ' - ' + to.params.pageName
+  } else if (to.meta.title) {
+    pageTitle = ' - ' + store.state.app.i18n.t(to.meta.title)
   }
   document.title = store.state.app.appInfo.appName + pageTitle
   iView.LoadingBar.finish()

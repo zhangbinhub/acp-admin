@@ -179,9 +179,10 @@ export const updateTagNavList = (tagNavList, menuList, route) => {
   if (!tagNavList.find(tagNav => tagNav.path === fullPath)) {
     const menu = findMenuByPath(fullPath, menuList)
     tagNavList.push({
-      name: menu ? menu.name : route.name,
+      name: menu ? menu.name : undefined,
       path: fullPath,
-      meta: route.meta
+      meta: route.meta,
+      routeName: route.name
     })
     return tagNavList
   }

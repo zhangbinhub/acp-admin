@@ -176,12 +176,13 @@
         }
       },
       /**
-       * 页面跳转
+       * 标签页面跳转
        * @param obj 跳转参数 stirng | route
        * @param beforeTurnFunc 跳转前执行的函数
        * @param pageName 页面名称
+       * @param closeAll 是否关闭所有页面
        */
-      turnToPage (obj, beforeTurnFunc, pageName) {
+      turnToPage (obj, beforeTurnFunc, pageName, closeAll = false) {
         let path = ''
         if (typeof obj === 'string') { // string
           path = obj
@@ -190,8 +191,12 @@
         }
         const menu = findMenuByPath(path, this.$store.state.app.user.menuList)
         let dataLose = false
-        if (this.$route.meta) {
-          dataLose = this.$route.meta.withInput && this.$route.meta.notCache
+        if (!closeAll) {
+          if (this.$route.meta) {
+            dataLose = this.$route.meta.withInput && this.$route.meta.notCache
+          }
+        } else {
+          dataLose = true
         }
         if ((!menu || menu.opentype !== 1) && dataLose) {
           this.$Modal.confirm({
@@ -264,7 +269,7 @@
             setTagNavListInLocalstorage(tagList)
             this.$store.commit('SET_TAG_NAV_LIST', tagList)
             return true
-          }, pageName)
+          }, this.$i18n.t('messages.allPages'), true)
         } else if (type !== 'others' && this.fullPath !== nextPath) {
           this.turnToPage(nextPath, () => {
             setTagNavListInLocalstorage(tagList)
