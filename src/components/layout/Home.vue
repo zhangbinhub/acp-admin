@@ -181,9 +181,9 @@
        * @param obj 跳转参数 stirng | route
        * @param beforeTurnFunc 跳转前执行的函数
        * @param pageName 页面名称
-       * @param closeAll 是否关闭所有页面
+       * @param closeMore 是否关闭多个页面
        */
-      turnToPage (obj, beforeTurnFunc, pageName, closeAll = false) {
+      turnToPage (obj, beforeTurnFunc, pageName, closeMore = false) {
         let path = ''
         if (typeof obj === 'string') { // string
           path = obj
@@ -192,7 +192,7 @@
         }
         const menu = findMenuByPath(path, this.$store.state.app.user.menuList)
         let dataLose = false
-        if (!closeAll) {
+        if (!closeMore) {
           if (this.$route.meta) {
             dataLose = this.$route.meta.withInput && this.$route.meta.notCache
           }
@@ -271,6 +271,12 @@
             this.$store.commit('SET_TAG_NAV_LIST', tagList)
             return true
           }, this.$i18n.t('messages.allPages'), true)
+        } else if (type === 'others') {
+          this.turnToPage(this.fullPath, () => {
+            setTagNavListInLocalstorage(tagList)
+            this.$store.commit('SET_TAG_NAV_LIST', tagList)
+            return true
+          }, this.$i18n.t('messages.otherPages'), true)
         } else if (type !== 'others' && this.fullPath !== nextPath) {
           this.turnToPage(nextPath, () => {
             setTagNavListInLocalstorage(tagList)
@@ -278,15 +284,8 @@
             return true
           }, pageName)
         } else {
-          this.$Modal.confirm({
-            title: this.$i18n.t('dialog.confirm'),
-            content: '<br/><p style="color: red">' + this.$i18n.t('messages.otherPages') + '</p><br/>' +
-              '<p>' + this.$i18n.t('messages.leavePage') + '</p>',
-            onOk: () => {
-              setTagNavListInLocalstorage(tagList)
-              this.$store.commit('SET_TAG_NAV_LIST', tagList)
-            }
-          })
+          setTagNavListInLocalstorage(tagList)
+          this.$store.commit('SET_TAG_NAV_LIST', tagList)
         }
       },
       handleClick (item) {
