@@ -278,8 +278,15 @@
             return true
           }, pageName)
         } else {
-          setTagNavListInLocalstorage(tagList)
-          this.$store.commit('SET_TAG_NAV_LIST', tagList)
+          this.$Modal.confirm({
+            title: this.$i18n.t('dialog.confirm'),
+            content: '<br/><p style="color: red">' + this.$i18n.t('messages.otherPages') + '</p><br/>' +
+              '<p>' + this.$i18n.t('messages.leavePage') + '</p>',
+            onOk: () => {
+              setTagNavListInLocalstorage(tagList)
+              this.$store.commit('SET_TAG_NAV_LIST', tagList)
+            }
+          })
         }
       },
       handleClick (item) {

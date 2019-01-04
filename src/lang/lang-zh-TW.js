@@ -11,7 +11,8 @@ const messages = Object.assign(twLocale, {
     requestFailed: '請求失敗',
     failed403: '請求被拒絕，可能沒有權限，請聯繫系統管理員',
     leavePage: '輸入的數據將會丟失，確認關閉嗎？',
-    allPages: '所有頁面'
+    allPages: '所有頁面',
+    otherPages: '其他頁面'
   },
   pageTitle: {
     test: '測試',

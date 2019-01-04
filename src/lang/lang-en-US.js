@@ -11,7 +11,8 @@ const messages = Object.assign(enLocale, {
     requestFailed: 'Requesst failed',
     failed403: 'Request rejected, may not hava permission, please contact the system administrator',
     leavePage: 'The data entered will be lost. Are you sure to close?',
-    allPages: 'All Pages'
+    allPages: 'All Pages',
+    otherPages: 'Other Pages'
   },
   pageTitle: {
     test: 'test',
