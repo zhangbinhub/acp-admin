@@ -42,7 +42,7 @@ export default {
     },
     user: {
       userInfo: {},
-      username: Cookies.get('username'),
+      loginNo: Cookies.get('loginNo'),
       remember: remember,
       token: Cookies.get('token'),
       tokenType: Cookies.get('token_type'),
@@ -76,9 +76,9 @@ export default {
       Cookies.set('lang', payload)
       state.i18n.locale = payload
     },
-    SET_USERNAME: (state, payload) => {
-      state.user.username = payload
-      Cookies.set('username', payload)
+    SET_LOGIN_NO: (state, payload) => {
+      state.user.loginNo = payload
+      Cookies.set('loginNo', payload)
     },
     SET_REMEMBER: (state, payload) => {
       state.user.remember = payload === 'true'
@@ -101,8 +101,6 @@ export default {
       state.user.tokenType = ''
       state.user.scope = ''
       state.user.menuList = []
-      state.user.customerName = ''
-      state.user.avatorImg = ''
       state.user.userInfo = {}
       Cookies.remove('token')
       Cookies.remove('token_type')

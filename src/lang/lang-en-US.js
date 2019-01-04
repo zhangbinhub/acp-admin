@@ -6,7 +6,7 @@ const messages = Object.assign(enLocale, {
   messages: {
     loginSuccess: 'Login successfully',
     loginFailed: 'Login failed',
-    loginInvalid: 'username and password do not match',
+    loginInvalid: 'loginNo and password do not match',
     logoutConfirm: 'Confirm to logout current system ?',
     requestFailed: 'Requesst failed',
     failed403: 'Request rejected, may not hava permission, please contact the system administrator',
@@ -36,16 +36,6 @@ const messages = Object.assign(enLocale, {
     closeAll: 'Close All',
     closeOther: 'Close Other'
   },
-  loginForm: {
-    usernamePlaceholder: 'Please enter your username',
-    usernameValidate: 'Username cannot be empty',
-    passwordPlaceholder: 'Please enter your password',
-    passwordValidate: 'Password cannot be empty',
-    rememberMe: 'Remember me',
-    buttons: {
-      login: 'login'
-    }
-  },
   errorPage: {
     message404: 'Page not found',
     description404: '',
@@ -53,6 +43,20 @@ const messages = Object.assign(enLocale, {
     buttons: {
       back: 'back',
       home: 'home'
+    }
+  },
+  forms: {
+    pleaseEnter: 'Please enter ',
+    loginNo: 'loginNo',
+    password: 'password',
+    rememberMe: 'remember me',
+    portrait: 'portrait',
+    name: 'name',
+    mobile: 'mobile',
+    invalid: ' is invalid',
+    notEmpty: ' can not be empty',
+    buttons: {
+      login: 'login'
     }
   }
 })

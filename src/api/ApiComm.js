@@ -105,7 +105,7 @@ const ApiComm = {
   },
   gotoPersonalInformation: () => {
     ApiComm.$router.push({
-      name: 'personal_information'
+      name: 'personalInformation'
     })
   },
   request: {}

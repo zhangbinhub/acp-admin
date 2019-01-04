@@ -66,7 +66,7 @@ export default [
       }
     }, {
       path: '/personalInformation',
-      name: 'personal_information',
+      name: 'personalInformation',
       component: () => import('@/components/views/PersonalInformation.vue'),
       meta: {
         title: 'pageTitle.personalInformation',

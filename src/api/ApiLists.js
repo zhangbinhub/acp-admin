@@ -3,7 +3,7 @@ import Qs from 'qs'
 import sha256 from 'js-sha256'
 
 export default {
-  login: (username, password) => {
+  login: (loginNo, password) => {
     const date = new Date()
     let year = date.getFullYear()
     let month = date.getMonth() + 1
@@ -12,10 +12,10 @@ export default {
     day = day < 10 ? ('0' + day) : day
     let hour = date.getHours()
     hour = hour < 10 ? ('0' + hour) : hour
-    password = sha256.sha256(sha256.sha256(sha256.sha256(password) + username) + year + month + day + hour)
+    password = sha256.sha256(sha256.sha256(sha256.sha256(password) + loginNo) + year + month + day + hour)
     return ApiComm.$http.post('/oauth/token', {
       grant_type: 'password',
-      username: username,
+      username: loginNo,
       password: password
     }, {
       headers: {

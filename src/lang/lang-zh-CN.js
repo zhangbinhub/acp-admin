@@ -36,16 +36,6 @@ const messages = Object.assign(zhLocale, {
     closeAll: '关闭所有',
     closeOther: '关闭其他'
   },
-  loginForm: {
-    usernamePlaceholder: '请输入用户名',
-    usernameValidate: '用户名不能为空',
-    passwordPlaceholder: '请输入密码',
-    passwordValidate: '密码不能为空',
-    rememberMe: '记住我',
-    buttons: {
-      login: '登录'
-    }
-  },
   errorPage: {
     message404: '页面找不到',
     description404: '众里寻他千百度 蓦然回首 那人却在灯火阑珊处',
@@ -53,6 +43,20 @@ const messages = Object.assign(zhLocale, {
     buttons: {
       back: '返回',
       home: '主页'
+    }
+  },
+  forms: {
+    pleaseEnter: '请输入',
+    loginNo: '登录账号',
+    password: '密码',
+    rememberMe: '记住我',
+    portrait: '头像',
+    name: '名称',
+    mobile: '手机号',
+    invalid: '无效',
+    notEmpty: '不能为空',
+    buttons: {
+      login: '登录'
     }
   }
 })

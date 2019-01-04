@@ -14,8 +14,8 @@
         </div>
         <div>
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
-            <FormItem prop="username">
-              <i-input v-model="formValidate.username" type="text" prefix="md-person"
+            <FormItem prop="loginNo">
+              <i-input v-model="formValidate.loginNo" type="text" prefix="md-person"
                        :placeholder="text.usernamePlaceholder"/>
             </FormItem>
             <FormItem prop="password">
@@ -32,7 +32,7 @@
         </div>
         <div slot="footer">
           <Button type="primary" size="large" long :loading="modal_loading" @click="handleSubmit('formValidate')">
-            {{$t('loginForm.buttons.login')}}
+            {{$t('forms.buttons.login')}}
           </Button>
           <small style="text-align: center;display: block;margin-top: 10px;">{{copyright}}</small>
         </div>
@@ -51,23 +51,27 @@
         copyright: this.$store.state.app.appInfo.copyright,
         homePath: this.$store.state.app.appInfo.homePath,
         text: {
-          usernamePlaceholder: this.$i18n.t('loginForm.usernamePlaceholder'),
-          passwordPlaceholder: this.$i18n.t('loginForm.passwordPlaceholder'),
-          rememberMe: this.$i18n.t('loginForm.rememberMe')
+          usernamePlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.loginNo'),
+          passwordPlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.password'),
+          rememberMe: this.$i18n.t('forms.rememberMe')
         },
         loginModal: true,
         modal_loading: false,
         formValidate: {
-          username: this.$store.state.app.user.username,
+          loginNo: this.$store.state.app.user.loginNo,
           password: '',
           remember: this.$store.state.app.user.remember
         },
         ruleValidate: {
-          username: [
-            { required: true, message: this.$i18n.t('loginForm.usernameValidate'), trigger: 'blur' }
+          loginNo: [
+            { required: true, message: this.$i18n.t('forms.loginNo') + this.$i18n.t('forms.notEmpty'), trigger: 'blur' }
           ],
           password: [
-            { required: true, message: this.$i18n.t('loginForm.passwordValidate'), trigger: 'blur' }
+            {
+              required: true,
+              message: this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty'),
+              trigger: 'blur'
+            }
           ]
         }
       }
@@ -78,7 +82,7 @@
         currObj.$refs[name].validate((valid) => {
           if (valid) {
             currObj.modal_loading = true
-            currObj.$api.request.login(currObj.formValidate.username, currObj.formValidate.password).then(res => {
+            currObj.$api.request.login(currObj.formValidate.loginNo, currObj.formValidate.password).then(res => {
               currObj.modal_loading = false
               if (res) {
                 if (res.data.access_token) {
@@ -87,9 +91,9 @@
                   currObj.$store.commit('SET_TOKEN_TYPE', res.data.token_type)
                   currObj.$store.commit('SET_SCOPE', res.data.scope)
                   if (currObj.formValidate.remember) {
-                    currObj.$store.commit('SET_USERNAME', currObj.formValidate.username)
+                    currObj.$store.commit('SET_LOGIN_NO', currObj.formValidate.loginNo)
                   } else {
-                    currObj.$store.commit('SET_USERNAME', '')
+                    currObj.$store.commit('SET_LOGIN_NO', '')
                   }
                   currObj.$store.commit('SET_REMEMBER', currObj.formValidate.remember)
                   let redirectPath = this.homePath

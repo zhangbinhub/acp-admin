@@ -6,6 +6,6 @@ export default {
   minWidth: 756,
   homePath: '/index',
 
-  client_id: '98b51358-08e2-11e9-b347-d8c49792dd7b',
+  client_id: 'c58d05c7-0feb-11e9-9a6b-d8c49792dd7b',
   client_secret: 'E0D3024D-9A22-41EE-AC0F-FC6B56E367AE'
 }

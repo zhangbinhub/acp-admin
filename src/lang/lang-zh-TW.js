@@ -36,16 +36,6 @@ const messages = Object.assign(twLocale, {
     closeAll: '關閉所有',
     closeOther: '關閉其他'
   },
-  loginForm: {
-    usernamePlaceholder: '請輸入用戶名',
-    usernameValidate: '用戶名不能爲空',
-    passwordPlaceholder: '請輸入密碼',
-    passwordValidate: '密碼不能爲空',
-    rememberMe: '記住我',
-    buttons: {
-      login: '登錄'
-    }
-  },
   errorPage: {
     message404: '頁面找不到',
     description404: '衆裏尋他千百度 驀然回首 那人卻在燈火闌珊處',
@@ -53,6 +43,20 @@ const messages = Object.assign(twLocale, {
     buttons: {
       back: '返回',
       home: '主頁'
+    }
+  },
+  forms: {
+    pleaseEnter: '請輸入',
+    loginNo: '登錄帳號',
+    password: '密碼',
+    rememberMe: '記住我',
+    portrait: '頭像',
+    name: '名稱',
+    mobile: '手機號',
+    invalid: '無效',
+    notEmpty: '不能爲空',
+    buttons: {
+      login: '登錄'
     }
   }
 })
