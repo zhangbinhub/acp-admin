@@ -50,13 +50,16 @@ const messages = Object.assign(enLocale, {
     loginNo: 'loginNo',
     password: 'password',
     rememberMe: 'remember me',
-    portrait: 'portrait',
+    avatar: 'avatar',
+    avatarUpload: 'Avatar Upload',
     name: 'name',
     mobile: 'mobile',
     invalid: ' is invalid',
     notEmpty: ' can not be empty',
     buttons: {
-      login: 'login'
+      login: 'login',
+      submit: 'submit',
+      reset: 'reset'
     }
   }
 })

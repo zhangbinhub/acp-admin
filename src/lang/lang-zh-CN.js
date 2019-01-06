@@ -50,13 +50,16 @@ const messages = Object.assign(zhLocale, {
     loginNo: '登录账号',
     password: '密码',
     rememberMe: '记住我',
-    portrait: '头像',
+    avatar: '头像',
+    avatarUpload: '头像上传',
     name: '名称',
     mobile: '手机号',
     invalid: '无效',
     notEmpty: '不能为空',
     buttons: {
-      login: '登录'
+      login: '登录',
+      submit: '提交',
+      reset: '重置'
     }
   }
 })

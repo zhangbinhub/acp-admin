@@ -1,26 +1,57 @@
 <template>
   <Card>
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+      <Form-item prop="avatar">
+        <Tooltip :content="$t('forms.avatar')" placement="right">
+          <Avatar style="width: 150px; height: 150px; cursor: pointer" :src="formValidate.avatar"
+                  @click.native="openAvatarUpload"/>
+        </Tooltip>
+      </Form-item>
       <Form-item :label="$t('forms.name')" prop="name">
-        <Input v-model="formValidate.name" :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"></Input>
+        <Input ref="name" v-model="formValidate.name" :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"></Input>
       </Form-item>
       <Form-item :label="$t('forms.mobile')" prop="mobile">
         <Input v-model="formValidate.mobile" :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></Input>
       </Form-item>
+      <Form-item>
+        <Button type="primary" @click="handleSubmit('formValidate')">{{$t('forms.buttons.submit')}}</Button>
+        <Button type="default" @click="handleReset('formValidate')" style="margin-left: 10px">
+          {{$t('forms.buttons.reset')}}
+        </Button>
+      </Form-item>
     </Form>
+    <Modal v-model="avatarUpload" fullscreen :title="$t('forms.avatarUpload')">
+      <div>This is a fullscreen modal</div>
+      <div slot="footer">
+        <Button type="primary" size="large" long @click="del">{{$t('i.modal.okText')}}</Button>
+      </div>
+    </Modal>
   </Card>
 </template>
 <script>
+  import avatarImg from '@/assets/images/avatar/avatar.jpg'
+
   export default {
     name: 'personalInformation',
+    data () {
+      return {
+        formValidate: {
+          avatar: avatarImg,
+          name: '',
+          mobile: ''
+        },
+        avatarUpload: false
+      }
+    },
+    created () {
+      this.resetFieldsValue(this.userInfo)
+    },
+    watch: {
+      userInfo (newUserInfo) {
+        this.resetFieldsValue(newUserInfo)
+      }
+    },
     computed: {
-      formValidate () {
-        return {
-          portrait: this.$store.state.app.user.userInfo.portrait,
-          name: this.$store.state.app.user.userInfo.name,
-          mobile: this.$store.state.app.user.userInfo.mobile
-        }
-      },
       ruleValidate () {
         return {
           name: [
@@ -39,6 +70,34 @@
       },
       userInfo () {
         return this.$store.state.app.user.userInfo
+      }
+    },
+    methods: {
+      openAvatarUpload () {
+        this.avatarUpload = true
+      },
+      handleSubmit (name) {
+        console.log(this.formValidate.avatar)
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            this.$Message.success('提交成功!')
+          } else {
+            this.$Message.error('表单验证失败!')
+          }
+        })
+      },
+      handleReset (name) {
+        this.$refs[name].resetFields()
+        this.resetFieldsValue(this.userInfo)
+      },
+      resetFieldsValue (userInfo) {
+        if (userInfo.avatar && userInfo.avatar !== '') {
+          this.formValidate.avatar = userInfo.avatar
+        } else {
+          this.formValidate.avatar = avatarImg
+        }
+        this.formValidate.name = userInfo.name
+        this.formValidate.mobile = userInfo.mobile
       }
     }
   }

@@ -107,7 +107,7 @@
         return this.$store.state.app.tagNavList
       },
       userAvator () {
-        return this.$store.state.app.user.userInfo.portrait
+        return this.$store.state.app.user.userInfo.avatar
       },
       userName () {
         return this.$store.state.app.user.userInfo.name

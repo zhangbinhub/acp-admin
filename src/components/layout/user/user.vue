@@ -1,8 +1,7 @@
 <template>
   <div class="user-avator-dropdown">
     <Dropdown @on-click="handleClick">
-      <Avatar v-if="userAvator && userAvator !== ''" :src="userAvator"/>
-      <Avatar v-else icon="ios-person"/>
+      <Avatar :src="avatar"/>
       <Icon :size="18" type="md-arrow-dropdown"></Icon>
       <DropdownMenu slot="list">
         <DropdownItem v-if="customerName && customerName !== ''" name="personalInformation">{{customerName}}
@@ -15,6 +14,7 @@
 </template>
 
 <script>
+  import avatarImg from '@/assets/images/avatar/avatar.jpg'
   import './user.less'
 
   export default {
@@ -26,7 +26,16 @@
       },
       userAvator: {
         type: String,
-        default: ''
+        default: avatarImg
+      }
+    },
+    computed: {
+      avatar () {
+        if (this.userAvator !== '') {
+          return this.userAvator
+        } else {
+          return avatarImg
+        }
       }
     },
     methods: {

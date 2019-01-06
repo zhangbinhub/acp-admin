@@ -50,13 +50,16 @@ const messages = Object.assign(twLocale, {
     loginNo: '登錄帳號',
     password: '密碼',
     rememberMe: '記住我',
-    portrait: '頭像',
+    avatar: '頭像',
+    avatarUpload: '頭像上傳',
     name: '名稱',
     mobile: '手機號',
     invalid: '無效',
     notEmpty: '不能爲空',
     buttons: {
-      login: '登錄'
+      login: '登錄',
+      submit: '提交',
+      reset: '重置'
     }
   }
 })
