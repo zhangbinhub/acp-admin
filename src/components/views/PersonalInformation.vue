@@ -84,6 +84,7 @@
         this.formValidate.avatar = data
       },
       handleSubmit (name) {
+        // TODO: update user info
         this.$refs[name].validate((valid) => {
           if (valid) {
             this.$Message.success('提交成功!')

@@ -59,7 +59,9 @@ const messages = Object.assign(zhLocale, {
     buttons: {
       login: '登录',
       submit: '提交',
-      reset: '重置'
+      reset: '重置',
+      upload: '上传',
+      free: '自定义'
     }
   }
 })

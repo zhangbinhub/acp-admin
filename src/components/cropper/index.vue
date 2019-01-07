@@ -25,7 +25,7 @@
           <Row style="margin-top: 33px;display: inline-block;">
             <div style="float: left">
               <Upload action="image/upload" :before-upload="beforeUpload">
-                <Button style="width: 150px;" type="primary">上传图片</Button>
+                <Button style="width: 150px;" type="primary">{{$t('forms.buttons.upload')}}</Button>
               </Upload>
             </div>
             <div style="float: left;margin-left: 20px;">
@@ -117,7 +117,7 @@
             <Button type="primary" @click="aspact(4/3)">4:3</Button>
             <Button type="primary" @click="aspact(1)">1:1</Button>
             <Button type="primary" @click="aspact(2/3)">2:3</Button>
-            <Button type="primary" @click="aspact(NaN)">Free</Button>
+            <Button type="primary" @click="aspact(NaN)">{{$t('forms.buttons.free')}}</Button>
           </ButtonGroup>
         </div>
       </Row>

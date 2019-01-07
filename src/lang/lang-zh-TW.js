@@ -59,7 +59,9 @@ const messages = Object.assign(twLocale, {
     buttons: {
       login: '登錄',
       submit: '提交',
-      reset: '重置'
+      reset: '重置',
+      upload: '上傳',
+      free: '自定義'
     }
   }
 })

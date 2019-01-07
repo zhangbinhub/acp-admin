@@ -59,7 +59,9 @@ const messages = Object.assign(enLocale, {
     buttons: {
       login: 'login',
       submit: 'submit',
-      reset: 'reset'
+      reset: 'reset',
+      upload: 'upload',
+      free: 'Free'
     }
   }
 })
