@@ -1,0 +1,137 @@
+.bg {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA3NCSVQICAjb4U/gAAAABlBMVEXMzMz////TjRV2AAAACXBIWXMAAArrAAAK6wGCiw1aAAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAABFJREFUCJlj+M/AgBVhF/0PAH6/D/HkDxOGAAAAAElFTkSuQmCC")
+}
+
+.cropper-wrapper {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+
+  .cropper-card {
+    width: 992px;
+    display: inline-block;
+  }
+
+  .img-box {
+    height: 420px;
+    width: 600px;
+    border: 1px solid #ebebeb;
+    display: inline-block;
+    .bg;
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+  }
+
+  .right-con {
+    display: inline-block;
+    height: 420px;
+    width: 340px;
+    vertical-align: top;
+    box-sizing: border-box;
+    padding: 0 10px;
+
+    .preview-box {
+      height: auto;
+      float: left;
+      border: 1px solid #ebebeb;
+      overflow: hidden;
+      margin-bottom: 10px;
+      margin-right: 10px;
+      .bg;
+    }
+
+    .preview-lg {
+      max-width: 330px;
+      max-height: 175px;
+
+      .img-preview {
+        width: 320px;
+        height: 175px;
+      }
+    }
+
+    .preview-md {
+      max-width: 150px;
+      max-height: 150px;
+
+      .img-preview {
+        width: 150px;
+        height: 150px;
+      }
+    }
+
+    .preview-sm {
+      max-width: 100px;
+      max-height: 100px;
+
+      .img-preview {
+        width: 100px;
+        height: 100px;
+      }
+    }
+
+    .preview-xs {
+      max-width: 32px;
+      max-height: 32px;
+
+      .img-preview {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+
+  .ivu-input-group-prepend {
+    min-width: 60px;
+  }
+
+  .input-box {
+    width: 960px;
+    padding: 10px 0 0;
+    display: inline-block;
+  }
+
+  .button-box {
+    width: 960px;
+    padding: 10px 0 0;
+    display: inline-block;
+
+    .ivu-btn-group {
+      margin-right: 8px;
+    }
+
+    button {
+      i {
+        font-size: 18px;
+      }
+
+      .icon-refresh-left {
+        transform: scaleX(-1);
+        -ms-transform: scaleX(-1); /* IE 9 */
+        -moz-transform: scaleX(-1); /* Firefox */
+        -webkit-transform: scaleX(-1); /* Safari 和 Chrome */
+        -o-transform: scaleX(-1); /* Opera */
+      }
+
+      .icon-leftAndRight {
+        transform: rotate(45deg);
+        -ms-transform: rotate(45deg); /* IE 9 */
+        -moz-transform: rotate(45deg); /* Firefox */
+        -webkit-transform: rotate(45deg); /* Safari 和 Chrome */
+        -o-transform: rotate(45deg); /* Opera */
+      }
+
+      .icon-upAndDown {
+        transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg); /* IE 9 */
+        -moz-transform: rotate(-45deg); /* Firefox */
+        -webkit-transform: rotate(-45deg); /* Safari 和 Chrome */
+        -o-transform: rotate(-45deg); /* Opera */
+      }
+    }
+  }
+
+}

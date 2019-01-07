@@ -20,19 +20,21 @@
         </Button>
       </Form-item>
     </Form>
-    <Modal v-model="avatarUpload" fullscreen :title="$t('forms.avatarUpload')">
-      <div>This is a fullscreen modal</div>
-      <div slot="footer">
-        <Button type="primary" size="large" long @click="del">{{$t('i.modal.okText')}}</Button>
-      </div>
+    <Modal v-model="avatarUpload" :title="$t('forms.avatarUpload')" footer-hide fullscreen>
+      <cropper :crop-button-text="$t('i.modal.okText')" @on-crop="handleCroped"></cropper>
     </Modal>
   </Card>
 </template>
 <script>
   import avatarImg from '@/assets/images/avatar/avatar.jpg'
+  import Cropper from '@/components/cropper'
+  import 'cropperjs/dist/cropper.min.css'
 
   export default {
     name: 'personalInformation',
+    components: {
+      Cropper
+    },
     data () {
       return {
         formValidate: {
@@ -76,8 +78,12 @@
       openAvatarUpload () {
         this.avatarUpload = true
       },
+      handleCroped (data) {
+        console.log(data)
+        this.avatarUpload = false
+        this.formValidate.avatar = data
+      },
       handleSubmit (name) {
-        console.log(this.formValidate.avatar)
         this.$refs[name].validate((valid) => {
           if (valid) {
             this.$Message.success('提交成功!')
