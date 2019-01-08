@@ -3,7 +3,7 @@
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
       <Form-item prop="avatar">
         <Tooltip :content="$t('forms.avatar')" placement="right">
-          <Avatar style="width: 150px; height: 150px; cursor: pointer" :src="formValidate.avatar"
+          <Avatar style="width: 100px; height: 100px; cursor: pointer" :src="formValidate.avatar"
                   @click.native="openAvatarUpload"/>
         </Tooltip>
       </Form-item>
