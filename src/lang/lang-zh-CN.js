@@ -47,6 +47,7 @@ const messages = Object.assign(zhLocale, {
     }
   },
   forms: {
+    changePassword: '修改密码',
     pleaseEnter: '请输入',
     loginNo: '登录账号',
     password: '密码',
@@ -59,6 +60,10 @@ const messages = Object.assign(zhLocale, {
     notEmpty: '不能为空',
     width: '宽',
     height: '高',
+    old: '旧',
+    new: '新',
+    confirmPassword: '确认密码',
+    passwordNotEqual: '两次输入的密码不相等',
     buttons: {
       login: '登录',
       submit: '提交',

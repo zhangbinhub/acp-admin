@@ -1,6 +1,6 @@
 <template>
   <Card>
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
       <Form-item prop="avatar">
         <Tooltip :content="$t('forms.avatar')" placement="right">
           <Avatar style="width: 150px; height: 150px; cursor: pointer" :src="formValidate.avatar"
@@ -13,12 +13,30 @@
       <Form-item :label="$t('forms.mobile')" prop="mobile">
         <Input v-model="formValidate.mobile" :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></Input>
       </Form-item>
+      <Form-item :label="$t('forms.changePassword')">
+        <Switch v-model="updatePassword">
+          <Icon type="md-checkmark" slot="open"></Icon>
+          <Icon type="md-close" slot="close"></Icon>
+        </Switch>
+      </Form-item>
+      <Form-item v-show="updatePassword" :label="$t('forms.old')+$t('forms.password')" prop="oldPassword">
+        <Input v-model="formValidate.oldPassword" type="password"
+               :placeholder="$t('forms.pleaseEnter') + $t('forms.old')+$t('forms.password')"></Input>
+      </Form-item>
+      <Form-item v-show="updatePassword" :label="$t('forms.new')+$t('forms.password')" prop="password">
+        <Input v-model="formValidate.password" :type="passwordType" :icon="passwordIcon" @on-click="showPassword"
+               :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></Input>
+      </Form-item>
+      <Form-item v-show="updatePassword" :label="$t('forms.confirmPassword')" prop="repeatPassword">
+        <Input v-model="formValidate.repeatPassword" :type="passwordType" :icon="passwordIcon" @on-click="showPassword"
+               :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></Input>
+      </Form-item>
       <Form-item>
-        <Button type="primary" @click="handleSubmit('formValidate')">
-          {{$t('forms.buttons.submit')}}
-        </Button>
-        <Button type="default" @click="handleReset('formValidate')" style="margin-left: 10px">
+        <Button type="default" @click="handleReset('formValidate')">
           {{$t('forms.buttons.reset')}}
+        </Button>
+        <Button type="primary" @click="handleSubmit('formValidate')" style="margin-left: 10px">
+          {{$t('forms.buttons.submit')}}
         </Button>
       </Form-item>
     </Form>
@@ -43,10 +61,16 @@
         formValidate: {
           avatar: avatarImg,
           name: '',
-          mobile: ''
+          mobile: '',
+          oldPassword: '',
+          password: '',
+          repeatPassword: ''
         },
+        updatePassword: false,
         avatarUpload: false,
-        modal_loading: false
+        modal_loading: false,
+        passwordType: 'password',
+        passwordIcon: 'ios-eye-outline'
       }
     },
     created () {
@@ -71,7 +95,49 @@
               message: this.$i18n.t('forms.mobile') + this.$i18n.t('forms.invalid'),
               trigger: 'blur'
             }
-          ]
+          ],
+          oldPassword: [{
+            required: true,
+            validator: (rule, value, callback) => {
+              if (this.updatePassword) {
+                if (value === '') {
+                  callback(new Error(this.$i18n.t('forms.old') + this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty')))
+                  return
+                }
+              }
+              callback()
+            },
+            trigger: 'blur'
+          }],
+          password: [{
+            required: true,
+            validator: (rule, value, callback) => {
+              if (this.updatePassword) {
+                if (value === '') {
+                  callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty')))
+                  return
+                }
+              }
+              callback()
+            },
+            trigger: 'blur'
+          }],
+          repeatPassword: [{
+            required: true,
+            validator: (rule, value, callback) => {
+              if (this.updatePassword) {
+                if (value === '') {
+                  callback(new Error(this.$i18n.t('forms.confirmPassword') + this.$i18n.t('forms.notEmpty')))
+                  return
+                } else if (value !== this.formValidate.password) {
+                  callback(new Error(this.$i18n.t('forms.passwordNotEqual') + ''))
+                  return
+                }
+              }
+              callback()
+            },
+            trigger: 'blur'
+          }]
         }
       },
       userInfo () {
@@ -90,12 +156,17 @@
         this.$refs[name].validate((valid) => {
           if (valid) {
             this.modal_loading = true
-            this.$api.request.updateUserInfo({
+            const userParam = {
               id: this.$store.state.app.user.userInfo.id,
               avatar: this.formValidate.avatar,
               name: this.formValidate.name,
               mobile: this.formValidate.mobile
-            }).then((res) => {
+            }
+            if (this.updatePassword) {
+              userParam.old_password = this.formValidate.oldPassword
+              userParam.password = this.formValidate.password
+            }
+            this.$api.request.updateUserInfo(userParam).then((res) => {
               this.$store.commit('SET_USER_INFO', res.data)
               this.modal_loading = false
               this.$Message.success(this.$i18n.t('messages.saveSuccess'))
@@ -117,6 +188,15 @@
         }
         this.formValidate.name = userInfo.name
         this.formValidate.mobile = userInfo.mobile
+      },
+      showPassword () {
+        if (this.passwordType === 'password') {
+          this.passwordType = 'text'
+          this.passwordIcon = 'ios-eye'
+        } else {
+          this.passwordType = 'password'
+          this.passwordIcon = 'ios-eye-outline'
+        }
       }
     }
   }

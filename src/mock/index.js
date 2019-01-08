@@ -10,6 +10,6 @@ Mock.setup({
 Mock.mock(/\/oauth\/token/, /post/i, login)
 Mock.mock(/\/oauth\/userinfo/, /get/i, userInfo)
 Mock.mock(/\/oauth\/menulist/, /get/i, menuList)
-Mock.mock(/\/oauth\/user/, /patch/i, function (options) {
+Mock.mock(/\/oauth\/userinfo/, /(patch)|(put)/i, function (options) {
   return Object.assign(userInfo(), JSON.parse(options.body))
 })

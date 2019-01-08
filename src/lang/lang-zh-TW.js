@@ -47,6 +47,7 @@ const messages = Object.assign(twLocale, {
     }
   },
   forms: {
+    changePassword: '修改密碼',
     pleaseEnter: '請輸入',
     loginNo: '登錄帳號',
     password: '密碼',
@@ -59,6 +60,10 @@ const messages = Object.assign(twLocale, {
     notEmpty: '不能爲空',
     width: '寬',
     height: '高',
+    old: '舊',
+    new: '新',
+    confirmPassword: '確認密碼',
+    passwordNotEqual: '兩次輸入的密碼不相等',
     buttons: {
       login: '登錄',
       submit: '提交',

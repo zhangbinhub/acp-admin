@@ -40,6 +40,12 @@ export default {
     return ApiComm.$http.get('/oauth/menulist')
   },
   updateUserInfo: (userInfo) => {
-    return ApiComm.$http.patch('/oauth/user', userInfo)
+    if (userInfo.old_password) {
+      userInfo.old_password = sha256.sha256(sha256.sha256(userInfo.old_password) + ApiComm.$store.state.app.user.userInfo.loginno)
+    }
+    if (userInfo.password) {
+      userInfo.password = sha256.sha256(sha256.sha256(userInfo.password) + ApiComm.$store.state.app.user.userInfo.loginno)
+    }
+    return ApiComm.$http.patch('/oauth/userinfo', userInfo)
   }
 }

@@ -47,6 +47,7 @@ const messages = Object.assign(enLocale, {
     }
   },
   forms: {
+    changePassword: 'Change Password',
     pleaseEnter: 'Please enter ',
     loginNo: 'loginNo',
     password: 'password',
@@ -59,6 +60,10 @@ const messages = Object.assign(enLocale, {
     notEmpty: ' can not be empty',
     width: 'Width',
     height: 'Height',
+    old: 'Old ',
+    new: 'New ',
+    confirmPassword: 'Confirm password',
+    passwordNotEqual: 'Confirm password is not equal new password',
     buttons: {
       login: 'login',
       submit: 'submit',
