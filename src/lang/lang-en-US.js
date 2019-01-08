@@ -12,7 +12,8 @@ const messages = Object.assign(enLocale, {
     failed403: 'Request rejected, may not hava permission, please contact the system administrator',
     leavePage: 'The data entered will be lost. Are you sure to close?',
     allPages: 'All Pages',
-    otherPages: 'Other Pages'
+    otherPages: 'Other Pages',
+    saveSuccess: 'Save Successfully'
   },
   pageTitle: {
     test: 'test',

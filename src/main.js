@@ -45,7 +45,8 @@ Vue.use(api, {
   http: Vue.prototype.$http,
   store: store,
   router: router,
-  loading: Vue.prototype.$Loading
+  loading: Vue.prototype.$Loading,
+  spin: Vue.prototype.$Spin
 })
 new Vue({
   router,

@@ -15,16 +15,16 @@
         <div>
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
             <FormItem prop="loginNo">
-              <i-input v-model="formValidate.loginNo" type="text" prefix="md-person"
+              <i-input v-model="formValidate.loginNo" type="text" prefix="md-person" :disabled="modal_loading"
                        :placeholder="text.usernamePlaceholder"/>
             </FormItem>
             <FormItem prop="password">
-              <i-input v-model="formValidate.password" type="password" prefix="md-lock"
+              <i-input v-model="formValidate.password" type="password" prefix="md-lock" :disabled="modal_loading"
                        :placeholder="text.passwordPlaceholder"
                        @keyup.native.enter="handleSubmit('formValidate')"/>
             </FormItem>
             <FormItem style="margin-bottom: 0;">
-              <Checkbox v-model="formValidate.remember">
+              <Checkbox v-model="formValidate.remember" :disabled="modal_loading">
                 {{text.rememberMe}}
               </Checkbox>
             </FormItem>
@@ -82,7 +82,7 @@
         currObj.$refs[name].validate((valid) => {
           if (valid) {
             currObj.modal_loading = true
-            currObj.$api.request.login(currObj.formValidate.loginNo, currObj.formValidate.password).then(res => {
+            currObj.$api.request.doLogin(currObj.formValidate.loginNo, currObj.formValidate.password).then(res => {
               currObj.modal_loading = false
               if (res) {
                 if (res.data.access_token) {

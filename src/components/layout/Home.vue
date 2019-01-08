@@ -134,10 +134,7 @@
           if (res && !res.data.error_description) {
             this.$store.commit('SET_USER_INFO', res.data)
           }
-        }).catch((error) => {
-            this.$api.errorProcess(error)
-          }
-        )
+        })
         // 获取菜单信息
         this.$api.request.getMenus().then((res) => {
           if (res && !res.data.error_description) {
@@ -145,10 +142,7 @@
             this.openedNames = getOpenedNamesByActiveName(this.fullPath, this)
             this.updateTagList(this.$store.state.app.tagNavList, this.menuList, this.$route)
           }
-        }).catch((error) => {
-            this.$api.errorProcess(error)
-          }
-        )
+        })
       },
       initStoreData () {
         // 初始化主页子路由缓存列表

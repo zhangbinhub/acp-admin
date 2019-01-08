@@ -5,6 +5,8 @@ const ApiComm = {
   $store: undefined,
   $router: undefined,
   $loading: undefined,
+  $Spin: undefined,
+  showSpin: false,
   install: function (Vue, options) {
     Vue.prototype.$api = ApiComm
     this.$notice = options.notice
@@ -13,15 +15,21 @@ const ApiComm = {
     this.$store = options.store
     this.$router = options.router
     this.$loading = options.loading
+    this.$Spin = options.spin
+    this.showSpin = false
 
     // 请求拦截器
     this.$http.interceptors.request.use(config => {
       ApiComm.$loading.start()
+      if (this.showSpin) {
+        ApiComm.$Spin.show()
+      }
       if (ApiComm.$store.state.app.user.token) {
         config.headers.Authorization = `${ApiComm.$store.state.app.user.tokenType} ${ApiComm.$store.state.app.user.token}`
       }
       return config
     }, error => {
+      ApiComm.$Spin.hide()
       ApiComm.$loading.error()
       ApiComm.errorProcess(error)
       return Promise.reject(error)
@@ -29,9 +37,11 @@ const ApiComm = {
 
     // 响应拦截器
     this.$http.interceptors.response.use(data => {
+      ApiComm.$Spin.hide()
       ApiComm.$loading.finish()
       return data
     }, error => {
+      ApiComm.$Spin.hide()
       ApiComm.$loading.error()
       if (error.response) {
         switch (error.response.status) {
@@ -45,6 +55,9 @@ const ApiComm = {
             return
           case 403:
             error.response.data.error_description = ApiComm.$i18n.t('messages.failed403')
+            if (!error.config.headers.Process403 || error.config.headers.Process403 !== 'false') {
+              ApiComm.errorProcess(error)
+            }
             break
           case 500:
             let errorMsg = 'Internal System Error'

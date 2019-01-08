@@ -14,7 +14,9 @@
         <Input v-model="formValidate.mobile" :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></Input>
       </Form-item>
       <Form-item>
-        <Button type="primary" @click="handleSubmit('formValidate')">{{$t('forms.buttons.submit')}}</Button>
+        <Button type="primary" @click="handleSubmit('formValidate')">
+          {{$t('forms.buttons.submit')}}
+        </Button>
         <Button type="default" @click="handleReset('formValidate')" style="margin-left: 10px">
           {{$t('forms.buttons.reset')}}
         </Button>
@@ -23,6 +25,7 @@
     <Modal v-model="avatarUpload" :title="$t('forms.avatarUpload')" footer-hide fullscreen>
       <cropper :crop-button-text="$t('i.modal.okText')" @on-crop="handleCroped"></cropper>
     </Modal>
+    <Spin size="large" fix v-if="modal_loading"></Spin>
   </Card>
 </template>
 <script>
@@ -42,7 +45,8 @@
           name: '',
           mobile: ''
         },
-        avatarUpload: false
+        avatarUpload: false,
+        modal_loading: false
       }
     },
     created () {
@@ -79,17 +83,25 @@
         this.avatarUpload = true
       },
       handleCroped (data) {
-        console.log(data)
         this.avatarUpload = false
         this.formValidate.avatar = data
       },
       handleSubmit (name) {
-        // TODO: update user info
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.$Message.success('提交成功!')
-          } else {
-            this.$Message.error('表单验证失败!')
+            this.modal_loading = true
+            this.$api.request.updateUserInfo({
+              id: this.$store.state.app.user.userInfo.id,
+              avatar: this.formValidate.avatar,
+              name: this.formValidate.name,
+              mobile: this.formValidate.mobile
+            }).then((res) => {
+              this.$store.commit('SET_USER_INFO', res.data)
+              this.modal_loading = false
+              this.$Message.success(this.$i18n.t('messages.saveSuccess'))
+            }).catch(() => {
+              this.modal_loading = false
+            })
           }
         })
       },

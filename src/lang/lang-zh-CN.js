@@ -12,7 +12,8 @@ const messages = Object.assign(zhLocale, {
     failed403: '请求被拒绝，可能没有权限，请联系系统管理员',
     leavePage: '输入的数据将会丢失，确认关闭吗？',
     allPages: '所有页面',
-    otherPages: '其他页面'
+    otherPages: '其他页面',
+    saveSuccess: '保存成功'
   },
   pageTitle: {
     test: '测试',
