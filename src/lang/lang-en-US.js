@@ -13,7 +13,8 @@ const messages = Object.assign(enLocale, {
     leavePage: 'The data entered will be lost. Are you sure to close?',
     allPages: 'All Pages',
     otherPages: 'Other Pages',
-    saveSuccess: 'Save Successfully'
+    saveSuccess: 'Save Successfully',
+    changedPassword: 'You have changed your password. Please log in again.'
   },
   pageTitle: {
     test: 'test',
@@ -27,6 +28,7 @@ const messages = Object.assign(enLocale, {
     exit: 'Exit'
   },
   dialog: {
+    info: 'Message',
     confirm: 'Please confirm'
   },
   home: {

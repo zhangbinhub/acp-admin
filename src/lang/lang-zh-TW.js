@@ -13,7 +13,8 @@ const messages = Object.assign(twLocale, {
     leavePage: '輸入的數據將會丟失，確認關閉嗎？',
     allPages: '所有頁面',
     otherPages: '其他頁面',
-    saveSuccess: '保存成功'
+    saveSuccess: '保存成功',
+    changedPassword: '您修改了密碼，請重新登錄'
   },
   pageTitle: {
     test: '測試',
@@ -27,6 +28,7 @@ const messages = Object.assign(twLocale, {
     exit: '退出'
   },
   dialog: {
+    info: '提示信息',
     confirm: '請確認'
   },
   home: {

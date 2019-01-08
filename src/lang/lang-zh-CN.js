@@ -13,7 +13,8 @@ const messages = Object.assign(zhLocale, {
     leavePage: '输入的数据将会丢失，确认关闭吗？',
     allPages: '所有页面',
     otherPages: '其他页面',
-    saveSuccess: '保存成功'
+    saveSuccess: '保存成功',
+    changedPassword: '您修改了密码，请重新登录'
   },
   pageTitle: {
     test: '测试',
@@ -27,6 +28,7 @@ const messages = Object.assign(zhLocale, {
     exit: '退出'
   },
   dialog: {
+    info: '提示信息',
     confirm: '请确认'
   },
   home: {
