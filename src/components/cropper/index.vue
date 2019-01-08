@@ -51,13 +51,13 @@
           </Col>
           <Col span="6">
             <Input v-model="width" @on-blur="reSize" @on-enter="reSize">
-              <span slot="prepend">height</span>
+              <span slot="prepend">{{$t('forms.width')}}</span>
               <span slot="append">px</span>
             </Input>
           </Col>
           <Col span="6">
             <Input v-model="height" @on-blur="reSize" @on-enter="reSize">
-              <span slot="prepend">height</span>
+              <span slot="prepend">{{$t('forms.height')}}</span>
               <span slot="append">px</span>
             </Input>
           </Col>

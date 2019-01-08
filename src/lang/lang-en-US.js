@@ -56,6 +56,8 @@ const messages = Object.assign(enLocale, {
     mobile: 'mobile',
     invalid: ' is invalid',
     notEmpty: ' can not be empty',
+    width: 'Width',
+    height: 'Height',
     buttons: {
       login: 'login',
       submit: 'submit',

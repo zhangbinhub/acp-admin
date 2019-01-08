@@ -56,6 +56,8 @@ const messages = Object.assign(zhLocale, {
     mobile: '手机号',
     invalid: '无效',
     notEmpty: '不能为空',
+    width: '宽',
+    height: '高',
     buttons: {
       login: '登录',
       submit: '提交',

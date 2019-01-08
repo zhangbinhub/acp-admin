@@ -56,6 +56,8 @@ const messages = Object.assign(twLocale, {
     mobile: '手機號',
     invalid: '無效',
     notEmpty: '不能爲空',
+    width: '寬',
+    height: '高',
     buttons: {
       login: '登錄',
       submit: '提交',
