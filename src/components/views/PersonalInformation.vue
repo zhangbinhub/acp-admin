@@ -157,7 +157,6 @@
           if (valid) {
             this.modal_loading = true
             const userParam = {
-              id: this.$store.state.app.user.userInfo.id,
               avatar: this.formValidate.avatar,
               name: this.formValidate.name,
               mobile: this.formValidate.mobile
