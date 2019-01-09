@@ -27,9 +27,11 @@
           </div>
           <Content class="content-wrapper">
             <div class="content-sticker">
-              <keep-alive :include="cacheList">
-                <router-view/>
-              </keep-alive>
+              <transition name="fade" mode="out-in" appear>
+                <keep-alive :include="cacheList">
+                  <router-view/>
+                </keep-alive>
+              </transition>
               <ABackTop :height="100" :bottom="80" :right="50" container=".content-wrapper"></ABackTop>
             </div>
             <Footer class="content-footer">
