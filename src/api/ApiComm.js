@@ -51,8 +51,11 @@ const ApiComm = {
             }
             break
           case 401:
-            ApiComm.redirectLogin()
-            return
+            if (!error.config.headers.Process401 || error.config.headers.Process401 !== 'false') {
+              ApiComm.redirectLogin()
+              return
+            }
+            break
           case 403:
             error.response.data.error_description = ApiComm.$i18n.t('messages.failed403')
             if (!error.config.headers.Process403 || error.config.headers.Process403 !== 'false') {

@@ -21,6 +21,7 @@ export default {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Process400': 'false',
+        'Process401': 'false',
         'Process403': 'false'
       },
       auth: {

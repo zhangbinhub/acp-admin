@@ -105,9 +105,13 @@
                   currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
                 }
               }
-            }).catch(() => {
+            }).catch((error) => {
                 currObj.modal_loading = false
-                currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
+                if (error.response && error.response.status && error.response.status === 400) {
+                  currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
+                } else {
+                  currObj.$api.errorProcess(currObj.$i18n.t('messages.failed403'), currObj.$i18n.t('messages.loginFailed'))
+                }
               }
             )
           }
