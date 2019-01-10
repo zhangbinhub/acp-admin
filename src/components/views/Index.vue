@@ -1,24 +1,24 @@
 <template>
   <div class="index">
     <Row :gutter="8">
-      <Col :md='{span:8}'>
+      <i-col :md='{span:8}'>
       <Row>
-        <Col span="12" v-for="(item,index) in cardMessage" :key="index" class="cardMessage"  style="padding: 0">
+        <i-col span="12" v-for="(item,index) in cardMessage" :key="index" class="cardMessage"  style="padding: 0">
         <Card>
           <Row>
-            <Col span="8">
+            <i-col span="8">
             <Icon :type="item.icon"></Icon>
-            </Col>
-            <Col span="16">
+            </i-col>
+            <i-col span="16">
             <p class="subText">{{item.name}}</p>
             <h3>{{item.count}}</h3>
-            </Col>
+            </i-col>
           </Row>
         </Card>
-        </Col>
+        </i-col>
       </Row>
-      </Col>
-      <Col :md='{span:16}'>
+      </i-col>
+      <i-col :md='{span:16}'>
       <Card>
         <p slot="title">
           本周排行
@@ -32,11 +32,11 @@
         <Progress :percent="85" status="active"></Progress>
         <Progress :percent="45" status="active"></Progress>
       </Card>
-      </Col>
+      </i-col>
     </Row>
 
     <Row :gutter="8">
-      <Col :md='{span:8}'>
+      <i-col :md='{span:8}'>
       <Card style="height: 320px">
         <p slot="title">
           10个已经完成，2个待完成，1个正在进行中
@@ -51,13 +51,13 @@
           <Step title="待进行" content="这里是该步骤的描述信息"></Step>
         </Steps>
       </Card>
-      </Col>
-      <Col :md='{span:8}'>
+      </i-col>
+      <i-col :md='{span:8}'>
       <Card style="height: 320px">
         <Table :columns="columns1" :data="data1" :show-header="false"></Table>
       </Card>
-      </Col>
-      <Col :md='{span:8}'>
+      </i-col>
+      <i-col :md='{span:8}'>
       <Card style="height: 320px">
         <p slot="title">
           未读消息
@@ -72,7 +72,7 @@
           <Step title="待进行" content="这里是该步骤的描述信息"></Step>
         </Steps>
       </Card>
-      </Col>
+      </i-col>
     </Row>
   </div>
 </template>

@@ -5,10 +5,10 @@
         <div slot="header" style="text-align: center;">
           <h1 style="margin:10px;">
             <Row type="flex" justify="center" align="middle" style="text-align: center;">
-              <Col span="24">
+              <i-col span="24">
                 <span style="color: #657180;">{{title}}</span>
                 <span style="text-align: center;font-size: x-small;color: #c5c8ce;">&nbsp;V{{version}}</span>
-              </Col>
+              </i-col>
             </Row>
           </h1>
         </div>

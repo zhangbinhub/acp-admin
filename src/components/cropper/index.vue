@@ -3,7 +3,7 @@
     <Card class="cropper-card">
       <Row>
         <div class="img-box">
-          <img class="cropper-image" :id="imgId" alt="" style="max-width: 100%">
+          <img class="cropper-image" :id="imgId" alt="" style="max-width: 100%" src="">
         </div>
         <div class="right-con">
           <Row style="height: 185px;">
@@ -37,30 +37,30 @@
       </Row>
       <Row v-show="insideSrc" :gutter="16">
         <div class="input-box">
-          <Col span="6">
-            <Input v-model="X" @on-blur="reSize" @on-enter="reSize">
+          <i-col span="6">
+            <i-input v-model="X" @on-blur="reSize" @on-enter="reSize">
               <span slot="prepend">X</span>
               <span slot="append">px</span>
-            </Input>
-          </Col>
-          <Col span="6">
-            <Input v-model="Y" @on-blur="reSize" @on-enter="reSize">
+            </i-input>
+          </i-col>
+          <i-col span="6">
+            <i-input v-model="Y" @on-blur="reSize" @on-enter="reSize">
               <span slot="prepend">Y</span>
               <span slot="append">px</span>
-            </Input>
-          </Col>
-          <Col span="6">
-            <Input v-model="width" @on-blur="reSize" @on-enter="reSize">
+            </i-input>
+          </i-col>
+          <i-col span="6">
+            <i-input v-model="width" @on-blur="reSize" @on-enter="reSize">
               <span slot="prepend">{{$t('forms.width')}}</span>
               <span slot="append">px</span>
-            </Input>
-          </Col>
-          <Col span="6">
-            <Input v-model="height" @on-blur="reSize" @on-enter="reSize">
+            </i-input>
+          </i-col>
+          <i-col span="6">
+            <i-input v-model="height" @on-blur="reSize" @on-enter="reSize">
               <span slot="prepend">{{$t('forms.height')}}</span>
               <span slot="append">px</span>
-            </Input>
-          </Col>
+            </i-input>
+          </i-col>
         </div>
       </Row>
       <Row v-show="insideSrc">

@@ -1,4 +1,5 @@
 /**
+ * name: 路由名称必须和对应组件名称一致，否则无法实现 keep-live
  * meta 附加参数说明（除原生参数外）
  * meta{
  *   title: 页面标题；值：i18n表达式。显示位置：1、浏览器网页title；2、面包屑名称（该路由没有对应的菜单时显示）；3、标签导航（该路由没有对应的菜单时显示）
@@ -67,12 +68,60 @@ export default [
     }, {
       path: '/personalInformation',
       name: 'personalInformation',
-      component: () => import('@/components/views/PersonalInformation.vue'),
+      component: () => import('@/components/views/main/PersonalInformation.vue'),
       meta: {
         title: 'pageTitle.personalInformation',
         icon: 'md-person',
         requireAuth: true,
         withInput: true
+      }
+    }, {
+      path: '/appconfig',
+      name: 'appConfig',
+      component: () => import('@/components/views/sysconfig/ApplicationConfig.vue'),
+      meta: {
+        title: 'pageTitle.appConfig',
+        requireAuth: true
+      }
+    }, {
+      path: '/authconfig',
+      name: 'authConfig',
+      component: () => import('@/components/views/sysconfig/AuthConfig.vue'),
+      meta: {
+        title: 'pageTitle.authConfig',
+        requireAuth: true
+      }
+    }, {
+      path: '/orgconfig',
+      name: 'orgConfig',
+      component: () => import('@/components/views/sysconfig/OrgConfig.vue'),
+      meta: {
+        title: 'pageTitle.orgConfig',
+        requireAuth: true
+      }
+    }, {
+      path: '/paramconfig',
+      name: 'paramConfig',
+      component: () => import('@/components/views/sysconfig/ParamConfig.vue'),
+      meta: {
+        title: 'pageTitle.paramConfig',
+        requireAuth: true
+      }
+    }, {
+      path: '/roleconfig',
+      name: 'roleConfig',
+      component: () => import('@/components/views/sysconfig/RoleConfig.vue'),
+      meta: {
+        title: 'pageTitle.roleConfig',
+        requireAuth: true
+      }
+    }, {
+      path: '/userconfig',
+      name: 'userConfig',
+      component: () => import('@/components/views/sysconfig/UserConfig.vue'),
+      meta: {
+        title: 'pageTitle.userConfig',
+        requireAuth: true
       }
     }]
   },
