@@ -77,7 +77,7 @@ export const menuList = () => {
       'id': '408b65b6-1482-11e9-8c6d-d8c49792dd7b',
       'appid': '4085bd00-1482-11e9-8c6d-d8c49792dd7b',
       'name': '权限配置',
-      'icon_type': 'md-lock',
+      'icon_type': 'md-key',
       'path': '/authconfig',
       'parentid': '408aa27c-1482-11e9-8c6d-d8c49792dd7b',
       'enabled': true,

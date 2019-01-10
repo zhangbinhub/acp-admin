@@ -1,47 +1,67 @@
 <template>
   <Card>
-    <Form ref="searchForm" :label-width="60" :inline="true" class="search-form">
-      <Form-item :label="'名称'">
-        <i-input></i-input>
+    <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form">
+      <Form-item :label="$t('forms.name')" prop="name">
+        <i-input v-model="searchForm.name"></i-input>
       </Form-item>
-      <Form-item :label="'值'">
-        <i-input></i-input>
+      <Form-item :label="$t('forms.value')" prop="value">
+        <i-input v-model="searchForm.value"></i-input>
       </Form-item>
       <Form-item>
-        <Button>查询</Button>
-        <Button style="margin-left: 20px;">重置</Button>
-        <Button style="margin-left: 20px;">新增</Button>
-        <Button style="margin-left: 20px;">删除</Button>
+        <Button @click="handleSearch()" type="primary" ghost>
+          {{$t('forms.buttons.search')}}
+        </Button>
+        <Button @click="handleSearchReset('searchForm')" style="margin-left: 20px;">
+          {{$t('forms.buttons.reset')}}
+        </Button>
+        <Button style="margin-left: 20px;" type="success" ghost>
+          {{$t('forms.buttons.add')}}
+        </Button>
+        <Button style="margin-left: 20px;" type="error" ghost>
+          {{$t('forms.buttons.delete')}}
+        </Button>
       </Form-item>
     </Form>
     <Table border height="433" size="small" :columns="columns" :data="data" class="search-table" highlight-row
            no-data-text="-" no-filtered-data-text="-">
-      <template slot-scope="{ row, index }" slot="name">
-        <i-input type="text" v-model="editName" v-if="editIndex === index"/>
-        <span v-else>{{ row.name }}</span>
+      <template slot-scope="{ row }" slot="name">
+        <span>{{ row.name }}</span>
       </template>
       <template slot-scope="{ row, index }" slot="value">
-        <i-input type="text" v-model="editValue" v-if="editIndex === index"/>
+        <i-input type="text" v-model="editValue" v-if="editIndex === index" @on-enter="handleSave(index)"
+                 @on-keyup="handleCancel($event)"/>
         <span v-else>{{ row.value }}</span>
       </template>
       <template slot-scope="{ row, index }" slot="des">
-        <i-input type="text" v-model="editDes" v-if="editIndex === index"/>
+        <i-input type="text" v-model="editDes" v-if="editIndex === index" @on-enter="handleSave(index)"
+                 @on-keyup="handleCancel($event)"/>
         <span v-else>{{ row.des }}</span>
       </template>
       <template slot-scope="{ row, index }" slot="action">
         <div v-if="editIndex === index">
-          <Button @click="handleSave(index)">保存</Button>
-          <Button @click="editIndex = -1">取消</Button>
+          <Tooltip :content="$t('forms.buttons.save')" placement="top-start">
+            <Icon @click="handleSave(index)" type="md-checkmark" color="green" size="18"
+                  style="cursor: pointer;"></Icon>
+          </Tooltip>
+          <Tooltip :content="$t('forms.buttons.cancel')" placement="top-start">
+            <Icon @click="editIndex = -1" type="md-close" color="red" size="18"
+                  style="cursor: pointer;margin-left: 10px;"></Icon>
+          </Tooltip>
         </div>
         <div v-else>
-          <Button @click="handleEdit(row, index)" size="small">编辑</Button>
-          <Button size="small" style="margin-left: 10px;">删除</Button>
+          <Tooltip :content="$t('forms.buttons.edit')" placement="top-start">
+            <Icon @click="handleEdit(row, index)" type="md-create" size="18" style="cursor: pointer;"></Icon>
+          </Tooltip>
+          <Tooltip :content="$t('forms.buttons.delete')" placement="top-start">
+            <Icon @click="handleDelete(row, index)" type="md-trash" size="18"
+                  style="cursor: pointer;margin-left: 10px;"></Icon>
+          </Tooltip>
         </div>
       </template>
     </Table>
     <div style="margin-top: 10px;overflow: hidden">
       <div style="float: right;">
-        <Page :current="2" :total="50" show-total show-elevator show-sizer size="small"/>
+        <Page :current="1" :total="50" show-total show-elevator show-sizer size="small"/>
       </div>
     </div>
   </Card>
@@ -52,32 +72,10 @@
     name: 'paramConfig',
     data () {
       return {
-        columns: [
-          {
-            type: 'selection',
-            width: 50,
-            align: 'center'
-          },
-          {
-            key: 'name',
-            title: '名称',
-            slot: 'name'
-          },
-          {
-            key: 'value',
-            title: '值',
-            slot: 'value'
-          },
-          {
-            key: 'des',
-            title: '描述',
-            slot: 'des'
-          },
-          {
-            title: '操作',
-            slot: 'action'
-          }
-        ],
+        searchForm: {
+          name: '',
+          value: ''
+        },
         data: [
           {
             name: '王小明',
@@ -145,7 +143,45 @@
         editDes: ''
       }
     },
+    computed: {
+      columns () {
+        return [
+          {
+            type: 'selection',
+            width: 60,
+            align: 'center'
+          },
+          {
+            key: 'name',
+            title: this.$i18n.t('forms.name'),
+            slot: 'name'
+          },
+          {
+            key: 'value',
+            title: this.$i18n.t('forms.value'),
+            slot: 'value'
+          },
+          {
+            key: 'des',
+            title: this.$i18n.t('forms.describe'),
+            slot: 'des'
+          },
+          {
+            title: this.$i18n.t('forms.action'),
+            width: 90,
+            align: 'center',
+            slot: 'action'
+          }
+        ]
+      }
+    },
     methods: {
+      handleSearch () {
+
+      },
+      handleSearchReset (name) {
+        this.$refs[name].resetFields()
+      },
       handleEdit (row, index) {
         this.editName = row.name
         this.editValue = row.value
@@ -157,6 +193,15 @@
         this.data[index].value = this.editValue
         this.data[index].des = this.editDes
         this.editIndex = -1
+      },
+      handleCancel (event) {
+        if (event.which === 27) {
+          this.editIndex = -1
+        }
+      },
+      handleDelete (row, index) {
+        console.log(row)
+        console.log(index)
       }
     }
   }
