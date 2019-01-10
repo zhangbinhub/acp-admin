@@ -14,7 +14,9 @@ const messages = Object.assign(enLocale, {
     allPages: 'All Pages',
     otherPages: 'Other Pages',
     saveSuccess: 'Save Successfully',
-    changedPassword: 'You have changed your password. Please log in again.'
+    changedPassword: 'You have changed your password. Please log in again.',
+    tableNoData: 'No data found',
+    tableDataCannotDel: 'This data cannot be deleted'
   },
   pageTitle: {
     test: 'test',
@@ -29,6 +31,9 @@ const messages = Object.assign(enLocale, {
   },
   dialog: {
     info: 'Message',
+    error: 'Error message',
+    warning: 'Warning message',
+    success: 'Success',
     confirm: 'Please confirm'
   },
   home: {
@@ -62,6 +67,8 @@ const messages = Object.assign(enLocale, {
     describe: 'describe',
     action: 'action',
     invalid: ' is invalid',
+    enabled: 'enabled',
+    disabled: 'disabled',
     notEmpty: ' can not be empty',
     width: 'Width',
     height: 'Height',

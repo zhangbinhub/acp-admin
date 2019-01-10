@@ -14,7 +14,9 @@ const messages = Object.assign(zhLocale, {
     allPages: '所有页面',
     otherPages: '其他页面',
     saveSuccess: '保存成功',
-    changedPassword: '您修改了密码，请重新登录'
+    changedPassword: '您修改了密码，请重新登录',
+    tableNoData: '没有查询到数据',
+    tableDataCannotDel: '该条数据不允许删除'
   },
   pageTitle: {
     test: '测试',
@@ -29,6 +31,9 @@ const messages = Object.assign(zhLocale, {
   },
   dialog: {
     info: '提示信息',
+    error: '错误信息',
+    warning: '警告信息',
+    success: '操作成功',
     confirm: '请确认'
   },
   home: {
@@ -62,6 +67,8 @@ const messages = Object.assign(zhLocale, {
     describe: '描述',
     action: '操作',
     invalid: '无效',
+    enabled: '启用',
+    disabled: '禁用',
     notEmpty: '不能为空',
     width: '宽',
     height: '高',

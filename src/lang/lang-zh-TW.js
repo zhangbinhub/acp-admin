@@ -14,7 +14,9 @@ const messages = Object.assign(twLocale, {
     allPages: '所有頁面',
     otherPages: '其他頁面',
     saveSuccess: '保存成功',
-    changedPassword: '您修改了密碼，請重新登錄'
+    changedPassword: '您修改了密碼，請重新登錄',
+    tableNoData: '沒有查詢到數據',
+    tableDataCannotDel: '該條數據不允許刪除'
   },
   pageTitle: {
     test: '測試',
@@ -29,6 +31,9 @@ const messages = Object.assign(twLocale, {
   },
   dialog: {
     info: '提示信息',
+    error: '錯誤信息',
+    warning: '警告信息',
+    success: '操作成功',
     confirm: '請確認'
   },
   home: {
@@ -62,6 +67,8 @@ const messages = Object.assign(twLocale, {
     describe: '描述',
     action: '操作',
     invalid: '無效',
+    enabled: '啓用',
+    disabled: '禁用',
     notEmpty: '不能爲空',
     width: '寬',
     height: '高',
