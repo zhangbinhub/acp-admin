@@ -14,9 +14,12 @@ const messages = Object.assign(twLocale, {
     allPages: '所有頁面',
     otherPages: '其他頁面',
     saveSuccess: '保存成功',
+    deleteSuccess: '删除成功',
     changedPassword: '您修改了密碼，請重新登錄',
     tableNoData: '沒有查詢到數據',
-    tableDataCannotDel: '該條數據不允許刪除'
+    tableDataCannotDel: '該條數據不允許刪除',
+    selectDataForDelete: '請選擇需要刪除的數據',
+    deleteDataConfirm: '確定刪除所選數據嗎？'
   },
   pageTitle: {
     test: '測試',
@@ -24,7 +27,13 @@ const messages = Object.assign(twLocale, {
     E500: '500',
     login: '登錄',
     home: '首頁',
-    personalInformation: '個人信息維護'
+    personalInformation: '個人信息維護',
+    appConfig: '應用配置',
+    authConfig: '權限配置',
+    orgConfig: '機構配置',
+    paramConfig: '運行參數配置',
+    roleConfig: '角色配置',
+    userConfig: '用戶配置'
   },
   common: {
     exit: '退出'

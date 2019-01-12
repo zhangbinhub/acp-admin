@@ -14,9 +14,12 @@ const messages = Object.assign(zhLocale, {
     allPages: '所有页面',
     otherPages: '其他页面',
     saveSuccess: '保存成功',
+    deleteSuccess: '删除成功',
     changedPassword: '您修改了密码，请重新登录',
     tableNoData: '没有查询到数据',
-    tableDataCannotDel: '该条数据不允许删除'
+    tableDataCannotDel: '该条数据不允许删除',
+    selectDataForDelete: '请选择需要删除的数据',
+    deleteDataConfirm: '确定删除所选数据吗？'
   },
   pageTitle: {
     test: '测试',
@@ -24,7 +27,13 @@ const messages = Object.assign(zhLocale, {
     E500: '500',
     login: '登录',
     home: '首页',
-    personalInformation: '个人信息维护'
+    personalInformation: '个人信息维护',
+    appConfig: '应用配置',
+    authConfig: '权限配置',
+    orgConfig: '机构配置',
+    paramConfig: '运行参数配置',
+    roleConfig: '角色配置',
+    userConfig: '用户配置'
   },
   common: {
     exit: '退出'

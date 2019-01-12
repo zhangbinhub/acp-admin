@@ -14,9 +14,12 @@ const messages = Object.assign(enLocale, {
     allPages: 'All Pages',
     otherPages: 'Other Pages',
     saveSuccess: 'Save Successfully',
+    deleteSuccess: 'Delete Successfully',
     changedPassword: 'You have changed your password. Please log in again.',
     tableNoData: 'No data found',
-    tableDataCannotDel: 'This data cannot be deleted'
+    tableDataCannotDel: 'This data cannot be deleted',
+    selectDataForDelete: 'Please select the data you want to delete',
+    deleteDataConfirm: 'Are you sure to delete the selected data?'
   },
   pageTitle: {
     test: 'test',
@@ -24,7 +27,13 @@ const messages = Object.assign(enLocale, {
     E500: '500',
     login: 'login',
     home: 'home',
-    personalInformation: 'Personal Information Configure'
+    personalInformation: 'Personal Information Configure',
+    appConfig: 'Application Configure',
+    authConfig: 'Authority Configure',
+    orgConfig: 'Organization Configure',
+    paramConfig: 'Parameter Configure',
+    roleConfig: 'Role Configure',
+    userConfig: 'User Configure'
   },
   common: {
     exit: 'Exit'
