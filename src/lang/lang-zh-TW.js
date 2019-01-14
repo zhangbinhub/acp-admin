@@ -14,6 +14,7 @@ const messages = Object.assign(twLocale, {
     allPages: '所有頁面',
     otherPages: '其他頁面',
     saveSuccess: '保存成功',
+    updateSuccess: '更新成功',
     deleteSuccess: '删除成功',
     changedPassword: '您修改了密碼，請重新登錄',
     tableNoData: '沒有查詢到數據',
@@ -74,17 +75,20 @@ const messages = Object.assign(twLocale, {
     value: '值',
     mobile: '手機號',
     describe: '描述',
+    info: '信息',
     action: '操作',
     invalid: '無效',
     enabled: '啓用',
     disabled: '禁用',
     notEmpty: '不能爲空',
+    incorrect: '不正確',
     width: '寬',
     height: '高',
     old: '舊',
     new: '新',
     confirmPassword: '確認密碼',
     passwordNotEqual: '兩次輸入的密碼不相等',
+    seconds: '秒',
     buttons: {
       login: '登錄',
       submit: '提交',
@@ -97,7 +101,9 @@ const messages = Object.assign(twLocale, {
       add: '新增',
       reset: '重置',
       upload: '上傳',
-      free: '自定義'
+      view: '查看',
+      free: '自定義',
+      updateSecret: '更新密鑰'
     }
   }
 })

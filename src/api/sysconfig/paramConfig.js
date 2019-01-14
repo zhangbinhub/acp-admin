@@ -1,18 +1,18 @@
 import ApiComm from '../ApiComm'
 
 export default {
-  createParam: (paramInfo) => {
+  create: (paramInfo) => {
     return ApiComm.$http.put('/oauth/param', paramInfo)
   },
-  deleteParam: (paramIds) => {
+  delete: (paramIds) => {
     return ApiComm.$http.delete('/oauth/param', {
       data: paramIds
     })
   },
-  updateParam: (paramInfo) => {
+  update: (paramInfo) => {
     return ApiComm.$http.patch('/oauth/param', paramInfo)
   },
-  queryParam: (query) => {
+  query: (query) => {
     return ApiComm.$http.post('/oauth/param', query)
   }
 }

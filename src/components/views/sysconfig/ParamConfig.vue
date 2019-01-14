@@ -5,10 +5,12 @@
         <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form">
           <Form-item :label="$t('forms.name')" prop="name">
             <i-input v-model="searchForm.name" :disabled="modal_loading" size="small"
+                     :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                      @on-enter="handleSearch"></i-input>
           </Form-item>
           <Form-item :label="$t('forms.value')" prop="value">
             <i-input v-model="searchForm.value" :disabled="modal_loading" size="small"
+                     :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
                      @on-enter="handleSearch"></i-input>
           </Form-item>
           <Form-item :label="$t('forms.enabled')" prop="value">
@@ -76,7 +78,7 @@
             <Icon @click="handleEdit(row, index)" type="md-create" size="18" style="cursor: pointer;"></Icon>
           </Tooltip>
           <Tooltip :content="$t('forms.buttons.delete')" placement="top-start" v-show="row.covert">
-            <Icon @click="handleDeleteRow(row, index)" type="md-trash" size="18"
+            <Icon @click="handleDeleteRow(row)" type="md-trash" size="18"
                   style="cursor: pointer;margin-left: 10px;"></Icon>
           </Tooltip>
         </div>
@@ -92,13 +94,19 @@
     <Modal v-model="addModal" :title="$t('forms.buttons.add')" :loading="modal_loading" :mask-closable="false">
       <Form ref="addForm" :model="addForm" :rules="ruleAddForm" :label-width="60">
         <Form-item :label="$t('forms.name')" prop="name">
-          <i-input v-model="addForm.name" :disabled="modal_loading" @on-enter="doAdd('addForm')"></i-input>
+          <i-input v-model="addForm.name" :disabled="modal_loading"
+                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
+                   @on-enter="doAdd('addForm')"></i-input>
         </Form-item>
         <Form-item :label="$t('forms.value')" prop="value">
-          <i-input v-model="addForm.value" :disabled="modal_loading" @on-enter="doAdd('addForm')"></i-input>
+          <i-input v-model="addForm.value" :disabled="modal_loading"
+                   :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
+                   @on-enter="doAdd('addForm')"></i-input>
         </Form-item>
         <Form-item :label="$t('forms.describe')" prop="describe">
-          <i-input v-model="addForm.describe" :disabled="modal_loading" @on-enter="doAdd('addForm')"></i-input>
+          <i-input v-model="addForm.describe" :disabled="modal_loading"
+                   :placeholder="$t('forms.pleaseEnter') + $t('forms.describe')"
+                   @on-enter="doAdd('addForm')"></i-input>
         </Form-item>
         <Form-item :label="$t('forms.enabled')" prop="enabled">
           <i-switch v-model="addForm.enabled" :disabled="modal_loading"
@@ -233,12 +241,13 @@
         this.$refs[name].validate((valid) => {
           if (valid) {
             this.modal_loading = true
-            this.$api.request.createParam({
+            this.$api.request.param.create({
               name: this.addForm.name,
               value: this.addForm.value,
               config_des: this.addForm.describe,
               enabled: this.addForm.enabled
             }).then(() => {
+              this.$Message.success(this.$i18n.t('messages.saveSuccess'))
               this.addModal = false
               this.handleSearch()
             }).catch(() => {
@@ -249,7 +258,8 @@
       },
       handleDelete (rowIds) {
         this.modal_loading = true
-        this.$api.request.deleteParam(rowIds).then(() => {
+        this.$api.request.param.delete(rowIds).then(() => {
+          this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
           this.handleSearch()
         }).catch(() => {
           this.modal_loading = false
@@ -257,7 +267,7 @@
       },
       handleSave (index) {
         this.modal_loading = true
-        this.$api.request.updateParam({
+        this.$api.request.param.update({
           id: this.searchData[index].id,
           value: this.editValue,
           config_des: this.editDes,
@@ -268,6 +278,7 @@
           this.searchData[index].config_des = this.editDes
           this.searchData[index].enabled = this.editEnabled
           this.editIndex = -1
+          this.$Message.success(this.$i18n.t('messages.updateSuccess'))
         }).catch(() => {
           this.modal_loading = false
         })
@@ -299,7 +310,7 @@
           searchParam.query_param.order_commond = this.searchForm.orderParam.order
         }
         this.modal_loading = true
-        this.$api.request.queryParam(searchParam).then((res) => {
+        this.$api.request.param.query(searchParam).then((res) => {
           this.modal_loading = false
           if (res) {
             this.selectedData = []

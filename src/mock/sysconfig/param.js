@@ -5,7 +5,7 @@ export const updateParam = () => {
     'value': 'value',
     'config_des': 'dnioa你哦按身份111',
     'enabled': false,
-    'covert': false
+    'covert': true
   }
 }
 export const deleteParam = () => {
@@ -21,7 +21,7 @@ export const queryParam = () => {
       'value': 'value',
       'config_des': 'dnioa你哦按身份',
       'enabled': true,
-      'covert': false
+      'covert': true
     }],
     'pageable': {
       'sort': { 'sorted': true, 'unsorted': false, 'empty': false },

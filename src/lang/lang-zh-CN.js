@@ -14,6 +14,7 @@ const messages = Object.assign(zhLocale, {
     allPages: '所有页面',
     otherPages: '其他页面',
     saveSuccess: '保存成功',
+    updateSuccess: '更新成功',
     deleteSuccess: '删除成功',
     changedPassword: '您修改了密码，请重新登录',
     tableNoData: '没有查询到数据',
@@ -74,17 +75,22 @@ const messages = Object.assign(zhLocale, {
     value: '值',
     mobile: '手机号',
     describe: '描述',
+    info: '信息',
     action: '操作',
     invalid: '无效',
     enabled: '启用',
     disabled: '禁用',
     notEmpty: '不能为空',
+    incorrect: '不正确',
     width: '宽',
     height: '高',
     old: '旧',
     new: '新',
     confirmPassword: '确认密码',
     passwordNotEqual: '两次输入的密码不相等',
+    access_token_validity_seconds: 'token有效期',
+    refresh_token_validity_seconds: 'refreshToken有效期',
+    seconds: '秒',
     buttons: {
       login: '登录',
       submit: '提交',
@@ -97,7 +103,9 @@ const messages = Object.assign(zhLocale, {
       add: '新增',
       reset: '重置',
       upload: '上传',
-      free: '自定义'
+      view: '查看',
+      free: '自定义',
+      updateSecret: '更新密钥'
     }
   }
 })
