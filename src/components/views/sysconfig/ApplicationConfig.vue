@@ -42,14 +42,14 @@
       <template slot-scope="{ row }" slot="refresh_token_validity_seconds">
         <span>{{ row.refresh_token_validity_seconds }}</span>
       </template>
-      <template slot-scope="{ row }" slot="action">
+      <template slot-scope="{ row, index }" slot="action">
         <div>
           <Tooltip :content="$t('forms.buttons.edit')" placement="top-start">
             <Icon @click="handleEdit(row,1)" type="md-create" size="18" style="cursor: pointer;"></Icon>
           </Tooltip>
           <Tooltip v-show="row.secret!==$store.state.app.appInfo.appSecret"
                    :content="$t('forms.buttons.view')" placement="top-start">
-            <Icon @click="handleEdit(row,2)" type="md-search" size="18"
+            <Icon @click="handleEdit(row,2,index)" type="md-search" size="18"
                   style="cursor: pointer;margin-left: 10px;"></Icon>
           </Tooltip>
           <Tooltip :content="$t('forms.buttons.delete')" placement="top-start" v-show="row.covert">
@@ -67,7 +67,7 @@
       </div>
     </div>
     <Modal v-model="editModal" :title="$t('forms.info')" :loading="modal_loading" :mask-closable="false">
-      <Form ref="editForm" :model="editForm" :rules="ruleEditForm" :label-width="140" style="padding-right: 30px;">
+      <Form ref="editForm" :model="editForm" :rules="ruleEditForm" :label-width="135" style="padding-right: 25px;">
         <Form-item :label="'appId'" prop="id" v-if="action===2">
           <Alert type="success">{{editForm.id}}</Alert>
         </Form-item>
@@ -134,7 +134,8 @@
           appname: '',
           access_token_validity_seconds: '',
           refresh_token_validity_seconds: '',
-          secret: ''
+          secret: '',
+          index: -1
         },
         editModal: false,
         action: 0, // 0-add, 1-update, 2-view
@@ -272,6 +273,7 @@
               this.modal_loading = false
               this.$Message.success(this.$i18n.t('messages.updateSuccess'))
               this.editForm.secret = res.data.secret
+              this.searchData[this.editForm.index].secret = res.data.secret
             }).catch(() => {
               this.modal_loading = false
             })
@@ -370,13 +372,14 @@
           })
         }
       },
-      handleEdit (row, action) {
+      handleEdit (row, action, index) {
         this.$refs['editForm'].resetFields()
         this.editForm.appname = row.appname
         this.editForm.access_token_validity_seconds = row.access_token_validity_seconds + ''
         this.editForm.refresh_token_validity_seconds = row.refresh_token_validity_seconds + ''
         this.editForm.id = row.id
         this.editForm.secret = row.secret
+        this.editForm.index = index
         this.editModal = true
         this.action = action
       }
