@@ -6,6 +6,6 @@ export default {
   minWidth: 756,
   homePath: '/index',
 
-  appId: 'f6fc9345-1711-11e9-9bf7-d8c49792dd7b',
+  appId: '15b956a8-186c-11e9-bfb4-d8c49792dd7b',
   appSecret: 'E0D3024D-9A22-41EE-AC0F-FC6B56E367AE'
 }
