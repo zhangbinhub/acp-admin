@@ -75,7 +75,7 @@
           <Alert type="error">{{editForm.secret}}</Alert>
         </Form-item>
         <Form-item :label="$t('forms.name')" prop="appname">
-          <i-input v-model="editForm.appname" :disabled="modal_loading" v-if="action!==2"
+          <i-input ref="appname" v-model="editForm.appname" :disabled="modal_loading" v-if="action!==2"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                    @on-enter="doSave('editForm')"></i-input>
           <Alert v-else>{{editForm.appname}}</Alert>
@@ -142,6 +142,15 @@
         modal_loading: false,
         searchData: [],
         selectedData: []
+      }
+    },
+    watch: {
+      editModal (value) {
+        if (value) {
+          this.$nextTick(() => {
+            this.$refs['appname'].focus()
+          })
+        }
       }
     },
     computed: {

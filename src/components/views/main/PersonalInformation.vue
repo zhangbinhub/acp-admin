@@ -8,7 +8,8 @@
         </Tooltip>
       </Form-item>
       <Form-item :label="$t('forms.name')" prop="name">
-        <i-input ref="name" v-model="formValidate.name" :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"></i-input>
+        <i-input ref="name" v-model="formValidate.name" autofocus="true"
+                 :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"></i-input>
       </Form-item>
       <Form-item :label="$t('forms.mobile')" prop="mobile">
         <i-input v-model="formValidate.mobile" :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></i-input>
@@ -21,15 +22,16 @@
       </Form-item>
       <Form-item v-show="updatePassword" :label="$t('forms.old')+$t('forms.password')" prop="oldPassword">
         <i-input v-model="formValidate.oldPassword" type="password"
-               :placeholder="$t('forms.pleaseEnter') + $t('forms.old')+$t('forms.password')"></i-input>
+                 :placeholder="$t('forms.pleaseEnter') + $t('forms.old')+$t('forms.password')"></i-input>
       </Form-item>
       <Form-item v-show="updatePassword" :label="$t('forms.new')+$t('forms.password')" prop="password">
         <i-input v-model="formValidate.password" :type="passwordType" :icon="passwordIcon" @on-click="showPassword"
-               :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></i-input>
+                 :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></i-input>
       </Form-item>
       <Form-item v-show="updatePassword" :label="$t('forms.confirmPassword')" prop="repeatPassword">
-        <i-input v-model="formValidate.repeatPassword" :type="passwordType" :icon="passwordIcon" @on-click="showPassword"
-               :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></i-input>
+        <i-input v-model="formValidate.repeatPassword" :type="passwordType" :icon="passwordIcon"
+                 @on-click="showPassword"
+                 :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></i-input>
       </Form-item>
       <Form-item>
         <Button type="default" @click="handleReset('formValidate')">

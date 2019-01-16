@@ -92,9 +92,9 @@
       </div>
     </div>
     <Modal v-model="addModal" :title="$t('forms.buttons.add')" :loading="modal_loading" :mask-closable="false">
-      <Form ref="addForm" :model="addForm" :rules="ruleAddForm" :label-width="60">
+      <Form ref="addForm" :model="addForm" :rules="ruleAddForm" :label-width="60" style="padding-right: 25px;">
         <Form-item :label="$t('forms.name')" prop="name">
-          <i-input v-model="addForm.name" :disabled="modal_loading"
+          <i-input v-model="addForm.name" :disabled="modal_loading" ref="name"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                    @on-enter="doAdd('addForm')"></i-input>
         </Form-item>
@@ -160,6 +160,15 @@
         editDes: '',
         editEnabled: true,
         selectedData: []
+      }
+    },
+    watch: {
+      addModal (value) {
+        if (value) {
+          this.$nextTick(() => {
+            this.$refs['name'].focus()
+          })
+        }
       }
     },
     computed: {

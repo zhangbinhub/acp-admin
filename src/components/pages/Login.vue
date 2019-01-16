@@ -16,7 +16,7 @@
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
             <FormItem prop="loginNo">
               <i-input v-model="formValidate.loginNo" type="text" prefix="md-person" :disabled="modal_loading"
-                       :placeholder="text.usernamePlaceholder"/>
+                       autofocus="true" :placeholder="text.usernamePlaceholder"/>
             </FormItem>
             <FormItem prop="password">
               <i-input v-model="formValidate.password" type="password" prefix="md-lock" :disabled="modal_loading"
