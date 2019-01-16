@@ -32,7 +32,7 @@ const messages = Object.assign(enLocale, {
     appConfig: 'Application Configure',
     authConfig: 'Authority Configure',
     orgConfig: 'Organization Configure',
-    paramConfig: 'Parameter Configure',
+    runtimeConfig: 'Parameter Configure',
     roleConfig: 'Role Configure',
     userConfig: 'User Configure'
   },

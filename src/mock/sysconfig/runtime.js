@@ -1,4 +1,4 @@
-export const updateParam = () => {
+export const updateRuntime = () => {
   return {
     'id': '58e19099-15c5-11e9-95dd-d8c49792dd7b',
     'name': 'name',
@@ -8,12 +8,12 @@ export const updateParam = () => {
     'covert': true
   }
 }
-export const deleteParam = () => {
+export const deleteRuntime = () => {
   return {
     message: '删除成功'
   }
 }
-export const queryParam = () => {
+export const queryRuntime = () => {
   return {
     'content': [{
       'id': '58e19099-15c5-11e9-95dd-d8c49792dd7b',

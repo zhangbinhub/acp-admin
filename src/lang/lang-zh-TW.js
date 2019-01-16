@@ -32,7 +32,7 @@ const messages = Object.assign(twLocale, {
     appConfig: '應用配置',
     authConfig: '權限配置',
     orgConfig: '機構配置',
-    paramConfig: '運行參數配置',
+    runtimeConfig: '運行參數配置',
     roleConfig: '角色配置',
     userConfig: '用戶配置'
   },

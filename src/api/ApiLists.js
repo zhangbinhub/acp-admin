@@ -1,11 +1,11 @@
 import oauth from './oauth/OauthApi'
-import param from './sysconfig/paramConfig'
+import runtime from './sysconfig/runtimeConfig'
 import app from './sysconfig/appConfig'
 
 export default Object.assign(
   oauth,
   {
-    param: param,
+    runtime: runtime,
     app: app
   }
 )

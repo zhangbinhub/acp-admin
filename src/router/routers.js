@@ -100,11 +100,11 @@ export default [
         requireAuth: true
       }
     }, {
-      path: '/paramconfig',
-      name: 'paramConfig',
-      component: () => import('@/components/views/sysconfig/ParamConfig.vue'),
+      path: '/runtimeconfig',
+      name: 'runtimeConfig',
+      component: () => import('@/components/views/sysconfig/RuntimeConfig.vue'),
       meta: {
-        title: 'pageTitle.paramConfig',
+        title: 'pageTitle.runtimeConfig',
         requireAuth: true
       }
     }, {

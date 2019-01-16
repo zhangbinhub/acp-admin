@@ -129,7 +129,7 @@
 </template>
 <script>
   export default {
-    name: 'paramConfig',
+    name: 'runtimeConfig',
     data () {
       return {
         searchForm: {
@@ -241,7 +241,7 @@
         this.$refs[name].validate((valid) => {
           if (valid) {
             this.modal_loading = true
-            this.$api.request.param.create({
+            this.$api.request.runtime.create({
               name: this.addForm.name,
               value: this.addForm.value,
               config_des: this.addForm.describe,
@@ -258,7 +258,7 @@
       },
       handleDelete (rowIds) {
         this.modal_loading = true
-        this.$api.request.param.delete(rowIds).then(() => {
+        this.$api.request.runtime.delete(rowIds).then(() => {
           this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
           this.handleSearch()
         }).catch(() => {
@@ -267,7 +267,7 @@
       },
       handleSave (index) {
         this.modal_loading = true
-        this.$api.request.param.update({
+        this.$api.request.runtime.update({
           id: this.searchData[index].id,
           value: this.editValue,
           config_des: this.editDes,
@@ -310,7 +310,7 @@
           searchParam.query_param.order_commond = this.searchForm.orderParam.order
         }
         this.modal_loading = true
-        this.$api.request.param.query(searchParam).then((res) => {
+        this.$api.request.runtime.query(searchParam).then((res) => {
           this.modal_loading = false
           if (res) {
             this.selectedData = []

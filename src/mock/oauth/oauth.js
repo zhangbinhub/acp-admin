@@ -114,7 +114,7 @@ export const menuList = () => {
       'appid': '4085bd00-1482-11e9-8c6d-d8c49792dd7b',
       'name': '运行参数配置',
       'icon_type': 'md-build',
-      'path': '/paramconfig',
+      'path': '/runtimeconfig',
       'parentid': '408aa27c-1482-11e9-8c6d-d8c49792dd7b',
       'enabled': true,
       'covert': false,
