@@ -37,9 +37,6 @@ export default {
   getUserInfo: () => {
     return ApiComm.$http.get('/oauth/userinfo')
   },
-  getMenus: () => {
-    return ApiComm.$http.get('/oauth/menulist')
-  },
   updateUserInfo: (userInfo) => {
     if (userInfo.old_password) {
       userInfo.old_password = sha256.sha256(sha256.sha256(userInfo.old_password) + ApiComm.$store.state.app.user.userInfo.loginno)

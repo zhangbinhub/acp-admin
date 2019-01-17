@@ -167,7 +167,7 @@
               userParam.old_password = this.formValidate.oldPassword
               userParam.password = this.formValidate.password
             }
-            this.$api.request.updateUserInfo(userParam).then((res) => {
+            this.$api.request.auth.updateUserInfo(userParam).then((res) => {
               this.$store.commit('SET_USER_INFO', res.data)
               this.modal_loading = false
               this.$Message.success(this.$i18n.t('messages.saveSuccess'))

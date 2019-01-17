@@ -82,7 +82,7 @@
         currObj.$refs[name].validate((valid) => {
           if (valid) {
             currObj.modal_loading = true
-            currObj.$api.request.doLogin(currObj.formValidate.loginNo, currObj.formValidate.password).then(res => {
+            currObj.$api.request.auth.doLogin(currObj.formValidate.loginNo, currObj.formValidate.password).then(res => {
               currObj.modal_loading = false
               if (res) {
                 if (res.data.access_token) {
