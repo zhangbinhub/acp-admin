@@ -13,6 +13,7 @@ const messages = Object.assign(zhLocale, {
     leavePage: '输入的数据将会丢失，确认关闭吗？',
     allPages: '所有页面',
     otherPages: '其他页面',
+    createSuccess: '创建成功',
     saveSuccess: '保存成功',
     updateSuccess: '更新成功',
     deleteSuccess: '删除成功',
@@ -72,6 +73,12 @@ const messages = Object.assign(zhLocale, {
     avatar: '头像',
     avatarUpload: '头像上传',
     name: '名称',
+    code: '编码',
+    sort: '序号',
+    parent: '上级',
+    userList: '用户列表',
+    selected: '已选',
+    optional: '可选项',
     value: '值',
     mobile: '手机号',
     describe: '描述',
@@ -91,6 +98,7 @@ const messages = Object.assign(zhLocale, {
     access_token_validity_seconds: 'token有效期',
     refresh_token_validity_seconds: 'refreshToken有效期',
     seconds: '秒',
+    organization: '机构',
     buttons: {
       login: '登录',
       submit: '提交',
@@ -105,7 +113,10 @@ const messages = Object.assign(zhLocale, {
       upload: '上传',
       view: '查看',
       free: '自定义',
-      updateSecret: '更新密钥'
+      updateSecret: '更新密钥',
+      select: '选择',
+      deSelect: '取消选择',
+      refresh: '刷新'
     }
   }
 })

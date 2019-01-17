@@ -13,6 +13,7 @@ const messages = Object.assign(enLocale, {
     leavePage: 'The data entered will be lost. Are you sure to close?',
     allPages: 'All Pages',
     otherPages: 'Other Pages',
+    createSuccess: 'Create Successfully',
     saveSuccess: 'Save Successfully',
     updateSuccess: 'Update Successfully',
     deleteSuccess: 'Delete Successfully',
@@ -72,6 +73,12 @@ const messages = Object.assign(enLocale, {
     avatar: 'avatar',
     avatarUpload: 'Avatar Upload',
     name: 'name',
+    code: 'code',
+    sort: 'sort',
+    parent: 'parent',
+    userList: 'user list',
+    selected: 'selected',
+    optional: 'optional',
     value: 'value',
     mobile: 'mobile',
     describe: 'describe',
@@ -88,7 +95,10 @@ const messages = Object.assign(enLocale, {
     new: 'New ',
     confirmPassword: 'Confirm password',
     passwordNotEqual: 'Confirm password is not equal new password',
+    access_token_validity_seconds: 'token validity',
+    refresh_token_validity_seconds: 'refresh Token validity',
     seconds: 'seconds',
+    organization: 'Organization',
     buttons: {
       login: 'login',
       submit: 'submit',
@@ -103,7 +113,10 @@ const messages = Object.assign(enLocale, {
       upload: 'upload',
       view: 'view',
       free: 'Free',
-      updateSecret: 'update secret'
+      updateSecret: 'update secret',
+      select: 'select',
+      deSelect: 'Deselect',
+      refresh: 'Refresh'
     }
   }
 })

@@ -15,8 +15,9 @@
         <div>
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
             <FormItem prop="loginNo">
-              <i-input v-model="formValidate.loginNo" type="text" prefix="md-person" :disabled="modal_loading"
-                       autofocus="true" :placeholder="text.usernamePlaceholder"/>
+              <i-input ref="loginNo" v-model="formValidate.loginNo" type="text" prefix="md-person"
+                       :disabled="modal_loading" :placeholder="text.usernamePlaceholder"
+                       @keyup.native.enter="handleSubmit('formValidate')"/>
             </FormItem>
             <FormItem prop="password">
               <i-input v-model="formValidate.password" type="password" prefix="md-lock" :disabled="modal_loading"
@@ -117,6 +118,11 @@
           }
         })
       }
+    },
+    mounted () {
+      this.$nextTick(() => {
+        this.$refs['loginNo'].focus()
+      })
     }
   }
 </script>

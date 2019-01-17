@@ -13,6 +13,7 @@ const messages = Object.assign(twLocale, {
     leavePage: '輸入的數據將會丟失，確認關閉嗎？',
     allPages: '所有頁面',
     otherPages: '其他頁面',
+    createSuccess: '創建成功',
     saveSuccess: '保存成功',
     updateSuccess: '更新成功',
     deleteSuccess: '删除成功',
@@ -72,6 +73,12 @@ const messages = Object.assign(twLocale, {
     avatar: '頭像',
     avatarUpload: '頭像上傳',
     name: '名稱',
+    code: '編碼',
+    sort: '序號',
+    parent: '上級',
+    userList: '用戶列表',
+    selected: '已選',
+    optional: '可選項',
     value: '值',
     mobile: '手機號',
     describe: '描述',
@@ -88,7 +95,10 @@ const messages = Object.assign(twLocale, {
     new: '新',
     confirmPassword: '確認密碼',
     passwordNotEqual: '兩次輸入的密碼不相等',
+    access_token_validity_seconds: 'token有效期',
+    refresh_token_validity_seconds: 'refreshToken有效期',
     seconds: '秒',
+    organization: '機構',
     buttons: {
       login: '登錄',
       submit: '提交',
@@ -103,7 +113,10 @@ const messages = Object.assign(twLocale, {
       upload: '上傳',
       view: '查看',
       free: '自定義',
-      updateSecret: '更新密鑰'
+      updateSecret: '更新密鑰',
+      select: '選擇',
+      deSelect: '取消選擇',
+      refresh: '刷新'
     }
   }
 })

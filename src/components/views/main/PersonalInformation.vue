@@ -8,7 +8,7 @@
         </Tooltip>
       </Form-item>
       <Form-item :label="$t('forms.name')" prop="name">
-        <i-input ref="name" v-model="formValidate.name" autofocus="true"
+        <i-input ref="name" v-model="formValidate.name"
                  :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"></i-input>
       </Form-item>
       <Form-item :label="$t('forms.mobile')" prop="mobile">
@@ -208,6 +208,11 @@
           this.passwordIcon = 'ios-eye-outline'
         }
       }
+    },
+    activated () {
+      this.$nextTick(() => {
+        this.$refs['name'].focus()
+      })
     }
   }
 </script>
