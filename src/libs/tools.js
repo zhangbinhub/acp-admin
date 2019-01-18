@@ -187,3 +187,106 @@ export const updateTagNavList = (tagNavList, menuList, route) => {
     return tagNavList
   }
 }
+
+/**
+ * 树节点排序，根据sort属性
+ * @param nodeList Array
+ */
+export const sortTreeNodes = (nodeList) => {
+  nodeList.sort((obj1, obj2) => {
+    if (obj1.sort > obj2.sort) {
+      return 1
+    } else if (obj1.sort === obj2.sort) {
+      return 0
+    } else {
+      return -1
+    }
+  })
+  for (let item of nodeList) {
+    if (item.children && item.children.length > 0) {
+      sortTreeNodes(item.children)
+    }
+  }
+}
+
+/**
+ * 将后台返回数据转换为tree组件数据
+ * @param nodeList Array
+ * @returns Array
+ */
+export const processTreeNode = (nodeList) => {
+  for (let i = 0; i < nodeList.length; i++) {
+    nodeList[i].value = nodeList[i].id
+    nodeList[i].title = nodeList[i].name
+    nodeList[i].label = nodeList[i].name
+    nodeList[i].expand = true
+    if (nodeList[i].children && nodeList[i].children.length > 0) {
+      nodeList[i].children = processTreeNode(nodeList[i].children)
+    }
+  }
+  return nodeList
+}
+
+/**
+ * 获取树中某个节点的全路径title字符串
+ * @param treeData 树全数据 Array
+ * @param targetId 指定节点id
+ * @param property 拼接的属性名，default='title'
+ * @param separate 分隔字符串，default=' > '
+ * @returns String
+ */
+export const getTreeFullPathTitle = (treeData, targetId, property = 'title', separate = ' > ') => {
+  for (let item of treeData) {
+    if (item.id === targetId) {
+      return item[property]
+    } else {
+      if (item.children && item.children.length > 0) {
+        const childrenPathTitle = getTreeFullPathTitle(item.children, targetId, property, separate)
+        if (childrenPathTitle !== '') {
+          return item[property] + separate + childrenPathTitle
+        }
+      }
+    }
+  }
+  return ''
+}
+
+/**
+ * 获取树中某个节点的全路径节点数组
+ * @param treeData 树全数据 Array
+ * @param targetId 指定节点id
+ * @returns Array
+ */
+export const getTreeFullPathArray = (treeData, targetId) => {
+  for (let item of treeData) {
+    if (item.id === targetId) {
+      return [item]
+    } else {
+      if (item.children && item.children.length > 0) {
+        const childrenArray = getTreeFullPathArray(item.children, targetId)
+        if (childrenArray.length > 0) {
+          return [item, ...getTreeFullPathArray(item.children, targetId)]
+        }
+      }
+    }
+  }
+  return []
+}
+
+/**
+ * 过滤树中指定id的节点
+ * @param treeData 树全数据 Array
+ * @param targetIds id数组 Array
+ * @returns Array
+ */
+export const filterTreeNode = (treeData, targetIds) => {
+  const filterData = treeData.filter(item => {
+    return !targetIds.includes(item.id)
+  })
+  for (let item of filterData) {
+    if (item.children && item.children.length > 0) {
+      item.children = filterTreeNode(item.children, targetIds)
+    }
+  }
+  return filterData
+}

@@ -29,5 +29,5 @@ Mock.mock(/\/oauth\/org/, /put/i, getOrgInfo)
 Mock.mock(/\/oauth\/org/, /patch/i, function (options) {
   return Object.assign(getOrgInfo(), JSON.parse(options.body))
 })
-Mock.mock(/\/oauth\/app/, /delete/i, deleteOrg)
+Mock.mock(/\/oauth\/org/, /delete/i, deleteOrg)
 Mock.mock(/\/oauth\/moduserlist/, /get/i, getModUserList)
