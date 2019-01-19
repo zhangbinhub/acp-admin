@@ -54,6 +54,7 @@
               </div>
             </Transfer>
           </Form-item>
+          <Divider style="margin: 12px 0;"/>
           <div align="center">
             <Button type="default" size="small" :loading="treeLoading" style="margin-right: 20px;"
                     @click="doReset">
@@ -84,7 +85,7 @@
       return {
         listStyle: {
           width: '210px',
-          height: '295px'
+          height: '283px'
         },
         treeData: [{
           id: 'root',
