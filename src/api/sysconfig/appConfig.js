@@ -1,6 +1,9 @@
 import ApiComm from '../ApiComm'
 
 export default {
+  getList: () => {
+    return ApiComm.$http.get('/oauth/app')
+  },
   create: (appInfo) => {
     return ApiComm.$http.put('/oauth/app', appInfo)
   },

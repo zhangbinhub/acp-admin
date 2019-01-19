@@ -75,6 +75,7 @@ const messages = Object.assign(twLocale, {
     name: '名稱',
     code: '編碼',
     sort: '序號',
+    level: '級別',
     parent: '上級',
     userList: '用戶列表',
     selected: '已選',
@@ -99,6 +100,10 @@ const messages = Object.assign(twLocale, {
     refresh_token_validity_seconds: 'refreshToken有效期',
     seconds: '秒',
     organization: '機構',
+    role: '角色',
+    basicInfo: '基本信息',
+    menuList: '菜單列表',
+    moduleFuncList: '模塊功能列表',
     buttons: {
       login: '登錄',
       submit: '提交',

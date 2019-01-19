@@ -24,6 +24,8 @@
                           @on-enter="doSave"></Cascader>
               </Form-item>
             </i-col>
+          </Row>
+          <Row>
             <i-col :sm="{ span: 12 }">
               <Form-item :label="$t('forms.code')" prop="code">
                 <i-input v-model="editForm.code" :disabled="treeLoading" size="small"
@@ -68,6 +70,7 @@
 </template>
 <script>
   import {
+    copy,
     sortTreeNodes,
     processTreeNode,
     getTreeFullPathTitle,
@@ -129,8 +132,7 @@
         return this.tree_loading
       },
       cascaderData () {
-        const srcData = JSON.parse(JSON.stringify(this.treeData))
-        return filterTreeNode(srcData, [this.editForm.id])
+        return filterTreeNode(copy(this.treeData), [this.editForm.id])
       },
       parentArray () {
         return this.editForm.parentArray

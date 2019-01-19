@@ -75,6 +75,7 @@ const messages = Object.assign(zhLocale, {
     name: '名称',
     code: '编码',
     sort: '序号',
+    level: '级别',
     parent: '上级',
     userList: '用户列表',
     selected: '已选',
@@ -99,6 +100,10 @@ const messages = Object.assign(zhLocale, {
     refresh_token_validity_seconds: 'refreshToken有效期',
     seconds: '秒',
     organization: '机构',
+    role: '角色',
+    basicInfo: '基本信息',
+    menuList: '菜单列表',
+    moduleFuncList: '模块功能列表',
     buttons: {
       login: '登录',
       submit: '提交',

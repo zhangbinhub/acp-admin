@@ -75,6 +75,7 @@ const messages = Object.assign(enLocale, {
     name: 'name',
     code: 'code',
     sort: 'sort',
+    level: 'level',
     parent: 'parent',
     userList: 'user list',
     selected: 'selected',
@@ -99,6 +100,10 @@ const messages = Object.assign(enLocale, {
     refresh_token_validity_seconds: 'refresh Token validity',
     seconds: 'seconds',
     organization: 'Organization',
+    role: 'Role',
+    basicInfo: 'Basic Info',
+    menuList: 'menu list',
+    moduleFuncList: 'ModuleFunc list',
     buttons: {
       login: 'login',
       submit: 'submit',

@@ -1,4 +1,13 @@
 /**
+ * 对象的深拷贝
+ * @param srcObj 源对象
+ * @returns {any} 拷贝后的对象
+ */
+export const copy = (srcObj) => {
+  return JSON.parse(JSON.stringify(srcObj))
+}
+
+/**
  * 根据 path 获取菜单全路径
  * @param path
  * @param menuList
@@ -212,16 +221,28 @@ export const sortTreeNodes = (nodeList) => {
 /**
  * 将后台返回数据转换为tree组件数据
  * @param nodeList Array
+ * @param flag 0-config,1-select
+ * @param selectedIds 选中项的id
  * @returns Array
  */
-export const processTreeNode = (nodeList) => {
+export const processTreeNode = (nodeList, flag = 0, selectedIds = []) => {
   for (let i = 0; i < nodeList.length; i++) {
     nodeList[i].value = nodeList[i].id
     nodeList[i].title = nodeList[i].name
     nodeList[i].label = nodeList[i].name
-    nodeList[i].expand = true
+    if (flag === 1 && selectedIds.includes(nodeList[i].id)) {
+      nodeList[i].expand = true
+      if (nodeList[i].children && nodeList[i].children.length > 0) {
+        nodeList[i].checked = false
+        nodeList[i].indeterminate = true
+      } else {
+        nodeList[i].checked = true
+      }
+    } else if (flag === 0) {
+      nodeList[i].expand = true
+    }
     if (nodeList[i].children && nodeList[i].children.length > 0) {
-      nodeList[i].children = processTreeNode(nodeList[i].children)
+      nodeList[i].children = processTreeNode(nodeList[i].children, flag, selectedIds)
     }
   }
   return nodeList
