@@ -272,7 +272,8 @@
         this.$api.request.org.getOrgList().then((res) => {
           this.tree_loading = false
           if (res) {
-            this.treeData[0].children = processTreeNode(res.data)
+            processTreeNode(res.data)
+            this.treeData[0].children = res.data
             this.clearCurrOrg()
           }
         }).catch(() => {
@@ -305,8 +306,8 @@
           if (res) {
             this.$Message.success(this.$i18n.t('messages.createSuccess'))
             const children = data.children || []
-            const newOrg = processTreeNode([res.data])
-            children.push(newOrg[0])
+            processTreeNode([res.data])
+            children.push(res.data)
             sortTreeNodes(children)
             this.$set(data, 'children', children)
           }

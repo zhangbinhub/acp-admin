@@ -242,8 +242,8 @@
             this.$api.request.role.getList().then((res) => {
               this.tree_loading = false
               if (res) {
-                const roleData = processTreeNode(res.data)
-                for (const item of roleData) {
+                processTreeNode(res.data)
+                for (const item of res.data) {
                   item.parentid = item.appid
                   for (const root of this.treeData) {
                     if (root.id === item.appid) {
@@ -292,7 +292,8 @@
         this.$api.request.auth.getMenuList(this.currRole.appid).then((res) => {
           this.tree_loading = false
           if (res) {
-            this.menuData = processTreeNode(res.data, 1, this.currRole.menu_ids)
+            processTreeNode(res.data, 1, this.currRole.menu_ids)
+            this.menuData = res.data
           }
         }).catch(() => {
           this.tree_loading = false
@@ -303,7 +304,8 @@
         this.$api.request.auth.getModuleFuncList(this.currRole.appid).then((res) => {
           this.tree_loading = false
           if (res) {
-            this.moduleFuncData = processTreeNode(res.data, 1, this.currRole.module_func_ids)
+            processTreeNode(res.data, 1, this.currRole.module_func_ids)
+            this.moduleFuncData = res.data
           }
         }).catch(() => {
           this.tree_loading = false
@@ -348,8 +350,8 @@
           if (res) {
             this.$Message.success(this.$i18n.t('messages.createSuccess'))
             const children = data.children || []
-            const newOrg = processTreeNode([res.data])
-            children.push(newOrg[0])
+            processTreeNode([res.data])
+            children.push(res.data)
             sortTreeNodes(children)
             this.$set(data, 'children', children)
           }

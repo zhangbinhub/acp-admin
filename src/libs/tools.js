@@ -223,29 +223,32 @@ export const sortTreeNodes = (nodeList) => {
  * @param nodeList Array
  * @param flag 0-config,1-select
  * @param selectedIds 选中项的id
- * @returns Array
+ * @returns number selectedCount
  */
 export const processTreeNode = (nodeList, flag = 0, selectedIds = []) => {
+  let selectedCount = 0
   for (let i = 0; i < nodeList.length; i++) {
     nodeList[i].value = nodeList[i].id
     nodeList[i].title = nodeList[i].name
     nodeList[i].label = nodeList[i].name
+    let childrenSelected = 0
+    if (nodeList[i].children && nodeList[i].children.length > 0) {
+      childrenSelected = processTreeNode(nodeList[i].children, flag, selectedIds)
+    }
     if (flag === 1 && selectedIds.includes(nodeList[i].id)) {
       nodeList[i].expand = true
-      if (nodeList[i].children && nodeList[i].children.length > 0) {
+      if (childrenSelected === nodeList[i].children.length) {
+        selectedCount++
+        nodeList[i].checked = true
+      } else {
         nodeList[i].checked = false
         nodeList[i].indeterminate = true
-      } else {
-        nodeList[i].checked = true
       }
     } else if (flag === 0) {
       nodeList[i].expand = true
     }
-    if (nodeList[i].children && nodeList[i].children.length > 0) {
-      nodeList[i].children = processTreeNode(nodeList[i].children, flag, selectedIds)
-    }
   }
-  return nodeList
+  return selectedCount
 }
 
 /**
