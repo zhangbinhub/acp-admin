@@ -1,15 +1,17 @@
 <template>
   <Row :gutter="16">
-    <i-col :lg="{ span: 8 }" style="min-width: 300px;margin-bottom: 16px;">
+    <i-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
       <Card>
-        <Tree :data="treeData" :render="renderContent"></Tree>
+        <div style="max-height: 500px;overflow: auto;">
+          <Tree style="margin-right: 16px;" :data="treeData" :render="renderContent"></Tree>
+        </div>
       </Card>
     </i-col>
-    <i-col :lg="{ span: 16 }" v-show="currRole.id&&currRole.id!==''" style="margin-bottom: 16px;">
+    <i-col :lg="{ span: 15 }" v-show="currRole.id&&currRole.id!==''" style="margin-bottom: 16px;">
       <Card>
         <p style="margin: 0 16px;">{{currRoleFullPath}}</p>
         <Divider style="margin: 12px 0;"/>
-        <Tabs size="small">
+        <Tabs size="small" capture-focus>
           <TabPane :label="$t('forms.basicInfo')" icon="md-text">
             <Form ref="editForm" :model="editForm" :rules="ruleEditForm" :label-width="60">
               <Form-item :label="$t('forms.name')" prop="name">
@@ -18,8 +20,7 @@
                          @on-enter="doSave"></i-input>
               </Form-item>
               <Form-item :label="$t('forms.code')" prop="code">
-                <i-select v-model="editForm.code" filterable :disabled="treeLoading" clearable
-                          @keyup.enter.native="doSave">
+                <i-select v-model="editForm.code" filterable :disabled="treeLoading" @keyup.enter.native="doSave">
                   <Option v-for="item in roleCodeList" :value="item" :key="item">{{ item }}</Option>
                 </i-select>
               </Form-item>
@@ -50,12 +51,10 @@
             </Transfer>
           </TabPane>
           <TabPane :label="$t('forms.menuList')" icon="md-list">
-            <Tree ref="menuTree" :data="menuData" show-checkbox multiple
-                  style="max-height: 355px;overflow: auto"></Tree>
+            <Tree ref="menuTree" :data="menuData" show-checkbox multiple></Tree>
           </TabPane>
           <TabPane :label="$t('forms.moduleFuncList')" icon="md-apps">
-            <Tree ref="moduleFuncTree" :data="moduleFuncData" show-checkbox multiple
-                  style="max-height: 355px;overflow: auto"></Tree>
+            <Tree ref="moduleFuncTree" :data="moduleFuncData" show-checkbox multiple></Tree>
           </TabPane>
         </Tabs>
         <Divider style="margin: 12px 0;"/>
@@ -231,6 +230,7 @@
             const appData = appres.data
             for (let i = 0; i < appData.length; i++) {
               const item = appData[i]
+              item.appid = item.id
               item.name = item.appname
               item.render = this.rootRenderContent
               item.expand = true
@@ -341,7 +341,7 @@
         this.tree_loading = true
         this.$api.request.role.createRole({
           name: this.$i18n.t('forms.new') + this.$i18n.t('forms.role'),
-          appid: data.id,
+          appid: data.appid,
           sort: data.children.length + 1,
           code: 'OTHER',
           levels: 999

@@ -200,12 +200,13 @@ export const updateTagNavList = (tagNavList, menuList, route) => {
 /**
  * 树节点排序，根据sort属性
  * @param nodeList Array
+ * @param property
  */
-export const sortTreeNodes = (nodeList) => {
+export const sortTreeNodes = (nodeList, property = 'sort') => {
   nodeList.sort((obj1, obj2) => {
-    if (obj1.sort > obj2.sort) {
+    if (obj1[property] > obj2[property]) {
       return 1
-    } else if (obj1.sort === obj2.sort) {
+    } else if (obj1[property] === obj2[property]) {
       return 0
     } else {
       return -1

@@ -53,3 +53,13 @@ export const deleteRole = () => {
     message: '删除成功'
   }
 }
+export const getRoleListOption = () => {
+  return [{
+    'id': 'e9bdd38d-1bf7-11e9-a49e-d8c49792dd7b',
+    'appid': 'aa4da240-1bf2-11e9-a49e-d8c49792dd7b',
+    'name': '新角色',
+    'code': 'OTHER',
+    'levels': 999,
+    'sort': 1
+  }]
+}

@@ -5,8 +5,17 @@ import { deleteRuntime, queryRuntime, updateRuntime } from './sysconfig/runtime'
 import { getAppList, deleteApp, queryApp, updateApp } from './sysconfig/application'
 import { getOrgList, getOrgInfo, deleteOrg } from './sysconfig/organization'
 import { getModUserList } from './sysconfig/user'
-import { getRoleCodeList, getRoleList, getRoleInfo, updateRole, deleteRole } from './sysconfig/role'
-import { getMenuListByAppId, getModuleFuncListByAppId } from './sysconfig/auth'
+import { getRoleCodeList, getRoleList, getRoleInfo, updateRole, deleteRole, getRoleListOption } from './sysconfig/role'
+import {
+  getMenuListByAppId,
+  getModuleFuncListByAppId,
+  getModuleFuncCodeList,
+  getAllMenuList,
+  getMenuInfo,
+  deleteAuth,
+  getAllModuleFuncList,
+  getModuleFuncInfo
+} from './sysconfig/auth'
 
 // 配置Ajax请求延时，可用来测试网络延迟大时项目中一些效果
 Mock.setup({
@@ -43,5 +52,21 @@ Mock.mock(/\/oauth\/role/, /patch/i, function (options) {
   return Object.assign(updateRole(), JSON.parse(options.body))
 })
 Mock.mock(/\/oauth\/role/, /delete/i, deleteRole)
+Mock.mock(/\/oauth\/role\/rolelist\/.*/, /get/i, getRoleListOption)
 Mock.mock(/\/oauth\/auth\/menulist\/.*/, /get/i, getMenuListByAppId)
 Mock.mock(/\/oauth\/auth\/modulefunclist\/.*/, /get/i, getModuleFuncListByAppId)
+Mock.mock(/\/oauth\/auth\/modulefunccodes/, /get/i, getModuleFuncCodeList)
+Mock.mock(/\/oauth\/auth\/menu/, /get/i, getAllMenuList)
+Mock.mock(/\/oauth\/auth\/menu/, /put/i, getMenuInfo)
+Mock.mock(/\/oauth\/auth\/menu\/.*/, /get/i, getMenuInfo)
+Mock.mock(/\/oauth\/auth\/menu/, /patch/i, function (options) {
+  return Object.assign(getMenuInfo(), JSON.parse(options.body))
+})
+Mock.mock(/\/oauth\/auth\/menu/, /delete/i, deleteAuth)
+Mock.mock(/\/oauth\/auth\/modulefunc/, /get/i, getAllModuleFuncList)
+Mock.mock(/\/oauth\/auth\/modulefunc/, /put/i, getModuleFuncInfo)
+Mock.mock(/\/oauth\/auth\/modulefunc\/.*/, /get/i, getModuleFuncInfo)
+Mock.mock(/\/oauth\/auth\/modulefunc/, /patch/i, function (options) {
+  return Object.assign(getModuleFuncInfo(), JSON.parse(options.body))
+})
+Mock.mock(/\/oauth\/auth\/modulefunc/, /delete/i, deleteAuth)

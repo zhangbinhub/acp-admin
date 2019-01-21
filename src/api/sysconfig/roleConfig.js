@@ -7,6 +7,9 @@ export default {
   getList: () => {
     return ApiComm.$http.get('/oauth/role')
   },
+  getRoleList: (appId) => {
+    return ApiComm.$http.get('/oauth/role/rolelist/' + appId)
+  },
   getRoleInfo: (roleId) => {
     return ApiComm.$http.get('/oauth/role/' + roleId)
   },

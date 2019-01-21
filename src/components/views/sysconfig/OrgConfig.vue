@@ -1,11 +1,13 @@
 <template>
   <Row :gutter="16">
-    <i-col :lg="{ span: 8 }" style="min-width: 300px;margin-bottom: 16px;">
+    <i-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
       <Card>
-        <Tree :data="treeData" :render="renderContent"></Tree>
+        <div style="max-height: 500px;overflow: auto;">
+          <Tree style="margin-right: 16px;" :data="treeData" :render="renderContent"></Tree>
+        </div>
       </Card>
     </i-col>
-    <i-col :lg="{ span: 16 }" v-show="currOrg.id&&currOrg.id!==''" style="margin-bottom: 16px;">
+    <i-col :lg="{ span: 15 }" v-show="currOrg.id&&currOrg.id!==''" style="margin-bottom: 16px;">
       <Card>
         <p style="margin: 0 16px;">{{currOrgFullPath}}</p>
         <Divider style="margin: 12px 0;"/>
