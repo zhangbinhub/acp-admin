@@ -26,13 +26,13 @@
               </Form-item>
               <Form-item :label="$t('forms.level')" prop="levels">
                 <InputNumber v-model="editForm.levels" :disabled="treeLoading" style="width: 100%;max-width: 150px;"
-                             :placeholder="$t('forms.pleaseEnter') + $t('forms.level')"
+                             :placeholder="$t('forms.pleaseEnter') + $t('forms.level')" min="0"
                              @keyup.enter.native="doSave">
                 </InputNumber>
               </Form-item>
               <Form-item :label="$t('forms.sort')" prop="sort">
                 <InputNumber v-model="editForm.sort" :disabled="treeLoading" style="width: 100%;max-width: 150px;"
-                             :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')"
+                             :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" min="0"
                              @keyup.enter.native="doSave">
                 </InputNumber>
               </Form-item>
