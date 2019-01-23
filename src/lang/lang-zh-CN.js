@@ -21,7 +21,9 @@ const messages = Object.assign(zhLocale, {
     tableNoData: '没有查询到数据',
     tableDataCannotDel: '该条数据不允许删除',
     selectDataForDelete: '请选择需要删除的数据',
-    deleteDataConfirm: '确定删除所选数据吗？'
+    deleteDataConfirm: '确定删除所选数据吗？',
+    modifyLoginNo: '修改登录账号将重置密码，是否继续？',
+    resetPassword: '确定重置所选用户密码吗？'
   },
   pageTitle: {
     test: '测试',
@@ -106,12 +108,15 @@ const messages = Object.assign(zhLocale, {
     moduleFunc: '模块功能',
     basicInfo: '基本信息',
     menuList: '菜单列表',
+    orgList: '机构列表',
+    orgMngList: '可管理的机构',
     moduleFuncList: '模块功能列表',
     icon_type: '图标',
     path: '链接路径',
     opentype: '打开方式',
     inner: '内嵌模式',
     newTabs: '新标签页',
+    status: '状态',
     buttons: {
       login: '登录',
       submit: '提交',
@@ -129,7 +134,8 @@ const messages = Object.assign(zhLocale, {
       updateSecret: '更新密钥',
       select: '选择',
       deSelect: '取消选择',
-      refresh: '刷新'
+      refresh: '刷新',
+      resetPwd: '重置密码'
     }
   }
 })

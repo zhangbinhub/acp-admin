@@ -214,7 +214,7 @@ export const sortTreeNodes = (nodeList, property = 'sort') => {
   })
   for (let item of nodeList) {
     if (item.children && item.children.length > 0) {
-      sortTreeNodes(item.children)
+      sortTreeNodes(item.children, property)
     }
   }
 }
@@ -229,11 +229,14 @@ export const sortTreeNodes = (nodeList, property = 'sort') => {
 export const processTreeNode = (nodeList, flag = 0, selectedIds = []) => {
   let selectedCount = 0
   for (let i = 0; i < nodeList.length; i++) {
+    if (!nodeList[i].children) {
+      nodeList[i].children = []
+    }
     nodeList[i].value = nodeList[i].id
     nodeList[i].title = nodeList[i].name
     nodeList[i].label = nodeList[i].name
     let childrenSelected = 0
-    if (nodeList[i].children && nodeList[i].children.length > 0) {
+    if (nodeList[i].children.length > 0) {
       childrenSelected = processTreeNode(nodeList[i].children, flag, selectedIds)
     }
     if (flag === 1 && selectedIds.includes(nodeList[i].id)) {

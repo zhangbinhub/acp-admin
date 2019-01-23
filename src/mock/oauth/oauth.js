@@ -11,7 +11,7 @@ export const login = () => {
 
 export const userInfo = () => {
   return {
-    'id': '7e64c79a-1958-11e9-894e-d8c49792dd7b',
+    'id': 'dbfd58aa-19fb-11e9-894e-d8c49792dd7b',
     'name': 'ZhangBin',
     'loginno': 'admin',
     'mobile': '13888888888',

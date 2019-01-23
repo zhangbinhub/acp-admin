@@ -58,7 +58,7 @@
                 </i-col>
                 <i-col :sm="{ span: 12 }">
                   <Form-item :label="$t('forms.sort')" prop="sort">
-                    <InputNumber v-model="menuEditForm.sort" :disabled="treeLoading" min="0"
+                    <InputNumber v-model="menuEditForm.sort" :disabled="treeLoading" :min="0"
                                  style="width: 100%;max-width: 150px;"
                                  size="small" :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')"
                                  @keyup.enter.native="doSaveMenu">

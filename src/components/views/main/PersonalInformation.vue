@@ -8,29 +8,31 @@
         </Tooltip>
       </Form-item>
       <Form-item :label="$t('forms.name')" prop="name">
-        <i-input ref="name" v-model="formValidate.name"
+        <i-input ref="name" v-model="formValidate.name" @on-enter="handleSubmit('formValidate')"
                  :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"></i-input>
       </Form-item>
       <Form-item :label="$t('forms.mobile')" prop="mobile">
-        <i-input v-model="formValidate.mobile" :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></i-input>
+        <i-input v-model="formValidate.mobile" @on-enter="handleSubmit('formValidate')"
+                 :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></i-input>
       </Form-item>
       <Form-item :label="$t('forms.changePassword')">
-        <Switch v-model="updatePassword">
+        <Switch v-model="updatePassword" @keyup.enter.native="handleSubmit('formValidate')">
           <Icon type="md-checkmark" slot="open"></Icon>
           <Icon type="md-close" slot="close"></Icon>
         </Switch>
       </Form-item>
       <Form-item v-show="updatePassword" :label="$t('forms.old')+$t('forms.password')" prop="oldPassword">
-        <i-input v-model="formValidate.oldPassword" type="password"
+        <i-input v-model="formValidate.oldPassword" type="password" @on-enter="handleSubmit('formValidate')"
                  :placeholder="$t('forms.pleaseEnter') + $t('forms.old')+$t('forms.password')"></i-input>
       </Form-item>
       <Form-item v-show="updatePassword" :label="$t('forms.new')+$t('forms.password')" prop="password">
-        <i-input v-model="formValidate.password" :type="passwordType" :icon="passwordIcon" @on-click="showPassword"
+        <i-input v-model="formValidate.password" :type="passwordType" :icon="passwordIcon"
+                 @on-enter="handleSubmit('formValidate')" @on-click="showPassword"
                  :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></i-input>
       </Form-item>
       <Form-item v-show="updatePassword" :label="$t('forms.confirmPassword')" prop="repeatPassword">
         <i-input v-model="formValidate.repeatPassword" :type="passwordType" :icon="passwordIcon"
-                 @on-click="showPassword"
+                 @on-click="showPassword" @on-enter="handleSubmit('formValidate')"
                  :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></i-input>
       </Form-item>
       <Form-item>

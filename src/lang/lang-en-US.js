@@ -21,7 +21,9 @@ const messages = Object.assign(enLocale, {
     tableNoData: 'No data found',
     tableDataCannotDel: 'This data cannot be deleted',
     selectDataForDelete: 'Please select the data you want to delete',
-    deleteDataConfirm: 'Are you sure to delete the selected data?'
+    deleteDataConfirm: 'Are you sure to delete the selected data?',
+    modifyLoginNo: 'Modifying the loginNo will reset the password. Do you want to continue?',
+    resetPassword: 'Are you sure you want to reset the selected user password?'
   },
   pageTitle: {
     test: 'test',
@@ -107,11 +109,14 @@ const messages = Object.assign(enLocale, {
     basicInfo: 'Basic Info',
     menuList: 'menu list',
     moduleFuncList: 'ModuleFunc list',
+    orgList: 'organization list',
+    orgMngList: 'Administrable organization',
     icon_type: 'icon',
     path: 'path',
     opentype: 'open type',
     inner: 'inner',
     newTabs: 'new tabs',
+    status: 'status',
     buttons: {
       login: 'login',
       submit: 'submit',
@@ -129,7 +134,8 @@ const messages = Object.assign(enLocale, {
       updateSecret: 'update secret',
       select: 'select',
       deSelect: 'Deselect',
-      refresh: 'Refresh'
+      refresh: 'Refresh',
+      resetPwd: 'reset password'
     }
   }
 })

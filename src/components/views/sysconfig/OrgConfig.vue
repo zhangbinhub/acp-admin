@@ -38,7 +38,7 @@
             <i-col :sm="{ span: 12 }">
               <Form-item :label="$t('forms.sort')" prop="sort">
                 <InputNumber v-model="editForm.sort" :disabled="treeLoading" style="width: 100%;max-width: 150px;"
-                             size="small" :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" min="0"
+                             size="small" :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" :min="0"
                              @keyup.enter.native="doSave">
                 </InputNumber>
               </Form-item>

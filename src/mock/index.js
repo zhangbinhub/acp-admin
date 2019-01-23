@@ -4,7 +4,7 @@ import { login, userInfo, menuList } from './oauth/oauth'
 import { deleteRuntime, queryRuntime, updateRuntime } from './sysconfig/runtime'
 import { getAppList, deleteApp, queryApp, updateApp } from './sysconfig/application'
 import { getOrgList, getOrgInfo, deleteOrg } from './sysconfig/organization'
-import { getModUserList } from './sysconfig/user'
+import { getModUserList, getUserList, updateUser, deleteUser, resetSuccess } from './sysconfig/user'
 import { getRoleCodeList, getRoleList, getRoleInfo, updateRole, deleteRole, getRoleListOption } from './sysconfig/role'
 import {
   getMenuListByAppId,
@@ -70,3 +70,7 @@ Mock.mock(/\/oauth\/auth\/modulefunc/, /patch/i, function (options) {
   return Object.assign(getModuleFuncInfo(), JSON.parse(options.body))
 })
 Mock.mock(/\/oauth\/auth\/modulefunc/, /delete/i, deleteAuth)
+Mock.mock(/\/oauth\/user/, /post/i, getUserList)
+Mock.mock(/\/oauth\/user/, /delete/i, deleteUser)
+Mock.mock(/\/oauth\/user\/resetpwd\/.*/, /get/i, resetSuccess)
+Mock.mock(/\/oauth\/user/, /(put)|(patch)/i, updateUser)

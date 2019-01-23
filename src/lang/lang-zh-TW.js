@@ -21,7 +21,9 @@ const messages = Object.assign(twLocale, {
     tableNoData: '沒有查詢到數據',
     tableDataCannotDel: '該條數據不允許刪除',
     selectDataForDelete: '請選擇需要刪除的數據',
-    deleteDataConfirm: '確定刪除所選數據嗎？'
+    deleteDataConfirm: '確定刪除所選數據嗎？',
+    modifyLoginNo: '修改登陸賬號將重置密碼，是否繼續？',
+    resetPassword: '確定重置所選用戶密碼嗎？'
   },
   pageTitle: {
     test: '測試',
@@ -106,12 +108,15 @@ const messages = Object.assign(twLocale, {
     moduleFunc: '模塊功能',
     basicInfo: '基本信息',
     menuList: '菜單列表',
+    orgList: '機構列表',
+    orgMngList: '可管理的機構',
     moduleFuncList: '模塊功能列表',
     icon_type: '圖標',
     path: '鏈接路徑',
     opentype: '打開方式',
     inner: '內嵌模式',
     newTabs: '新標籤頁',
+    status: '狀態',
     buttons: {
       login: '登錄',
       submit: '提交',
@@ -129,7 +134,8 @@ const messages = Object.assign(twLocale, {
       updateSecret: '更新密鑰',
       select: '選擇',
       deSelect: '取消選擇',
-      refresh: '刷新'
+      refresh: '刷新',
+      resetPwd: '重置密碼'
     }
   }
 })
