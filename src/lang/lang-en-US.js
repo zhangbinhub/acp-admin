@@ -13,6 +13,7 @@ const messages = Object.assign(enLocale, {
     leavePage: 'The data entered will be lost. Are you sure to close?',
     allPages: 'All Pages',
     otherPages: 'Other Pages',
+    createSuccess: 'Create Successfully',
     saveSuccess: 'Save Successfully',
     updateSuccess: 'Update Successfully',
     deleteSuccess: 'Delete Successfully',
@@ -20,7 +21,9 @@ const messages = Object.assign(enLocale, {
     tableNoData: 'No data found',
     tableDataCannotDel: 'This data cannot be deleted',
     selectDataForDelete: 'Please select the data you want to delete',
-    deleteDataConfirm: 'Are you sure to delete the selected data?'
+    deleteDataConfirm: 'Are you sure to delete the selected data?',
+    modifyLoginNo: 'Modifying the loginNo will reset the password. Do you want to continue?',
+    resetPassword: 'Are you sure you want to reset the selected user password?'
   },
   pageTitle: {
     test: 'test',
@@ -32,7 +35,7 @@ const messages = Object.assign(enLocale, {
     appConfig: 'Application Configure',
     authConfig: 'Authority Configure',
     orgConfig: 'Organization Configure',
-    paramConfig: 'Parameter Configure',
+    runtimeConfig: 'Parameter Configure',
     roleConfig: 'Role Configure',
     userConfig: 'User Configure'
   },
@@ -72,6 +75,14 @@ const messages = Object.assign(enLocale, {
     avatar: 'avatar',
     avatarUpload: 'Avatar Upload',
     name: 'name',
+    code: 'code',
+    sort: 'sort',
+    level: 'level',
+    parent: 'parent',
+    userList: 'user list',
+    roleList: 'role list',
+    selected: 'selected',
+    optional: 'optional',
     value: 'value',
     mobile: 'mobile',
     describe: 'describe',
@@ -88,7 +99,24 @@ const messages = Object.assign(enLocale, {
     new: 'New ',
     confirmPassword: 'Confirm password',
     passwordNotEqual: 'Confirm password is not equal new password',
+    access_token_validity_seconds: 'token validity',
+    refresh_token_validity_seconds: 'refresh Token validity',
     seconds: 'seconds',
+    organization: 'Organization',
+    role: 'Role',
+    menu: 'Menu',
+    moduleFunc: 'ModuleFunction',
+    basicInfo: 'Basic Info',
+    menuList: 'menu list',
+    moduleFuncList: 'ModuleFunc list',
+    orgList: 'organization list',
+    orgMngList: 'Administrable organization',
+    icon_type: 'icon',
+    path: 'path',
+    opentype: 'open type',
+    inner: 'inner',
+    newTabs: 'new tabs',
+    status: 'status',
     buttons: {
       login: 'login',
       submit: 'submit',
@@ -103,7 +131,11 @@ const messages = Object.assign(enLocale, {
       upload: 'upload',
       view: 'view',
       free: 'Free',
-      updateSecret: 'update secret'
+      updateSecret: 'update secret',
+      select: 'select',
+      deSelect: 'Deselect',
+      refresh: 'Refresh',
+      resetPwd: 'reset password'
     }
   }
 })

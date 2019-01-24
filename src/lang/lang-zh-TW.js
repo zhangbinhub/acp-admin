@@ -13,6 +13,7 @@ const messages = Object.assign(twLocale, {
     leavePage: '輸入的數據將會丟失，確認關閉嗎？',
     allPages: '所有頁面',
     otherPages: '其他頁面',
+    createSuccess: '創建成功',
     saveSuccess: '保存成功',
     updateSuccess: '更新成功',
     deleteSuccess: '删除成功',
@@ -20,7 +21,9 @@ const messages = Object.assign(twLocale, {
     tableNoData: '沒有查詢到數據',
     tableDataCannotDel: '該條數據不允許刪除',
     selectDataForDelete: '請選擇需要刪除的數據',
-    deleteDataConfirm: '確定刪除所選數據嗎？'
+    deleteDataConfirm: '確定刪除所選數據嗎？',
+    modifyLoginNo: '修改登陸賬號將重置密碼，是否繼續？',
+    resetPassword: '確定重置所選用戶密碼嗎？'
   },
   pageTitle: {
     test: '測試',
@@ -32,7 +35,7 @@ const messages = Object.assign(twLocale, {
     appConfig: '應用配置',
     authConfig: '權限配置',
     orgConfig: '機構配置',
-    paramConfig: '運行參數配置',
+    runtimeConfig: '運行參數配置',
     roleConfig: '角色配置',
     userConfig: '用戶配置'
   },
@@ -72,6 +75,14 @@ const messages = Object.assign(twLocale, {
     avatar: '頭像',
     avatarUpload: '頭像上傳',
     name: '名稱',
+    code: '編碼',
+    sort: '序號',
+    level: '級別',
+    parent: '上級',
+    userList: '用戶列表',
+    roleList: '角色列表',
+    selected: '已選',
+    optional: '可選項',
     value: '值',
     mobile: '手機號',
     describe: '描述',
@@ -88,7 +99,24 @@ const messages = Object.assign(twLocale, {
     new: '新',
     confirmPassword: '確認密碼',
     passwordNotEqual: '兩次輸入的密碼不相等',
+    access_token_validity_seconds: 'token有效期',
+    refresh_token_validity_seconds: 'refreshToken有效期',
     seconds: '秒',
+    organization: '機構',
+    role: '角色',
+    menu: '菜單',
+    moduleFunc: '模塊功能',
+    basicInfo: '基本信息',
+    menuList: '菜單列表',
+    orgList: '機構列表',
+    orgMngList: '可管理的機構',
+    moduleFuncList: '模塊功能列表',
+    icon_type: '圖標',
+    path: '鏈接路徑',
+    opentype: '打開方式',
+    inner: '內嵌模式',
+    newTabs: '新標籤頁',
+    status: '狀態',
     buttons: {
       login: '登錄',
       submit: '提交',
@@ -103,7 +131,11 @@ const messages = Object.assign(twLocale, {
       upload: '上傳',
       view: '查看',
       free: '自定義',
-      updateSecret: '更新密鑰'
+      updateSecret: '更新密鑰',
+      select: '選擇',
+      deSelect: '取消選擇',
+      refresh: '刷新',
+      resetPwd: '重置密碼'
     }
   }
 })

@@ -1,28 +1,25 @@
 <template>
   <Card>
-    <Row>
-      <i-col span="18">
-        <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form">
-          <Form-item :label="$t('forms.name')" prop="name">
-            <i-input v-model="searchForm.name" :disabled="modal_loading" size="small"
-                     :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                     @on-enter="handleSearch"></i-input>
-          </Form-item>
-          <Form-item :label="$t('forms.value')" prop="value">
-            <i-input v-model="searchForm.value" :disabled="modal_loading" size="small"
-                     :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
-                     @on-enter="handleSearch"></i-input>
-          </Form-item>
-          <Form-item :label="$t('forms.enabled')" prop="value">
-            <i-select v-model="searchForm.enabled" :clearable="true" size="small" @on-keyup="handleSearchKeyUp($event)">
-              <Option v-for="item in enabledList" :value="item.value" :key="'search_select_'+item.value">
-                {{ item.label }}
-              </Option>
-            </i-select>
-          </Form-item>
-        </Form>
-      </i-col>
-      <i-col span="6" style="text-align: right">
+    <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form">
+      <Form-item :label="$t('forms.name')" prop="name">
+        <i-input v-model="searchForm.name" :disabled="modal_loading" size="small"
+                 :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
+                 @on-enter="handleSearch"></i-input>
+      </Form-item>
+      <Form-item :label="$t('forms.value')" prop="value">
+        <i-input v-model="searchForm.value" :disabled="modal_loading" size="small"
+                 :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
+                 @on-enter="handleSearch"></i-input>
+      </Form-item>
+      <Form-item :label="$t('forms.status')" prop="enabled">
+        <i-select v-model="searchForm.enabled" clearable size="small" :disabled="modal_loading"
+                  @keyup.enter.native="handleSearchKeyUp($event)" style="width:200px">
+          <Option v-for="item in enabledList" :value="item.value" :key="'search_select_'+item.value">
+            {{ item.label }}
+          </Option>
+        </i-select>
+      </Form-item>
+      <Form-item style="float: right">
         <ButtonGroup>
           <Button :loading="modal_loading" @click="handleSearch()" type="info" size="small">
             {{$t('forms.buttons.search')}}
@@ -37,8 +34,8 @@
             {{$t('forms.buttons.delete')}}
           </Button>
         </ButtonGroup>
-      </i-col>
-    </Row>
+      </Form-item>
+    </Form>
     <Table border height="433" size="small" :columns="columns" :data="searchData" class="search-table"
            :loading="modal_loading" :no-data-text="$t('messages.tableNoData')" @on-row-dblclick="handleEdit"
            @on-selection-change="handleSelect" @on-sort-change="handleSortChange">
@@ -92,9 +89,9 @@
       </div>
     </div>
     <Modal v-model="addModal" :title="$t('forms.buttons.add')" :loading="modal_loading" :mask-closable="false">
-      <Form ref="addForm" :model="addForm" :rules="ruleAddForm" :label-width="60">
+      <Form ref="addForm" :model="addForm" :rules="ruleAddForm" :label-width="60" style="padding-right: 25px;">
         <Form-item :label="$t('forms.name')" prop="name">
-          <i-input v-model="addForm.name" :disabled="modal_loading"
+          <i-input v-model="addForm.name" :disabled="modal_loading" ref="name"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                    @on-enter="doAdd('addForm')"></i-input>
         </Form-item>
@@ -129,7 +126,7 @@
 </template>
 <script>
   export default {
-    name: 'paramConfig',
+    name: 'runtimeConfig',
     data () {
       return {
         searchForm: {
@@ -162,10 +159,18 @@
         selectedData: []
       }
     },
+    watch: {
+      addModal (value) {
+        if (value) {
+          this.$nextTick(() => {
+            this.$refs['name'].focus()
+          })
+        }
+      }
+    },
     computed: {
       enabledList () {
         return [
-          { value: '', label: '' },
           { value: 'true', label: this.$i18n.t('forms.enabled') },
           { value: 'false', label: this.$i18n.t('forms.disabled') }
         ]
@@ -174,7 +179,7 @@
         const columns = [
           {
             type: 'selection',
-            width: 60,
+            width: 50,
             align: 'center'
           },
           {
@@ -241,15 +246,18 @@
         this.$refs[name].validate((valid) => {
           if (valid) {
             this.modal_loading = true
-            this.$api.request.param.create({
+            this.$api.request.runtime.create({
               name: this.addForm.name,
               value: this.addForm.value,
               config_des: this.addForm.describe,
               enabled: this.addForm.enabled
-            }).then(() => {
-              this.$Message.success(this.$i18n.t('messages.saveSuccess'))
-              this.addModal = false
-              this.handleSearch()
+            }).then((res) => {
+              this.modal_loading = false
+              if (res) {
+                this.$Message.success(this.$i18n.t('messages.saveSuccess'))
+                this.addModal = false
+                this.handleSearch()
+              }
             }).catch(() => {
               this.modal_loading = false
             })
@@ -258,27 +266,32 @@
       },
       handleDelete (rowIds) {
         this.modal_loading = true
-        this.$api.request.param.delete(rowIds).then(() => {
-          this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
-          this.handleSearch()
+        this.$api.request.runtime.delete(rowIds).then((res) => {
+          this.modal_loading = false
+          if (res) {
+            this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
+            this.handleSearch()
+          }
         }).catch(() => {
           this.modal_loading = false
         })
       },
       handleSave (index) {
         this.modal_loading = true
-        this.$api.request.param.update({
+        this.$api.request.runtime.update({
           id: this.searchData[index].id,
           value: this.editValue,
           config_des: this.editDes,
           enabled: this.editEnabled
-        }).then(() => {
+        }).then((res) => {
           this.modal_loading = false
-          this.searchData[index].value = this.editValue
-          this.searchData[index].config_des = this.editDes
-          this.searchData[index].enabled = this.editEnabled
-          this.editIndex = -1
-          this.$Message.success(this.$i18n.t('messages.updateSuccess'))
+          if (res) {
+            this.searchData[index].value = this.editValue
+            this.searchData[index].config_des = this.editDes
+            this.searchData[index].enabled = this.editEnabled
+            this.editIndex = -1
+            this.$Message.success(this.$i18n.t('messages.updateSuccess'))
+          }
         }).catch(() => {
           this.modal_loading = false
         })
@@ -310,7 +323,7 @@
           searchParam.query_param.order_commond = this.searchForm.orderParam.order
         }
         this.modal_loading = true
-        this.$api.request.param.query(searchParam).then((res) => {
+        this.$api.request.runtime.query(searchParam).then((res) => {
           this.modal_loading = false
           if (res) {
             this.selectedData = []

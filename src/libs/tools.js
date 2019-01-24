@@ -1,4 +1,13 @@
 /**
+ * 对象的深拷贝
+ * @param srcObj 源对象
+ * @returns {any} 拷贝后的对象
+ */
+export const copy = (srcObj) => {
+  return JSON.parse(JSON.stringify(srcObj))
+}
+
+/**
  * 根据 path 获取菜单全路径
  * @param path
  * @param menuList
@@ -186,4 +195,126 @@ export const updateTagNavList = (tagNavList, menuList, route) => {
     })
     return tagNavList
   }
+}
+
+/**
+ * 树节点排序，根据sort属性
+ * @param nodeList Array
+ * @param property
+ */
+export const sortTreeNodes = (nodeList, property = 'sort') => {
+  nodeList.sort((obj1, obj2) => {
+    if (obj1[property] > obj2[property]) {
+      return 1
+    } else if (obj1[property] === obj2[property]) {
+      return 0
+    } else {
+      return -1
+    }
+  })
+  for (let item of nodeList) {
+    if (item.children && item.children.length > 0) {
+      sortTreeNodes(item.children, property)
+    }
+  }
+}
+
+/**
+ * 将后台返回数据转换为tree组件数据
+ * @param nodeList Array
+ * @param flag 0-config,1-select
+ * @param selectedIds 选中项的id
+ * @returns number selectedCount
+ */
+export const processTreeNode = (nodeList, flag = 0, selectedIds = []) => {
+  let selectedCount = 0
+  for (let i = 0; i < nodeList.length; i++) {
+    if (!nodeList[i].children) {
+      nodeList[i].children = []
+    }
+    nodeList[i].value = nodeList[i].id
+    nodeList[i].title = nodeList[i].name
+    nodeList[i].label = nodeList[i].name
+    let childrenSelected = 0
+    if (nodeList[i].children.length > 0) {
+      childrenSelected = processTreeNode(nodeList[i].children, flag, selectedIds)
+    }
+    if (flag === 1 && selectedIds.includes(nodeList[i].id)) {
+      nodeList[i].expand = true
+      if (childrenSelected === nodeList[i].children.length) {
+        selectedCount++
+        nodeList[i].checked = true
+      } else {
+        nodeList[i].checked = false
+        nodeList[i].indeterminate = true
+      }
+    } else if (flag === 0) {
+      nodeList[i].expand = true
+    }
+  }
+  return selectedCount
+}
+
+/**
+ * 获取树中某个节点的全路径title字符串
+ * @param treeData 树全数据 Array
+ * @param targetId 指定节点id
+ * @param property 拼接的属性名，default='title'
+ * @param separate 分隔字符串，default=' > '
+ * @returns String
+ */
+export const getTreeFullPathTitle = (treeData, targetId, property = 'title', separate = ' > ') => {
+  for (let item of treeData) {
+    if (item.id === targetId) {
+      return item[property]
+    } else {
+      if (item.children && item.children.length > 0) {
+        const childrenPathTitle = getTreeFullPathTitle(item.children, targetId, property, separate)
+        if (childrenPathTitle !== '') {
+          return item[property] + separate + childrenPathTitle
+        }
+      }
+    }
+  }
+  return ''
+}
+
+/**
+ * 获取树中某个节点的全路径节点数组
+ * @param treeData 树全数据 Array
+ * @param targetId 指定节点id
+ * @returns Array
+ */
+export const getTreeFullPathArray = (treeData, targetId) => {
+  for (let item of treeData) {
+    if (item.id === targetId) {
+      return [item]
+    } else {
+      if (item.children && item.children.length > 0) {
+        const childrenArray = getTreeFullPathArray(item.children, targetId)
+        if (childrenArray.length > 0) {
+          return [item, ...getTreeFullPathArray(item.children, targetId)]
+        }
+      }
+    }
+  }
+  return []
+}
+
+/**
+ * 过滤树中指定id的节点
+ * @param treeData 树全数据 Array
+ * @param targetIds id数组 Array
+ * @returns Array
+ */
+export const filterTreeNode = (treeData, targetIds) => {
+  const filterData = treeData.filter(item => {
+    return !targetIds.includes(item.id)
+  })
+  for (let item of filterData) {
+    if (item.children && item.children.length > 0) {
+      item.children = filterTreeNode(item.children, targetIds)
+    }
+  }
+  return filterData
 }

@@ -49,3 +49,20 @@ export const updateApp = () => {
     'covert': true
   }
 }
+export const getAppList = () => {
+  return [{
+    'id': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+    'appname': 'Acp-Admin',
+    'secret': 'E0D3024D-9A22-41EE-AC0F-FC6B56E367AE',
+    'access_token_validity_seconds': 86400,
+    'refresh_token_validity_seconds': 2592000,
+    'covert': false
+  }, {
+    'id': 'aa4da240-1bf2-11e9-a49e-d8c49792dd7b',
+    'appname': 'test',
+    'secret': '2DB1B4C6-F6C3-4A3B-9250-74D91AC8F648',
+    'access_token_validity_seconds': 84600,
+    'refresh_token_validity_seconds': 2592000,
+    'covert': true
+  }]
+}

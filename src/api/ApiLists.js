@@ -1,11 +1,16 @@
 import oauth from './oauth/OauthApi'
-import param from './sysconfig/paramConfig'
+import runtime from './sysconfig/runtimeConfig'
 import app from './sysconfig/appConfig'
+import auth from './sysconfig/authConfig'
+import org from './sysconfig/orgConfig'
+import user from './sysconfig/userConfig'
+import role from './sysconfig/roleConfig'
 
-export default Object.assign(
-  oauth,
-  {
-    param: param,
-    app: app
-  }
-)
+export default {
+  auth: Object.assign(oauth, auth),
+  runtime: runtime,
+  app: app,
+  org: org,
+  user: user,
+  role: role
+}

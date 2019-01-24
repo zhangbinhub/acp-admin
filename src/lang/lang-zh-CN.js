@@ -13,6 +13,7 @@ const messages = Object.assign(zhLocale, {
     leavePage: '输入的数据将会丢失，确认关闭吗？',
     allPages: '所有页面',
     otherPages: '其他页面',
+    createSuccess: '创建成功',
     saveSuccess: '保存成功',
     updateSuccess: '更新成功',
     deleteSuccess: '删除成功',
@@ -20,7 +21,9 @@ const messages = Object.assign(zhLocale, {
     tableNoData: '没有查询到数据',
     tableDataCannotDel: '该条数据不允许删除',
     selectDataForDelete: '请选择需要删除的数据',
-    deleteDataConfirm: '确定删除所选数据吗？'
+    deleteDataConfirm: '确定删除所选数据吗？',
+    modifyLoginNo: '修改登录账号将重置密码，是否继续？',
+    resetPassword: '确定重置所选用户密码吗？'
   },
   pageTitle: {
     test: '测试',
@@ -32,7 +35,7 @@ const messages = Object.assign(zhLocale, {
     appConfig: '应用配置',
     authConfig: '权限配置',
     orgConfig: '机构配置',
-    paramConfig: '运行参数配置',
+    runtimeConfig: '运行参数配置',
     roleConfig: '角色配置',
     userConfig: '用户配置'
   },
@@ -72,6 +75,14 @@ const messages = Object.assign(zhLocale, {
     avatar: '头像',
     avatarUpload: '头像上传',
     name: '名称',
+    code: '编码',
+    sort: '序号',
+    level: '级别',
+    parent: '上级',
+    userList: '用户列表',
+    roleList: '角色列表',
+    selected: '已选',
+    optional: '可选项',
     value: '值',
     mobile: '手机号',
     describe: '描述',
@@ -91,6 +102,21 @@ const messages = Object.assign(zhLocale, {
     access_token_validity_seconds: 'token有效期',
     refresh_token_validity_seconds: 'refreshToken有效期',
     seconds: '秒',
+    organization: '机构',
+    role: '角色',
+    menu: '菜单',
+    moduleFunc: '模块功能',
+    basicInfo: '基本信息',
+    menuList: '菜单列表',
+    orgList: '机构列表',
+    orgMngList: '可管理的机构',
+    moduleFuncList: '模块功能列表',
+    icon_type: '图标',
+    path: '链接路径',
+    opentype: '打开方式',
+    inner: '内嵌模式',
+    newTabs: '新标签页',
+    status: '状态',
     buttons: {
       login: '登录',
       submit: '提交',
@@ -105,7 +131,11 @@ const messages = Object.assign(zhLocale, {
       upload: '上传',
       view: '查看',
       free: '自定义',
-      updateSecret: '更新密钥'
+      updateSecret: '更新密钥',
+      select: '选择',
+      deSelect: '取消选择',
+      refresh: '刷新',
+      resetPwd: '重置密码'
     }
   }
 })

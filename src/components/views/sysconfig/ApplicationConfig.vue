@@ -1,16 +1,12 @@
 <template>
   <Card>
-    <Row>
-      <i-col span="18">
-        <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form">
-          <Form-item :label="$t('forms.name')" prop="appname">
-            <i-input v-model="searchForm.appname" :disabled="modal_loading" size="small"
-                     :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                     @on-enter="handleSearch"></i-input>
-          </Form-item>
-        </Form>
-      </i-col>
-      <i-col span="6" style="text-align: right">
+    <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form">
+      <Form-item :label="$t('forms.name')" prop="appname">
+        <i-input v-model="searchForm.appname" :disabled="modal_loading" size="small"
+                 :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
+                 @on-enter="handleSearch"></i-input>
+      </Form-item>
+      <Form-item style="float: right">
         <ButtonGroup>
           <Button :loading="modal_loading" @click="handleSearch()" type="info" size="small">
             {{$t('forms.buttons.search')}}
@@ -25,8 +21,8 @@
             {{$t('forms.buttons.delete')}}
           </Button>
         </ButtonGroup>
-      </i-col>
-    </Row>
+      </Form-item>
+    </Form>
     <Table border height="433" size="small" :columns="columns" :data="searchData" class="search-table"
            :loading="modal_loading" :no-data-text="$t('messages.tableNoData')" @on-selection-change="handleSelect"
            @on-sort-change="handleSortChange">
@@ -75,7 +71,7 @@
           <Alert type="error">{{editForm.secret}}</Alert>
         </Form-item>
         <Form-item :label="$t('forms.name')" prop="appname">
-          <i-input v-model="editForm.appname" :disabled="modal_loading" v-if="action!==2"
+          <i-input ref="appname" v-model="editForm.appname" :disabled="modal_loading" v-if="action!==2"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                    @on-enter="doSave('editForm')"></i-input>
           <Alert v-else>{{editForm.appname}}</Alert>
@@ -144,12 +140,21 @@
         selectedData: []
       }
     },
+    watch: {
+      editModal (value) {
+        if (value) {
+          this.$nextTick(() => {
+            this.$refs['appname'].focus()
+          })
+        }
+      }
+    },
     computed: {
       columns () {
         const columns = [
           {
             type: 'selection',
-            width: 60,
+            width: 50,
             align: 'center'
           },
           {
@@ -238,10 +243,13 @@
                   appname: this.editForm.appname,
                   access_token_validity_seconds: Number(this.editForm.access_token_validity_seconds),
                   refresh_token_validity_seconds: Number(this.editForm.refresh_token_validity_seconds)
-                }).then(() => {
-                  this.$Message.success(this.$i18n.t('messages.saveSuccess'))
-                  this.editModal = false
-                  this.handleSearch()
+                }).then((res) => {
+                  this.modal_loading = false
+                  if (res) {
+                    this.$Message.success(this.$i18n.t('messages.saveSuccess'))
+                    this.editModal = false
+                    this.handleSearch()
+                  }
                 }).catch(() => {
                   this.modal_loading = false
                 })
@@ -257,10 +265,13 @@
                   appname: this.editForm.appname,
                   access_token_validity_seconds: Number(this.editForm.access_token_validity_seconds),
                   refresh_token_validity_seconds: Number(this.editForm.refresh_token_validity_seconds)
-                }).then(() => {
-                  this.$Message.success(this.$i18n.t('messages.updateSuccess'))
-                  this.editModal = false
-                  this.handleSearch()
+                }).then((res) => {
+                  this.modal_loading = false
+                  if (res) {
+                    this.$Message.success(this.$i18n.t('messages.updateSuccess'))
+                    this.editModal = false
+                    this.handleSearch()
+                  }
                 }).catch(() => {
                   this.modal_loading = false
                 })
@@ -282,9 +293,12 @@
       },
       handleDelete (rowIds) {
         this.modal_loading = true
-        this.$api.request.app.delete(rowIds).then(() => {
-          this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
-          this.handleSearch()
+        this.$api.request.app.delete(rowIds).then((res) => {
+          this.modal_loading = false
+          if (res) {
+            this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
+            this.handleSearch()
+          }
         }).catch(() => {
           this.modal_loading = false
         })
