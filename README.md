@@ -112,6 +112,9 @@ npm install
 ![images](doc/images/pages/login.png)
 - 首页
 ![images](doc/images/pages/index.png)
+- 目前支持主题：dark 和 light
+    - light 主题
+![images](doc/images/pages/light.png)
 - 个人信息
 ![images](doc/images/pages/userinfo.png)
 - 头像裁剪
