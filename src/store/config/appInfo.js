@@ -1,6 +1,6 @@
 export default {
   appName: 'Acp-Admin',
-  appVersion: '1.0.1',
+  appVersion: '1.0.0',
   copyright: 'Copyright © 2018 by ZhangBin',
   theme: 'dark', // dark and light
   minWidth: 768,
