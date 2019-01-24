@@ -17,6 +17,9 @@
 - [iView](https://www.iviewui.com/)
 - [cropperjs](https://github.com/fengyuanchen/cropperjs)
 
+## 总体架构
+![Architecture diagram](doc/images/总体架构.jpg)
+
 ## 部署运行
 该工程默认运行于 nodejs 中，也可根据实际需要运行在其他 web 容器
 
