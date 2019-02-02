@@ -16,6 +16,7 @@ import {
   getAllModuleFuncList,
   getModuleFuncInfo
 } from './sysconfig/auth'
+import { logFileList, downLoadLogFile } from './log/logFile'
 
 // 配置Ajax请求延时，可用来测试网络延迟大时项目中一些效果
 Mock.setup({
@@ -74,3 +75,5 @@ Mock.mock(/\/oauth\/user/, /post/i, getUserList)
 Mock.mock(/\/oauth\/user/, /delete/i, deleteUser)
 Mock.mock(/\/oauth\/user\/resetpwd\/.*/, /get/i, resetSuccess)
 Mock.mock(/\/oauth\/user/, /(put)|(patch)/i, updateUser)
+Mock.mock(/\/log\/files/, /post/i, logFileList)
+Mock.mock(/\/log\/files\/.*/, /get/i, downLoadLogFile)

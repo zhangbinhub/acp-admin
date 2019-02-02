@@ -60,8 +60,16 @@ export default [{
     meta: {
       title: 'pageTitle.personalInformation',
       icon: 'md-person',
-      requireAuth: true,
-      withInput: true
+      requireAuth: true
+    }
+  }, {
+    path: '/logfile',
+    name: 'logFile',
+    component: () => import('@/components/views/main/LogFile.vue'),
+    meta: {
+      title: 'pageTitle.logFile',
+      icon: 'ios-bug',
+      requireAuth: true
     }
   }, {
     path: '/appconfig',
