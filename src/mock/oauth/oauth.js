@@ -6,7 +6,6 @@ export const login = () => {
     'expires_in': 86399,
     'scope': 'ALL'
   }
-  // return { 'error': 'invalid_grant', 'error_description': 'Bad credentials' }
 }
 
 export const userInfo = () => {

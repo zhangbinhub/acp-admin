@@ -5,6 +5,7 @@ import auth from './sysconfig/authConfig'
 import org from './sysconfig/orgConfig'
 import user from './sysconfig/userConfig'
 import role from './sysconfig/roleConfig'
+import log from './log/LogFile'
 
 export default {
   auth: Object.assign(oauth, auth),
@@ -12,5 +13,6 @@ export default {
   app: app,
   org: org,
   user: user,
-  role: role
+  role: role,
+  log: log
 }

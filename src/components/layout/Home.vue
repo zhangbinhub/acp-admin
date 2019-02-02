@@ -16,6 +16,7 @@
                     :mini="isMini" @on-coll-change="handleCollapsedChange">
           <user :user-avator="userAvator" :customer-name="userName"/>
           <language style="margin-right: 10px;" :lang="localLang"/>
+          <logFileButton v-if="showLogFile" style="margin-right: 10px;"></logFileButton>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </header-bar>
       </Header>
@@ -51,6 +52,7 @@
   import ABackTop from './a-back-top'
   import Fullscreen from './fullscreen'
   import Language from './language'
+  import logFileButton from './log-file-button'
 
   import './Home.less'
   import {
@@ -70,7 +72,8 @@
       TagsNav,
       Fullscreen,
       User,
-      ABackTop
+      ABackTop,
+      logFileButton
     },
     data () {
       return {
@@ -87,6 +90,9 @@
       this.initStoreData()
     },
     computed: {
+      showLogFile () {
+        return this.$store.state.app.user.userInfo.levels === 0
+      },
       theme () {
         return this.$store.state.app.appInfo.theme
       },

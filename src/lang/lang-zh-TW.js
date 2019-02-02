@@ -32,6 +32,7 @@ const messages = Object.assign(twLocale, {
     login: '登錄',
     home: '首頁',
     personalInformation: '個人信息維護',
+    logFile: '日誌文件',
     appConfig: '應用配置',
     authConfig: '權限配置',
     orgConfig: '機構配置',
@@ -117,6 +118,9 @@ const messages = Object.assign(twLocale, {
     inner: '內嵌模式',
     newTabs: '新標籤頁',
     status: '狀態',
+    startDate: '開始日期',
+    endDate: '結束日期',
+    startDateCantGreaterThenEndDate: '開始日期不能大於結束日期',
     buttons: {
       login: '登錄',
       submit: '提交',

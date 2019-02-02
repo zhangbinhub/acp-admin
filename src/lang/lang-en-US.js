@@ -32,6 +32,7 @@ const messages = Object.assign(enLocale, {
     login: 'login',
     home: 'home',
     personalInformation: 'Personal Information Configure',
+    logFile: 'Log File',
     appConfig: 'Application Configure',
     authConfig: 'Authority Configure',
     orgConfig: 'Organization Configure',
@@ -117,6 +118,9 @@ const messages = Object.assign(enLocale, {
     inner: 'inner',
     newTabs: 'new tabs',
     status: 'status',
+    startDate: 'Start Date',
+    endDate: 'End Date',
+    startDateCantGreaterThenEndDate: 'Start date should not be greater than end date',
     buttons: {
       login: 'login',
       submit: 'submit',

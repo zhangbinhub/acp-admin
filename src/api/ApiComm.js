@@ -86,6 +86,7 @@ const ApiComm = {
   errorProcess: function (error, title) {
     let errorMessage = ''
     if (error.response) {
+      console.log(error.response)
       if (typeof error.response.data === 'string') {
         errorMessage = String(error.response.data)
       } else {
@@ -122,6 +123,11 @@ const ApiComm = {
   gotoPersonalInformation: () => {
     ApiComm.$router.push({
       name: 'personalInformation'
+    })
+  },
+  gotoLogFile: () => {
+    ApiComm.$router.push({
+      name: 'logFile'
     })
   },
   request: {}

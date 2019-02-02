@@ -32,6 +32,7 @@ const messages = Object.assign(zhLocale, {
     login: '登录',
     home: '首页',
     personalInformation: '个人信息维护',
+    logFile: '日志文件',
     appConfig: '应用配置',
     authConfig: '权限配置',
     orgConfig: '机构配置',
@@ -117,6 +118,9 @@ const messages = Object.assign(zhLocale, {
     inner: '内嵌模式',
     newTabs: '新标签页',
     status: '状态',
+    startDate: '开始日期',
+    endDate: '结束日期',
+    startDateCantGreaterThenEndDate: '开始日期不能大于结束日期',
     buttons: {
       login: '登录',
       submit: '提交',
