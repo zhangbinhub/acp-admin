@@ -17,6 +17,19 @@
 - [iView](https://www.iviewui.com/)
 - [cropperjs](https://github.com/fengyuanchen/cropperjs)
 
+## 技术栈
+- webpack
+- nodejs
+- vue2
+- vue cli 3
+- vuex
+- vue-router
+- axios
+- iview3
+- cropperjs
+- mockjs
+- js-sha256
+
 ## 总体架构
 ![Architecture diagram](doc/images/总体架构.jpg)
 
