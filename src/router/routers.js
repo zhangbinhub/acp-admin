@@ -1,7 +1,7 @@
 import demo from './demo'
 
 /**
- * name: 路由名称必须和对应组件名称一致，否则无法实现 keep-live
+ * name: 路由名称必须和对应页面组件名称一致，否则无法实现 keep-live
  * meta 附加参数说明（除原生参数外）
  * meta{
  *   title: 页面标题；值：i18n表达式。显示位置：1、浏览器网页title；2、面包屑名称（该路由没有对应的菜单时显示）；3、标签导航（该路由没有对应的菜单时显示）
@@ -60,6 +60,15 @@ export default [{
     meta: {
       title: 'pageTitle.personalInformation',
       icon: 'md-person',
+      requireAuth: true
+    }
+  }, {
+    path: '/configCenter',
+    name: 'configCenter',
+    component: () => import('@/components/views/main/ConfigCenter.vue'),
+    meta: {
+      title: 'pageTitle.configCenter',
+      icon: 'ios-construct',
       requireAuth: true
     }
   }, {

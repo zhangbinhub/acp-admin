@@ -23,7 +23,8 @@ const messages = Object.assign(twLocale, {
     selectDataForDelete: '請選擇需要刪除的數據',
     deleteDataConfirm: '確定刪除所選數據嗎？',
     modifyLoginNo: '修改登陸賬號將重置密碼，是否繼續？',
-    resetPassword: '確定重置所選用戶密碼嗎？'
+    resetPassword: '確定重置所選用戶密碼嗎？',
+    refreshServiceConfirm: '確定刷新服務配置信息嗎？所有服務將重新從配置中心獲取配置信息'
   },
   pageTitle: {
     test: '測試',
@@ -32,6 +33,7 @@ const messages = Object.assign(twLocale, {
     login: '登錄',
     home: '首頁',
     personalInformation: '個人信息維護',
+    configCenter: '配置中心',
     logFile: '日誌文件',
     appConfig: '應用配置',
     authConfig: '權限配置',
@@ -76,6 +78,9 @@ const messages = Object.assign(twLocale, {
     avatar: '頭像',
     avatarUpload: '頭像上傳',
     name: '名稱',
+    profile: '配置項',
+    label: '標籤',
+    key: '鍵',
     code: '編碼',
     sort: '序號',
     level: '級別',
@@ -139,7 +144,8 @@ const messages = Object.assign(twLocale, {
       select: '選擇',
       deSelect: '取消選擇',
       refresh: '刷新',
-      resetPwd: '重置密碼'
+      resetPwd: '重置密碼',
+      refreshService: '刷新服務'
     }
   }
 })

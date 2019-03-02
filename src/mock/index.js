@@ -17,6 +17,7 @@ import {
   getModuleFuncInfo
 } from './sysconfig/auth'
 import { logFileList, downLoadLogFile } from './log/logFile'
+import { deleteConfig, queryConfig, updateConfig, refreshConfig } from './config/configCenter'
 
 // 配置Ajax请求延时，可用来测试网络延迟大时项目中一些效果
 Mock.setup({
@@ -77,3 +78,7 @@ Mock.mock(/\/oauth\/user\/resetpwd\/.*/, /get/i, resetSuccess)
 Mock.mock(/\/oauth\/user/, /(put)|(patch)/i, updateUser)
 Mock.mock(/\/log\/files/, /post/i, logFileList)
 Mock.mock(/\/log\/files\/.*/, /get/i, downLoadLogFile)
+Mock.mock(/\/oauth\/properties/, /(put)|(patch)/i, updateConfig)
+Mock.mock(/\/oauth\/properties/, /delete/i, deleteConfig)
+Mock.mock(/\/oauth\/properties/, /post/i, queryConfig)
+Mock.mock(/\/oauth\/properties\/refresh/, /post/i, refreshConfig)
