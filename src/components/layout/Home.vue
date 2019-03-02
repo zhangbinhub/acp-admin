@@ -94,10 +94,10 @@
     },
     computed: {
       showConfigCenter () {
-        return this.$store.state.app.user.userInfo.levels === 0
+        return this.$store.state.app.user.userInfo.levels <= 0
       },
       showLogFile () {
-        return this.$store.state.app.user.userInfo.levels === 0
+        return this.$store.state.app.user.userInfo.levels <= 0
       },
       theme () {
         return this.$store.state.app.appInfo.theme
