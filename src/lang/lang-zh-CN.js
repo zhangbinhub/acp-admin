@@ -23,7 +23,8 @@ const messages = Object.assign(zhLocale, {
     selectDataForDelete: '请选择需要删除的数据',
     deleteDataConfirm: '确定删除所选数据吗？',
     modifyLoginNo: '修改登录账号将重置密码，是否继续？',
-    resetPassword: '确定重置所选用户密码吗？'
+    resetPassword: '确定重置所选用户密码吗？',
+    refreshServiceConfirm: '确定刷新服务配置信息吗？所有服务将重新从配置中心获取配置信息'
   },
   pageTitle: {
     test: '测试',
@@ -32,6 +33,7 @@ const messages = Object.assign(zhLocale, {
     login: '登录',
     home: '首页',
     personalInformation: '个人信息维护',
+    configCenter: '配置中心',
     logFile: '日志文件',
     appConfig: '应用配置',
     authConfig: '权限配置',
@@ -76,6 +78,9 @@ const messages = Object.assign(zhLocale, {
     avatar: '头像',
     avatarUpload: '头像上传',
     name: '名称',
+    profile: '配置项',
+    label: '标签',
+    key: '键',
     code: '编码',
     sort: '序号',
     level: '级别',
@@ -139,7 +144,8 @@ const messages = Object.assign(zhLocale, {
       select: '选择',
       deSelect: '取消选择',
       refresh: '刷新',
-      resetPwd: '重置密码'
+      resetPwd: '重置密码',
+      refreshService: '刷新服务'
     }
   }
 })

@@ -1,5 +1,5 @@
 # acp-admin
-###### v1.1.0 [版本更新日志](doc/version_history.md)
+###### v1.2.0 [版本更新日志](doc/version_history.md)
 兼容的浏览器及版本
 - IE 9+
 - Edge
@@ -110,7 +110,7 @@ npm install
 
 ##### （六）http 请求
 > - 组件：axios、vue-axios
-> - 入口：[src/plugins/plugin-axios.js](src/plugins/plugin-axios.js)
+> - 入口及全局配置：[src/plugins/plugin-axios.js](src/plugins/plugin-axios.js)
 > - 请求 api
 >   - 路径：src/api
 >   - 入口：[src/api/index.js](src/api/index.js)
@@ -159,6 +159,10 @@ npm install
 ![images](doc/images/pages/500.png)
 - 后台日志文件查询、下载
 ![images](doc/images/pages/logfile.png)
+- 配置中心管理
+![images](doc/images/pages/configcenter.png)
+![images](doc/images/pages/configcenteredit.png)
+![images](doc/images/pages/configcenterefresh.png)
 
 ## 六、nodejs 常用命令
 ## Project setup

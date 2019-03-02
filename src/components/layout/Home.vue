@@ -17,6 +17,7 @@
           <user :user-avator="userAvator" :customer-name="userName"/>
           <language style="margin-right: 10px;" :lang="localLang"/>
           <logFileButton v-if="showLogFile" style="margin-right: 10px;"></logFileButton>
+          <configCenterButton v-if="showConfigCenter" style="margin-right: 10px;"></configCenterButton>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </header-bar>
       </Header>
@@ -53,6 +54,7 @@
   import Fullscreen from './fullscreen'
   import Language from './language'
   import logFileButton from './log-file-button'
+  import configCenterButton from './config-center-button'
 
   import './Home.less'
   import {
@@ -73,6 +75,7 @@
       Fullscreen,
       User,
       ABackTop,
+      configCenterButton,
       logFileButton
     },
     data () {
@@ -90,6 +93,9 @@
       this.initStoreData()
     },
     computed: {
+      showConfigCenter () {
+        return this.$store.state.app.user.userInfo.levels === 0
+      },
       showLogFile () {
         return this.$store.state.app.user.userInfo.levels === 0
       },

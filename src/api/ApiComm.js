@@ -130,6 +130,11 @@ const ApiComm = {
       name: 'logFile'
     })
   },
+  gotoConfigCenter: () => {
+    ApiComm.$router.push({
+      name: 'configCenter'
+    })
+  },
   request: {}
 }
 export default ApiComm

@@ -23,7 +23,8 @@ const messages = Object.assign(enLocale, {
     selectDataForDelete: 'Please select the data you want to delete',
     deleteDataConfirm: 'Are you sure to delete the selected data?',
     modifyLoginNo: 'Modifying the loginNo will reset the password. Do you want to continue?',
-    resetPassword: 'Are you sure you want to reset the selected user password?'
+    resetPassword: 'Are you sure you want to reset the selected user password?',
+    refreshServiceConfirm: 'Are you sure to refresh the service configuration information? All services will retrieve configuration information from the configuration center'
   },
   pageTitle: {
     test: 'test',
@@ -32,6 +33,7 @@ const messages = Object.assign(enLocale, {
     login: 'login',
     home: 'home',
     personalInformation: 'Personal Information Configure',
+    configCenter: 'Config Center',
     logFile: 'Log File',
     appConfig: 'Application Configure',
     authConfig: 'Authority Configure',
@@ -76,6 +78,9 @@ const messages = Object.assign(enLocale, {
     avatar: 'avatar',
     avatarUpload: 'Avatar Upload',
     name: 'name',
+    profile: 'profile',
+    label: 'label',
+    key: 'key',
     code: 'code',
     sort: 'sort',
     level: 'level',
@@ -139,7 +144,8 @@ const messages = Object.assign(enLocale, {
       select: 'select',
       deSelect: 'Deselect',
       refresh: 'Refresh',
-      resetPwd: 'reset password'
+      resetPwd: 'reset password',
+      refreshService: 'refresh services'
     }
   }
 })
