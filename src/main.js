@@ -9,7 +9,7 @@ import router from './router'
 import './plugins/plugin-axios.js'
 import api from './api'
 import './assets/styles/layout/layout.less'
-import './mock'
+// import './mock'
 
 // 响应式布局
 const autoWidth = () => {

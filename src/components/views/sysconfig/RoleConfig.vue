@@ -39,7 +39,7 @@
             </Form>
           </TabPane>
           <TabPane :label="$t('forms.userList')" icon="md-people">
-            <Transfer :data="optionalUsers" :target-keys="editForm.user_ids" :list-style="listStyle" filterable
+            <Transfer :data="optionalUsers" :target-keys="editForm.userIds" :list-style="listStyle" filterable
                       :titles="[$t('forms.optional'),$t('forms.selected')]"
                       :operations="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
                       @on-change="handleUserListChange">
@@ -67,6 +67,7 @@
             {{$t('forms.buttons.submit')}}
           </Button>
         </div>
+        <Spin size="large" fix v-if="treeLoading"></Spin>
       </Card>
     </i-col>
   </Row>
@@ -292,7 +293,7 @@
         this.$api.request.auth.getMenuList(this.currRole.appid).then((res) => {
           this.tree_loading = false
           if (res) {
-            processTreeNode(res.data, 1, this.currRole.menu_ids)
+            processTreeNode(res.data, 1, this.currRole.menuIds)
             this.menuData = res.data
           }
         }).catch(() => {
@@ -304,7 +305,7 @@
         this.$api.request.auth.getModuleFuncList(this.currRole.appid).then((res) => {
           this.tree_loading = false
           if (res) {
-            processTreeNode(res.data, 1, this.currRole.module_func_ids)
+            processTreeNode(res.data, 1, this.currRole.moduleFuncIds)
             this.moduleFuncData = res.data
           }
         }).catch(() => {
@@ -319,9 +320,9 @@
             code: '',
             levels: 1,
             sort: 0,
-            user_ids: [],
-            menu_ids: [],
-            module_func_ids: []
+            userIds: [],
+            menuIds: [],
+            moduleFuncIds: []
           }
           this.currRole = {
             id: '',
@@ -330,9 +331,9 @@
             code: '',
             levels: 1,
             sort: 0,
-            user_ids: [],
-            menu_ids: [],
-            module_func_ids: []
+            userIds: [],
+            menuIds: [],
+            moduleFuncIds: []
           }
           this.currRoleData = {}
         }
@@ -387,9 +388,9 @@
           this.tree_loading = false
           if (res) {
             this.currRoleData = data
-            this.currRoleData.user_ids = res.data.user_ids
-            this.currRoleData.menu_ids = res.data.menu_ids
-            this.currRoleData.module_func_ids = res.data.module_func_ids
+            this.currRoleData.userIds = res.data.userIds
+            this.currRoleData.menuIds = res.data.menuIds
+            this.currRoleData.moduleFuncIds = res.data.moduleFuncIds
             this.currRole = {
               id: this.currRoleData.id,
               appid: this.currRoleData.appid,
@@ -397,9 +398,9 @@
               code: this.currRoleData.code,
               levels: this.currRoleData.levels,
               sort: this.currRoleData.sort,
-              user_ids: this.currRoleData.user_ids,
-              menu_ids: this.currRoleData.menu_ids,
-              module_func_ids: this.currRoleData.module_func_ids
+              userIds: this.currRoleData.userIds,
+              menuIds: this.currRoleData.menuIds,
+              moduleFuncIds: this.currRoleData.moduleFuncIds
             }
             this.doReset()
             this.$nextTick(() => {
@@ -420,9 +421,9 @@
               code: this.editForm.code,
               levels: this.editForm.levels,
               sort: this.editForm.sort,
-              user_ids: this.editForm.user_ids,
-              menu_ids: this.$refs['menuTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
-              module_func_ids: this.$refs['moduleFuncTree'].getCheckedAndIndeterminateNodes().map(item => item.id)
+              userIds: this.editForm.userIds,
+              menuIds: this.$refs['menuTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
+              moduleFuncIds: this.$refs['moduleFuncTree'].getCheckedAndIndeterminateNodes().map(item => item.id)
             }).then((res) => {
               this.tree_loading = false
               if (res) {
@@ -434,9 +435,9 @@
                 this.currRoleData.code = this.editForm.code
                 this.currRoleData.levels = this.editForm.levels
                 this.currRoleData.sort = this.editForm.sort
-                this.currRoleData.user_ids = this.editForm.user_ids
-                this.currRoleData.menu_ids = this.$refs['menuTree'].getCheckedAndIndeterminateNodes().map(item => item.id)
-                this.currRoleData.module_func_ids = this.$refs['moduleFuncTree'].getCheckedAndIndeterminateNodes().map(item => item.id)
+                this.currRoleData.userIds = this.editForm.userIds
+                this.currRoleData.menuIds = this.$refs['menuTree'].getCheckedAndIndeterminateNodes().map(item => item.id)
+                this.currRoleData.moduleFuncIds = this.$refs['moduleFuncTree'].getCheckedAndIndeterminateNodes().map(item => item.id)
                 this.currRole = {
                   id: this.editForm.id,
                   appid: this.editForm.appid,
@@ -444,9 +445,9 @@
                   code: this.editForm.code,
                   levels: this.editForm.levels,
                   sort: this.editForm.sort,
-                  user_ids: this.editForm.user_ids,
-                  menu_ids: this.$refs['menuTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
-                  module_func_ids: this.$refs['moduleFuncTree'].getCheckedAndIndeterminateNodes().map(item => item.id)
+                  userIds: this.editForm.userIds,
+                  menuIds: this.$refs['menuTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
+                  moduleFuncIds: this.$refs['moduleFuncTree'].getCheckedAndIndeterminateNodes().map(item => item.id)
                 }
                 this.reloadMenuList()
                 this.reloadModuleFuncList()
@@ -469,16 +470,16 @@
           code: this.currRole.code,
           levels: this.currRole.levels,
           sort: this.currRole.sort,
-          user_ids: this.currRole.user_ids,
-          menu_ids: this.currRole.menu_ids,
-          module_func_ids: this.currRole.module_func_ids
+          userIds: this.currRole.userIds,
+          menuIds: this.currRole.menuIds,
+          moduleFuncIds: this.currRole.moduleFuncIds
         }
         this.reloadMenuList()
         this.reloadModuleFuncList()
         this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)
       },
       handleUserListChange (newTargetKeys) {
-        this.editForm.user_ids = newTargetKeys
+        this.editForm.userIds = newTargetKeys
       }
     },
     mounted () {

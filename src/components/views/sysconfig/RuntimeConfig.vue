@@ -47,10 +47,10 @@
                  @on-keyup="handleCancel($event)"/>
         <span v-else>{{ row.value }}</span>
       </template>
-      <template slot-scope="{ row, index }" slot="config_des">
+      <template slot-scope="{ row, index }" slot="configDes">
         <i-input type="text" v-model="editDes" v-if="editIndex === index" @on-enter="handleSave(index)"
                  @on-keyup="handleCancel($event)"/>
-        <span v-else>{{ row.config_des }}</span>
+        <span v-else>{{ row.configDes }}</span>
       </template>
       <template slot-scope="{ row, index }" slot="enabled">
         <i-switch v-if="editIndex === index" v-model="editEnabled" @keyup.native="handleKeyUp($event, index)">
@@ -193,9 +193,9 @@
             slot: 'value'
           },
           {
-            key: 'config_des',
+            key: 'configDes',
             title: this.$i18n.t('forms.describe'),
-            slot: 'config_des'
+            slot: 'configDes'
           },
           {
             key: 'enabled',
@@ -249,7 +249,7 @@
             this.$api.request.runtime.create({
               name: this.addForm.name,
               value: this.addForm.value,
-              config_des: this.addForm.describe,
+              configDes: this.addForm.describe,
               enabled: this.addForm.enabled
             }).then((res) => {
               this.modal_loading = false
@@ -280,14 +280,15 @@
         this.modal_loading = true
         this.$api.request.runtime.update({
           id: this.searchData[index].id,
+          name: this.editName,
           value: this.editValue,
-          config_des: this.editDes,
+          configDes: this.editDes,
           enabled: this.editEnabled
         }).then((res) => {
           this.modal_loading = false
           if (res) {
             this.searchData[index].value = this.editValue
-            this.searchData[index].config_des = this.editDes
+            this.searchData[index].configDes = this.editDes
             this.searchData[index].enabled = this.editEnabled
             this.editIndex = -1
             this.$Message.success(this.$i18n.t('messages.updateSuccess'))
@@ -308,9 +309,9 @@
         let searchParam = {
           name: this.searchForm.name,
           value: this.searchForm.value,
-          query_param: {
-            curr_page: this.searchForm.currPage,
-            page_size: this.searchForm.pageSize
+          queryParam: {
+            currPage: this.searchForm.currPage,
+            pageSize: this.searchForm.pageSize
           }
         }
         if (this.searchForm.enabled === 'true') {
@@ -319,16 +320,16 @@
           searchParam.enabled = false
         }
         if (this.searchForm.orderParam.order !== 'normal') {
-          searchParam.query_param.order_name = this.searchForm.orderParam.key
-          searchParam.query_param.order_commond = this.searchForm.orderParam.order
+          searchParam.queryParam.orderName = this.searchForm.orderParam.key
+          searchParam.queryParam.orderCommond = this.searchForm.orderParam.order
         }
         this.modal_loading = true
         this.$api.request.runtime.query(searchParam).then((res) => {
           this.modal_loading = false
           if (res) {
             this.selectedData = []
-            this.searchForm.currPage = res.data.pageable.page_number + 1
-            this.searchForm.totalRows = res.data.total_elements
+            this.searchForm.currPage = res.data.pageable.pageNumber + 1
+            this.searchForm.totalRows = res.data.totalElements
             this.searchData = res.data.content.map(item => {
               if (!item.covert) {
                 item._disabled = true
@@ -393,7 +394,7 @@
       handleEdit (row, index) {
         this.editName = row.name
         this.editValue = row.value
-        this.editDes = row.config_des
+        this.editDes = row.configDes
         this.editEnabled = !!row.enabled
         this.editIndex = index
       },

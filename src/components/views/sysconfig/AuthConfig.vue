@@ -23,9 +23,9 @@
                   </Form-item>
                 </i-col>
                 <i-col :sm="{ span: 12 }">
-                  <Form-item :label="$t('forms.icon_type')" prop="icon_type">
-                    <i-input v-model="menuEditForm.icon_type" :disabled="treeLoading" size="small"
-                             :placeholder="$t('forms.pleaseEnter') + $t('forms.icon_type')"
+                  <Form-item :label="$t('forms.iconType')" prop="iconType">
+                    <i-input v-model="menuEditForm.iconType" :disabled="treeLoading" size="small"
+                             :placeholder="$t('forms.pleaseEnter') + $t('forms.iconType')"
                              @on-enter="doSaveMenu"></i-input>
                   </Form-item>
                 </i-col>
@@ -77,7 +77,7 @@
                 </i-col>
               </Row>
               <Form-item :label="$t('forms.roleList')">
-                <Transfer :data="optionalMenuRoles" :target-keys="menuEditForm.role_ids" :list-style="listStyle"
+                <Transfer :data="optionalMenuRoles" :target-keys="menuEditForm.roleIds" :list-style="listStyle"
                           filterable
                           :titles="[$t('forms.optional'),$t('forms.selected')]"
                           :operations="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
@@ -100,6 +100,7 @@
                 </Button>
               </div>
             </Form>
+            <Spin size="large" fix v-if="treeLoading"></Spin>
           </Card>
         </i-col>
       </Row>
@@ -146,7 +147,7 @@
                 </i-col>
               </Row>
               <Form-item :label="$t('forms.roleList')">
-                <Transfer :data="optionalModuleFuncRoles" :target-keys="moduleFuncEditForm.role_ids"
+                <Transfer :data="optionalModuleFuncRoles" :target-keys="moduleFuncEditForm.roleIds"
                           :list-style="listStyle" filterable
                           :titles="[$t('forms.optional'),$t('forms.selected')]"
                           :operations="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
@@ -169,6 +170,7 @@
                 </Button>
               </div>
             </Form>
+            <Spin size="large" fix v-if="treeLoading"></Spin>
           </Card>
         </i-col>
       </Row>
@@ -260,10 +262,10 @@
           name: [
             { required: true, message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'), trigger: 'blur' }
           ],
-          icon_type: [
+          iconType: [
             {
               required: true,
-              message: this.$i18n.t('forms.icon_type') + this.$i18n.t('forms.notEmpty'),
+              message: this.$i18n.t('forms.iconType') + this.$i18n.t('forms.notEmpty'),
               trigger: 'blur'
             }
           ],
@@ -645,26 +647,26 @@
             id: '',
             appid: '',
             name: '',
-            icon_type: '',
+            iconType: '',
             path: '',
             enabled: true,
             opentype: 0,
             menuParentArray: [],
             parentid: '',
             sort: 0,
-            role_ids: []
+            roleIds: []
           }
           this.currMenu = {
             id: '',
             appid: '',
             name: '',
-            icon_type: '',
+            iconType: '',
             path: '',
             enabled: true,
             opentype: 0,
             parentid: '',
             sort: 0,
-            role_ids: []
+            roleIds: []
           }
           this.currMenuData = {}
         }
@@ -678,7 +680,7 @@
             code: '',
             moduleFuncParentArray: [],
             parentid: '',
-            role_ids: []
+            roleIds: []
           }
           this.currModuleFunc = {
             id: '',
@@ -686,7 +688,7 @@
             name: '',
             code: '',
             parentid: '',
-            role_ids: []
+            roleIds: []
           }
           this.currModuleFuncData = {}
         }
@@ -696,7 +698,7 @@
         this.$api.request.auth.createMenu({
           appid: data.appid,
           name: this.$i18n.t('forms.new') + this.$i18n.t('forms.menu'),
-          icon_type: 'md-funnel',
+          iconType: 'md-funnel',
           path: '/',
           parentid: data.id,
           enabled: false,
@@ -801,18 +803,18 @@
           this.tree_loading = false
           if (res) {
             this.currMenuData = data
-            this.currMenuData.role_ids = res.data.role_ids
+            this.currMenuData.roleIds = res.data.roleIds
             this.currMenu = {
               id: this.currMenuData.id,
               appid: this.currMenuData.appid,
               name: this.currMenuData.name,
-              icon_type: this.currMenuData.icon_type,
+              iconType: this.currMenuData.iconType,
               path: this.currMenuData.path,
               enabled: this.currMenuData.enabled,
               opentype: this.currMenuData.opentype,
               parentid: this.currMenuData.parentid,
               sort: this.currMenuData.sort,
-              role_ids: this.currMenuData.role_ids
+              roleIds: this.currMenuData.roleIds
             }
             this.doResetMenu()
           }
@@ -826,14 +828,14 @@
           this.tree_loading = false
           if (res) {
             this.currModuleFuncData = data
-            this.currModuleFuncData.role_ids = res.data.role_ids
+            this.currModuleFuncData.roleIds = res.data.roleIds
             this.currModuleFunc = {
               id: this.currModuleFuncData.id,
               appid: this.currModuleFuncData.appid,
               name: this.currModuleFuncData.name,
               code: this.currModuleFuncData.code,
               parentid: this.currModuleFuncData.parentid,
-              role_ids: this.currModuleFuncData.role_ids
+              roleIds: this.currModuleFuncData.roleIds
             }
             this.doResetModuleFunc()
           }
@@ -849,13 +851,13 @@
               id: this.menuEditForm.id,
               appid: this.menuEditForm.appid,
               name: this.menuEditForm.name,
-              icon_type: this.menuEditForm.icon_type,
+              iconType: this.menuEditForm.iconType,
               path: this.menuEditForm.path,
               parentid: this.menuEditForm.parentid,
               enabled: this.menuEditForm.enabled,
               opentype: this.menuEditForm.opentype,
               sort: this.menuEditForm.sort,
-              role_ids: this.menuEditForm.role_ids
+              roleIds: this.menuEditForm.roleIds
             }).then((res) => {
               this.tree_loading = false
               if (res) {
@@ -865,24 +867,24 @@
                 this.currMenuData.name = this.menuEditForm.name
                 this.currMenuData.title = this.menuEditForm.name
                 this.currMenuData.label = this.menuEditForm.name
-                this.currMenuData.icon_type = this.menuEditForm.icon_type
+                this.currMenuData.iconType = this.menuEditForm.iconType
                 this.currMenuData.path = this.menuEditForm.path
                 this.currMenuData.parentid = this.menuEditForm.parentid
                 this.currMenuData.enabled = this.menuEditForm.enabled
                 this.currMenuData.opentype = this.menuEditForm.opentype
                 this.currMenuData.sort = this.menuEditForm.sort
-                this.currMenuData.role_ids = this.menuEditForm.role_ids
+                this.currMenuData.roleIds = this.menuEditForm.roleIds
                 this.currMenu = {
                   id: this.menuEditForm.id,
                   appid: this.menuEditForm.appid,
                   name: this.menuEditForm.name,
-                  icon_type: this.menuEditForm.icon_type,
+                  iconType: this.menuEditForm.iconType,
                   path: this.menuEditForm.path,
                   parentid: this.menuEditForm.parentid,
                   enabled: this.menuEditForm.enabled,
                   opentype: this.menuEditForm.opentype,
                   sort: this.menuEditForm.sort,
-                  role_ids: this.menuEditForm.role_ids
+                  roleIds: this.menuEditForm.roleIds
                 }
                 this.currMenuFullPath = getTreeFullPathTitle(this.menuTreeData, this.currMenu.id)
                 if (oldParentId === this.currMenuData.parentid) {
@@ -907,7 +909,7 @@
               name: this.moduleFuncEditForm.name,
               code: this.moduleFuncEditForm.code,
               parentid: this.moduleFuncEditForm.parentid,
-              role_ids: this.moduleFuncEditForm.role_ids
+              roleIds: this.moduleFuncEditForm.roleIds
             }).then((res) => {
               this.tree_loading = false
               if (res) {
@@ -919,14 +921,14 @@
                 this.currModuleFuncData.label = this.moduleFuncEditForm.name
                 this.currModuleFuncData.code = this.moduleFuncEditForm.code
                 this.currModuleFuncData.parentid = this.moduleFuncEditForm.parentid
-                this.currModuleFuncData.role_ids = this.moduleFuncEditForm.role_ids
+                this.currModuleFuncData.roleIds = this.moduleFuncEditForm.roleIds
                 this.currModuleFunc = {
                   id: this.moduleFuncEditForm.id,
                   appid: this.moduleFuncEditForm.appid,
                   name: this.moduleFuncEditForm.name,
                   code: this.moduleFuncEditForm.code,
                   parentid: this.moduleFuncEditForm.parentid,
-                  role_ids: this.moduleFuncEditForm.role_ids
+                  roleIds: this.moduleFuncEditForm.roleIds
                 }
                 this.currModuleFuncFullPath = getTreeFullPathTitle(this.moduleFuncTreeData, this.currModuleFunc.id)
                 if (oldParentId === this.currModuleFuncData.parentid) {
@@ -947,14 +949,14 @@
           id: this.currMenu.id,
           appid: this.currMenu.appid,
           name: this.currMenu.name,
-          icon_type: this.currMenu.icon_type,
+          iconType: this.currMenu.iconType,
           path: this.currMenu.path,
           enabled: this.currMenu.enabled,
           opentype: this.currMenu.opentype,
           menuParentArray: getTreeFullPathArray(this.menuTreeData, this.currMenu.parentid).map(item => item.id),
           parentid: this.currMenu.parentid,
           sort: this.currMenu.sort,
-          role_ids: this.currMenu.role_ids
+          roleIds: this.currMenu.roleIds
         }
         this.reloadMenuRoleList()
         this.currMenuFullPath = getTreeFullPathTitle(this.menuTreeData, this.currMenu.id)
@@ -968,16 +970,16 @@
           code: this.currModuleFunc.code,
           moduleFuncParentArray: getTreeFullPathArray(this.moduleFuncTreeData, this.currModuleFunc.parentid).map(item => item.id),
           parentid: this.currModuleFunc.parentid,
-          role_ids: this.currModuleFunc.role_ids
+          roleIds: this.currModuleFunc.roleIds
         }
         this.reloadModuleFuncRoleList()
         this.currModuleFuncFullPath = getTreeFullPathTitle(this.moduleFuncTreeData, this.currModuleFunc.id)
       },
       handleMenuRoleListChange (newTargetKeys) {
-        this.menuEditForm.role_ids = newTargetKeys
+        this.menuEditForm.roleIds = newTargetKeys
       },
       handleModuleFuncRoleListChange (newTargetKeys) {
-        this.moduleFuncEditForm.role_ids = newTargetKeys
+        this.moduleFuncEditForm.roleIds = newTargetKeys
       }
     },
     mounted () {

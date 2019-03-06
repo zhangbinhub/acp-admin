@@ -145,13 +145,13 @@
       initRemoteData () {
         // 获取用户信息
         this.$api.request.auth.getUserInfo().then((res) => {
-          if (res && !res.data.error_description) {
+          if (res && !res.data.errorDescription) {
             this.$store.commit('SET_USER_INFO', res.data)
           }
         })
         // 获取菜单信息
         this.$api.request.auth.getMenus().then((res) => {
-          if (res && !res.data.error_description) {
+          if (res && !res.data.errorDescription) {
             this.$store.commit('SET_MENU_LIST', res.data)
             this.openedNames = getOpenedNamesByActiveName(this.fullPath, this)
             this.updateTagList(this.$store.state.app.tagNavList, this.menuList, this.$route)

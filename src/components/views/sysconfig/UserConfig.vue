@@ -68,11 +68,11 @@
       <template slot-scope="{ row }" slot="levels">
         <span>{{ row.levels }}</span>
       </template>
-      <template slot-scope="{ row }" slot="organization_set">
-        <span style="white-space: pre-wrap;">{{ orgNames(row.organization_set) }}</span>
+      <template slot-scope="{ row }" slot="organizationSet">
+        <span style="white-space: pre-wrap;">{{ orgNames(row.organizationSet) }}</span>
       </template>
-      <template slot-scope="{ row }" slot="role_set">
-        <span style="white-space: pre-wrap;">{{ row.role_set.map(role => role.name).join(',') }}</span>
+      <template slot-scope="{ row }" slot="roleSet">
+        <span style="white-space: pre-wrap;">{{ row.roleSet.map(role => role.name).join(',') }}</span>
       </template>
       <template slot-scope="{ row }" slot="enabled">
         <span :style="row.enabled ? 'color:green':'color:red'">{{enabledText(row.enabled)}}</span>
@@ -149,18 +149,21 @@
           <Card>
             <p slot="title">{{$t('forms.orgList')}}</p>
             <Tree ref="orgTree" :data="orgTreeDataS1" show-checkbox check-strictly></Tree>
+            <Spin size="large" fix v-if="modal_loading"></Spin>
           </Card>
         </i-col>
         <i-col :md="6" class="card-col">
           <Card>
             <p slot="title">{{$t('forms.orgMngList')}}</p>
             <Tree ref="orgMngTree" :data="orgTreeDataS2" show-checkbox></Tree>
+            <Spin size="large" fix v-if="modal_loading"></Spin>
           </Card>
         </i-col>
         <i-col :md="6" class="card-col">
           <Card>
             <p slot="title">{{$t('forms.roleList')}}</p>
             <Tree ref="roleTree" :data="roleTreeData" show-checkbox check-strictly></Tree>
+            <Spin size="large" fix v-if="modal_loading"></Spin>
           </Card>
         </i-col>
       </Row>
@@ -228,11 +231,11 @@
           enabled: true,
           sort: 1,
           org_ids: [],
-          organization_set: [],
+          organizationSet: [],
           org_mng_ids: [],
-          organization_mng_set: [],
-          role_ids: [],
-          role_set: []
+          organizationMngSet: [],
+          roleIds: [],
+          roleSet: []
         },
         editForm: {
           id: '',
@@ -285,13 +288,13 @@
           slot: 'levels',
           sortable: 'custom'
         }, {
-          key: 'organization_set',
+          key: 'organizationSet',
           title: this.$i18n.t('forms.organization'),
-          slot: 'organization_set'
+          slot: 'organizationSet'
         }, {
-          key: 'role_set',
+          key: 'roleSet',
           title: this.$i18n.t('forms.role'),
-          slot: 'role_set'
+          slot: 'roleSet'
         }, {
           key: 'enabled',
           title: this.$i18n.t('forms.enabled'),
@@ -398,7 +401,7 @@
             this.$api.request.role.getList().then((res) => {
               this.modal_loading = false
               if (res) {
-                processTreeNode(res.data, 1, this.currObj.role_ids)
+                processTreeNode(res.data, 1, this.currObj.roleIds)
                 for (const item of res.data) {
                   item.parentid = item.appid
                   for (const root of this.roleTreeData) {
@@ -454,9 +457,9 @@
           loginno: this.searchForm.loginno,
           org_name: this.searchForm.organization_name,
           role_name: this.searchForm.role_name,
-          query_param: {
-            curr_page: this.searchForm.currPage,
-            page_size: this.searchForm.pageSize
+          queryParam: {
+            currPage: this.searchForm.currPage,
+            pageSize: this.searchForm.pageSize
           }
         }
         if (this.searchForm.enabled === 'true') {
@@ -465,16 +468,16 @@
           searchParam.enabled = false
         }
         if (this.searchForm.orderParam.order !== 'normal') {
-          searchParam.query_param.order_name = this.searchForm.orderParam.key
-          searchParam.query_param.order_commond = this.searchForm.orderParam.order
+          searchParam.queryParam.orderName = this.searchForm.orderParam.key
+          searchParam.queryParam.orderCommond = this.searchForm.orderParam.order
         }
         this.modal_loading = true
         this.$api.request.user.query(searchParam).then((res) => {
           this.modal_loading = false
           if (res) {
             this.selectedData = []
-            this.searchForm.currPage = res.data.pageable.page_number + 1
-            this.searchForm.totalRows = res.data.total_elements
+            this.searchForm.currPage = res.data.pageable.pageNumber + 1
+            this.searchForm.totalRows = res.data.totalElements
             this.searchData = res.data.content.map(item => {
               if (item.id === this.$store.state.app.user.userInfo.id || item.levels <= this.$store.state.app.user.userInfo.levels) {
                 item._disabled = true
@@ -545,11 +548,11 @@
           enabled: true,
           sort: 1,
           org_ids: [],
-          organization_set: [],
+          organizationSet: [],
           org_mng_ids: [],
-          organization_mng_set: [],
-          role_ids: [],
-          role_set: []
+          organizationMngSet: [],
+          roleIds: [],
+          roleSet: []
         }
       },
       handleEdit (row) {
@@ -574,14 +577,14 @@
         this.editForm.levels = this.currObj.levels
         this.editForm.enabled = this.currObj.enabled
         this.editForm.sort = this.currObj.sort
-        if (this.currObj.organization_set.length > 0) {
-          this.currObj.org_ids = this.currObj.organization_set.map(item => item.id)
+        if (this.currObj.organizationSet.length > 0) {
+          this.currObj.org_ids = this.currObj.organizationSet.map(item => item.id)
         }
-        if (this.currObj.organization_mng_set.length > 0) {
-          this.currObj.org_mng_ids = this.currObj.organization_mng_set.map(item => item.id)
+        if (this.currObj.organizationMngSet.length > 0) {
+          this.currObj.org_mng_ids = this.currObj.organizationMngSet.map(item => item.id)
         }
-        if (this.currObj.role_set.length > 0) {
-          this.currObj.role_ids = this.currObj.role_set.map(item => item.id)
+        if (this.currObj.roleSet.length > 0) {
+          this.currObj.roleIds = this.currObj.roleSet.map(item => item.id)
         }
         this.refreshOrgTree()
         this.refreshRoleTree()
@@ -612,7 +615,7 @@
                 sort: this.editForm.sort,
                 org_ids: this.$refs['orgTree'].getCheckedNodes().map(item => item.id),
                 org_mng_ids: this.$refs['orgMngTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
-                role_ids: this.$refs['roleTree'].getCheckedNodes().map(item => item.id)
+                roleIds: this.$refs['roleTree'].getCheckedNodes().map(item => item.id)
               }).then((res) => {
                 this.modal_loading = false
                 if (res) {
@@ -639,7 +642,7 @@
           sort: this.editForm.sort,
           org_ids: this.$refs['orgTree'].getCheckedNodes().map(item => item.id),
           org_mng_ids: this.$refs['orgMngTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
-          role_ids: this.$refs['roleTree'].getCheckedNodes().map(item => item.id)
+          roleIds: this.$refs['roleTree'].getCheckedNodes().map(item => item.id)
         }).then((res) => {
           this.modal_loading = false
           if (res) {
@@ -673,7 +676,7 @@
       // 获取用户信息
       this.modal_loading = true
       this.$api.request.auth.getUserInfo().then((res) => {
-        if (res && !res.data.error_description) {
+        if (res && !res.data.errorDescription) {
           this.modal_loading = false
           this.$store.commit('SET_USER_INFO', res.data)
           this.refreshOrgTree(this.handleSearch())

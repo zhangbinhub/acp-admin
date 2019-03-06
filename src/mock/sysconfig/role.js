@@ -33,9 +33,9 @@ export const getRoleInfo = () => {
     'code': 'TEST',
     'levels': 1,
     'sort': 1,
-    'user_ids': [],
-    'menu_ids': ['dbdc0cd5-19fb-11e9-894e-d8c49792dd7b', 'dbdd18fc-19fb-11e9-894e-d8c49792dd7b', 'dbdc4e5a-19fb-11e9-894e-d8c49792dd7b', 'dbdba3bf-19fb-11e9-894e-d8c49792dd7b', 'dbdc90b0-19fb-11e9-894e-d8c49792dd7b', 'dbdcd7a2-19fb-11e9-894e-d8c49792dd7b'],
-    'module_func_ids': []
+    'userIds': [],
+    'menuIds': ['dbdc0cd5-19fb-11e9-894e-d8c49792dd7b', 'dbdd18fc-19fb-11e9-894e-d8c49792dd7b', 'dbdc4e5a-19fb-11e9-894e-d8c49792dd7b', 'dbdba3bf-19fb-11e9-894e-d8c49792dd7b', 'dbdc90b0-19fb-11e9-894e-d8c49792dd7b', 'dbdcd7a2-19fb-11e9-894e-d8c49792dd7b'],
+    'moduleFuncIds': []
   }
 }
 export const updateRole = () => {

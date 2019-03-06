@@ -134,7 +134,7 @@
           const reader = new FileReader()
           reader.onload = function (event) {
             const errorObj = JSON.parse(event.target.result)
-            currObj.$api.errorProcess(errorObj.error_description, currObj.$i18n.t('messages.requestFailed'))
+            currObj.$api.errorProcess(errorObj.errorDescription, currObj.$i18n.t('messages.requestFailed'))
           }
           reader.readAsText(blob, 'UTF-8')
         })

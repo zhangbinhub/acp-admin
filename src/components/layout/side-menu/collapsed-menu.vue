@@ -3,7 +3,7 @@
             :transfer="isRoot" :placement="placement">
     <a class="drop-menu-a" type="text" @mouseover="handleMousemove($event, children)"
        :style="{textAlign: !hideTitle ? 'left' : ''}">
-      <Icon :type="parentItem.icon_type" :size="rootIconSize"></Icon>
+      <Icon :type="parentItem.iconType" :size="rootIconSize"></Icon>
       <span class="menu-title" v-if="!hideTitle">{{ parentItem.name }}</span>
       <Icon style="float: right;" v-if="!hideTitle" type="ios-arrow-forward" :size="iconSize"/>
     </a>
@@ -12,7 +12,7 @@
         <collapsed-menu v-if="child.children && child.children.length > 0" :icon-size="iconSize" :parent-item="child"
                         :key="`drop-${child.id}`" :hide-title="false"></collapsed-menu>
         <DropdownItem v-else :key="`drop-${child.id}`" :name="child.path">
-          <Icon :type="child.icon_type" :size="iconSize"></Icon>
+          <Icon :type="child.iconType" :size="iconSize"></Icon>
           <span class="menu-title">{{ child.name }}</span>
         </DropdownItem>
       </template>

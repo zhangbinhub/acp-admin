@@ -3,7 +3,7 @@ export const updateRuntime = () => {
     'id': '58e19099-15c5-11e9-95dd-d8c49792dd7b',
     'name': 'name',
     'value': 'value',
-    'config_des': 'dnioa你哦按身份111',
+    'configDes': 'dnioa你哦按身份111',
     'enabled': false,
     'covert': true
   }
@@ -19,25 +19,25 @@ export const queryRuntime = () => {
       'id': '58e19099-15c5-11e9-95dd-d8c49792dd7b',
       'name': 'name',
       'value': 'value',
-      'config_des': 'dnioa你哦按身份',
+      'configDes': 'dnioa你哦按身份',
       'enabled': true,
       'covert': true
     }],
     'pageable': {
       'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
       'offset': 0,
-      'page_number': 0,
-      'page_size': 10,
+      'pageNumber': 0,
+      'pageSize': 10,
       'paged': true,
       'unpaged': false
     },
     'last': true,
-    'total_pages': 1,
-    'total_elements': 1,
+    'totalPages': 1,
+    'totalElements': 1,
     'size': 10,
     'number': 0,
     'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
-    'number_of_elements': 1,
+    'numberOfElements': 1,
     'first': true,
     'empty': false
   }

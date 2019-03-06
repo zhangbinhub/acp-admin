@@ -8,7 +8,7 @@
           <side-menu-item v-if="item.children && item.children.length > 0" :key="`menu-${item.id}`"
                           :parent-item="item"></side-menu-item>
           <menu-item v-else :name="item.path" :key="`menu-${item.id}`">
-            <Icon :type="item.icon_type"></Icon>
+            <Icon :type="item.iconType"></Icon>
             <span>{{ item.name }}</span>
           </menu-item>
         </template>
@@ -23,7 +23,7 @@
                  placement="right" :key="`drop-menu-${item.id}`">
           <a @click="handleSelect(item.path)" class="drop-menu-a"
              :style="{textAlign: 'center'}">
-            <Icon :type="item.icon_type" :size="30"></Icon>
+            <Icon :type="item.iconType" :size="30"></Icon>
           </a>
         </Tooltip>
       </template>
