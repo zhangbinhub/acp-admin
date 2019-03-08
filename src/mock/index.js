@@ -1,6 +1,6 @@
 import Mock from 'mockjs'
 
-import { login, userInfo, menuList } from './oauth/oauth'
+import { login, logOut, userInfo, menuList } from './oauth/oauth'
 import { deleteRuntime, queryRuntime, updateRuntime } from './sysconfig/runtime'
 import { getAppList, deleteApp, queryApp, updateApp } from './sysconfig/application'
 import { getOrgList, getOrgInfo, deleteOrg } from './sysconfig/organization'
@@ -25,6 +25,7 @@ Mock.setup({
 })
 
 Mock.mock(/\/oauth\/token/, /post/i, login)
+Mock.mock(/\/oauth\/logout/, /post/i, logOut)
 Mock.mock(/\/oauth\/userinfo/, /get/i, userInfo)
 Mock.mock(/\/oauth\/menulist/, /get/i, menuList)
 Mock.mock(/\/oauth\/userinfo/, /(patch)|(put)/i, function (options) {

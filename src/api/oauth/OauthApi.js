@@ -34,6 +34,9 @@ export default {
       }]
     })
   },
+  doLogOut: () => {
+    return ApiComm.$http.post('/oauth/logout')
+  },
   getUserInfo: () => {
     return ApiComm.$http.get('/oauth/userinfo')
   },

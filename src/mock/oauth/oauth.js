@@ -8,6 +8,12 @@ export const login = () => {
   }
 }
 
+export const logOut = () => {
+  return {
+    message: '下线成功'
+  }
+}
+
 export const userInfo = () => {
   return {
     'id': 'dbfd58aa-19fb-11e9-894e-d8c49792dd7b',
