@@ -45,31 +45,31 @@ const ApiComm = {
       ApiComm.$loading.error()
       if (error.response) {
         switch (error.response.status) {
-          case 400:
+          case 400: // 业务错误
             if (!error.config.headers.Process400 || error.config.headers.Process400 !== 'false') {
               ApiComm.errorProcess(error)
             }
             break
-          case 401:
+          case 401: // token 失效
             if (!error.config.headers.Process401 || error.config.headers.Process401 !== 'false') {
               ApiComm.redirectLogin()
               return
             }
             break
-          case 403:
-            error.response.data.error_description = ApiComm.$i18n.t('messages.failed403')
+          case 403: // 权限不足
+            error.response.data.errorDescription = ApiComm.$i18n.t('messages.failed403')
             if (!error.config.headers.Process403 || error.config.headers.Process403 !== 'false') {
               ApiComm.errorProcess(error)
             }
             break
-          case 500:
+          case 500: // 系统内部异常
             let errorMsg = 'Internal System Error'
             if (error.response.data) {
               if (typeof error.response.data === 'string') {
                 errorMsg = String(error.response.data)
               } else {
-                if (error.response.data.error_description) {
-                  errorMsg = error.response.data.error_description
+                if (error.response.data.errorDescription) {
+                  errorMsg = error.response.data.errorDescription
                 } else {
                   errorMsg = error.response.data.message
                 }
@@ -90,8 +90,8 @@ const ApiComm = {
       if (typeof error.response.data === 'string') {
         errorMessage = String(error.response.data)
       } else {
-        if (error.response.data.error_description) {
-          errorMessage = error.response.data.error_description
+        if (error.response.data.errorDescription) {
+          errorMessage = error.response.data.errorDescription
         } else {
           errorMessage = error.response.data.message
         }

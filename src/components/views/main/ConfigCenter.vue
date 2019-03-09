@@ -2,18 +2,18 @@
   <Card>
     <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form">
       <Row>
-        <Form-item :label="$t('forms.name')" prop="config_application">
-          <i-input v-model="searchForm.config_application" :disabled="modal_loading" size="small"
+        <Form-item :label="$t('forms.name')" prop="configApplication">
+          <i-input v-model="searchForm.configApplication" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                    @on-enter="handleSearch"></i-input>
         </Form-item>
-        <Form-item :label="$t('forms.profile')" prop="config_profile">
-          <i-input v-model="searchForm.config_profile" :disabled="modal_loading" size="small"
+        <Form-item :label="$t('forms.profile')" prop="configProfile">
+          <i-input v-model="searchForm.configProfile" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.profile')"
                    @on-enter="handleSearch"></i-input>
         </Form-item>
-        <Form-item :label="$t('forms.label')" prop="config_label">
-          <i-input v-model="searchForm.config_label" :disabled="modal_loading" size="small"
+        <Form-item :label="$t('forms.label')" prop="configLabel">
+          <i-input v-model="searchForm.configLabel" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.label')"
                    @on-enter="handleSearch"></i-input>
         </Form-item>
@@ -27,8 +27,8 @@
         </Form-item>
       </Row>
       <Row>
-        <Form-item :label="$t('forms.key')" prop="config_key" style="width: 80%;max-width: 700px">
-          <i-input v-model="searchForm.config_key" :disabled="modal_loading" size="small"
+        <Form-item :label="$t('forms.key')" prop="configKey" style="width: 80%;max-width: 700px">
+          <i-input v-model="searchForm.configKey" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.key')"
                    @on-enter="handleSearch"></i-input>
         </Form-item>
@@ -56,23 +56,23 @@
     <Table border height="433" size="small" :columns="columns" :data="searchData" class="search-table"
            :loading="modal_loading" :no-data-text="$t('messages.tableNoData')" @on-row-dblclick="handleEdit"
            @on-selection-change="handleSelect" @on-sort-change="handleSortChange">
-      <template slot-scope="{ row }" slot="config_application">
-        <span>{{ row.config_application }}</span>
+      <template slot-scope="{ row }" slot="configApplication">
+        <span>{{ row.configApplication }}</span>
       </template>
-      <template slot-scope="{ row }" slot="config_profile">
-        <span>{{ row.config_profile }}</span>
+      <template slot-scope="{ row }" slot="configProfile">
+        <span>{{ row.configProfile }}</span>
       </template>
-      <template slot-scope="{ row }" slot="config_label">
-        <span>{{ row.config_label }}</span>
+      <template slot-scope="{ row }" slot="configLabel">
+        <span>{{ row.configLabel }}</span>
       </template>
-      <template slot-scope="{ row }" slot="config_key">
-        <span>{{ row.config_key }}</span>
+      <template slot-scope="{ row }" slot="configKey">
+        <span>{{ row.configKey }}</span>
       </template>
-      <template slot-scope="{ row }" slot="config_value">
-        <span>{{ row.config_value }}</span>
+      <template slot-scope="{ row }" slot="configValue">
+        <span>{{ row.configValue }}</span>
       </template>
-      <template slot-scope="{ row }" slot="config_des">
-        <span>{{ row.config_des }}</span>
+      <template slot-scope="{ row }" slot="configDes">
+        <span>{{ row.configDes }}</span>
       </template>
       <template slot-scope="{ row }" slot="enabled">
         <span :style="row.enabled ? 'color:green':'color:red'">{{enabledText(row.enabled)}}</span>
@@ -96,33 +96,33 @@
     </div>
     <Modal v-model="editModal" :title="$t('forms.info')" :loading="modal_loading" :mask-closable="false">
       <Form ref="editForm" :model="editForm" :rules="ruleAddForm" :label-width="60" style="padding-right: 25px;">
-        <Form-item :label="$t('forms.name')" prop="config_application">
-          <i-input v-model="editForm.config_application" :disabled="modal_loading" ref="config_application"
+        <Form-item :label="$t('forms.name')" prop="configApplication">
+          <i-input v-model="editForm.configApplication" :disabled="modal_loading" ref="configApplication"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                    @on-enter="doSave('editForm')"></i-input>
         </Form-item>
-        <Form-item :label="$t('forms.profile')" prop="config_profile">
-          <i-input v-model="editForm.config_profile" :disabled="modal_loading"
+        <Form-item :label="$t('forms.profile')" prop="configProfile">
+          <i-input v-model="editForm.configProfile" :disabled="modal_loading"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.profile')"
                    @on-enter="doSave('editForm')"></i-input>
         </Form-item>
-        <Form-item :label="$t('forms.label')" prop="config_label">
-          <i-input v-model="editForm.config_label" :disabled="modal_loading"
+        <Form-item :label="$t('forms.label')" prop="configLabel">
+          <i-input v-model="editForm.configLabel" :disabled="modal_loading"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.label')"
                    @on-enter="doSave('editForm')"></i-input>
         </Form-item>
-        <Form-item :label="$t('forms.key')" prop="config_key">
-          <i-input v-model="editForm.config_key" :disabled="modal_loading"
+        <Form-item :label="$t('forms.key')" prop="configKey">
+          <i-input v-model="editForm.configKey" :disabled="modal_loading"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.key')"
                    @on-enter="doSave('editForm')"></i-input>
         </Form-item>
-        <Form-item :label="$t('forms.value')" prop="config_value">
-          <i-input v-model="editForm.config_value" :disabled="modal_loading"
+        <Form-item :label="$t('forms.value')" prop="configValue">
+          <i-input v-model="editForm.configValue" :disabled="modal_loading"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
                    @on-enter="doSave('editForm')"></i-input>
         </Form-item>
-        <Form-item :label="$t('forms.describe')" prop="config_des">
-          <i-input v-model="editForm.config_des" :disabled="modal_loading"
+        <Form-item :label="$t('forms.describe')" prop="configDes">
+          <i-input v-model="editForm.configDes" :disabled="modal_loading"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.describe')"
                    @on-enter="doSave('editForm')"></i-input>
         </Form-item>
@@ -151,13 +151,13 @@
     data () {
       return {
         searchForm: {
-          config_application: '',
-          config_profile: '',
-          config_label: '',
-          config_key: '',
+          configApplication: '',
+          configProfile: '',
+          configLabel: '',
+          configKey: '',
           enabled: '',
           orderParam: {
-            key: 'config_key',
+            key: 'configKey',
             order: 'asc'
           },
           currPage: 1,
@@ -167,12 +167,12 @@
         },
         editForm: {
           id: '',
-          config_application: '',
-          config_profile: '',
-          config_label: '',
-          config_key: '',
-          config_value: '',
-          config_des: '',
+          configApplication: '',
+          configProfile: '',
+          configLabel: '',
+          configKey: '',
+          configValue: '',
+          configDes: '',
           enabled: true
         },
         editModal: false,
@@ -186,7 +186,7 @@
       editModal (value) {
         if (value) {
           this.$nextTick(() => {
-            this.$refs['config_application'].focus()
+            this.$refs['configApplication'].focus()
           })
         }
       }
@@ -206,43 +206,43 @@
             align: 'center'
           },
           {
-            key: 'config_application',
+            key: 'configApplication',
             title: this.$i18n.t('forms.name'),
             width: 100,
-            slot: 'config_application',
+            slot: 'configApplication',
             sortable: 'custom'
           },
           {
-            key: 'config_profile',
+            key: 'configProfile',
             title: this.$i18n.t('forms.profile'),
             width: 95,
-            slot: 'config_profile',
+            slot: 'configProfile',
             sortable: 'custom'
           },
           {
-            key: 'config_label',
+            key: 'configLabel',
             title: this.$i18n.t('forms.label'),
             width: 85,
-            slot: 'config_label',
+            slot: 'configLabel',
             sortable: 'custom'
           },
           {
-            key: 'config_key',
+            key: 'configKey',
             title: this.$i18n.t('forms.key'),
-            slot: 'config_key',
+            slot: 'configKey',
             sortable: 'custom'
           },
           {
-            key: 'config_value',
+            key: 'configValue',
             title: this.$i18n.t('forms.value'),
             width: 100,
-            slot: 'config_value'
+            slot: 'configValue'
           },
           {
-            key: 'config_des',
+            key: 'configDes',
             title: this.$i18n.t('forms.describe'),
             width: 200,
-            slot: 'config_des'
+            slot: 'configDes'
           },
           {
             key: 'enabled',
@@ -268,19 +268,19 @@
       },
       ruleAddForm () {
         return {
-          config_application: [
+          configApplication: [
             { required: true, message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'), trigger: 'blur' }
           ],
-          config_profile: [
+          configProfile: [
             { required: true, message: this.$i18n.t('forms.profile') + this.$i18n.t('forms.notEmpty'), trigger: 'blur' }
           ],
-          config_label: [
+          configLabel: [
             { required: true, message: this.$i18n.t('forms.label') + this.$i18n.t('forms.notEmpty'), trigger: 'blur' }
           ],
-          config_key: [
+          configKey: [
             { required: true, message: this.$i18n.t('forms.key') + this.$i18n.t('forms.notEmpty'), trigger: 'blur' }
           ],
-          config_value: [
+          configValue: [
             { required: true, message: this.$i18n.t('forms.value') + this.$i18n.t('forms.notEmpty'), trigger: 'blur' }
           ]
         }
@@ -310,12 +310,12 @@
               if (valid) {
                 this.modal_loading = true
                 this.$api.request.config.create({
-                  config_application: this.editForm.config_application,
-                  config_profile: this.editForm.config_profile,
-                  config_label: this.editForm.config_label,
-                  config_key: this.editForm.config_key,
-                  config_value: this.editForm.config_value,
-                  config_des: this.editForm.config_des,
+                  configApplication: this.editForm.configApplication,
+                  configProfile: this.editForm.configProfile,
+                  configLabel: this.editForm.configLabel,
+                  configKey: this.editForm.configKey,
+                  configValue: this.editForm.configValue,
+                  configDes: this.editForm.configDes,
                   enabled: this.editForm.enabled
                 }).then((res) => {
                   this.modal_loading = false
@@ -336,12 +336,12 @@
                 this.modal_loading = true
                 this.$api.request.config.update({
                   id: this.editForm.id,
-                  config_application: this.editForm.config_application,
-                  config_profile: this.editForm.config_profile,
-                  config_label: this.editForm.config_label,
-                  config_key: this.editForm.config_key,
-                  config_value: this.editForm.config_value,
-                  config_des: this.editForm.config_des,
+                  configApplication: this.editForm.configApplication,
+                  configProfile: this.editForm.configProfile,
+                  configLabel: this.editForm.configLabel,
+                  configKey: this.editForm.configKey,
+                  configValue: this.editForm.configValue,
+                  configDes: this.editForm.configDes,
                   enabled: this.editForm.enabled
                 }).then((res) => {
                   this.modal_loading = false
@@ -374,22 +374,22 @@
         this.modal_loading = true
         this.$api.request.runtime.update({
           id: this.searchData[index].id,
-          config_application: this.editForm.config_application,
-          config_profile: this.editForm.config_profile,
-          config_label: this.editForm.config_label,
-          config_key: this.editForm.config_key,
-          config_value: this.editForm.config_value,
-          config_des: this.editForm.describe,
+          configApplication: this.editForm.configApplication,
+          configProfile: this.editForm.configProfile,
+          configLabel: this.editForm.configLabel,
+          configKey: this.editForm.configKey,
+          configValue: this.editForm.configValue,
+          configDes: this.editForm.describe,
           enabled: this.editEnabled
         }).then((res) => {
           this.modal_loading = false
           if (res) {
-            this.searchData[index].config_application = this.editApplication
-            this.searchData[index].config_profile = this.editProfile
-            this.searchData[index].config_label = this.editLabel
-            this.searchData[index].config_key = this.editKey
-            this.searchData[index].config_value = this.editValue
-            this.searchData[index].config_des = this.editDes
+            this.searchData[index].configApplication = this.editApplication
+            this.searchData[index].configProfile = this.editProfile
+            this.searchData[index].configLabel = this.editLabel
+            this.searchData[index].configKey = this.editKey
+            this.searchData[index].configValue = this.editValue
+            this.searchData[index].configDes = this.editDes
             this.searchData[index].enabled = this.editEnabled
             this.editIndex = -1
             this.$Message.success(this.$i18n.t('messages.updateSuccess'))
@@ -408,13 +408,13 @@
       },
       handleSearch () {
         let searchParam = {
-          config_application: this.searchForm.config_application,
-          config_profile: this.searchForm.config_profile,
-          config_label: this.searchForm.config_label,
-          config_key: this.searchForm.config_key,
-          query_param: {
-            curr_page: this.searchForm.currPage,
-            page_size: this.searchForm.pageSize
+          configApplication: this.searchForm.configApplication,
+          configProfile: this.searchForm.configProfile,
+          configLabel: this.searchForm.configLabel,
+          configKey: this.searchForm.configKey,
+          queryParam: {
+            currPage: this.searchForm.currPage,
+            pageSize: this.searchForm.pageSize
           }
         }
         if (this.searchForm.enabled === 'true') {
@@ -423,16 +423,16 @@
           searchParam.enabled = false
         }
         if (this.searchForm.orderParam.order !== 'normal') {
-          searchParam.query_param.order_name = this.searchForm.orderParam.key
-          searchParam.query_param.order_commond = this.searchForm.orderParam.order
+          searchParam.queryParam.orderName = this.searchForm.orderParam.key
+          searchParam.queryParam.orderCommond = this.searchForm.orderParam.order
         }
         this.modal_loading = true
         this.$api.request.config.query(searchParam).then((res) => {
           this.modal_loading = false
           if (res) {
             this.selectedData = []
-            this.searchForm.currPage = res.data.pageable.page_number + 1
-            this.searchForm.totalRows = res.data.total_elements
+            this.searchForm.currPage = res.data.pageable.pageNumber + 1
+            this.searchForm.totalRows = res.data.totalElements
             this.searchData = res.data.content.map(item => {
               if (item.enabled) {
                 item._disabled = true
@@ -497,12 +497,12 @@
       handleEdit (row) {
         this.$refs['editForm'].resetFields()
         this.editForm.id = row.id
-        this.editForm.config_application = row.config_application
-        this.editForm.config_profile = row.config_profile
-        this.editForm.config_label = row.config_label
-        this.editForm.config_key = row.config_key
-        this.editForm.config_value = row.config_value
-        this.editForm.config_des = row.config_des
+        this.editForm.configApplication = row.configApplication
+        this.editForm.configProfile = row.configProfile
+        this.editForm.configLabel = row.configLabel
+        this.editForm.configKey = row.configKey
+        this.editForm.configValue = row.configValue
+        this.editForm.configDes = row.configDes
         this.editForm.enabled = !!row.enabled
         this.editModal = true
         this.action = 1

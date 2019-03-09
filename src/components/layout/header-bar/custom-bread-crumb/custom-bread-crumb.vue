@@ -3,7 +3,7 @@
     <Breadcrumb :style="{fontSize: `${fontSize}px`}">
       <BreadcrumbItem v-for="(item, index) in list" :key="`bread-crumb-${index}`"
                       :to="index !== list.length - 1 ? item.path : ''">
-        <Icon style="margin-right: 4px;" :type="item.icon_type"></Icon>
+        <Icon style="margin-right: 4px;" :type="item.iconType"></Icon>
         <span>{{ item.name }}</span>
       </BreadcrumbItem>
     </Breadcrumb>
@@ -38,13 +38,13 @@
           breadCrumbList.push({
             name: this.$route.meta.title ? this.$i18n.t(this.$route.meta.title) : this.$route.name,
             path: this.fullPath,
-            icon_type: this.$route.meta.icon
+            iconType: this.$route.meta.icon
           })
         }
         return [{
           name: this.$i18n.t('pageTitle.home'),
           path: this.homePath,
-          icon_type: 'ios-home'
+          iconType: 'ios-home'
         }, ...breadCrumbList]
       }
     }

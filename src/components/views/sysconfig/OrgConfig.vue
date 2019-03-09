@@ -45,7 +45,7 @@
             </i-col>
           </Row>
           <Form-item :label="$t('forms.userList')">
-            <Transfer :data="optionalUsers" :target-keys="editForm.user_ids" :list-style="listStyle" filterable
+            <Transfer :data="optionalUsers" :target-keys="editForm.userIds" :list-style="listStyle" filterable
                       :titles="[$t('forms.optional'),$t('forms.selected')]"
                       :operations="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
                       @on-change="handleUserListChange">
@@ -67,6 +67,7 @@
             </Button>
           </div>
         </Form>
+        <Spin size="large" fix v-if="treeLoading"></Spin>
       </Card>
     </i-col>
   </Row>
@@ -256,7 +257,7 @@
             parentArray: [],
             parentid: '',
             sort: 0,
-            user_ids: []
+            userIds: []
           }
           this.currOrg = {
             id: '',
@@ -264,7 +265,7 @@
             code: '',
             parentid: '',
             sort: 0,
-            user_ids: []
+            userIds: []
           }
           this.currOrgData = {}
         }
@@ -345,14 +346,14 @@
           this.tree_loading = false
           if (res) {
             this.currOrgData = data
-            this.currOrgData.user_ids = res.data.user_ids
+            this.currOrgData.userIds = res.data.userIds
             this.currOrg = {
               id: this.currOrgData.id,
               name: this.currOrgData.name,
               code: this.currOrgData.code,
               parentid: this.currOrgData.parentid,
               sort: this.currOrgData.sort,
-              user_ids: this.currOrgData.user_ids
+              userIds: this.currOrgData.userIds
             }
             this.doReset()
             this.$nextTick(() => {
@@ -373,7 +374,7 @@
               code: this.editForm.code,
               parentid: this.editForm.parentid,
               sort: this.editForm.sort,
-              user_ids: this.editForm.user_ids
+              userIds: this.editForm.userIds
             }).then((res) => {
               this.tree_loading = false
               if (res) {
@@ -386,14 +387,14 @@
                 this.currOrgData.code = this.editForm.code
                 this.currOrgData.parentid = this.editForm.parentid
                 this.currOrgData.sort = this.editForm.sort
-                this.currOrgData.user_ids = this.editForm.user_ids
+                this.currOrgData.userIds = this.editForm.userIds
                 this.currOrg = {
                   id: this.editForm.id,
                   name: this.editForm.name,
                   code: this.editForm.code,
                   parentid: this.editForm.parentid,
                   sort: this.editForm.sort,
-                  user_ids: this.editForm.user_ids
+                  userIds: this.editForm.userIds
                 }
                 this.currOrgFullPath = getTreeFullPathTitle(this.treeData, this.currOrg.id)
                 if (oldParentId === this.currOrgData.parentid) {
@@ -418,12 +419,12 @@
           sort: this.currOrg.sort,
           parentArray: getTreeFullPathArray(this.treeData, this.currOrg.parentid).map(item => item.id),
           parentid: this.currOrg.parentid,
-          user_ids: this.currOrg.user_ids
+          userIds: this.currOrg.userIds
         }
         this.currOrgFullPath = getTreeFullPathTitle(this.treeData, this.currOrg.id)
       },
       handleUserListChange (newTargetKeys) {
-        this.editForm.user_ids = newTargetKeys
+        this.editForm.userIds = newTargetKeys
       }
     },
     mounted () {

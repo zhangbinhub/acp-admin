@@ -7,9 +7,9 @@ export const getModUserList = () => {
     'levels': 1,
     'enabled': true,
     'sort': 1,
-    'organization_set': [],
-    'organization_mng_set': [],
-    'role_set': []
+    'organizationSet': [],
+    'organizationMngSet': [],
+    'roleSet': []
   }]
 }
 export const getUserList = () => {
@@ -22,9 +22,9 @@ export const getUserList = () => {
       'levels': 0,
       'enabled': true,
       'sort': 0,
-      'organization_set': [],
-      'organization_mng_set': [],
-      'role_set': [{
+      'organizationSet': [],
+      'organizationMngSet': [],
+      'roleSet': [{
         'id': 'dbe88dbc-19fb-11e9-894e-d8c49792dd7b',
         'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
         'name': '超级管理员',
@@ -40,7 +40,7 @@ export const getUserList = () => {
       'levels': 1,
       'enabled': true,
       'sort': 1,
-      'organization_set': [{
+      'organizationSet': [{
         'parentid': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
         'children': [],
         'id': '386d4aae-1afc-11e9-a49e-d8c49792dd7b',
@@ -48,7 +48,7 @@ export const getUserList = () => {
         'code': '',
         'sort': 1
       }],
-      'organization_mng_set': [{
+      'organizationMngSet': [{
         'parentid': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
         'children': [],
         'id': '386d4aae-1afc-11e9-a49e-d8c49792dd7b',
@@ -70,7 +70,7 @@ export const getUserList = () => {
         'code': '',
         'sort': 1
       }],
-      'role_set': [{
+      'roleSet': [{
         'id': 'fd3bb9d8-1bf1-11e9-a49e-d8c49792dd7b',
         'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
         'name': '测试人员',
@@ -82,18 +82,18 @@ export const getUserList = () => {
     'pageable': {
       'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
       'offset': 0,
-      'page_size': 10,
-      'page_number': 0,
+      'pageSize': 10,
+      'pageNumber': 0,
       'paged': true,
       'unpaged': false
     },
     'last': true,
-    'total_pages': 1,
-    'total_elements': 2,
+    'totalPages': 1,
+    'totalElements': 2,
     'size': 10,
     'number': 0,
     'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
-    'number_of_elements': 2,
+    'numberOfElements': 2,
     'first': true,
     'empty': false
   }
@@ -108,7 +108,7 @@ export const updateUser = () => {
     'enabled': true,
     'avatar': '/public/img/avatar.5d5d165b.jpg',
     'sort': 1,
-    'organization_set': [{
+    'organizationSet': [{
       'parentid': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
       'children': [],
       'id': '386d4aae-1afc-11e9-a49e-d8c49792dd7b',
@@ -116,7 +116,7 @@ export const updateUser = () => {
       'code': '',
       'sort': 1
     }],
-    'organization_mng_set': [{
+    'organizationMngSet': [{
       'parentid': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
       'children': [],
       'id': '99c30635-1ccb-11e9-a49e-d8c49792dd7b',
@@ -138,7 +138,7 @@ export const updateUser = () => {
       'code': '',
       'sort': 1
     }],
-    'role_set': [{
+    'roleSet': [{
       'id': 'fd3bb9d8-1bf1-11e9-a49e-d8c49792dd7b',
       'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
       'name': '测试人员',

@@ -32,11 +32,11 @@
       <template slot-scope="{ row }" slot="appname">
         <span>{{ row.appname }}</span>
       </template>
-      <template slot-scope="{ row }" slot="access_token_validity_seconds">
-        <span>{{ row.access_token_validity_seconds }}</span>
+      <template slot-scope="{ row }" slot="accessTokenValiditySeconds">
+        <span>{{ row.accessTokenValiditySeconds }}</span>
       </template>
-      <template slot-scope="{ row }" slot="refresh_token_validity_seconds">
-        <span>{{ row.refresh_token_validity_seconds }}</span>
+      <template slot-scope="{ row }" slot="refreshTokenValiditySeconds">
+        <span>{{ row.refreshTokenValiditySeconds }}</span>
       </template>
       <template slot-scope="{ row, index }" slot="action">
         <div>
@@ -76,21 +76,21 @@
                    @on-enter="doSave('editForm')"></i-input>
           <Alert v-else>{{editForm.appname}}</Alert>
         </Form-item>
-        <Form-item :label="$t('forms.access_token_validity_seconds')" prop="access_token_validity_seconds">
-          <i-input v-model="editForm.access_token_validity_seconds" :disabled="modal_loading" v-if="action!==2"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.access_token_validity_seconds')"
+        <Form-item :label="$t('forms.accessTokenValiditySeconds')" prop="accessTokenValiditySeconds">
+          <i-input v-model="editForm.accessTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
+                   :placeholder="$t('forms.pleaseEnter') + $t('forms.accessTokenValiditySeconds')"
                    @on-enter="doSave('editForm')">
             <span slot="append">{{$t('forms.seconds')}}</span>
           </i-input>
-          <Alert v-else>{{editForm.access_token_validity_seconds}} {{$t('forms.seconds')}}</Alert>
+          <Alert v-else>{{editForm.accessTokenValiditySeconds}} {{$t('forms.seconds')}}</Alert>
         </Form-item>
-        <Form-item :label="$t('forms.refresh_token_validity_seconds')" prop="refresh_token_validity_seconds">
-          <i-input v-model="editForm.refresh_token_validity_seconds" :disabled="modal_loading" v-if="action!==2"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.refresh_token_validity_seconds')"
+        <Form-item :label="$t('forms.refreshTokenValiditySeconds')" prop="refreshTokenValiditySeconds">
+          <i-input v-model="editForm.refreshTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
+                   :placeholder="$t('forms.pleaseEnter') + $t('forms.refreshTokenValiditySeconds')"
                    @on-enter="doSave('editForm')">
             <span slot="append">{{$t('forms.seconds')}}</span>
           </i-input>
-          <Alert v-else>{{editForm.access_token_validity_seconds}} {{$t('forms.seconds')}}</Alert>
+          <Alert v-else>{{editForm.accessTokenValiditySeconds}} {{$t('forms.seconds')}}</Alert>
         </Form-item>
       </Form>
       <div slot="footer">
@@ -128,8 +128,8 @@
         editForm: {
           id: '',
           appname: '',
-          access_token_validity_seconds: '',
-          refresh_token_validity_seconds: '',
+          accessTokenValiditySeconds: '',
+          refreshTokenValiditySeconds: '',
           secret: '',
           index: -1
         },
@@ -144,7 +144,9 @@
       editModal (value) {
         if (value) {
           this.$nextTick(() => {
-            this.$refs['appname'].focus()
+            if (this.action !== 2) {
+              this.$refs['appname'].focus()
+            }
           })
         }
       }
@@ -168,14 +170,14 @@
             slot: 'appname'
           },
           {
-            key: 'access_token_validity_seconds',
-            title: this.$i18n.t('forms.access_token_validity_seconds'),
-            slot: 'access_token_validity_seconds'
+            key: 'accessTokenValiditySeconds',
+            title: this.$i18n.t('forms.accessTokenValiditySeconds'),
+            slot: 'accessTokenValiditySeconds'
           },
           {
-            key: 'refresh_token_validity_seconds',
-            title: this.$i18n.t('forms.refresh_token_validity_seconds'),
-            slot: 'refresh_token_validity_seconds'
+            key: 'refreshTokenValiditySeconds',
+            title: this.$i18n.t('forms.refreshTokenValiditySeconds'),
+            slot: 'refreshTokenValiditySeconds'
           },
           {
             title: this.$i18n.t('forms.action'),
@@ -197,27 +199,27 @@
           appname: [
             { required: true, message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'), trigger: 'blur' }
           ],
-          access_token_validity_seconds: [
+          accessTokenValiditySeconds: [
             {
               required: true,
-              message: this.$i18n.t('forms.access_token_validity_seconds') + this.$i18n.t('forms.notEmpty'),
+              message: this.$i18n.t('forms.accessTokenValiditySeconds') + this.$i18n.t('forms.notEmpty'),
               trigger: 'blur'
             }, {
               type: 'string',
               pattern: /^[0-9]*$/,
-              message: this.$i18n.t('forms.access_token_validity_seconds') + this.$i18n.t('forms.incorrect'),
+              message: this.$i18n.t('forms.accessTokenValiditySeconds') + this.$i18n.t('forms.incorrect'),
               trigger: 'blur'
             }
           ],
-          refresh_token_validity_seconds: [
+          refreshTokenValiditySeconds: [
             {
               required: true,
-              message: this.$i18n.t('forms.access_token_validity_seconds') + this.$i18n.t('forms.notEmpty'),
+              message: this.$i18n.t('forms.accessTokenValiditySeconds') + this.$i18n.t('forms.notEmpty'),
               trigger: 'blur'
             }, {
               type: 'string',
               pattern: /^[0-9]*$/,
-              message: this.$i18n.t('forms.access_token_validity_seconds') + this.$i18n.t('forms.incorrect'),
+              message: this.$i18n.t('forms.accessTokenValiditySeconds') + this.$i18n.t('forms.incorrect'),
               trigger: 'blur'
             }
           ]
@@ -241,8 +243,8 @@
                 this.modal_loading = true
                 this.$api.request.app.create({
                   appname: this.editForm.appname,
-                  access_token_validity_seconds: Number(this.editForm.access_token_validity_seconds),
-                  refresh_token_validity_seconds: Number(this.editForm.refresh_token_validity_seconds)
+                  accessTokenValiditySeconds: Number(this.editForm.accessTokenValiditySeconds),
+                  refreshTokenValiditySeconds: Number(this.editForm.refreshTokenValiditySeconds)
                 }).then((res) => {
                   this.modal_loading = false
                   if (res) {
@@ -263,8 +265,8 @@
                 this.$api.request.app.update({
                   id: this.editForm.id,
                   appname: this.editForm.appname,
-                  access_token_validity_seconds: Number(this.editForm.access_token_validity_seconds),
-                  refresh_token_validity_seconds: Number(this.editForm.refresh_token_validity_seconds)
+                  accessTokenValiditySeconds: Number(this.editForm.accessTokenValiditySeconds),
+                  refreshTokenValiditySeconds: Number(this.editForm.refreshTokenValiditySeconds)
                 }).then((res) => {
                   this.modal_loading = false
                   if (res) {
@@ -314,22 +316,22 @@
       handleSearch () {
         let searchParam = {
           appname: this.searchForm.appname,
-          query_param: {
-            curr_page: this.searchForm.currPage,
-            page_size: this.searchForm.pageSize
+          queryParam: {
+            currPage: this.searchForm.currPage,
+            pageSize: this.searchForm.pageSize
           }
         }
         if (this.searchForm.orderParam.order !== 'normal') {
-          searchParam.query_param.order_name = this.searchForm.orderParam.key
-          searchParam.query_param.order_commond = this.searchForm.orderParam.order
+          searchParam.queryParam.orderName = this.searchForm.orderParam.key
+          searchParam.queryParam.orderCommond = this.searchForm.orderParam.order
         }
         this.modal_loading = true
         this.$api.request.app.query(searchParam).then((res) => {
           this.modal_loading = false
           if (res) {
             this.selectedData = []
-            this.searchForm.currPage = res.data.pageable.page_number + 1
-            this.searchForm.totalRows = res.data.total_elements
+            this.searchForm.currPage = res.data.pageable.pageNumber + 1
+            this.searchForm.totalRows = res.data.totalElements
             this.searchData = res.data.content.map(item => {
               if (!item.covert) {
                 item._disabled = true
@@ -389,8 +391,8 @@
       handleEdit (row, action, index) {
         this.$refs['editForm'].resetFields()
         this.editForm.appname = row.appname
-        this.editForm.access_token_validity_seconds = row.access_token_validity_seconds + ''
-        this.editForm.refresh_token_validity_seconds = row.refresh_token_validity_seconds + ''
+        this.editForm.accessTokenValiditySeconds = row.accessTokenValiditySeconds + ''
+        this.editForm.refreshTokenValiditySeconds = row.refreshTokenValiditySeconds + ''
         this.editForm.id = row.id
         this.editForm.secret = row.secret
         this.editForm.index = index
