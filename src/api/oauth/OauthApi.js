@@ -48,5 +48,11 @@ export default {
       userInfo.password = sha256.sha256(sha256.sha256(userInfo.password) + ApiComm.$store.state.app.user.userInfo.loginno)
     }
     return ApiComm.$http.patch('/oauth/userinfo', userInfo)
+  },
+  getOnlineInfo: () => {
+    return ApiComm.$http.get('/oauth/onlineinfo')
+  },
+  getLoginInfo: () => {
+    return ApiComm.$http.get('/oauth/logininfo')
   }
 }

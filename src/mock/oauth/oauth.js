@@ -212,3 +212,35 @@ export const menuList = () => {
     'children': []
   }]
 }
+
+export const onlineInfo = () => {
+  return [{
+    'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+    'appname': 'Acp-Admin',
+    'count': 1
+  }, { 'appid': 'aa4da240-1bf2-11e9-a49e-d8c49792dd7b', 'appname': 'test', 'count': 0 }]
+}
+
+export const loginInfo = () => {
+  return [{
+    'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+    'appname': 'test',
+    'date': '2019-03-07',
+    'count': 12
+  }, {
+    'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+    'appname': 'Acp-Admin',
+    'date': '2019-03-08',
+    'count': 5
+  }, {
+    'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+    'appname': 'Acp-Admin',
+    'date': '2019-03-09',
+    'count': 15
+  }, {
+    'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+    'appname': 'test',
+    'date': '2019-03-09',
+    'count': 20
+  }]
+}

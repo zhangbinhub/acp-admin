@@ -108,12 +108,10 @@ const ApiComm = {
     ApiComm.$router.replace(ApiComm.$store.state.app.appInfo.homePath)
   },
   redirectLogin: () => {
-    ApiComm.request.auth.doLogOut().then(() => {
-      ApiComm.$store.commit('LOGIN_OUT')
-      ApiComm.$router.replace({
-        name: 'login',
-        params: { redirect: ApiComm.$router.currentRoute.fullPath }
-      })
+    ApiComm.$store.commit('LOGIN_OUT')
+    ApiComm.$router.replace({
+      name: 'login',
+      params: { redirect: ApiComm.$router.currentRoute.fullPath }
     })
   },
   redirectE500: (errorMsg) => {

@@ -15,6 +15,7 @@
 - [Vue](http://www.runoob.com/vue2/vue-tutorial.html)
 - [Vue CLI 3](https://cli.vuejs.org/zh/)
 - [iView](https://www.iviewui.com/)
+- [echarts](https://www.echartsjs.com/index.html)
 - [cropperjs](https://github.com/fengyuanchen/cropperjs)
 
 ## 技术栈
@@ -26,6 +27,7 @@
 - vue-router
 - axios
 - iview3
+- echarts
 - cropperjs
 - mockjs
 - js-sha256
@@ -72,7 +74,7 @@ npm install
 ```
 ##### （二）更新
 ``` bash
-ncu -a
+ncu
 npm install
 ```
 ## 四、开发
