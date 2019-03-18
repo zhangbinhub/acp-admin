@@ -24,7 +24,8 @@ const messages = Object.assign(enLocale, {
     deleteDataConfirm: 'Are you sure to delete the selected data?',
     modifyLoginNo: 'Modifying the loginNo will reset the password. Do you want to continue?',
     resetPassword: 'Are you sure you want to reset the selected user password?',
-    refreshServiceConfirm: 'Are you sure to refresh the service configuration information? All services will retrieve configuration information from the configuration center'
+    refreshServiceConfirm: 'Are you sure to refresh the service configuration information? All services will retrieve configuration information from the configuration center',
+    refreshRouteConfirm: 'Are you sure to refresh gateway routing information?'
   },
   pageTitle: {
     test: 'test',
@@ -33,6 +34,7 @@ const messages = Object.assign(enLocale, {
     login: 'login',
     home: 'home',
     personalInformation: 'Personal Information Configure',
+    routeConfig: 'Route Configure',
     configCenter: 'Config Center',
     logFile: 'Log File',
     appConfig: 'Application Configure',
@@ -126,6 +128,10 @@ const messages = Object.assign(enLocale, {
     startDate: 'Start Date',
     endDate: 'End Date',
     startDateCantGreaterThenEndDate: 'Start date should not be greater than end date',
+    routeId: 'Route Id',
+    uri: 'uri',
+    predicates: 'predicates',
+    filters: 'filters',
     buttons: {
       login: 'login',
       submit: 'submit',
@@ -145,7 +151,8 @@ const messages = Object.assign(enLocale, {
       deSelect: 'Deselect',
       refresh: 'Refresh',
       resetPwd: 'reset password',
-      refreshService: 'refresh services'
+      refreshService: 'refresh services',
+      refreshRoute: 'refresh routes'
     }
   }
 })

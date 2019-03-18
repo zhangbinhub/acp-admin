@@ -18,6 +18,7 @@
           <language style="margin-right: 10px;" :lang="localLang"/>
           <logFileButton v-if="showLogFile" style="margin-right: 10px;"></logFileButton>
           <configCenterButton v-if="showConfigCenter" style="margin-right: 10px;"></configCenterButton>
+          <routeConfigButton v-if="showRouteConfig" style="margin-right: 10px;"></routeConfigButton>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </header-bar>
       </Header>
@@ -55,6 +56,7 @@
   import Language from './language'
   import logFileButton from './log-file-button'
   import configCenterButton from './config-center-button'
+  import routeConfigButton from './route-config-button'
 
   import './Home.less'
   import {
@@ -75,6 +77,7 @@
       Fullscreen,
       User,
       ABackTop,
+      routeConfigButton,
       configCenterButton,
       logFileButton
     },
@@ -93,6 +96,9 @@
       this.initStoreData()
     },
     computed: {
+      showRouteConfig () {
+        return this.$store.state.app.user.userInfo.levels <= 0
+      },
       showConfigCenter () {
         return this.$store.state.app.user.userInfo.levels <= 0
       },

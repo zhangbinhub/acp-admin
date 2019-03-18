@@ -53,7 +53,7 @@
         </Form-item>
       </Row>
     </Form>
-    <Table border height="433" size="small" :columns="columns" :data="searchData" class="search-table"
+    <Table border height="388" size="small" :columns="columns" :data="searchData" class="search-table"
            :loading="modal_loading" :no-data-text="$t('messages.tableNoData')" @on-row-dblclick="handleEdit"
            @on-selection-change="handleSelect" @on-sort-change="handleSortChange">
       <template slot-scope="{ row }" slot="configApplication">
@@ -222,7 +222,7 @@
           {
             key: 'configLabel',
             title: this.$i18n.t('forms.label'),
-            width: 85,
+            width: 80,
             slot: 'configLabel',
             sortable: 'custom'
           },
@@ -247,7 +247,8 @@
           {
             key: 'enabled',
             title: this.$i18n.t('forms.enabled'),
-            width: 100,
+            width: 80,
+            align: 'center',
             slot: 'enabled',
             sortable: 'custom'
           },
@@ -370,34 +371,6 @@
           this.modal_loading = false
         })
       },
-      handleSave (index) {
-        this.modal_loading = true
-        this.$api.request.runtime.update({
-          id: this.searchData[index].id,
-          configApplication: this.editForm.configApplication,
-          configProfile: this.editForm.configProfile,
-          configLabel: this.editForm.configLabel,
-          configKey: this.editForm.configKey,
-          configValue: this.editForm.configValue,
-          configDes: this.editForm.describe,
-          enabled: this.editEnabled
-        }).then((res) => {
-          this.modal_loading = false
-          if (res) {
-            this.searchData[index].configApplication = this.editApplication
-            this.searchData[index].configProfile = this.editProfile
-            this.searchData[index].configLabel = this.editLabel
-            this.searchData[index].configKey = this.editKey
-            this.searchData[index].configValue = this.editValue
-            this.searchData[index].configDes = this.editDes
-            this.searchData[index].enabled = this.editEnabled
-            this.editIndex = -1
-            this.$Message.success(this.$i18n.t('messages.updateSuccess'))
-          }
-        }).catch(() => {
-          this.modal_loading = false
-        })
-      },
       handlePageSearch (page) {
         this.searchForm.currPage = page
         this.handleSearch()
@@ -507,21 +480,6 @@
         this.editModal = true
         this.action = 1
       },
-      handleKeyUp (event, index) {
-        switch (event.which) {
-          case 13:
-            this.handleSave(index)
-            break
-          case 27:
-            this.editIndex = -1
-            break
-        }
-      },
-      handleCancel (event) {
-        if (event.which === 27) {
-          this.editIndex = -1
-        }
-      },
       handleRefresh () {
         this.$Modal.confirm({
           title: this.$i18n.t('dialog.confirm'),
@@ -531,7 +489,7 @@
             this.$api.request.config.refreshAll().then((res) => {
               this.modal_loading = false
               if (res) {
-                this.$Message.success(this.$i18n.t('messages.updateSuccess'))
+                this.$Message.success(res.message)
                 this.handleSearch()
               }
             }).catch(() => {

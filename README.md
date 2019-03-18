@@ -1,5 +1,5 @@
 # acp-admin
-###### v1.3.0 [版本更新日志](doc/version_history.md)
+###### v1.4.0 [版本更新日志](doc/version_history.md)
 兼容的浏览器及版本
 - IE 9+
 - Edge
@@ -31,6 +31,7 @@
 - cropperjs
 - mockjs
 - js-sha256
+- vue-json-editor
 
 ## 总体架构
 ![Architecture diagram](doc/images/总体架构.jpg)
@@ -74,7 +75,7 @@ npm install
 ```
 ##### （二）更新
 ``` bash
-ncu
+ncu -u
 npm install
 ```
 ## 四、开发
@@ -165,6 +166,10 @@ npm install
 ![images](doc/images/pages/configcenter.png)
 ![images](doc/images/pages/configcenteredit.png)
 ![images](doc/images/pages/configcenterefresh.png)
+- 路由配置
+![images](doc/images/pages/route.png)
+![images](doc/images/pages/routeEdit.png)
+![images](doc/images/pages/routeRefresh.png)
 
 ## 六、nodejs 常用命令
 ## Project setup

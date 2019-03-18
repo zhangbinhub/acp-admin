@@ -24,7 +24,8 @@ const messages = Object.assign(twLocale, {
     deleteDataConfirm: '確定刪除所選數據嗎？',
     modifyLoginNo: '修改登陸賬號將重置密碼，是否繼續？',
     resetPassword: '確定重置所選用戶密碼嗎？',
-    refreshServiceConfirm: '確定刷新服務配置信息嗎？所有服務將重新從配置中心獲取配置信息'
+    refreshServiceConfirm: '確定刷新服務配置信息嗎？所有服務將重新從配置中心獲取配置信息',
+    refreshRouteConfirm: '確定刷新網關路由信息嗎？'
   },
   pageTitle: {
     test: '測試',
@@ -33,6 +34,7 @@ const messages = Object.assign(twLocale, {
     login: '登錄',
     home: '首頁',
     personalInformation: '個人信息維護',
+    routeConfig: '路由配置',
     configCenter: '配置中心',
     logFile: '日誌文件',
     appConfig: '應用配置',
@@ -126,6 +128,10 @@ const messages = Object.assign(twLocale, {
     startDate: '開始日期',
     endDate: '結束日期',
     startDateCantGreaterThenEndDate: '開始日期不能大於結束日期',
+    routeId: '路由ID',
+    uri: 'uri',
+    predicates: '斷言',
+    filters: '過濾器',
     buttons: {
       login: '登錄',
       submit: '提交',
@@ -145,7 +151,8 @@ const messages = Object.assign(twLocale, {
       deSelect: '取消選擇',
       refresh: '刷新',
       resetPwd: '重置密碼',
-      refreshService: '刷新服務'
+      refreshService: '刷新服務',
+      refreshRoute: '刷新路由'
     }
   }
 })
