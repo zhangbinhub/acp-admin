@@ -471,7 +471,7 @@
             this.$api.request.route.refreshRoute().then((res) => {
               this.modal_loading = false
               if (res) {
-                this.$Message.success(res.message)
+                this.$Message.success(res.data.message)
                 this.handleSearch()
               }
             }).catch(() => {
