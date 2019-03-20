@@ -63,6 +63,15 @@ export default [{
       requireAuth: true
     }
   }, {
+    path: '/routeConfig',
+    name: 'routeConfig',
+    component: () => import('@/components/views/main/RouteConfig.vue'),
+    meta: {
+      title: 'pageTitle.routeConfig',
+      icon: 'md-code-working',
+      requireAuth: true
+    }
+  }, {
     path: '/configCenter',
     name: 'configCenter',
     component: () => import('@/components/views/main/ConfigCenter.vue'),

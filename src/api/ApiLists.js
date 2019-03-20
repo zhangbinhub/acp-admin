@@ -7,6 +7,7 @@ import user from './sysconfig/userConfig'
 import role from './sysconfig/roleConfig'
 import log from './log/LogFile'
 import config from './config/ConfigCenter'
+import route from './route/RouteConfig'
 
 export default {
   auth: Object.assign(oauth, auth),
@@ -16,5 +17,6 @@ export default {
   user: user,
   role: role,
   log: log,
-  config: config
+  config: config,
+  route: route
 }

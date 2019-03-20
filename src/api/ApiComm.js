@@ -62,6 +62,9 @@ const ApiComm = {
               ApiComm.errorProcess(error)
             }
             break
+          case 404: // 页面找不到
+            ApiComm.redirectE404()
+            return
           case 500: // 系统内部异常
             let errorMsg = 'Internal System Error'
             if (error.response.data) {
@@ -114,6 +117,11 @@ const ApiComm = {
       params: { redirect: ApiComm.$router.currentRoute.fullPath }
     })
   },
+  redirectE404: () => {
+    ApiComm.$router.push({
+      name: 'E404'
+    })
+  },
   redirectE500: (errorMsg) => {
     ApiComm.$router.push({
       name: 'E500',
@@ -133,6 +141,11 @@ const ApiComm = {
   gotoConfigCenter: () => {
     ApiComm.$router.push({
       name: 'configCenter'
+    })
+  },
+  gotoRouteConfig: () => {
+    ApiComm.$router.push({
+      name: 'routeConfig'
     })
   },
   request: {}

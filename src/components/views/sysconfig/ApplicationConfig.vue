@@ -1,6 +1,7 @@
 <template>
   <Card>
-    <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form">
+    <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form"
+          onsubmit="return false;">
       <Form-item :label="$t('forms.name')" prop="appname">
         <i-input v-model="searchForm.appname" :disabled="modal_loading" size="small"
                  :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
