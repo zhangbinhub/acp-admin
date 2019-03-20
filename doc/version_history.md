@@ -2,7 +2,7 @@
 ##### v1.4.0
 > - [Upgrade] 更新依赖插件版本
 > - [Upgrade] 超级管理员增加后台网关动态路由配置界面，可维护 SpringCloud GateWay 路由信息、动态刷新路由
-> - [Upgrade] 升级 iview 至 3.3.2
+> - [Upgrade] 更新文档
 > - [Fix] 修复 404 页面跳转
 ##### v1.3.0
 > - [Upgrade] 接口字段统一改为驼峰命名
