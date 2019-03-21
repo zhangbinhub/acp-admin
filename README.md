@@ -37,9 +37,9 @@
 ![Architecture diagram](doc/images/总体架构.jpg)
 
 #### 说明
-> - 前后端交互 HttpStatus
+> - 前后端交互 HttpStatus Code 说明
 > 
->     | HttpStatus Code | 描述 |
+>     | HttpStatus | 描述 |
 >     | --- | --- | 
 >     | 200 | 请求成功 |
 >     | 201 | 资源创建成功 |
