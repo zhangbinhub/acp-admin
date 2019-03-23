@@ -50,6 +50,9 @@
       <template slot-scope="{ row }" slot="filters">
         <span>{{ row.filters }}</span>
       </template>
+      <template slot-scope="{ row }" slot="remarks">
+        <span>{{ row.remarks }}</span>
+      </template>
       <template slot-scope="{ row }" slot="orderNum">
         <span>{{ row.orderNum }}</span>
       </template>
@@ -109,6 +112,15 @@
           </i-col>
         </Row>
         <Row>
+          <i-col :xl="24">
+            <Form-item :label="$t('forms.remarks')" prop="remarks" style="width: 100%;">
+              <i-input v-model="editForm.remarks" :disabled="modal_loading"
+                       :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')"
+                       @on-enter="doSave('editForm')"></i-input>
+            </Form-item>
+          </i-col>
+        </Row>
+        <Row>
           <i-col :xl="12">
             <Form-item :label="$t('forms.predicates')" prop="predicates" style="width: 100%">
               <vueJsonEditor v-model="editForm.predicates" :showBtns="false"></vueJsonEditor>
@@ -161,7 +173,8 @@
           predicates: [],
           filters: [],
           orderNum: 0,
-          enabled: true
+          enabled: true,
+          remarks: ''
         },
         editModal: false,
         modal_loading: false,
@@ -215,6 +228,12 @@
             key: 'filters',
             title: this.$i18n.t('forms.filters'),
             slot: 'filters'
+          },
+          {
+            key: 'remarks',
+            title: this.$i18n.t('forms.remarks'),
+            width: 150,
+            slot: 'remarks'
           },
           {
             key: 'orderNum',
@@ -304,7 +323,8 @@
                   orderNum: this.editForm.orderNum,
                   predicates: JSON.stringify(this.editForm.predicates),
                   filters: JSON.stringify(this.editForm.filters),
-                  enabled: this.editForm.enabled
+                  enabled: this.editForm.enabled,
+                  remarks: this.editForm.remarks
                 }).then((res) => {
                   this.modal_loading = false
                   if (res) {
@@ -329,7 +349,8 @@
                   orderNum: this.editForm.orderNum,
                   predicates: JSON.stringify(this.editForm.predicates),
                   filters: JSON.stringify(this.editForm.filters),
-                  enabled: this.editForm.enabled
+                  enabled: this.editForm.enabled,
+                  remarks: this.editForm.remarks
                 }).then((res) => {
                   this.modal_loading = false
                   if (res) {
@@ -459,6 +480,7 @@
         this.editForm.filters = JSON.parse(row.filters)
         this.editForm.orderNum = row.orderNum
         this.editForm.enabled = !!row.enabled
+        this.editForm.remarks = row.remarks
         this.editModal = true
         this.action = 1
       },

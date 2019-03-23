@@ -94,6 +94,7 @@ const messages = Object.assign(zhLocale, {
     value: '值',
     mobile: '手机号',
     describe: '描述',
+    remarks: '备注',
     info: '信息',
     action: '操作',
     invalid: '无效',
