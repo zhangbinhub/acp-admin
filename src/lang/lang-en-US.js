@@ -94,6 +94,7 @@ const messages = Object.assign(enLocale, {
     value: 'value',
     mobile: 'mobile',
     describe: 'describe',
+    remarks: 'remarks',
     info: 'info',
     action: 'action',
     invalid: ' is invalid',

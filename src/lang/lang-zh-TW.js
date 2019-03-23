@@ -94,6 +94,7 @@ const messages = Object.assign(twLocale, {
     value: '值',
     mobile: '手機號',
     describe: '描述',
+    remarks: '備註',
     info: '信息',
     action: '操作',
     invalid: '無效',

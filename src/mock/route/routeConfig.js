@@ -6,7 +6,8 @@ export const updateRoute = () => {
     'predicates': '["Path=/api/log/**"]',
     'filters': '["StripPrefix=1",{"name":"Hystrix","args":{"name":"GateWayHystrix","fallbackUri":"forward:/hystrixhandle"}}]',
     'orderNum': 0,
-    'enabled': true
+    'enabled': true,
+    'remarks': '日志服务接口'
   }
 }
 export const deleteRoute = () => {
@@ -23,7 +24,8 @@ export const queryRoute = () => {
       'predicates': '["Path=/api/log/**"]',
       'filters': '["StripPrefix=1",{"name":"Hystrix","args":{"name":"GateWayHystrix","fallbackUri":"forward:/hystrixhandle"}}]',
       'orderNum': 0,
-      'enabled': true
+      'enabled': true,
+      'remarks': '日志服务接口'
     }],
     'pageable': {
       'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
