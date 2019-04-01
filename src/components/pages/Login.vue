@@ -15,14 +15,18 @@
         <div>
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
             <FormItem prop="loginNo">
-              <i-input ref="loginNo" v-model="formValidate.loginNo" type="text" prefix="md-person"
-                       :disabled="modal_loading" :placeholder="text.usernamePlaceholder"
-                       @keyup.native.enter="handleSubmit('formValidate')"/>
+              <i-input ref="loginNo" v-model="formValidate.loginNo" type="text" :disabled="modal_loading"
+                       :placeholder="text.usernamePlaceholder"
+                       @keyup.native.enter="handleSubmit('formValidate')">
+                <span slot="prepend"><Icon type="md-person"/></span>
+              </i-input>
             </FormItem>
             <FormItem prop="password">
-              <i-input v-model="formValidate.password" type="password" prefix="md-lock" :disabled="modal_loading"
+              <i-input v-model="formValidate.password" type="password" :disabled="modal_loading"
                        :placeholder="text.passwordPlaceholder"
-                       @keyup.native.enter="handleSubmit('formValidate')"/>
+                       @keyup.native.enter="handleSubmit('formValidate')">
+                <span slot="prepend"><Icon type="md-lock"/></span>
+              </i-input>
             </FormItem>
             <FormItem style="margin-bottom: 0;">
               <Checkbox v-model="formValidate.remember" :disabled="modal_loading">

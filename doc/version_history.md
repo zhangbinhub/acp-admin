@@ -2,6 +2,7 @@
 ##### v1.4.1
 > - [Upgrade] 更新依赖插件版本
 > - [Upgrade] 优化代码逻辑和 mock 匹配规则
+> - [Upgrade] 优化登录界面输入款样式
 ##### v1.4.0
 > - [Upgrade] 更新依赖插件版本
 > - [Upgrade] 超级管理员增加后台网关动态路由配置界面，可维护 SpringCloud GateWay 路由信息、动态刷新路由
