@@ -48,6 +48,6 @@ export const queryRoute = () => {
 }
 export const refreshRoute = () => {
   return {
-    message: 'ok'
+    message: '刷新路由缓存成功，稍后网关将刷新路由配置信息'
   }
 }

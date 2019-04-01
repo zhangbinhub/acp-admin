@@ -123,12 +123,16 @@
         <Row>
           <i-col :xl="12">
             <Form-item :label="$t('forms.predicates')" prop="predicates" style="width: 100%">
-              <vueJsonEditor v-model="editForm.predicates" :showBtns="false"></vueJsonEditor>
+              <vueJsonEditor v-model="editForm.predicates" :lang="jsonEditorLang" :showBtns="false"
+                             :modes="jsonEditModes"
+                             :mode="'code'"></vueJsonEditor>
             </Form-item>
           </i-col>
           <i-col :xl="12">
             <Form-item :label="$t('forms.filters')" prop="filters" style="width: 100%">
-              <vueJsonEditor v-model="editForm.filters" :showBtns="false"></vueJsonEditor>
+              <vueJsonEditor v-model="editForm.filters" :lang="jsonEditorLang" :showBtns="false"
+                             :modes="jsonEditModes"
+                             :mode="'code'"></vueJsonEditor>
             </Form-item>
           </i-col>
         </Row>
@@ -154,6 +158,7 @@
     },
     data () {
       return {
+        jsonEditModes: ['tree', 'code'],
         searchForm: {
           routeid: '',
           enabled: '',
@@ -193,6 +198,14 @@
       }
     },
     computed: {
+      jsonEditorLang () {
+        const lang = this.$store.state.app.lang.lang
+        if (lang === 'CN') {
+          return 'zh'
+        } else {
+          return 'en'
+        }
+      },
       enabledList () {
         return [
           { value: 'true', label: this.$i18n.t('forms.enabled') },
