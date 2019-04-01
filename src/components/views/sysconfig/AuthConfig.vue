@@ -90,7 +90,7 @@
                 </Transfer>
               </Form-item>
               <Divider style="margin: 12px 0;"/>
-              <div align="center">
+              <div style="text-align: center">
                 <Button type="default" size="small" :loading="treeLoading" style="margin-right: 20px;"
                         @click="doResetMenu">
                   {{$t('forms.buttons.reset')}}
@@ -160,7 +160,7 @@
                 </Transfer>
               </Form-item>
               <Divider style="margin: 12px 0;"/>
-              <div align="center">
+              <div style="text-align: center">
                 <Button type="default" size="small" :loading="treeLoading" style="margin-right: 20px;"
                         @click="doResetModuleFunc">
                   {{$t('forms.buttons.reset')}}

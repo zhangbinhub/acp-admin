@@ -125,19 +125,19 @@
             <Form-item :label="$t('forms.predicates')" prop="predicates" style="width: 100%">
               <vueJsonEditor v-model="editForm.predicates" :lang="jsonEditorLang" :showBtns="false"
                              :modes="jsonEditModes"
-                             :mode="'code'"></vueJsonEditor>
+                             :mode="'tree'"></vueJsonEditor>
             </Form-item>
           </i-col>
           <i-col :xl="12">
             <Form-item :label="$t('forms.filters')" prop="filters" style="width: 100%">
               <vueJsonEditor v-model="editForm.filters" :lang="jsonEditorLang" :showBtns="false"
                              :modes="jsonEditModes"
-                             :mode="'code'"></vueJsonEditor>
+                             :mode="'tree'"></vueJsonEditor>
             </Form-item>
           </i-col>
         </Row>
       </Form>
-      <div slot="footer" align="center">
+      <div slot="footer" style="text-align: center">
         <Button type="default" :loading="modal_loading" @click="doCancel()">
           {{$t('forms.buttons.cancel')}}
         </Button>
@@ -158,7 +158,7 @@
     },
     data () {
       return {
-        jsonEditModes: ['tree', 'code'],
+        jsonEditModes: ['tree', 'text'],
         searchForm: {
           routeid: '',
           enabled: '',
@@ -521,3 +521,12 @@
     }
   }
 </script>
+<style>
+  .jsoneditor-vue div.jsoneditor-outer {
+    min-height: 150px;
+  }
+
+  .jsoneditor-vue div.jsoneditor-tree {
+    height: 350px;
+  }
+</style>

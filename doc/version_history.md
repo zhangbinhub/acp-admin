@@ -1,4 +1,6 @@
 ## 版本更新记录
+##### v1.4.2
+> - [Fix] 修复 vue-json-editor 组件 height 样式无效的问题
 ##### v1.4.1
 > - [Upgrade] 更新依赖插件版本
 > - [Upgrade] 优化代码逻辑和 mock 匹配规则

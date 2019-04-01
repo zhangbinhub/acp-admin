@@ -58,7 +58,7 @@
           </TabPane>
         </Tabs>
         <Divider style="margin: 12px 0;"/>
-        <div align="center">
+        <div style="text-align: center">
           <Button type="default" :loading="treeLoading" size="small" style="margin-right: 20px;"
                   @click="doReset">
             {{$t('forms.buttons.reset')}}
