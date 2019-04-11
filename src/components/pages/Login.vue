@@ -23,7 +23,7 @@
             </FormItem>
             <FormItem prop="password">
               <i-input v-model="formValidate.password" type="password" :disabled="modal_loading"
-                       :placeholder="text.passwordPlaceholder"
+                       :placeholder="text.passwordPlaceholder" autocomplete="off"
                        @keyup.native.enter="handleSubmit('formValidate')">
                 <span slot="prepend"><Icon type="md-lock"/></span>
               </i-input>
