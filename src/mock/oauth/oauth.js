@@ -143,11 +143,11 @@ export const menuList = () => {
       'appid': '4085bd00-1482-11e9-8c6d-d8c49792dd7b',
       'name': '上传',
       'iconType': 'md-cloud-upload',
-      'path': 'https://www.iviewui.com/components/upload',
+      'path': '/demoupload',
       'parentid': '408c4577-1482-11e9-8c6d-d8c49792dd7b',
       'enabled': true,
       'covert': true,
-      'opentype': 1,
+      'opentype': 0,
       'sort': 0,
       'children': []
     }, {

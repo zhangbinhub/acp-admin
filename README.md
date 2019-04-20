@@ -183,6 +183,9 @@ npm install
 ![images](doc/images/pages/route.png)
 ![images](doc/images/pages/routeEdit.png)
 ![images](doc/images/pages/routeRefresh.png)
+- demo
+    - 文件上传
+![images](doc/images/pages/upload.png)
 
 ## 六、nodejs 常用命令
 ## Project setup

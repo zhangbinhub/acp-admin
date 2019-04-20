@@ -24,7 +24,6 @@ if (Cookies.get('remember') === 'true') {
 let cookieProperties = {
   expires: appInfo.cookieExpires
 }
-console.log(typeof cookieProperties.expires)
 Cookies.set('lang', lang, cookieProperties)
 export default {
   state: {
