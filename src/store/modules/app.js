@@ -21,7 +21,10 @@ let remember = false
 if (Cookies.get('remember') === 'true') {
   remember = true
 }
-Cookies.set('lang', lang)
+let cookieProperties = {
+  expires: appInfo.cookieExpires
+}
+Cookies.set('lang', lang, cookieProperties)
 export default {
   state: {
     appInfo: appInfo,
@@ -52,11 +55,11 @@ export default {
   },
   mutations: {
     CLOSE_SLIDEBAR: state => {
-      Cookies.set('sidebarStatus', 0)
+      Cookies.set('sidebarStatus', 0, cookieProperties)
       state.sidebar.opened = false
     },
     OPEN_SLIDEBAR: state => {
-      Cookies.set('sidebarStatus', 1)
+      Cookies.set('sidebarStatus', 1, cookieProperties)
       state.sidebar.opened = true
     },
     SET_CACHE_LIST: (state, payload) => {
@@ -73,28 +76,28 @@ export default {
      */
     SET_LANG: (state, payload) => {
       state.lang.lang = payload
-      Cookies.set('lang', payload)
+      Cookies.set('lang', payload, cookieProperties)
       state.i18n.locale = payload
     },
     SET_LOGIN_NO: (state, payload) => {
       state.user.loginNo = payload
-      Cookies.set('loginNo', payload)
+      Cookies.set('loginNo', payload, cookieProperties)
     },
     SET_REMEMBER: (state, payload) => {
       state.user.remember = payload === 'true'
-      Cookies.set('remember', payload)
+      Cookies.set('remember', payload, cookieProperties)
     },
     SET_TOKEN: (state, payload) => {
       state.user.token = payload
-      Cookies.set('token', payload)
+      Cookies.set('token', payload, cookieProperties)
     },
     SET_TOKEN_TYPE: (state, payload) => {
       state.user.tokenType = payload
-      Cookies.set('token_type', payload)
+      Cookies.set('token_type', payload, cookieProperties)
     },
     SET_SCOPE: (state, payload) => {
       state.user.scope = payload
-      Cookies.set('scope', payload)
+      Cookies.set('scope', payload, cookieProperties)
     },
     LOGIN_OUT: state => {
       state.user.token = ''

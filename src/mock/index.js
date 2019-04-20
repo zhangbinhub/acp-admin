@@ -1,5 +1,6 @@
 import Mock from 'mockjs'
 
+import { upLoadFile, downLoadFile } from './file/file'
 import { login, logOut, userInfo, menuList, onlineInfo, loginInfo } from './oauth/oauth'
 import { deleteRuntime, queryRuntime, updateRuntime } from './sysconfig/runtime'
 import { getAppList, deleteApp, queryApp, updateApp } from './sysconfig/application'
@@ -25,6 +26,8 @@ Mock.setup({
   timeout: 1000
 })
 
+Mock.mock(/\/file\/upload/, /post/i, upLoadFile)
+Mock.mock(/\/file\/download/, /post/i, downLoadFile)
 Mock.mock(/\/oauth\/token/, /post/i, login)
 Mock.mock(/\/oauth\/logout/, /post/i, logOut)
 Mock.mock(/\/oauth\/onlineinfo/, /get/i, onlineInfo())

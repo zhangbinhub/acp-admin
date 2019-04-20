@@ -1,5 +1,5 @@
 # acp-admin
-###### v1.4.1 [版本更新日志](doc/version_history.md)
+###### v1.4.2 [版本更新日志](doc/version_history.md)
 兼容的浏览器及版本
 - IE 9+
 - Edge
@@ -183,6 +183,9 @@ npm install
 ![images](doc/images/pages/route.png)
 ![images](doc/images/pages/routeEdit.png)
 ![images](doc/images/pages/routeRefresh.png)
+- demo
+    - 文件上传
+![images](doc/images/pages/upload.png)
 
 ## 六、nodejs 常用命令
 ## Project setup

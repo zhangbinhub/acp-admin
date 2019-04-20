@@ -167,7 +167,7 @@
           </Card>
         </i-col>
       </Row>
-      <div slot="footer" align="center">
+      <div slot="footer" style="text-align: center">
         <Button type="default" :loading="modal_loading" @click="doCancel()">
           {{$t('forms.buttons.cancel')}}
         </Button>
