@@ -57,13 +57,18 @@
 ``` bash
 node -v
 ```
-##### （二）安装淘宝 npm 镜像，之后使用 cnpm 代替 npm
+##### （二）安装淘宝 npm 镜像
+安装 cnpm ，之后使用 cnpm 代替 npm
 ``` bash
 npm install -g cnpm --registry=https://registry.npm.taobao.org
 ```
+或直接配置
+```bash
+npm config set registry https://registry.npm.taobao.org
+```
 ##### （三）安装 webpack
 ``` bash
-cnpm install webpack -g
+npm install webpack -g
 ```
 ##### （四）安装升级插件
 ```bash
@@ -71,7 +76,7 @@ npm install -g npm-check-updates
 ```
 ##### （五）安装全局 vue-cli 脚手架
 ``` bash
-cnpm install -g @vue/cli
+npm install -g @vue/cli
 ```
 ## 二、全新创建工程（如使用本工程源码，可忽略此步骤）
 ##### （一）命令创建
