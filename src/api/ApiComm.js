@@ -89,7 +89,6 @@ const ApiComm = {
   errorProcess: function (error, title) {
     let errorMessage = ''
     if (error.response) {
-      console.log(error.response)
       if (typeof error.response.data === 'string') {
         errorMessage = String(error.response.data)
       } else {
