@@ -188,6 +188,9 @@ npm install
 ![images](doc/images/pages/route.png)
 ![images](doc/images/pages/routeEdit.png)
 ![images](doc/images/pages/routeRefresh.png)
+- 路由日志
+![images](doc/images/pages/routeLog.png)
+![images](doc/images/pages/routeLogView.png)
 - demo
     - 文件上传
 ![images](doc/images/pages/upload.png)

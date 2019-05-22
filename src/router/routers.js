@@ -72,6 +72,15 @@ export default [{
       requireAuth: true
     }
   }, {
+    path: '/routeLog',
+    name: 'routeLog',
+    component: () => import('@/components/views/main/RouteLog.vue'),
+    meta: {
+      title: 'pageTitle.routeLog',
+      icon: 'ios-book',
+      requireAuth: true
+    }
+  }, {
     path: '/configCenter',
     name: 'configCenter',
     component: () => import('@/components/views/main/ConfigCenter.vue'),

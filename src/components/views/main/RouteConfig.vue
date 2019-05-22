@@ -2,8 +2,8 @@
   <Card>
     <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form"
           onsubmit="return false;">
-      <Form-item :label="$t('forms.routeId')" prop="routeid">
-        <i-input v-model="searchForm.routeid" :disabled="modal_loading" size="small"
+      <Form-item :label="$t('forms.routeId')" prop="routeId">
+        <i-input v-model="searchForm.routeId" :disabled="modal_loading" size="small"
                  :placeholder="$t('forms.pleaseEnter') + $t('forms.routeId')"
                  @on-enter="handleSearch"></i-input>
       </Form-item>
@@ -38,8 +38,8 @@
     <Table border height="433" size="small" :columns="columns" :data="searchData" class="search-table"
            :loading="modal_loading" :no-data-text="$t('messages.tableNoData')" @on-row-dblclick="handleEdit"
            @on-selection-change="handleSelect" @on-sort-change="handleSortChange">
-      <template slot-scope="{ row }" slot="routeid">
-        <span>{{ row.routeid }}</span>
+      <template slot-scope="{ row }" slot="routeId">
+        <span>{{ row.routeId }}</span>
       </template>
       <template slot-scope="{ row }" slot="uri">
         <span>{{ row.uri }}</span>
@@ -81,8 +81,8 @@
             style="padding-right: 25px;">
         <Row>
           <i-col :xl="8">
-            <Form-item :label="$t('forms.routeId')" prop="routeid" style="width: 100%">
-              <i-input v-model="editForm.routeid" :disabled="modal_loading" ref="routeid"
+            <Form-item :label="$t('forms.routeId')" prop="routeId" style="width: 100%">
+              <i-input v-model="editForm.routeId" :disabled="modal_loading" ref="routeId"
                        :placeholder="$t('forms.pleaseEnter') + $t('forms.routeId')"
                        @on-enter="doSave('editForm')"></i-input>
             </Form-item>
@@ -160,10 +160,10 @@
       return {
         jsonEditModes: ['tree', 'text'],
         searchForm: {
-          routeid: '',
+          routeId: '',
           enabled: '',
           orderParam: {
-            key: 'routeid',
+            key: 'routeId',
             order: 'asc'
           },
           currPage: 1,
@@ -173,7 +173,7 @@
         },
         editForm: {
           id: '',
-          routeid: '',
+          routeId: '',
           uri: '',
           predicates: [],
           filters: [],
@@ -192,7 +192,7 @@
       editModal (value) {
         if (value) {
           this.$nextTick(() => {
-            this.$refs['routeid'].focus()
+            this.$refs['routeId'].focus()
           })
         }
       }
@@ -220,10 +220,10 @@
             align: 'center'
           },
           {
-            key: 'routeid',
+            key: 'routeId',
             title: this.$i18n.t('forms.routeId'),
             width: 150,
-            slot: 'routeid',
+            slot: 'routeId',
             sortable: 'custom'
           },
           {
@@ -281,7 +281,7 @@
       },
       ruleAddForm () {
         return {
-          routeid: [
+          routeId: [
             { required: true, message: this.$i18n.t('forms.routeId') + this.$i18n.t('forms.notEmpty'), trigger: 'blur' }
           ],
           uri: [
@@ -331,7 +331,7 @@
               if (valid) {
                 this.modal_loading = true
                 this.$api.request.route.create({
-                  routeid: this.editForm.routeid,
+                  routeId: this.editForm.routeId,
                   uri: this.editForm.uri,
                   orderNum: this.editForm.orderNum,
                   predicates: JSON.stringify(this.editForm.predicates),
@@ -357,7 +357,7 @@
                 this.modal_loading = true
                 this.$api.request.route.update({
                   id: this.editForm.id,
-                  routeid: this.editForm.routeid,
+                  routeId: this.editForm.routeId,
                   uri: this.editForm.uri,
                   orderNum: this.editForm.orderNum,
                   predicates: JSON.stringify(this.editForm.predicates),
@@ -401,7 +401,7 @@
       },
       handleSearch () {
         let searchParam = {
-          routeid: this.searchForm.routeid,
+          routeId: this.searchForm.routeId,
           queryParam: {
             currPage: this.searchForm.currPage,
             pageSize: this.searchForm.pageSize
@@ -487,7 +487,7 @@
       handleEdit (row) {
         this.$refs['editForm'].resetFields()
         this.editForm.id = row.id
-        this.editForm.routeid = row.routeid
+        this.editForm.routeId = row.routeId
         this.editForm.uri = row.uri
         this.editForm.predicates = JSON.parse(row.predicates)
         this.editForm.filters = JSON.parse(row.filters)

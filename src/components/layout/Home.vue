@@ -18,17 +18,18 @@
           <language style="margin-right: 10px;" :lang="localLang"/>
           <logFileButton v-if="showLogFile" style="margin-right: 10px;"></logFileButton>
           <configCenterButton v-if="showConfigCenter" style="margin-right: 10px;"></configCenterButton>
+          <routeLogButton v-if="showRouteLog" style="margin-right: 10px;"></routeLogButton>
           <routeConfigButton v-if="showRouteConfig" style="margin-right: 10px;"></routeConfigButton>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </header-bar>
       </Header>
-      <Content class="home-content-con">
+      <i-content class="home-content-con">
         <Layout class="home-layout-con">
           <div class="tag-nav-wrapper">
             <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList"
                       @input="handleClick" @on-close="handleCloseTag"/>
           </div>
-          <Content class="content-wrapper">
+          <i-content class="content-wrapper">
             <div class="content-sticker">
               <transition name="fade" mode="out-in" appear>
                 <keep-alive :include="cacheList">
@@ -40,9 +41,9 @@
             <Footer class="content-footer">
               <small style="text-align: center;">{{copyright}}</small>
             </Footer>
-          </Content>
+          </i-content>
         </Layout>
-      </Content>
+      </i-content>
     </Layout>
   </Layout>
 </template>
@@ -57,7 +58,7 @@
   import logFileButton from './log-file-button'
   import configCenterButton from './config-center-button'
   import routeConfigButton from './route-config-button'
-
+  import routeLogButton from './route-log-button'
   import './Home.less'
   import {
     getOpenedNamesByActiveName,
@@ -79,7 +80,8 @@
       ABackTop,
       routeConfigButton,
       configCenterButton,
-      logFileButton
+      logFileButton,
+      routeLogButton
     },
     data () {
       return {
@@ -97,6 +99,9 @@
     },
     computed: {
       showRouteConfig () {
+        return this.$store.state.app.user.userInfo.levels <= 0
+      },
+      showRouteLog () {
         return this.$store.state.app.user.userInfo.levels <= 0
       },
       showConfigCenter () {

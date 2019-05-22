@@ -147,6 +147,11 @@ const ApiComm = {
       name: 'routeConfig'
     })
   },
+  gotoRouteLog: () => {
+    ApiComm.$router.push({
+      name: 'routeLog'
+    })
+  },
   request: {}
 }
 export default ApiComm
