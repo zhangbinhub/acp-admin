@@ -117,14 +117,18 @@ const ApiComm = {
     })
   },
   redirectE404: () => {
-    ApiComm.$router.push({
-      name: 'E404'
+    ApiComm.$router.replace({
+      name: 'E404',
+      params: { redirect: ApiComm.$router.currentRoute.fullPath }
     })
   },
   redirectE500: (errorMsg) => {
     ApiComm.$router.push({
       name: 'E500',
-      params: { msg: errorMsg }
+      params: {
+        msg: errorMsg,
+        redirect: ApiComm.$router.currentRoute.fullPath
+      }
     })
   },
   gotoPersonalInformation: () => {

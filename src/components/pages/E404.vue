@@ -139,7 +139,11 @@
     name: 'E404',
     methods: {
       goBack () {
-        this.$router.go(-1)
+        if (this.$route.params.redirect) {
+          this.$router.replace(this.$route.params.redirect)
+        } else {
+          this.goHome()
+        }
       },
       goHome () {
         this.$api.redirectHome()

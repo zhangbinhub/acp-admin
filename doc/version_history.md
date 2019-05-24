@@ -3,6 +3,7 @@
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 超级管理员增加网关路由日志查询界面
 > - [Upgrade] 更新文档
+> - [Upgrade] 优化404及500页面跳转
 ##### v1.4.2
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] cookie 增加超时时间
