@@ -19,18 +19,28 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start()
   if (to.matched.length === 0) {
-    router.push('/404')
+    router.replace({
+      name: 'E404',
+      params: { redirect: from.fullPath }
+    })
   } else {
-    if (to.meta.requireAuth) {
-      if (!store.state.app.user.token) {
-        store.commit('LOGIN_OUT')
-        router.replace({
-          name: 'login',
-          params: { redirect: to.fullPath }
-        })
+    if (to.name === 'E404' && !to.params.redirect) {
+      router.replace({
+        name: 'E404',
+        params: { redirect: from.fullPath }
+      })
+    } else {
+      if (to.meta.requireAuth) {
+        if (!store.state.app.user.token) {
+          store.commit('LOGIN_OUT')
+          router.replace({
+            name: 'login',
+            params: { redirect: to.fullPath }
+          })
+        }
       }
+      next()
     }
-    next()
   }
 })
 router.afterEach(to => {
