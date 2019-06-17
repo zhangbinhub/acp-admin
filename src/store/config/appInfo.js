@@ -1,7 +1,7 @@
 const baseURL = 'http://127.0.0.1:8770/api'
 export default {
   appName: 'Acp-Admin',
-  appVersion: '1.4.3',
+  appVersion: '2.0.0',
   copyright: 'Copyright © 2019 by ZhangBin',
   theme: 'dark', // dark and light
   minWidth: 768,
@@ -11,6 +11,6 @@ export default {
   uploadURL: baseURL + '/file/upload', // upload url
   timeOut: 60000,
 
-  appId: 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+  appId: '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
   appSecret: 'E0D3024D-9A22-41EE-AC0F-FC6B56E367AE'
 }

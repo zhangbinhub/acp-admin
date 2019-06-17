@@ -168,265 +168,313 @@ export const getMenuListByAppId = () => {
 }
 export const getModuleFuncListByAppId = () => {
   return [{
-    'id': 'dbdebf16-19fb-11e9-894e-d8c49792dd7b',
-    'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-    'name': '系统配置',
-    'code': 'sys_config',
-    'parentid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-    'covert': false,
+    'parentid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
     'children': [{
-      'id': 'dbe1d879-19fb-11e9-894e-d8c49792dd7b',
-      'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-      'name': '角色配置',
-      'code': 'roleconf_config',
-      'parentid': 'dbdebf16-19fb-11e9-894e-d8c49792dd7b',
-      'covert': false,
-      'children': [{
-        'id': 'dbe2529f-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '删除',
-        'code': 'roleconf_delete',
-        'parentid': 'dbe1d879-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe2958a-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '更新',
-        'code': 'roleconf_update',
-        'parentid': 'dbe1d879-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe2e790-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '查询',
-        'code': 'roleconf_query',
-        'parentid': 'dbe1d879-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe21984-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '新增',
-        'code': 'roleconf_add',
-        'parentid': 'dbe1d879-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }]
+      'parentid': '794a8ad1-8e7a-11e9-9bab-d8c49792dd7b',
+      'children': [],
+      'id': '794af500-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '审批',
+      'code': 'flow_approve',
+      'covert': false
     }, {
-      'id': 'dbe64917-19fb-11e9-894e-d8c49792dd7b',
-      'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-      'name': '用户配置',
-      'code': 'user_config',
-      'parentid': 'dbdebf16-19fb-11e9-894e-d8c49792dd7b',
-      'covert': false,
-      'children': [{
-        'id': 'dbe6d9af-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '删除',
-        'code': 'user_delete',
-        'parentid': 'dbe64917-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe76485-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '查询',
-        'code': 'user_query',
-        'parentid': 'dbe64917-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe689d6-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '新增',
-        'code': 'user_add',
-        'parentid': 'dbe64917-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe7229f-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '更新',
-        'code': 'user_update',
-        'parentid': 'dbe64917-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }]
+      'parentid': '794a8ad1-8e7a-11e9-9bab-d8c49792dd7b',
+      'children': [],
+      'id': '794b3d42-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '流程图查看',
+      'code': 'flow_diagram',
+      'covert': false
     }, {
-      'id': 'dbe4cfcc-19fb-11e9-894e-d8c49792dd7b',
-      'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-      'name': '权限配置',
-      'code': 'auth_config',
-      'parentid': 'dbdebf16-19fb-11e9-894e-d8c49792dd7b',
-      'covert': false,
-      'children': [{
-        'id': 'dbe5647e-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '删除',
-        'code': 'auth_delete',
-        'parentid': 'dbe4cfcc-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe5288d-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '新增',
-        'code': 'auth_add',
-        'parentid': 'dbe4cfcc-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe5f93d-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '查询',
-        'code': 'auth_query',
-        'parentid': 'dbe4cfcc-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe5a048-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '更新',
-        'code': 'auth_update',
-        'parentid': 'dbe4cfcc-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }]
+      'parentid': '794a8ad1-8e7a-11e9-9bab-d8c49792dd7b',
+      'children': [],
+      'id': '794b18f2-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '历史记录查看',
+      'code': 'flow_history',
+      'covert': false
     }, {
-      'id': 'dbe3343a-19fb-11e9-894e-d8c49792dd7b',
-      'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-      'name': '机构配置',
-      'code': 'org_config',
-      'parentid': 'dbdebf16-19fb-11e9-894e-d8c49792dd7b',
-      'covert': false,
-      'children': [{
-        'id': 'dbe385ad-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '新增',
-        'code': 'org_add',
-        'parentid': 'dbe3343a-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe47fc4-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '查询',
-        'code': 'org_query',
-        'parentid': 'dbe3343a-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe3f35b-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '删除',
-        'code': 'org_delete',
-        'parentid': 'dbe3343a-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe43266-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '更新',
-        'code': 'org_update',
-        'parentid': 'dbe3343a-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }]
+      'parentid': '794a8ad1-8e7a-11e9-9bab-d8c49792dd7b',
+      'children': [],
+      'id': '794ad425-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '查看待办任务',
+      'code': 'flow_pending',
+      'covert': false
     }, {
-      'id': 'dbdefaa5-19fb-11e9-894e-d8c49792dd7b',
-      'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-      'name': '运行参数配置',
-      'code': 'runtime_config',
-      'parentid': 'dbdebf16-19fb-11e9-894e-d8c49792dd7b',
-      'covert': false,
+      'parentid': '794a8ad1-8e7a-11e9-9bab-d8c49792dd7b',
+      'children': [],
+      'id': '794aaed3-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '发起流程',
+      'code': 'flow_start',
+      'covert': false
+    }],
+    'id': '794a8ad1-8e7a-11e9-9bab-d8c49792dd7b',
+    'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+    'name': '工作流处理',
+    'code': 'flow_process',
+    'covert': false
+  }, {
+    'parentid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+    'children': [{
+      'parentid': '79442bdf-8e7a-11e9-9bab-d8c49792dd7b',
       'children': [{
-        'id': 'dbdf4c13-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '新增',
-        'code': 'runtime_add',
-        'parentid': 'dbdefaa5-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe00768-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '查询',
-        'code': 'runtime_query',
-        'parentid': 'dbdefaa5-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbdfcd7c-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '更新',
-        'code': 'runtime_update',
-        'parentid': 'dbdefaa5-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbdf975a-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '删除',
-        'code': 'runtime_delete',
-        'parentid': 'dbdefaa5-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }]
-    }, {
-      'id': 'dbe0394a-19fb-11e9-894e-d8c49792dd7b',
-      'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-      'name': '应用配置',
-      'code': 'app_config',
-      'parentid': 'dbdebf16-19fb-11e9-894e-d8c49792dd7b',
-      'covert': false,
-      'children': [{
-        'id': 'dbe0b311-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '删除',
-        'code': 'app_delete',
-        'parentid': 'dbe0394a-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe195ec-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '更新密钥',
-        'code': 'app_update_secret',
-        'parentid': 'dbe0394a-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe15239-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '查询',
-        'code': 'app_query',
-        'parentid': 'dbe0394a-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe112e0-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
-        'name': '更新',
-        'code': 'app_update',
-        'parentid': 'dbe0394a-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }, {
-        'id': 'dbe06f89-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '7945654d-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '79459723-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '新增',
         'code': 'app_add',
-        'parentid': 'dbe0394a-19fb-11e9-894e-d8c49792dd7b',
-        'covert': false,
-        'children': []
-      }]
-    }]
+        'covert': false
+      }, {
+        'parentid': '7945654d-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '7945c0f8-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '删除',
+        'code': 'app_delete',
+        'covert': false
+      }, {
+        'parentid': '7945654d-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '79460ac1-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '查询',
+        'code': 'app_query',
+        'covert': false
+      }, {
+        'parentid': '7945654d-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '7945e423-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '更新',
+        'code': 'app_update',
+        'covert': false
+      }, {
+        'parentid': '7945654d-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '794634ad-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '更新密钥',
+        'code': 'app_update_secret',
+        'covert': false
+      }],
+      'id': '7945654d-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '应用配置',
+      'code': 'app_config',
+      'covert': false
+    }, {
+      'parentid': '79442bdf-8e7a-11e9-9bab-d8c49792dd7b',
+      'children': [{
+        'parentid': '7948dcab-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '794905cd-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '新增',
+        'code': 'auth_add',
+        'covert': false
+      }, {
+        'parentid': '7948dcab-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '79492e96-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '删除',
+        'code': 'auth_delete',
+        'covert': false
+      }, {
+        'parentid': '7948dcab-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '79497819-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '查询',
+        'code': 'auth_query',
+        'covert': false
+      }, {
+        'parentid': '7948dcab-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '794953cc-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '更新',
+        'code': 'auth_update',
+        'covert': false
+      }],
+      'id': '7948dcab-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '权限配置',
+      'code': 'auth_config',
+      'covert': false
+    }, {
+      'parentid': '79442bdf-8e7a-11e9-9bab-d8c49792dd7b',
+      'children': [{
+        'parentid': '79476c32-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '79479029-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '新增',
+        'code': 'org_add',
+        'covert': false
+      }, {
+        'parentid': '79476c32-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '7947b154-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '删除',
+        'code': 'org_delete',
+        'covert': false
+      }, {
+        'parentid': '79476c32-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '79489f70-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '查询',
+        'code': 'org_query',
+        'covert': false
+      }, {
+        'parentid': '79476c32-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '7948726e-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '更新',
+        'code': 'org_update',
+        'covert': false
+      }],
+      'id': '79476c32-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '机构配置',
+      'code': 'org_config',
+      'covert': false
+    }, {
+      'parentid': '79442bdf-8e7a-11e9-9bab-d8c49792dd7b',
+      'children': [{
+        'parentid': '79465d59-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '79468cab-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '新增',
+        'code': 'roleconf_add',
+        'covert': false
+      }, {
+        'parentid': '79465d59-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '7946bf02-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '删除',
+        'code': 'roleconf_delete',
+        'covert': false
+      }, {
+        'parentid': '79465d59-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '79474405-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '查询',
+        'code': 'roleconf_query',
+        'covert': false
+      }, {
+        'parentid': '79465d59-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '79470569-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '更新',
+        'code': 'roleconf_update',
+        'covert': false
+      }],
+      'id': '79465d59-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '角色配置',
+      'code': 'roleconf_config',
+      'covert': false
+    }, {
+      'parentid': '79442bdf-8e7a-11e9-9bab-d8c49792dd7b',
+      'children': [{
+        'parentid': '79448f48-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '7944d328-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '新增',
+        'code': 'runtime_add',
+        'covert': false
+      }, {
+        'parentid': '79448f48-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '7944f896-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '删除',
+        'code': 'runtime_delete',
+        'covert': false
+      }, {
+        'parentid': '79448f48-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '79454042-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '查询',
+        'code': 'runtime_query',
+        'covert': false
+      }, {
+        'parentid': '79448f48-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '79451c27-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '更新',
+        'code': 'runtime_update',
+        'covert': false
+      }],
+      'id': '79448f48-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '运行参数配置',
+      'code': 'runtime_config',
+      'covert': false
+    }, {
+      'parentid': '79442bdf-8e7a-11e9-9bab-d8c49792dd7b',
+      'children': [{
+        'parentid': '7949a515-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '7949e07f-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '新增',
+        'code': 'user_add',
+        'covert': false
+      }, {
+        'parentid': '7949a515-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '794a1b24-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '删除',
+        'code': 'user_delete',
+        'covert': false
+      }, {
+        'parentid': '7949a515-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '794a62a9-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '查询',
+        'code': 'user_query',
+        'covert': false
+      }, {
+        'parentid': '7949a515-8e7a-11e9-9bab-d8c49792dd7b',
+        'children': [],
+        'id': '794a3fef-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+        'name': '更新',
+        'code': 'user_update',
+        'covert': false
+      }],
+      'id': '7949a515-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '用户配置',
+      'code': 'user_config',
+      'covert': false
+    }],
+    'id': '79442bdf-8e7a-11e9-9bab-d8c49792dd7b',
+    'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+    'name': '系统配置',
+    'code': 'sys_config',
+    'covert': false
   }]
 }
 export const getModuleFuncCodeList = () => {
-  return ['other', 'sys_config', 'runtime_config', 'runtime_add', 'runtime_delete', 'runtime_update', 'runtime_query', 'app_config', 'app_add', 'app_delete', 'app_update', 'app_query', 'app_update_secret', 'org_config', 'org_add', 'org_delete', 'org_update', 'org_query', 'roleconf_config', 'roleconf_add', 'roleconf_delete', 'roleconf_update', 'roleconf_query', 'auth_config', 'auth_add', 'auth_delete', 'auth_update', 'auth_query', 'user_config', 'user_add', 'user_delete', 'user_update', 'user_query']
+  return ['other', 'sys_config', 'runtime_config', 'runtime_add', 'runtime_delete', 'runtime_update', 'runtime_query', 'app_config', 'app_add', 'app_delete', 'app_update', 'app_query', 'app_update_secret', 'org_config', 'org_add', 'org_delete', 'org_update', 'org_query', 'roleconf_config', 'roleconf_add', 'roleconf_delete', 'roleconf_update', 'roleconf_query', 'auth_config', 'auth_add', 'auth_delete', 'auth_update', 'auth_query', 'user_config', 'user_add', 'user_delete', 'user_update', 'user_query', 'flow_process', 'flow_start', 'flow_pending', 'flow_approve', 'flow_history', 'flow_diagram']
 }
 export const getAllMenuList = () => {
   return [{
@@ -598,258 +646,306 @@ export const getAllMenuList = () => {
 }
 export const getAllModuleFuncList = () => {
   return [{
-    'parentid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+    'parentid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
     'children': [{
-      'parentid': 'dbdebf16-19fb-11e9-894e-d8c49792dd7b',
+      'parentid': '794a8ad1-8e7a-11e9-9bab-d8c49792dd7b',
+      'children': [],
+      'id': '794af500-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '审批',
+      'code': 'flow_approve',
+      'covert': false
+    }, {
+      'parentid': '794a8ad1-8e7a-11e9-9bab-d8c49792dd7b',
+      'children': [],
+      'id': '794b3d42-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '流程图查看',
+      'code': 'flow_diagram',
+      'covert': false
+    }, {
+      'parentid': '794a8ad1-8e7a-11e9-9bab-d8c49792dd7b',
+      'children': [],
+      'id': '794b18f2-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '历史记录查看',
+      'code': 'flow_history',
+      'covert': false
+    }, {
+      'parentid': '794a8ad1-8e7a-11e9-9bab-d8c49792dd7b',
+      'children': [],
+      'id': '794ad425-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '查看待办任务',
+      'code': 'flow_pending',
+      'covert': false
+    }, {
+      'parentid': '794a8ad1-8e7a-11e9-9bab-d8c49792dd7b',
+      'children': [],
+      'id': '794aaed3-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+      'name': '发起流程',
+      'code': 'flow_start',
+      'covert': false
+    }],
+    'id': '794a8ad1-8e7a-11e9-9bab-d8c49792dd7b',
+    'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+    'name': '工作流处理',
+    'code': 'flow_process',
+    'covert': false
+  }, {
+    'parentid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
+    'children': [{
+      'parentid': '79442bdf-8e7a-11e9-9bab-d8c49792dd7b',
       'children': [{
-        'parentid': 'dbe0394a-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '7945654d-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe06f89-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '79459723-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '新增',
         'code': 'app_add',
         'covert': false
       }, {
-        'parentid': 'dbe0394a-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '7945654d-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe0b311-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '7945c0f8-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '删除',
         'code': 'app_delete',
         'covert': false
       }, {
-        'parentid': 'dbe0394a-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '7945654d-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe15239-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '79460ac1-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '查询',
         'code': 'app_query',
         'covert': false
       }, {
-        'parentid': 'dbe0394a-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '7945654d-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe112e0-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '7945e423-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '更新',
         'code': 'app_update',
         'covert': false
       }, {
-        'parentid': 'dbe0394a-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '7945654d-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe195ec-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '794634ad-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '更新密钥',
         'code': 'app_update_secret',
         'covert': false
       }],
-      'id': 'dbe0394a-19fb-11e9-894e-d8c49792dd7b',
-      'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+      'id': '7945654d-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
       'name': '应用配置',
       'code': 'app_config',
       'covert': false
     }, {
-      'parentid': 'dbdebf16-19fb-11e9-894e-d8c49792dd7b',
+      'parentid': '79442bdf-8e7a-11e9-9bab-d8c49792dd7b',
       'children': [{
-        'parentid': 'dbe4cfcc-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '7948dcab-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe5288d-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '794905cd-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '新增',
         'code': 'auth_add',
         'covert': false
       }, {
-        'parentid': 'dbe4cfcc-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '7948dcab-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe5647e-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '79492e96-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '删除',
         'code': 'auth_delete',
         'covert': false
       }, {
-        'parentid': 'dbe4cfcc-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '7948dcab-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe5f93d-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '79497819-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '查询',
         'code': 'auth_query',
         'covert': false
       }, {
-        'parentid': 'dbe4cfcc-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '7948dcab-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe5a048-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '794953cc-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '更新',
         'code': 'auth_update',
         'covert': false
       }],
-      'id': 'dbe4cfcc-19fb-11e9-894e-d8c49792dd7b',
-      'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+      'id': '7948dcab-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
       'name': '权限配置',
       'code': 'auth_config',
       'covert': false
     }, {
-      'parentid': 'dbdebf16-19fb-11e9-894e-d8c49792dd7b',
+      'parentid': '79442bdf-8e7a-11e9-9bab-d8c49792dd7b',
       'children': [{
-        'parentid': 'dbe3343a-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '79476c32-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe385ad-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '79479029-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '新增',
         'code': 'org_add',
         'covert': false
       }, {
-        'parentid': 'dbe3343a-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '79476c32-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe3f35b-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '7947b154-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '删除',
         'code': 'org_delete',
         'covert': false
       }, {
-        'parentid': 'dbe3343a-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '79476c32-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe47fc4-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '79489f70-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '查询',
         'code': 'org_query',
         'covert': false
       }, {
-        'parentid': 'dbe3343a-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '79476c32-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe43266-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '7948726e-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '更新',
         'code': 'org_update',
         'covert': false
       }],
-      'id': 'dbe3343a-19fb-11e9-894e-d8c49792dd7b',
-      'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+      'id': '79476c32-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
       'name': '机构配置',
       'code': 'org_config',
       'covert': false
     }, {
-      'parentid': 'dbdebf16-19fb-11e9-894e-d8c49792dd7b',
+      'parentid': '79442bdf-8e7a-11e9-9bab-d8c49792dd7b',
       'children': [{
-        'parentid': 'dbe1d879-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '79465d59-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe21984-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '79468cab-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '新增',
         'code': 'roleconf_add',
         'covert': false
       }, {
-        'parentid': 'dbe1d879-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '79465d59-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe2529f-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '7946bf02-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '删除',
         'code': 'roleconf_delete',
         'covert': false
       }, {
-        'parentid': 'dbe1d879-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '79465d59-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe2e790-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '79474405-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '查询',
         'code': 'roleconf_query',
         'covert': false
       }, {
-        'parentid': 'dbe1d879-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '79465d59-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe2958a-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '79470569-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '更新',
         'code': 'roleconf_update',
         'covert': false
       }],
-      'id': 'dbe1d879-19fb-11e9-894e-d8c49792dd7b',
-      'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+      'id': '79465d59-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
       'name': '角色配置',
       'code': 'roleconf_config',
       'covert': false
     }, {
-      'parentid': 'dbdebf16-19fb-11e9-894e-d8c49792dd7b',
+      'parentid': '79442bdf-8e7a-11e9-9bab-d8c49792dd7b',
       'children': [{
-        'parentid': 'dbdefaa5-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '79448f48-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbdf4c13-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '7944d328-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '新增',
         'code': 'runtime_add',
         'covert': false
       }, {
-        'parentid': 'dbdefaa5-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '79448f48-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbdf975a-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '7944f896-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '删除',
         'code': 'runtime_delete',
         'covert': false
       }, {
-        'parentid': 'dbdefaa5-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '79448f48-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe00768-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '79454042-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '查询',
         'code': 'runtime_query',
         'covert': false
       }, {
-        'parentid': 'dbdefaa5-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '79448f48-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbdfcd7c-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '79451c27-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '更新',
         'code': 'runtime_update',
         'covert': false
       }],
-      'id': 'dbdefaa5-19fb-11e9-894e-d8c49792dd7b',
-      'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+      'id': '79448f48-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
       'name': '运行参数配置',
       'code': 'runtime_config',
       'covert': false
     }, {
-      'parentid': 'dbdebf16-19fb-11e9-894e-d8c49792dd7b',
+      'parentid': '79442bdf-8e7a-11e9-9bab-d8c49792dd7b',
       'children': [{
-        'parentid': 'dbe64917-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '7949a515-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe689d6-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '7949e07f-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '新增',
         'code': 'user_add',
         'covert': false
       }, {
-        'parentid': 'dbe64917-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '7949a515-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe6d9af-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '794a1b24-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '删除',
         'code': 'user_delete',
         'covert': false
       }, {
-        'parentid': 'dbe64917-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '7949a515-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe76485-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '794a62a9-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '查询',
         'code': 'user_query',
         'covert': false
       }, {
-        'parentid': 'dbe64917-19fb-11e9-894e-d8c49792dd7b',
+        'parentid': '7949a515-8e7a-11e9-9bab-d8c49792dd7b',
         'children': [],
-        'id': 'dbe7229f-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'id': '794a3fef-8e7a-11e9-9bab-d8c49792dd7b',
+        'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
         'name': '更新',
         'code': 'user_update',
         'covert': false
       }],
-      'id': 'dbe64917-19fb-11e9-894e-d8c49792dd7b',
-      'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+      'id': '7949a515-8e7a-11e9-9bab-d8c49792dd7b',
+      'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
       'name': '用户配置',
       'code': 'user_config',
       'covert': false
     }],
-    'id': 'dbdebf16-19fb-11e9-894e-d8c49792dd7b',
-    'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+    'id': '79442bdf-8e7a-11e9-9bab-d8c49792dd7b',
+    'appid': '793a9790-8e7a-11e9-9bab-d8c49792dd7b',
     'name': '系统配置',
     'code': 'sys_config',
     'covert': false
