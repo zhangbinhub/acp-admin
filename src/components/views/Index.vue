@@ -12,7 +12,7 @@
                   <Icon type="md-pulse" :size="38"></Icon>
                 </i-col>
                 <i-col span="16">
-                  <p style="color: #9ea7b4;">{{item.appname}}</p>
+                  <p style="color: #9ea7b4;">{{item.appName}}</p>
                   <h3>{{item.count}}</h3>
                 </i-col>
               </Row>
@@ -68,10 +68,10 @@
           if (!xAxisdata.includes(info.date)) {
             xAxisdata.push(info.date)
           }
-          if (!appNames.includes(info.appname)) {
-            appNames.push(info.appname)
+          if (!appNames.includes(info.appName)) {
+            appNames.push(info.appName)
             series.push({
-              name: info.appname,
+              name: info.appName,
               type: 'bar',
               barGap: '5%',
               showAllSymbol: true,
@@ -80,7 +80,7 @@
             })
           } else {
             series.filter(item => {
-              return item.name === info.appname
+              return item.name === info.appName
             })[0].data.push([info.date, info.count])
           }
         })

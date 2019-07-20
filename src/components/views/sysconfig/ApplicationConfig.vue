@@ -2,8 +2,8 @@
   <Card>
     <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form"
           onsubmit="return false;">
-      <Form-item :label="$t('forms.name')" prop="appname">
-        <i-input v-model="searchForm.appname" :disabled="modal_loading" size="small"
+      <Form-item :label="$t('forms.name')" prop="appName">
+        <i-input v-model="searchForm.appName" :disabled="modal_loading" size="small"
                  :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                  @on-enter="handleSearch"></i-input>
       </Form-item>
@@ -30,8 +30,8 @@
       <template slot-scope="{ row }" slot="id">
         <span>{{ row.id }}</span>
       </template>
-      <template slot-scope="{ row }" slot="appname">
-        <span>{{ row.appname }}</span>
+      <template slot-scope="{ row }" slot="appName">
+        <span>{{ row.appName }}</span>
       </template>
       <template slot-scope="{ row }" slot="accessTokenValiditySeconds">
         <span>{{ row.accessTokenValiditySeconds }}</span>
@@ -71,11 +71,11 @@
         <Form-item :label="'secret'" prop="secret" v-if="action===2">
           <Alert type="error">{{editForm.secret}}</Alert>
         </Form-item>
-        <Form-item :label="$t('forms.name')" prop="appname">
-          <i-input ref="appname" v-model="editForm.appname" :disabled="modal_loading" v-if="action!==2"
+        <Form-item :label="$t('forms.name')" prop="appName">
+          <i-input ref="appName" v-model="editForm.appName" :disabled="modal_loading" v-if="action!==2"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                    @on-enter="doSave('editForm')"></i-input>
-          <Alert v-else>{{editForm.appname}}</Alert>
+          <Alert v-else>{{editForm.appName}}</Alert>
         </Form-item>
         <Form-item :label="$t('forms.accessTokenValiditySeconds')" prop="accessTokenValiditySeconds">
           <i-input v-model="editForm.accessTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
@@ -116,9 +116,9 @@
     data () {
       return {
         searchForm: {
-          appname: '',
+          appName: '',
           orderParam: {
-            key: 'appname',
+            key: 'appName',
             order: 'asc'
           },
           currPage: 1,
@@ -128,7 +128,7 @@
         },
         editForm: {
           id: '',
-          appname: '',
+          appName: '',
           accessTokenValiditySeconds: '',
           refreshTokenValiditySeconds: '',
           secret: '',
@@ -146,7 +146,7 @@
         if (value) {
           this.$nextTick(() => {
             if (this.action !== 2) {
-              this.$refs['appname'].focus()
+              this.$refs['appName'].focus()
             }
           })
         }
@@ -166,9 +166,9 @@
             slot: 'id'
           },
           {
-            key: 'appname',
+            key: 'appName',
             title: this.$i18n.t('forms.name'),
-            slot: 'appname'
+            slot: 'appName'
           },
           {
             key: 'accessTokenValiditySeconds',
@@ -197,7 +197,7 @@
       },
       ruleEditForm () {
         return {
-          appname: [
+          appName: [
             { required: true, message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'), trigger: 'blur' }
           ],
           accessTokenValiditySeconds: [
@@ -243,7 +243,7 @@
               if (valid) {
                 this.modal_loading = true
                 this.$api.request.app.create({
-                  appname: this.editForm.appname,
+                  appName: this.editForm.appName,
                   accessTokenValiditySeconds: Number(this.editForm.accessTokenValiditySeconds),
                   refreshTokenValiditySeconds: Number(this.editForm.refreshTokenValiditySeconds)
                 }).then((res) => {
@@ -265,7 +265,7 @@
                 this.modal_loading = true
                 this.$api.request.app.update({
                   id: this.editForm.id,
-                  appname: this.editForm.appname,
+                  appName: this.editForm.appName,
                   accessTokenValiditySeconds: Number(this.editForm.accessTokenValiditySeconds),
                   refreshTokenValiditySeconds: Number(this.editForm.refreshTokenValiditySeconds)
                 }).then((res) => {
@@ -316,7 +316,7 @@
       },
       handleSearch () {
         let searchParam = {
-          appname: this.searchForm.appname,
+          appName: this.searchForm.appName,
           queryParam: {
             currPage: this.searchForm.currPage,
             pageSize: this.searchForm.pageSize
@@ -391,7 +391,7 @@
       },
       handleEdit (row, action, index) {
         this.$refs['editForm'].resetFields()
-        this.editForm.appname = row.appname
+        this.editForm.appName = row.appName
         this.editForm.accessTokenValiditySeconds = row.accessTokenValiditySeconds + ''
         this.editForm.refreshTokenValiditySeconds = row.refreshTokenValiditySeconds + ''
         this.editForm.id = row.id

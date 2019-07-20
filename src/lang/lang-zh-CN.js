@@ -124,7 +124,7 @@ const messages = Object.assign(zhLocale, {
     moduleFuncList: '模块功能列表',
     iconType: '图标',
     path: '路径',
-    opentype: '打开方式',
+    openType: '打开方式',
     inner: '内嵌模式',
     newTabs: '新标签页',
     status: '状态',

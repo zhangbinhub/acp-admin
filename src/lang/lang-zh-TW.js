@@ -124,7 +124,7 @@ const messages = Object.assign(twLocale, {
     moduleFuncList: '模塊功能列表',
     iconType: '圖標',
     path: '路徑',
-    opentype: '打開方式',
+    openType: '打開方式',
     inner: '內嵌模式',
     newTabs: '新標籤頁',
     status: '狀態',

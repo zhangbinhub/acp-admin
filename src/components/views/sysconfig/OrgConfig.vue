@@ -145,9 +145,9 @@
     watch: {
       parentArray (selectedArray) {
         if (selectedArray.length > 0) {
-          this.editForm.parentid = selectedArray[selectedArray.length - 1]
+          this.editForm.parentId = selectedArray[selectedArray.length - 1]
         } else {
-          this.editForm.parentid = ''
+          this.editForm.parentId = ''
         }
       }
     },
@@ -255,7 +255,7 @@
             name: '',
             code: '',
             parentArray: [],
-            parentid: '',
+            parentId: '',
             sort: 0,
             userIds: []
           }
@@ -263,7 +263,7 @@
             id: '',
             name: '',
             code: '',
-            parentid: '',
+            parentId: '',
             sort: 0,
             userIds: []
           }
@@ -302,7 +302,7 @@
         this.tree_loading = true
         this.$api.request.org.createOrg({
           name: this.$i18n.t('forms.new') + this.$i18n.t('forms.organization'),
-          parentid: data.id,
+          parentId: data.id,
           sort: data.children.length + 1
         }).then((res) => {
           this.tree_loading = false
@@ -351,7 +351,7 @@
               id: this.currOrgData.id,
               name: this.currOrgData.name,
               code: this.currOrgData.code,
-              parentid: this.currOrgData.parentid,
+              parentId: this.currOrgData.parentId,
               sort: this.currOrgData.sort,
               userIds: this.currOrgData.userIds
             }
@@ -372,32 +372,32 @@
               id: this.editForm.id,
               name: this.editForm.name,
               code: this.editForm.code,
-              parentid: this.editForm.parentid,
+              parentId: this.editForm.parentId,
               sort: this.editForm.sort,
               userIds: this.editForm.userIds
             }).then((res) => {
               this.tree_loading = false
               if (res) {
-                let oldParentId = this.currOrgData.parentid
+                let oldParentId = this.currOrgData.parentId
                 this.reloadUserList()
                 this.$Message.success(this.$i18n.t('messages.saveSuccess'))
                 this.currOrgData.name = this.editForm.name
                 this.currOrgData.title = this.editForm.name
                 this.currOrgData.label = this.editForm.name
                 this.currOrgData.code = this.editForm.code
-                this.currOrgData.parentid = this.editForm.parentid
+                this.currOrgData.parentId = this.editForm.parentId
                 this.currOrgData.sort = this.editForm.sort
                 this.currOrgData.userIds = this.editForm.userIds
                 this.currOrg = {
                   id: this.editForm.id,
                   name: this.editForm.name,
                   code: this.editForm.code,
-                  parentid: this.editForm.parentid,
+                  parentId: this.editForm.parentId,
                   sort: this.editForm.sort,
                   userIds: this.editForm.userIds
                 }
                 this.currOrgFullPath = getTreeFullPathTitle(this.treeData, this.currOrg.id)
-                if (oldParentId === this.currOrgData.parentid) {
+                if (oldParentId === this.currOrgData.parentId) {
                   sortTreeNodes(this.treeData)
                 } else {
                   this.refreshOrgTree()
@@ -417,8 +417,8 @@
           name: this.currOrg.name,
           code: this.currOrg.code,
           sort: this.currOrg.sort,
-          parentArray: getTreeFullPathArray(this.treeData, this.currOrg.parentid).map(item => item.id),
-          parentid: this.currOrg.parentid,
+          parentArray: getTreeFullPathArray(this.treeData, this.currOrg.parentId).map(item => item.id),
+          parentId: this.currOrg.parentId,
           userIds: this.currOrg.userIds
         }
         this.currOrgFullPath = getTreeFullPathTitle(this.treeData, this.currOrg.id)

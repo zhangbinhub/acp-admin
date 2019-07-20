@@ -389,10 +389,10 @@
             const appData = appres.data
             for (let i = 0; i < appData.length; i++) {
               const item = appData[i]
-              item.appid = item.id
-              item.name = item.appname
+              item.appId = item.id
+              item.name = item.appName
               item.expand = true
-              item.title = item.appname
+              item.title = item.appName
               item.disableCheckbox = true
               item.sort = i
               item.children = []
@@ -403,9 +403,9 @@
               if (res) {
                 processTreeNode(res.data, 1, this.currObj.roleIds)
                 for (const item of res.data) {
-                  item.parentid = item.appid
+                  item.parentId = item.appId
                   for (const root of this.roleTreeData) {
-                    if (root.id === item.appid) {
+                    if (root.id === item.appId) {
                       root.children.push(item)
                     }
                   }

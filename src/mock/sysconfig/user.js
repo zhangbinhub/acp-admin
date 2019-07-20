@@ -26,7 +26,7 @@ export const getUserList = () => {
       'organizationMngSet': [],
       'roleSet': [{
         'id': 'dbe88dbc-19fb-11e9-894e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'appId': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
         'name': '超级管理员',
         'code': 'ADMIN',
         'levels': 0,
@@ -41,7 +41,7 @@ export const getUserList = () => {
       'enabled': true,
       'sort': 1,
       'organizationSet': [{
-        'parentid': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
+        'parentId': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
         'children': [],
         'id': '386d4aae-1afc-11e9-a49e-d8c49792dd7b',
         'name': '新机构112',
@@ -49,21 +49,21 @@ export const getUserList = () => {
         'sort': 1
       }],
       'organizationMngSet': [{
-        'parentid': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
+        'parentId': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
         'children': [],
         'id': '386d4aae-1afc-11e9-a49e-d8c49792dd7b',
         'name': '新机构112',
         'code': '',
         'sort': 1
       }, {
-        'parentid': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
+        'parentId': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
         'children': [],
         'id': '99c30635-1ccb-11e9-a49e-d8c49792dd7b',
         'name': '新机构2',
         'code': '',
         'sort': 0
       }, {
-        'parentid': 'root',
+        'parentId': 'root',
         'children': [],
         'id': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
         'name': '新机构1',
@@ -72,7 +72,7 @@ export const getUserList = () => {
       }],
       'roleSet': [{
         'id': 'fd3bb9d8-1bf1-11e9-a49e-d8c49792dd7b',
-        'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'appId': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
         'name': '测试人员',
         'code': 'TEST',
         'levels': 1,
@@ -109,7 +109,7 @@ export const updateUser = () => {
     'avatar': '/public/img/avatar.5d5d165b.jpg',
     'sort': 1,
     'organizationSet': [{
-      'parentid': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
+      'parentId': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
       'children': [],
       'id': '386d4aae-1afc-11e9-a49e-d8c49792dd7b',
       'name': '新机构112',
@@ -117,21 +117,21 @@ export const updateUser = () => {
       'sort': 1
     }],
     'organizationMngSet': [{
-      'parentid': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
+      'parentId': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
       'children': [],
       'id': '99c30635-1ccb-11e9-a49e-d8c49792dd7b',
       'name': '新机构2',
       'code': '',
       'sort': 0
     }, {
-      'parentid': 'root',
+      'parentId': 'root',
       'children': [],
       'id': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
       'name': '新机构1',
       'code': '',
       'sort': 1
     }, {
-      'parentid': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
+      'parentId': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
       'children': [],
       'id': '386d4aae-1afc-11e9-a49e-d8c49792dd7b',
       'name': '新机构112',
@@ -140,7 +140,7 @@ export const updateUser = () => {
     }],
     'roleSet': [{
       'id': 'fd3bb9d8-1bf1-11e9-a49e-d8c49792dd7b',
-      'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+      'appId': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
       'name': '测试人员',
       'code': 'TEST',
       'levels': 1,
