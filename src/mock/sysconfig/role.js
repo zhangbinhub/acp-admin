@@ -4,21 +4,21 @@ export const getRoleCodeList = () => {
 export const getRoleList = () => {
   return [{
     'id': 'dbe88dbc-19fb-11e9-894e-d8c49792dd7b',
-    'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+    'appId': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
     'name': '超级管理员',
     'code': 'ADMIN',
     'levels': 0,
     'sort': 0
   }, {
     'id': 'b09d505f-1bf2-11e9-a49e-d8c49792dd7b',
-    'appid': 'aa4da240-1bf2-11e9-a49e-d8c49792dd7b',
+    'appId': 'aa4da240-1bf2-11e9-a49e-d8c49792dd7b',
     'name': '新角色',
     'code': 'OTHER',
     'levels': 999,
     'sort': 1
   }, {
     'id': 'fd3bb9d8-1bf1-11e9-a49e-d8c49792dd7b',
-    'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+    'appId': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
     'name': '测试人员',
     'code': 'TEST',
     'levels': 1,
@@ -28,7 +28,7 @@ export const getRoleList = () => {
 export const getRoleInfo = () => {
   return {
     'id': 'fd3bb9d8-1bf1-11e9-a49e-d8c49792dd7b',
-    'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+    'appId': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
     'name': '测试人员',
     'code': 'TEST',
     'levels': 1,
@@ -41,7 +41,7 @@ export const getRoleInfo = () => {
 export const updateRole = () => {
   return {
     'id': 'fd3bb9d8-1bf1-11e9-a49e-d8c49792dd7b',
-    'appid': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+    'appId': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
     'name': '测试人员',
     'code': 'TEST',
     'levels': 1,
@@ -56,7 +56,7 @@ export const deleteRole = () => {
 export const getRoleListOption = () => {
   return [{
     'id': 'e9bdd38d-1bf7-11e9-a49e-d8c49792dd7b',
-    'appid': 'aa4da240-1bf2-11e9-a49e-d8c49792dd7b',
+    'appId': 'aa4da240-1bf2-11e9-a49e-d8c49792dd7b',
     'name': '新角色',
     'code': 'OTHER',
     'levels': 999,

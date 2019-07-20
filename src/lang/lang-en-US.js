@@ -124,7 +124,7 @@ const messages = Object.assign(enLocale, {
     orgMngList: 'Administrable organization',
     iconType: 'icon',
     path: 'path',
-    opentype: 'open type',
+    openType: 'open type',
     inner: 'inner',
     newTabs: 'new tabs',
     status: 'status',

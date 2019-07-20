@@ -218,7 +218,7 @@
         } else {
           dataLose = true
         }
-        if ((!menu || menu.opentype !== 1) && dataLose) {
+        if ((!menu || menu.openType !== 1) && dataLose) {
           this.$Modal.confirm({
             title: this.$i18n.t('dialog.confirm'),
             content: '<br/><p style="color: red">' + pageName + '</p><br/>' +
@@ -255,7 +255,7 @@
         if (name.startsWith('/') || name.toLowerCase().startsWith('http')) {
           const menu = findMenuByPath(name, this.$store.state.app.user.menuList)
           if (menu) {
-            switch (menu.opentype) {
+            switch (menu.openType) {
               case 0: // 内嵌模式
                 this.$router.push(menu.path)
                 break

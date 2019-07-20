@@ -231,11 +231,11 @@
             const appData = appres.data
             for (let i = 0; i < appData.length; i++) {
               const item = appData[i]
-              item.appid = item.id
-              item.name = item.appname
+              item.appId = item.id
+              item.name = item.appName
               item.render = this.rootRenderContent
               item.expand = true
-              item.title = item.appname
+              item.title = item.appName
               item.sort = i
               item.children = []
             }
@@ -245,9 +245,9 @@
               if (res) {
                 processTreeNode(res.data)
                 for (const item of res.data) {
-                  item.parentid = item.appid
+                  item.parentId = item.appId
                   for (const root of this.treeData) {
-                    if (root.id === item.appid) {
+                    if (root.id === item.appId) {
                       root.children.push(item)
                     }
                   }
@@ -290,7 +290,7 @@
       },
       reloadMenuList () {
         this.tree_loading = true
-        this.$api.request.auth.getMenuList(this.currRole.appid).then((res) => {
+        this.$api.request.auth.getMenuList(this.currRole.appId).then((res) => {
           this.tree_loading = false
           if (res) {
             processTreeNode(res.data, 1, this.currRole.menuIds)
@@ -302,7 +302,7 @@
       },
       reloadModuleFuncList () {
         this.tree_loading = true
-        this.$api.request.auth.getModuleFuncList(this.currRole.appid).then((res) => {
+        this.$api.request.auth.getModuleFuncList(this.currRole.appId).then((res) => {
           this.tree_loading = false
           if (res) {
             processTreeNode(res.data, 1, this.currRole.moduleFuncIds)
@@ -326,7 +326,7 @@
           }
           this.currRole = {
             id: '',
-            appid: '',
+            appId: '',
             name: '',
             code: '',
             levels: 1,
@@ -342,7 +342,7 @@
         this.tree_loading = true
         this.$api.request.role.createRole({
           name: this.$i18n.t('forms.new') + this.$i18n.t('forms.role'),
-          appid: data.appid,
+          appId: data.appId,
           sort: data.children.length + 1,
           code: 'OTHER',
           levels: 999
@@ -393,7 +393,7 @@
             this.currRoleData.moduleFuncIds = res.data.moduleFuncIds
             this.currRole = {
               id: this.currRoleData.id,
-              appid: this.currRoleData.appid,
+              appId: this.currRoleData.appId,
               name: this.currRoleData.name,
               code: this.currRoleData.code,
               levels: this.currRoleData.levels,
@@ -440,7 +440,7 @@
                 this.currRoleData.moduleFuncIds = this.$refs['moduleFuncTree'].getCheckedAndIndeterminateNodes().map(item => item.id)
                 this.currRole = {
                   id: this.editForm.id,
-                  appid: this.editForm.appid,
+                  appId: this.editForm.appId,
                   name: this.editForm.name,
                   code: this.editForm.code,
                   levels: this.editForm.levels,
@@ -465,7 +465,7 @@
         this.$refs['editForm'].resetFields()
         this.editForm = {
           id: this.currRole.id,
-          appid: this.currRole.appid,
+          appId: this.currRole.appId,
           name: this.currRole.name,
           code: this.currRole.code,
           levels: this.currRole.levels,
