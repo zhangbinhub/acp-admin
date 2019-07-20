@@ -742,13 +742,13 @@
       removeMenu (root, node, data) {
         if (!data.covert) {
           this.$Modal.error({
-            title: this.$i18n.t('dialog.error'),
+            title: this.$i18n.t('dialog.error') + '',
             content: this.$i18n.t('messages.tableDataCannotDel') + '<br/>' + getTreeFullPathTitle(this.menuTreeData, data.id)
           })
           return
         }
         this.$Modal.confirm({
-          title: this.$i18n.t('dialog.confirm'),
+          title: this.$i18n.t('dialog.confirm') + '',
           content: this.$i18n.t('messages.deleteDataConfirm') + '<br/>' + getTreeFullPathTitle(this.menuTreeData, data.id),
           onOk: () => {
             this.tree_loading = true
@@ -771,13 +771,13 @@
       removeModuleFunc (root, node, data) {
         if (!data.covert) {
           this.$Modal.error({
-            title: this.$i18n.t('dialog.error'),
+            title: this.$i18n.t('dialog.error') + '',
             content: this.$i18n.t('messages.tableDataCannotDel') + '<br/>' + getTreeFullPathTitle(this.menuTreeData, data.id)
           })
           return
         }
         this.$Modal.confirm({
-          title: this.$i18n.t('dialog.confirm'),
+          title: this.$i18n.t('dialog.confirm') + '',
           content: this.$i18n.t('messages.deleteDataConfirm') + '<br/>' + getTreeFullPathTitle(this.moduleFuncTreeData, data.id),
           onOk: () => {
             this.tree_loading = true

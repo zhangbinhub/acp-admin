@@ -220,7 +220,7 @@
         }
         if ((!menu || menu.openType !== 1) && dataLose) {
           this.$Modal.confirm({
-            title: this.$i18n.t('dialog.confirm'),
+            title: this.$i18n.t('dialog.confirm') + '',
             content: '<br/><p style="color: red">' + pageName + '</p><br/>' +
               '<p>' + this.$i18n.t('messages.leavePage') + '</p>',
             onOk: () => {

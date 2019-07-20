@@ -41,7 +41,7 @@
     methods: {
       logout () {
         this.$Modal.confirm({
-          title: this.$i18n.t('dialog.confirm'),
+          title: this.$i18n.t('dialog.confirm') + '',
           content: '<p>' + this.$i18n.t('messages.logoutConfirm') + '</p>',
           onOk: () => {
             this.$api.request.auth.doLogOut().then(() => {

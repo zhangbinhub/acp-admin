@@ -24,7 +24,7 @@ const messages = Object.assign(twLocale, {
     deleteDataConfirm: '確定刪除所選數據嗎？',
     modifyLoginNo: '修改登陸賬號將重置密碼，是否繼續？',
     resetPassword: '確定重置所選用戶密碼嗎？',
-    refreshServiceConfirm: '確定刷新服務配置信息嗎？所有服務將重新從配置中心獲取配置信息',
+    refreshServiceConfirm: '確定刷新服務配置信息嗎？指定的服務將重新從配置中心獲取配置信息',
     refreshRouteConfirm: '確定刷新網關路由信息嗎？'
   },
   pageTitle: {
