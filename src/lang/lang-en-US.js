@@ -24,7 +24,7 @@ const messages = Object.assign(enLocale, {
     deleteDataConfirm: 'Are you sure to delete the selected data?',
     modifyLoginNo: 'Modifying the loginNo will reset the password. Do you want to continue?',
     resetPassword: 'Are you sure you want to reset the selected user password?',
-    refreshServiceConfirm: 'Are you sure to refresh the service configuration information? All services will retrieve configuration information from the configuration center',
+    refreshServiceConfirm: 'Are you sure to refresh the service configuration information? The specified service retrieves configuration information from the configuration center',
     refreshRouteConfirm: 'Are you sure to refresh gateway routing information?'
   },
   pageTitle: {
@@ -143,6 +143,9 @@ const messages = Object.assign(enLocale, {
     processTime: 'process time',
     responseTime: 'response time',
     responseStatus: 'response status',
+    configRefreshServer: 'server name',
+    configRefreshMatcher: 'matcher',
+    configRefreshAll: 'all server',
     buttons: {
       login: 'login',
       submit: 'submit',

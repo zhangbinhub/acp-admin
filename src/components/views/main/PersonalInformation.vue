@@ -175,8 +175,8 @@
               this.$Message.success(this.$i18n.t('messages.saveSuccess'))
               if (this.updatePassword) {
                 this.$Modal.info({
-                  title: this.$i18n.t('dialog.info'),
-                  content: this.$i18n.t('messages.changedPassword'),
+                  title: this.$i18n.t('dialog.info') + '',
+                  content: this.$i18n.t('messages.changedPassword') + '',
                   onOk: () => {
                     this.modal_loading = false
                     this.$api.redirectLogin()

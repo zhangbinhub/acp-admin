@@ -362,7 +362,7 @@
       },
       remove (root, node, data) {
         this.$Modal.confirm({
-          title: this.$i18n.t('dialog.confirm'),
+          title: this.$i18n.t('dialog.confirm') + '',
           content: this.$i18n.t('messages.deleteDataConfirm') + '<br/>' + getTreeFullPathTitle(this.treeData, data.id),
           onOk: () => {
             this.tree_loading = true

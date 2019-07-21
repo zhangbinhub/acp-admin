@@ -509,13 +509,13 @@
       handleDeleteRow (row) {
         if (row.id === this.$store.state.app.user.userInfo.id || row.levels <= this.$store.state.app.user.userInfo.levels) {
           this.$Modal.error({
-            title: this.$i18n.t('dialog.error'),
-            content: this.$i18n.t('messages.tableDataCannotDel')
+            title: this.$i18n.t('dialog.error') + '',
+            content: this.$i18n.t('messages.tableDataCannotDel') + ''
           })
         } else {
           this.$Modal.confirm({
-            title: this.$i18n.t('dialog.confirm'),
-            content: this.$i18n.t('messages.deleteDataConfirm'),
+            title: this.$i18n.t('dialog.confirm') + '',
+            content: this.$i18n.t('messages.deleteDataConfirm') + '',
             onOk: () => {
               this.handleDelete([row.id])
             }
@@ -525,16 +525,16 @@
       handleDeleteMore () {
         if (this.selectedData.length > 0) {
           this.$Modal.confirm({
-            title: this.$i18n.t('dialog.confirm'),
-            content: this.$i18n.t('messages.deleteDataConfirm'),
+            title: this.$i18n.t('dialog.confirm') + '',
+            content: this.$i18n.t('messages.deleteDataConfirm') + '',
             onOk: () => {
               this.handleDelete(this.selectedData.map(item => item.id))
             }
           })
         } else {
           this.$Modal.info({
-            title: this.$i18n.t('dialog.info'),
-            content: this.$i18n.t('messages.selectDataForDelete')
+            title: this.$i18n.t('dialog.info') + '',
+            content: this.$i18n.t('messages.selectDataForDelete') + ''
           })
         }
       },
@@ -595,8 +595,8 @@
             if (this.editForm.id && this.editForm.id !== '') {
               if (this.editForm.loginno !== this.currObj.loginno) {
                 this.$Modal.confirm({
-                  title: this.$i18n.t('dialog.confirm'),
-                  content: this.$i18n.t('messages.modifyLoginNo'),
+                  title: this.$i18n.t('dialog.confirm') + '',
+                  content: this.$i18n.t('messages.modifyLoginNo') + '',
                   onOk: () => {
                     this.doUpdate()
                   }
@@ -656,8 +656,8 @@
       },
       doResetPwd (userId) {
         this.$Modal.confirm({
-          title: this.$i18n.t('dialog.confirm'),
-          content: this.$i18n.t('messages.resetPassword'),
+          title: this.$i18n.t('dialog.confirm') + '',
+          content: this.$i18n.t('messages.resetPassword') + '',
           onOk: () => {
             this.modal_loading = true
             this.$api.request.user.resetPwd(userId).then((res) => {

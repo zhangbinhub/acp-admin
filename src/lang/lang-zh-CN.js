@@ -24,7 +24,7 @@ const messages = Object.assign(zhLocale, {
     deleteDataConfirm: '确定删除所选数据吗？',
     modifyLoginNo: '修改登录账号将重置密码，是否继续？',
     resetPassword: '确定重置所选用户密码吗？',
-    refreshServiceConfirm: '确定刷新服务配置信息吗？所有服务将重新从配置中心获取配置信息',
+    refreshServiceConfirm: '确定刷新服务配置信息吗？指定的服务将重新从配置中心获取配置信息',
     refreshRouteConfirm: '确定刷新网关路由信息吗？'
   },
   pageTitle: {
@@ -143,6 +143,9 @@ const messages = Object.assign(zhLocale, {
     processTime: '处理时长',
     responseTime: '响应时间',
     responseStatus: '响应状态码',
+    configRefreshServer: '服务名',
+    configRefreshMatcher: '规则',
+    configRefreshAll: '所有服务',
     buttons: {
       login: '登录',
       submit: '提交',

@@ -183,7 +183,7 @@ npm install
 - 配置中心管理
 ![images](doc/images/pages/configcenter.png)
 ![images](doc/images/pages/configcenteredit.png)
-![images](doc/images/pages/configcenterefresh.png)
+![images](doc/images/pages/configcenterrefreshdialog.png)
 - 路由配置
 ![images](doc/images/pages/route.png)
 ![images](doc/images/pages/routeEdit.png)

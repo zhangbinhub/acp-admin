@@ -143,6 +143,37 @@
         </Button>
       </div>
     </Modal>
+    <Modal v-model="refreshModal" :title="$t('forms.buttons.refreshService')" :loading="modal_loading"
+           :mask-closable="false">
+      <Form ref="refreshForm" :model="refreshForm" :label-width="60"
+            style="padding-right: 25px;">
+        <Form-item>
+          <RadioGroup v-model="refreshForm.refreshType">
+            <Radio label="1">{{$t('forms.configRefreshServer')}}</Radio>
+            <Radio label="2">{{$t('forms.configRefreshMatcher')}}</Radio>
+            <Radio label="3">{{$t('forms.configRefreshAll')}}</Radio>
+          </RadioGroup>
+        </Form-item>
+        <Form-item v-if="refreshForm.refreshType === '1'" :label="$t('forms.configRefreshServer')">
+          <i-select v-model="refreshForm.applicationName">
+            <Option v-for="item in refreshForm.applicationList" :value="item" :key="item">{{ item }}</Option>
+          </i-select>
+        </Form-item>
+        <Form-item v-if="refreshForm.refreshType === '2'" :label="$t('forms.configRefreshMatcher')">
+          <i-input v-model="refreshForm.matcher" :disabled="modal_loading"
+                   :placeholder="$t('forms.pleaseEnter') + $t('forms.configRefreshMatcher')"
+                   @on-enter="doRefresh()"></i-input>
+        </Form-item>
+      </Form>
+      <div slot="footer">
+        <Button type="default" :loading="modal_loading" @click="doCancelRefresh()">
+          {{$t('forms.buttons.cancel')}}
+        </Button>
+        <Button type="primary" :loading="modal_loading" @click="doRefresh()">
+          {{$t('forms.buttons.submit')}}
+        </Button>
+      </div>
+    </Modal>
   </Card>
 </template>
 <script>
@@ -175,7 +206,14 @@
           configDes: '',
           enabled: true
         },
+        refreshForm: {
+          applicationList: [],
+          refreshType: '1',
+          applicationName: '',
+          matcher: ''
+        },
         editModal: false,
+        refreshModal: false,
         modal_loading: false,
         searchData: [],
         selectedData: [],
@@ -438,13 +476,13 @@
       handleDeleteRow (row) {
         if (row.enabled) {
           this.$Modal.error({
-            title: this.$i18n.t('dialog.error'),
-            content: this.$i18n.t('messages.tableDataCannotDel')
+            title: this.$i18n.t('dialog.error') + '',
+            content: this.$i18n.t('messages.tableDataCannotDel') + ''
           })
         } else {
           this.$Modal.confirm({
-            title: this.$i18n.t('dialog.confirm'),
-            content: this.$i18n.t('messages.deleteDataConfirm'),
+            title: this.$i18n.t('dialog.confirm') + '',
+            content: this.$i18n.t('messages.deleteDataConfirm') + '',
             onOk: () => {
               this.handleDelete([row.id])
             }
@@ -454,16 +492,16 @@
       handleDeleteMore () {
         if (this.selectedData.length > 0) {
           this.$Modal.confirm({
-            title: this.$i18n.t('dialog.confirm'),
-            content: this.$i18n.t('messages.deleteDataConfirm'),
+            title: this.$i18n.t('dialog.confirm') + '',
+            content: this.$i18n.t('messages.deleteDataConfirm') + '',
             onOk: () => {
               this.handleDelete(this.selectedData.map(item => item.id))
             }
           })
         } else {
           this.$Modal.info({
-            title: this.$i18n.t('dialog.info'),
-            content: this.$i18n.t('messages.selectDataForDelete')
+            title: this.$i18n.t('dialog.info') + '',
+            content: this.$i18n.t('messages.selectDataForDelete') + ''
           })
         }
       },
@@ -481,15 +519,90 @@
         this.action = 1
       },
       handleRefresh () {
+        this.modal_loading = true
+        this.$api.request.config.getServerList().then((res) => {
+          this.modal_loading = false
+          if (res) {
+            this.refreshForm.applicationList = res.data
+            this.refreshModal = true
+          }
+        }).catch(() => {
+          this.modal_loading = false
+        })
+      },
+      doCancelRefresh () {
+        this.refreshModal = false
+      },
+      doRefresh () {
+        switch (this.refreshForm.refreshType) {
+          case '1':
+            if (this.refreshForm.applicationName !== '') {
+              this.handleRefreshApp(this.refreshForm.applicationName)
+            } else {
+              this.$Message.error(this.$i18n.t('forms.configRefreshServer') + this.$i18n.t('forms.notEmpty'))
+            }
+            break
+          case '2':
+            if (this.refreshForm.matcher !== '') {
+              this.handleRefreshMatcher(this.refreshForm.matcher)
+            } else {
+              this.$Message.error(this.$i18n.t('forms.configRefreshMatcher') + this.$i18n.t('forms.notEmpty'))
+            }
+            break
+          case '3':
+            this.handleRefreshAll()
+            break
+        }
+      },
+      handleRefreshAll () {
         this.$Modal.confirm({
-          title: this.$i18n.t('dialog.confirm'),
-          content: this.$i18n.t('messages.refreshServiceConfirm'),
+          title: this.$i18n.t('dialog.confirm') + '',
+          content: this.$i18n.t('messages.refreshServiceConfirm') + '',
           onOk: () => {
             this.modal_loading = true
             this.$api.request.config.refreshAll().then((res) => {
               this.modal_loading = false
               if (res) {
                 this.$Message.success(res.data.message)
+                this.refreshModal = false
+                this.handleSearch()
+              }
+            }).catch(() => {
+              this.modal_loading = false
+            })
+          }
+        })
+      },
+      handleRefreshApp (applicationName) {
+        this.$Modal.confirm({
+          title: this.$i18n.t('dialog.confirm') + '',
+          content: this.$i18n.t('messages.refreshServiceConfirm') + '[' + applicationName + ']',
+          onOk: () => {
+            this.modal_loading = true
+            this.$api.request.config.refreshApp(applicationName).then((res) => {
+              this.modal_loading = false
+              if (res) {
+                this.$Message.success(res.data.message)
+                this.refreshModal = false
+                this.handleSearch()
+              }
+            }).catch(() => {
+              this.modal_loading = false
+            })
+          }
+        })
+      },
+      handleRefreshMatcher (matcher) {
+        this.$Modal.confirm({
+          title: this.$i18n.t('dialog.confirm') + '',
+          content: this.$i18n.t('messages.refreshServiceConfirm') + '[' + matcher + ']',
+          onOk: () => {
+            this.modal_loading = true
+            this.$api.request.config.refreshMatcher(matcher).then((res) => {
+              this.modal_loading = false
+              if (res) {
+                this.$Message.success(res.data.message)
+                this.refreshModal = false
                 this.handleSearch()
               }
             }).catch(() => {
