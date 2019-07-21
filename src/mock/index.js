@@ -18,7 +18,7 @@ import {
   getModuleFuncInfo
 } from './sysconfig/auth'
 import { logFileList, downLoadLogFile } from './log/logFile'
-import { deleteConfig, queryConfig, updateConfig, refreshConfig } from './config/configCenter'
+import { deleteConfig, queryConfig, updateConfig, refreshConfig, configServerList } from './config/configCenter'
 import { deleteRoute, queryRoute, updateRoute, refreshRoute, queryRouteLog } from './route/routeConfig'
 
 // 配置Ajax请求延时，可用来测试网络延迟大时项目中一些效果
@@ -87,6 +87,7 @@ Mock.mock(/\/log\/files/, /post/i, logFileList)
 Mock.mock(/\/log\/files\/.*/, /get/i, downLoadLogFile)
 Mock.mock(/\/config\/properties/, /(put)|(patch)/i, updateConfig)
 Mock.mock(/\/config\/properties/, /delete/i, deleteConfig)
+Mock.mock(/\/config\/properties\/services/, /get/i, configServerList)
 Mock.mock(/\/config\/properties\/refresh/, /post/i, refreshConfig)
 Mock.mock(/\/config\/properties\/refresh\/application/, /post/i, refreshConfig)
 Mock.mock(/\/config\/properties\/refresh\/matcher/, /post/i, refreshConfig)

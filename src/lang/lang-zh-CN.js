@@ -143,6 +143,9 @@ const messages = Object.assign(zhLocale, {
     processTime: '处理时长',
     responseTime: '响应时间',
     responseStatus: '响应状态码',
+    configRefreshServer: '服务名',
+    configRefreshMatcher: '规则',
+    configRefreshAll: '所有服务',
     buttons: {
       login: '登录',
       submit: '提交',

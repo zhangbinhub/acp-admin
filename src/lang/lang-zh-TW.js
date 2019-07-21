@@ -143,6 +143,9 @@ const messages = Object.assign(twLocale, {
     processTime: '處理時長',
     responseTime: '響應時間',
     responseStatus: '響應狀態碼',
+    configRefreshServer: '服務名',
+    configRefreshMatcher: '規則',
+    configRefreshAll: '所有服務',
     buttons: {
       login: '登錄',
       submit: '提交',

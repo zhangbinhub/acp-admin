@@ -55,6 +55,11 @@ export const queryConfig = () => {
     'empty': false
   }
 }
+export const configServerList = () => {
+  return [
+    'log-server'
+  ]
+}
 export const refreshConfig = () => {
   return {
     message: 'ok'

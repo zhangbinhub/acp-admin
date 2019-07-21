@@ -143,6 +143,9 @@ const messages = Object.assign(enLocale, {
     processTime: 'process time',
     responseTime: 'response time',
     responseStatus: 'response status',
+    configRefreshServer: 'server name',
+    configRefreshMatcher: 'matcher',
+    configRefreshAll: 'all server',
     buttons: {
       login: 'login',
       submit: 'submit',

@@ -1,4 +1,5 @@
 import ApiComm from '../ApiComm'
+import Qs from 'qs'
 
 export default {
   create: (paramInfo) => {
@@ -15,6 +16,9 @@ export default {
   query: (query) => {
     return ApiComm.$http.post('/config/properties', query)
   },
+  getServerList: () => {
+    return ApiComm.$http.get('/config/properties/services')
+  },
   refreshAll: () => {
     return ApiComm.$http.post('/config/properties/refresh', {}, {
       timeout: 600000
@@ -24,14 +28,28 @@ export default {
     return ApiComm.$http.post('/config/properties/refresh/application', {
       applicationName: applicationName
     }, {
-      timeout: 600000
+      timeout: 600000,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      transformRequest: [function (data) {
+        data = Qs.stringify(data)
+        return data
+      }]
     })
   },
   refreshMatcher: (matcher) => {
     return ApiComm.$http.post('/config/properties/refresh/matcher', {
       matcher: matcher
     }, {
-      timeout: 600000
+      timeout: 600000,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      transformRequest: [function (data) {
+        data = Qs.stringify(data)
+        return data
+      }]
     })
   }
 }
