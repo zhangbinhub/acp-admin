@@ -36,7 +36,7 @@
         </ButtonGroup>
       </Form-item>
     </Form>
-    <Table border height="433" size="small" :columns="columns" :data="searchData" class="search-table"
+    <Table border="" height="433" size="small" :columns="columns" :data="searchData" class="search-table"
            :loading="modal_loading" :no-data-text="$t('messages.tableNoData')" @on-row-dblclick="handleEdit"
            @on-selection-change="handleSelect" @on-sort-change="handleSortChange">
       <template slot-scope="{ row }" slot="name">

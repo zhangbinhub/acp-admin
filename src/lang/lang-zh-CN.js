@@ -73,6 +73,8 @@ const messages = Object.assign(zhLocale, {
     }
   },
   forms: {
+    loginStatistics: '登录统计',
+    numberOfOnlineUsers: '在线用户数',
     changePassword: '修改密码',
     pleaseEnter: '请输入',
     loginNo: '登录账号',
@@ -144,7 +146,8 @@ const messages = Object.assign(zhLocale, {
     responseTime: '响应时间',
     responseStatus: '响应状态码',
     configRefreshServer: '服务名',
-    configRefreshMatcher: '规则',
+    configRefreshMatcher: '匹配表达式',
+    configRefreshMatcherDescribe: '请在下方输入服务ID的匹配表达式（模糊匹配可用"**"），服务ID格式如下：',
     configRefreshAll: '所有服务',
     buttons: {
       login: '登录',

@@ -73,6 +73,8 @@ const messages = Object.assign(twLocale, {
     }
   },
   forms: {
+    loginStatistics: '登錄統計',
+    numberOfOnlineUsers: '在線用戶數',
     changePassword: '修改密碼',
     pleaseEnter: '請輸入',
     loginNo: '登錄帳號',
@@ -144,7 +146,8 @@ const messages = Object.assign(twLocale, {
     responseTime: '響應時間',
     responseStatus: '響應狀態碼',
     configRefreshServer: '服務名',
-    configRefreshMatcher: '規則',
+    configRefreshMatcher: '匹配表達式',
+    configRefreshMatcherDescribe: '請在下方輸入服務ID的匹配表達式（模糊匹配可用"**"），服務ID格式如下：',
     configRefreshAll: '所有服務',
     buttons: {
       login: '登錄',
