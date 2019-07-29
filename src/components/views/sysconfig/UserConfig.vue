@@ -3,29 +3,37 @@
     <Form ref="searchForm" :model="searchForm" :label-width="80" :inline="true" class="search-form">
       <Row>
         <Form-item :label="$t('forms.name')" prop="name">
-          <i-input v-model="searchForm.name" :disabled="modal_loading" size="small"
+          <label>
+            <Input v-model="searchForm.name" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                   @on-enter="handleSearch"></i-input>
+                   @on-enter="handleSearch"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.loginNo')" prop="loginno">
-          <i-input v-model="searchForm.loginno" :disabled="modal_loading" size="small"
+          <label>
+            <Input v-model="searchForm.loginno" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.loginNo')"
-                   @on-enter="handleSearch"></i-input>
+                   @on-enter="handleSearch"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.organization')" prop="organization_name">
-          <i-input v-model="searchForm.organization_name" :disabled="modal_loading" size="small"
+          <label>
+            <Input v-model="searchForm.organization_name" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.organization')"
-                   @on-enter="handleSearch"></i-input>
+                   @on-enter="handleSearch"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.role')" prop="role_name">
-          <i-input v-model="searchForm.role_name" :disabled="modal_loading" size="small"
+          <label>
+            <Input v-model="searchForm.role_name" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.role')"
-                   @on-enter="handleSearch"></i-input>
+                   @on-enter="handleSearch"></Input>
+          </label>
         </Form-item>
       </Row>
       <Row>
         <Form-item :label="$t('forms.status')" prop="enabled">
-          <i-select v-model="searchForm.enabled" :disabled="modal_loading" clearable size="small"
+          <i-select v-model="searchForm.enabled" :disabled="modal_loading" :clearable="true" size="small"
                     @keyup.enter.native="handleSearchKeyUp($event)" style="width:170px">
             <Option v-for="item in enabledList" :value="item.value" :key="'search_select_'+item.value">
               {{ item.label }}
@@ -99,30 +107,37 @@
     <div style="margin-top: 10px;overflow: hidden">
       <div style="float: right;">
         <Page :current="searchForm.currPage" :total="searchForm.totalRows" :page-size="searchForm.pageSize"
-              :page-size-opts="searchForm.pageSizeArray" show-total show-elevator show-sizer size="small"
-              @on-change="handlePageSearch" @on-page-size-change="handlePageSizeSearch"/>
+              :page-size-opts="searchForm.pageSizeArray" :show-total="true" :show-elevator="true" :show-sizer="true"
+              size="small" @on-change="handlePageSearch" @on-page-size-change="handlePageSizeSearch"/>
       </div>
     </div>
-    <Modal v-model="editModal" :title="$t('forms.info')" :loading="modal_loading" :mask-closable="false" fullscreen>
+    <Modal v-model="editModal" :title="$t('forms.info')" :loading="modal_loading" :mask-closable="false"
+           :fullscreen="true">
       <Row :gutter="10">
         <i-col :md="6" class="card-col">
           <Card>
             <p slot="title">{{$t('forms.basicInfo')}}</p>
             <Form ref="editForm" :model="editForm" :rules="ruleEditForm" :label-width="100">
               <Form-item :label="$t('forms.name')" prop="name">
-                <i-input ref="name" v-model="editForm.name" @on-enter="doSave" :disabled="modal_loading"
+                <label>
+                  <Input ref="name" v-model="editForm.name" @on-enter="doSave" :disabled="modal_loading"
                          style="width: 100%;max-width: 160px;"
-                         :placeholder=" $t('forms.pleaseEnter') + $t('forms.name')"></i-input>
+                         :placeholder=" $t('forms.pleaseEnter') + $t('forms.name')"></Input>
+                </label>
               </Form-item>
               <Form-item :label="$t('forms.loginNo')" prop="loginno">
-                <i-input v-model="editForm.loginno" @on-enter="doSave" :disabled="modal_loading"
+                <label>
+                  <Input v-model="editForm.loginno" @on-enter="doSave" :disabled="modal_loading"
                          style="width: 100%;max-width: 160px;"
-                         :placeholder=" $t('forms.pleaseEnter') + $t('forms.loginNo')"></i-input>
+                         :placeholder=" $t('forms.pleaseEnter') + $t('forms.loginNo')"></Input>
+                </label>
               </Form-item>
               <Form-item :label="$t('forms.mobile')" prop="mobile">
-                <i-input v-model="editForm.mobile" @on-enter="doSave" :disabled="modal_loading"
+                <label>
+                  <Input v-model="editForm.mobile" @on-enter="doSave" :disabled="modal_loading"
                          style="width: 100%;max-width: 160px;"
-                         :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></i-input>
+                         :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></Input>
+                </label>
               </Form-item>
               <Form-item :label="$t('forms.level')" prop="levels">
                 <InputNumber v-model="editForm.levels" :disabled="modal_loading" style="width: 100%;max-width: 160px;"
@@ -136,11 +151,11 @@
                              @keyup.enter.native="doSave">
                 </InputNumber>
               </Form-item>
-              <Form-item :label="$t('forms.enabled')" prop="enabled" required>
-                <Switch v-model="editForm.enabled" @keyup.enter.native="doSave">
+              <Form-item :label="$t('forms.enabled')" prop="enabled" :required="true">
+                <i-switch v-model="editForm.enabled" @keyup.enter.native="doSave">
                   <Icon type="md-checkmark" slot="open"></Icon>
                   <Icon type="md-close" slot="close"></Icon>
-                </Switch>
+                </i-switch>
               </Form-item>
             </Form>
           </Card>
@@ -148,22 +163,22 @@
         <i-col :md="6" class="card-col">
           <Card>
             <p slot="title">{{$t('forms.orgList')}}</p>
-            <Tree ref="orgTree" :data="orgTreeDataS1" show-checkbox check-strictly></Tree>
-            <Spin size="large" fix v-if="modal_loading"></Spin>
+            <Tree ref="orgTree" :data="orgTreeDataS1" :show-checkbox="true" :check-strictly="true"></Tree>
+            <Spin size="large" :fix="true" v-if="modal_loading"></Spin>
           </Card>
         </i-col>
         <i-col :md="6" class="card-col">
           <Card>
             <p slot="title">{{$t('forms.orgMngList')}}</p>
-            <Tree ref="orgMngTree" :data="orgTreeDataS2" show-checkbox></Tree>
-            <Spin size="large" fix v-if="modal_loading"></Spin>
+            <Tree ref="orgMngTree" :data="orgTreeDataS2" :show-checkbox="true"></Tree>
+            <Spin size="large" :fix="true" v-if="modal_loading"></Spin>
           </Card>
         </i-col>
         <i-col :md="6" class="card-col">
           <Card>
             <p slot="title">{{$t('forms.roleList')}}</p>
-            <Tree ref="roleTree" :data="roleTreeData" show-checkbox check-strictly></Tree>
-            <Spin size="large" fix v-if="modal_loading"></Spin>
+            <Tree ref="roleTree" :data="roleTreeData" :show-checkbox="true" :check-strictly="true"></Tree>
+            <Spin size="large" :fix="true" v-if="modal_loading"></Spin>
           </Card>
         </i-col>
       </Row>

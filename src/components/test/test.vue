@@ -8,7 +8,7 @@
         <code v-text="'<Button>'"></code>
         below
       </p>
-      <i-button type="primary" @click="clickFun">这是一个按钮</i-button>
+      <Button type="primary" @click="clickFun">这是一个按钮</Button>
       <label>
         <i-select v-model="model1" style="width:100px" :label-in-value="true" @on-change="changeFun">
           <Option v-for="item in langList" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -19,26 +19,26 @@
 </template>
 
 <script>
-  export default {
-    name: 'test',
-    data () {
-      return {
-        langList: this.$store.state.app.lang.langList,
-        model1: this.$store.state.app.lang.lang
-      }
-    },
-    methods: {
-      clickFun: function () {
-        this.$Modal.info({
-          title: '消息',
-          content: '这是一个对话框'
-        })
-      },
-      changeFun: function (option) {
-        this.$store.commit('SET_LANG', option.value)
-      }
+    export default {
+        name: 'test',
+        data () {
+            return {
+                langList: this.$store.state.app.lang.langList,
+                model1: this.$store.state.app.lang.lang
+            }
+        },
+        methods: {
+            clickFun: function () {
+                this.$Modal.info({
+                    title: '消息',
+                    content: '这是一个对话框'
+                })
+            },
+            changeFun: function (option) {
+                this.$store.commit('SET_LANG', option.value)
+            }
+        }
     }
-  }
 </script>
 
 <style>

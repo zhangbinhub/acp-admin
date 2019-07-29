@@ -9,14 +9,14 @@
 </template>
 
 <script>
-  export default {
-    name: 'routeConfigButton',
-    methods: {
-      openRouteConfigPage () {
-        this.$api.gotoRouteConfig()
-      }
+    export default {
+        name: 'routeConfigButton',
+        methods: {
+            openRouteConfigPage () {
+                this.$api.gotoRouteConfig()
+            }
+        }
     }
-  }
 </script>
 
 <style lang="less">

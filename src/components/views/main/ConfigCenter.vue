@@ -3,34 +3,41 @@
     <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form">
       <Row>
         <Form-item :label="$t('forms.name')" prop="configApplication">
-          <i-input v-model="searchForm.configApplication" :disabled="modal_loading" size="small"
+          <label>
+            <Input v-model="searchForm.configApplication" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                   @on-enter="handleSearch"></i-input>
+                   @on-enter="handleSearch"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.profile')" prop="configProfile">
-          <i-input v-model="searchForm.configProfile" :disabled="modal_loading" size="small"
+          <label>
+            <Input v-model="searchForm.configProfile" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.profile')"
-                   @on-enter="handleSearch"></i-input>
+                   @on-enter="handleSearch"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.label')" prop="configLabel">
-          <i-input v-model="searchForm.configLabel" :disabled="modal_loading" size="small"
+          <label>
+            <Input v-model="searchForm.configLabel" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.label')"
-                   @on-enter="handleSearch"></i-input>
+                   @on-enter="handleSearch"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.status')" prop="enabled">
-          <i-select v-model="searchForm.enabled" clearable size="small" :disabled="modal_loading"
+          <i-select v-model="searchForm.enabled" :clearable="true" size="small" :disabled="modal_loading"
                     @keyup.enter.native="handleSearchKeyUp($event)" style="width:100px">
             <Option v-for="item in enabledList" :value="item.value" :key="'search_select_'+item.value">
               {{ item.label }}
             </Option>
           </i-select>
         </Form-item>
-      </Row>
-      <Row>
+
         <Form-item :label="$t('forms.key')" prop="configKey" style="width: 80%;max-width: 700px">
-          <i-input v-model="searchForm.configKey" :disabled="modal_loading" size="small"
+          <label>
+            <Input v-model="searchForm.configKey" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.key')"
-                   @on-enter="handleSearch"></i-input>
+                   @on-enter="handleSearch"></Input>
+          </label>
         </Form-item>
         <Form-item style="float: right">
           <ButtonGroup style="margin-right: 20px">
@@ -90,41 +97,53 @@
     <div style="margin-top: 10px;overflow: hidden">
       <div style="float: right;">
         <Page :current="searchForm.currPage" :total="searchForm.totalRows" :page-size="searchForm.pageSize"
-              :page-size-opts="searchForm.pageSizeArray" show-total show-elevator show-sizer size="small"
-              @on-change="handlePageSearch" @on-page-size-change="handlePageSizeSearch"/>
+              :page-size-opts="searchForm.pageSizeArray" :show-total="true" :show-elevator="true" :show-sizer="true"
+              size="small" @on-change="handlePageSearch" @on-page-size-change="handlePageSizeSearch"/>
       </div>
     </div>
     <Modal v-model="editModal" :title="$t('forms.info')" :loading="modal_loading" :mask-closable="false">
       <Form ref="editForm" :model="editForm" :rules="ruleAddForm" :label-width="60" style="padding-right: 25px;">
         <Form-item :label="$t('forms.name')" prop="configApplication">
-          <i-input v-model="editForm.configApplication" :disabled="modal_loading" ref="configApplication"
+          <label>
+            <Input v-model="editForm.configApplication" :disabled="modal_loading" ref="configApplication"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                   @on-enter="doSave('editForm')"></i-input>
+                   @on-enter="doSave('editForm')"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.profile')" prop="configProfile">
-          <i-input v-model="editForm.configProfile" :disabled="modal_loading"
+          <label>
+            <Input v-model="editForm.configProfile" :disabled="modal_loading"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.profile')"
-                   @on-enter="doSave('editForm')"></i-input>
+                   @on-enter="doSave('editForm')"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.label')" prop="configLabel">
-          <i-input v-model="editForm.configLabel" :disabled="modal_loading"
+          <label>
+            <Input v-model="editForm.configLabel" :disabled="modal_loading"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.label')"
-                   @on-enter="doSave('editForm')"></i-input>
+                   @on-enter="doSave('editForm')"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.key')" prop="configKey">
-          <i-input v-model="editForm.configKey" :disabled="modal_loading"
+          <label>
+            <Input v-model="editForm.configKey" :disabled="modal_loading"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.key')"
-                   @on-enter="doSave('editForm')"></i-input>
+                   @on-enter="doSave('editForm')"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.value')" prop="configValue">
-          <i-input v-model="editForm.configValue" :disabled="modal_loading"
+          <label>
+            <Input v-model="editForm.configValue" :disabled="modal_loading"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
-                   @on-enter="doSave('editForm')"></i-input>
+                   @on-enter="doSave('editForm')"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.describe')" prop="configDes">
-          <i-input v-model="editForm.configDes" :disabled="modal_loading"
+          <label>
+            <Input v-model="editForm.configDes" :disabled="modal_loading"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.describe')"
-                   @on-enter="doSave('editForm')"></i-input>
+                   @on-enter="doSave('editForm')"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.enabled')" prop="enabled">
           <i-switch v-model="editForm.enabled" :disabled="modal_loading"
@@ -164,9 +183,11 @@
             <p>name:ip:port:version:profiles</p>
             <p style="color: red">eg: log-server:**</p>
           </Alert>
-          <i-input v-model="refreshForm.matcher" :disabled="modal_loading"
+          <label>
+            <Input v-model="refreshForm.matcher" :disabled="modal_loading"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.configRefreshMatcher')"
-                   @on-enter="doRefresh()"></i-input>
+                   @on-enter="doRefresh()"></Input>
+          </label>
         </Form-item>
       </Form>
       <div slot="footer">

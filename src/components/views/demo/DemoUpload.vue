@@ -18,7 +18,7 @@
       <i-col :xl="{span:8}">
         <Card>
           <Upload
-            multiple
+            multiple="true"
             :name="'file'"
             :data="uploadParam"
             :headers="uploadHeaders"
@@ -56,7 +56,7 @@
       <i-col :xl="{span:12}">
         <Card>
           <Upload
-            multiple
+            :multiple="true"
             type="drag"
             :name="'file'"
             :data="uploadParam"
@@ -85,7 +85,7 @@
               </div>
             </template>
             <template v-else>
-              <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+              <Progress v-if="item.showProgress" :percent="item.percentage" :hide-info="true"></Progress>
             </template>
           </div>
           <Upload
@@ -101,7 +101,7 @@
             :on-format-error="handleFormatError"
             :on-exceeded-size="handleMaxSize"
             :before-upload="handleBeforeUpload"
-            multiple
+            :multiple="true"
             type="drag"
             :action="uploadURL"
             style="display: inline-block;width:58px;">
@@ -179,89 +179,89 @@
   }
 </style>
 <script>
-  import appInfo from '@/store/config/appInfo'
+    import appInfo from '@/store/config/appInfo'
 
-  export default {
-    name: 'demoUpload',
-    data () {
-      return {
-        uploadURL: appInfo.uploadURL,
-        file: null,
-        loadingStatus: false,
-        defaultList: [
-          {
-            'name': 'a42bdcc1178e62b4694c830f028db5c0',
-            'url': 'https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar'
-          },
-          {
-            'name': 'bc7521e033abdd1e92222d733590f104',
-            'url': 'https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar'
-          }
-        ],
-        imgName: '',
-        visible: false,
-        uploadParam: {
-          filePath: 'file/upload/test'
+    export default {
+        name: 'demoUpload',
+        data () {
+            return {
+                uploadURL: appInfo.uploadURL,
+                file: null,
+                loadingStatus: false,
+                defaultList: [
+                    {
+                        'name': 'a42bdcc1178e62b4694c830f028db5c0',
+                        'url': 'https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar'
+                    },
+                    {
+                        'name': 'bc7521e033abdd1e92222d733590f104',
+                        'url': 'https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar'
+                    }
+                ],
+                imgName: '',
+                visible: false,
+                uploadParam: {
+                    filePath: 'file/upload/test'
+                },
+                uploadHeaders: {
+                    Authorization: `${this.$store.state.app.user.tokenType} ${this.$store.state.app.user.token}`
+                },
+                uploadList: []
+            }
         },
-        uploadHeaders: {
-          Authorization: `${this.$store.state.app.user.tokenType} ${this.$store.state.app.user.token}`
+        methods: {
+            handleUpload (file) {
+                this.file = file
+                return false
+            },
+            upload () {
+                this.loadingStatus = true
+                setTimeout(() => {
+                    this.file = null
+                    this.loadingStatus = false
+                    this.$Message.success('Success')
+                }, 1500)
+            },
+            handleSuccess (res, file, fileList) {
+                file.path = res.message
+                console.log(file)
+                console.log(fileList)
+            },
+            handleView (name) {
+                this.imgName = name
+                this.visible = true
+            },
+            handleRemove (file) {
+                const fileList = this.$refs.upload.fileList
+                this.$refs.upload.fileList.splice(fileList.indexOf(file), 1)
+            },
+            handleFormatError (file) {
+                this.$Notice.warning({
+                    title: 'The file format is incorrect',
+                    desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
+                })
+            },
+            handleMaxSize (file) {
+                this.$Notice.warning({
+                    title: 'Exceeding file size limit',
+                    desc: 'File  ' + file.name + ' is too large, no more than 2M.'
+                })
+            },
+            handleBeforeUpload () {
+                const check = this.uploadList.length < 5
+                if (!check) {
+                    this.$Notice.warning({
+                        title: 'Up to five pictures can be uploaded.'
+                    })
+                }
+                return check
+            },
+            handlePreview (file) {
+                console.log(file)
+            }
         },
-        uploadList: []
-      }
-    },
-    methods: {
-      handleUpload (file) {
-        this.file = file
-        return false
-      },
-      upload () {
-        this.loadingStatus = true
-        setTimeout(() => {
-          this.file = null
-          this.loadingStatus = false
-          this.$Message.success('Success')
-        }, 1500)
-      },
-      handleSuccess (res, file, fileList) {
-        file.path = res.message
-        console.log(file)
-        console.log(fileList)
-      },
-      handleView (name) {
-        this.imgName = name
-        this.visible = true
-      },
-      handleRemove (file) {
-        const fileList = this.$refs.upload.fileList
-        this.$refs.upload.fileList.splice(fileList.indexOf(file), 1)
-      },
-      handleFormatError (file) {
-        this.$Notice.warning({
-          title: 'The file format is incorrect',
-          desc: 'File format of ' + file.name + ' is incorrect, please select jpg or png.'
-        })
-      },
-      handleMaxSize (file) {
-        this.$Notice.warning({
-          title: 'Exceeding file size limit',
-          desc: 'File  ' + file.name + ' is too large, no more than 2M.'
-        })
-      },
-      handleBeforeUpload () {
-        const check = this.uploadList.length < 5
-        if (!check) {
-          this.$Notice.warning({
-            title: 'Up to five pictures can be uploaded.'
-          })
+        mounted () {
+            this.uploadList = this.$refs.upload.fileList
         }
-        return check
-      },
-      handlePreview (file) {
-        console.log(file)
-      }
-    },
-    mounted () {
-      this.uploadList = this.$refs.upload.fileList
     }
-  }
 </script>

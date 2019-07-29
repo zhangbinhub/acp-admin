@@ -3,12 +3,14 @@
     <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form"
           onsubmit="return false;">
       <Form-item :label="$t('forms.routeId')" prop="routeId">
-        <i-input v-model="searchForm.routeId" :disabled="modal_loading" size="small"
+        <label>
+          <Input v-model="searchForm.routeId" :disabled="modal_loading" size="small"
                  :placeholder="$t('forms.pleaseEnter') + $t('forms.routeId')"
-                 @on-enter="handleSearch"></i-input>
+                 @on-enter="handleSearch"></Input>
+        </label>
       </Form-item>
       <Form-item :label="$t('forms.status')" prop="enabled">
-        <i-select v-model="searchForm.enabled" clearable size="small" :disabled="modal_loading"
+        <i-select v-model="searchForm.enabled" :clearable="true" size="small" :disabled="modal_loading"
                   @keyup.enter.native="handleSearchKeyUp($event)" style="width:100px">
           <Option v-for="item in enabledList" :value="item.value" :key="'search_select_'+item.value">
             {{ item.label }}
@@ -72,26 +74,31 @@
     <div style="margin-top: 10px;overflow: hidden">
       <div style="float: right;">
         <Page :current="searchForm.currPage" :total="searchForm.totalRows" :page-size="searchForm.pageSize"
-              :page-size-opts="searchForm.pageSizeArray" show-total show-elevator show-sizer size="small"
-              @on-change="handlePageSearch" @on-page-size-change="handlePageSizeSearch"/>
+              :page-size-opts="searchForm.pageSizeArray" :show-total="true" :show-elevator="true" :show-sizer="true"
+              size="small" @on-change="handlePageSearch" @on-page-size-change="handlePageSizeSearch"/>
       </div>
     </div>
-    <Modal v-model="editModal" :title="$t('forms.info')" :loading="modal_loading" :mask-closable="false" fullscreen>
+    <Modal v-model="editModal" :title="$t('forms.info')" :loading="modal_loading" :mask-closable="false"
+           :fullscreen="true">
       <Form ref="editForm" :model="editForm" :rules="ruleAddForm" :label-width="80" :inline="true"
             style="padding-right: 25px;">
         <Row>
           <i-col :xl="8">
             <Form-item :label="$t('forms.routeId')" prop="routeId" style="width: 100%">
-              <i-input v-model="editForm.routeId" :disabled="modal_loading" ref="routeId"
+              <label>
+                <Input v-model="editForm.routeId" :disabled="modal_loading" ref="routeId"
                        :placeholder="$t('forms.pleaseEnter') + $t('forms.routeId')"
-                       @on-enter="doSave('editForm')"></i-input>
+                       @on-enter="doSave('editForm')"></Input>
+              </label>
             </Form-item>
           </i-col>
           <i-col :xl="8">
             <Form-item :label="$t('forms.uri')" prop="uri" style="width: 100%">
-              <i-input v-model="editForm.uri" :disabled="modal_loading"
+              <label>
+                <Input v-model="editForm.uri" :disabled="modal_loading"
                        :placeholder="$t('forms.pleaseEnter') + $t('forms.uri')"
-                       @on-enter="doSave('editForm')"></i-input>
+                       @on-enter="doSave('editForm')"></Input>
+              </label>
             </Form-item>
           </i-col>
           <i-col :xl="4">
@@ -114,9 +121,11 @@
         <Row>
           <i-col :xl="24">
             <Form-item :label="$t('forms.remarks')" prop="remarks" style="width: 100%;">
-              <i-input v-model="editForm.remarks" :disabled="modal_loading"
+              <label>
+                <Input v-model="editForm.remarks" :disabled="modal_loading"
                        :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')"
-                       @on-enter="doSave('editForm')"></i-input>
+                       @on-enter="doSave('editForm')"></Input>
+              </label>
             </Form-item>
           </i-col>
         </Row>
