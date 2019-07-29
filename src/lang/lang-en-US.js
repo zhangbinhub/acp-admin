@@ -73,6 +73,8 @@ const messages = Object.assign(enLocale, {
     }
   },
   forms: {
+    loginStatistics: 'Login statistics',
+    numberOfOnlineUsers: 'Number of online users',
     changePassword: 'Change Password',
     pleaseEnter: 'Please enter ',
     loginNo: 'loginNo',
@@ -145,7 +147,8 @@ const messages = Object.assign(enLocale, {
     responseStatus: 'response status',
     configRefreshServer: 'server name',
     configRefreshMatcher: 'matcher',
-    configRefreshAll: 'all server',
+    configRefreshMatcherDescribe: 'Please enter the matching expression of the service ID below (the fuzzy matching can be used "**"). The service ID format is as follows:',
+    configRefreshAll: 'all servers',
     buttons: {
       login: 'login',
       submit: 'submit',

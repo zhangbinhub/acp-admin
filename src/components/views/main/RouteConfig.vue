@@ -35,7 +35,7 @@
         </Button>
       </Form-item>
     </Form>
-    <Table border height="433" size="small" :columns="columns" :data="searchData" class="search-table"
+    <Table border="" height="433" size="small" :columns="columns" :data="searchData" class="search-table"
            :loading="modal_loading" :no-data-text="$t('messages.tableNoData')" @on-row-dblclick="handleEdit"
            @on-selection-change="handleSelect" @on-sort-change="handleSortChange">
       <template slot-scope="{ row }" slot="routeId">
@@ -149,377 +149,385 @@
   </Card>
 </template>
 <script>
-  import vueJsonEditor from 'vue-json-editor'
+    import vueJsonEditor from 'vue-json-editor'
 
-  export default {
-    name: 'routeConfig',
-    components: {
-      vueJsonEditor
-    },
-    data () {
-      return {
-        jsonEditModes: ['tree', 'text'],
-        searchForm: {
-          routeId: '',
-          enabled: '',
-          orderParam: {
-            key: 'routeId',
-            order: 'asc'
-          },
-          currPage: 1,
-          totalRows: 0,
-          pageSize: 10,
-          pageSizeArray: [10, 20, 30, 40]
+    export default {
+        name: 'routeConfig',
+        components: {
+            vueJsonEditor
         },
-        editForm: {
-          id: '',
-          routeId: '',
-          uri: '',
-          predicates: [],
-          filters: [],
-          orderNum: 0,
-          enabled: true,
-          remarks: ''
+        data () {
+            return {
+                jsonEditModes: ['tree', 'text'],
+                searchForm: {
+                    routeId: '',
+                    enabled: '',
+                    orderParam: {
+                        key: 'routeId',
+                        order: 'asc'
+                    },
+                    currPage: 1,
+                    totalRows: 0,
+                    pageSize: 10,
+                    pageSizeArray: [10, 20, 30, 40]
+                },
+                editForm: {
+                    id: '',
+                    routeId: '',
+                    uri: '',
+                    predicates: [],
+                    filters: [],
+                    orderNum: 0,
+                    enabled: true,
+                    remarks: ''
+                },
+                editModal: false,
+                modal_loading: false,
+                searchData: [],
+                selectedData: [],
+                action: 0
+            }
         },
-        editModal: false,
-        modal_loading: false,
-        searchData: [],
-        selectedData: [],
-        action: 0
-      }
-    },
-    watch: {
-      editModal (value) {
-        if (value) {
-          this.$nextTick(() => {
-            this.$refs['routeId'].focus()
-          })
-        }
-      }
-    },
-    computed: {
-      jsonEditorLang () {
-        const lang = this.$store.state.app.lang.lang
-        if (lang === 'CN') {
-          return 'zh'
-        } else {
-          return 'en'
-        }
-      },
-      enabledList () {
-        return [
-          { value: 'true', label: this.$i18n.t('forms.enabled') },
-          { value: 'false', label: this.$i18n.t('forms.disabled') }
-        ]
-      },
-      columns () {
-        const columns = [
-          {
-            type: 'selection',
-            width: 50,
-            align: 'center'
-          },
-          {
-            key: 'routeId',
-            title: this.$i18n.t('forms.routeId'),
-            width: 150,
-            slot: 'routeId',
-            sortable: 'custom'
-          },
-          {
-            key: 'uri',
-            title: this.$i18n.t('forms.uri'),
-            width: 150,
-            slot: 'uri'
-          },
-          {
-            key: 'predicates',
-            title: this.$i18n.t('forms.predicates'),
-            slot: 'predicates'
-          },
-          {
-            key: 'filters',
-            title: this.$i18n.t('forms.filters'),
-            slot: 'filters'
-          },
-          {
-            key: 'remarks',
-            title: this.$i18n.t('forms.remarks'),
-            width: 150,
-            slot: 'remarks'
-          },
-          {
-            key: 'orderNum',
-            title: this.$i18n.t('forms.sort'),
-            width: 80,
-            align: 'center',
-            slot: 'orderNum',
-            sortable: 'custom'
-          },
-          {
-            key: 'enabled',
-            title: this.$i18n.t('forms.enabled'),
-            width: 80,
-            align: 'center',
-            slot: 'enabled',
-            sortable: 'custom'
-          },
-          {
-            title: this.$i18n.t('forms.action'),
-            width: 90,
-            align: 'center',
-            slot: 'action'
-          }
-        ]
-        columns.forEach((item) => {
-          if (item.key === this.searchForm.orderParam.key) {
-            item.sortType = this.searchForm.orderParam.order
-            item.sortable = 'custom'
-          }
-        })
-        return columns
-      },
-      ruleAddForm () {
-        return {
-          routeId: [
-            { required: true, message: this.$i18n.t('forms.routeId') + this.$i18n.t('forms.notEmpty'), trigger: 'blur' }
-          ],
-          uri: [
-            { required: true, message: this.$i18n.t('forms.uri') + this.$i18n.t('forms.notEmpty'), trigger: 'blur' }
-          ],
-          orderNum: [
-            {
-              type: 'number',
-              required: true,
-              message: this.$i18n.t('forms.sort') + this.$i18n.t('forms.notEmpty'),
-              trigger: 'blur'
+        watch: {
+            editModal (value) {
+                if (value) {
+                    this.$nextTick(() => {
+                        this.$refs['routeId'].focus()
+                    })
+                }
             }
-          ],
-          predicates: [
-            {
-              required: true,
-              type: 'array',
-              min: 1,
-              message: this.$i18n.t('forms.predicates') + this.$i18n.t('forms.notEmpty'),
-              trigger: 'blur'
-            }
-          ]
-        }
-      }
-    },
-    methods: {
-      enabledText (enabled) {
-        return enabled ? this.$i18n.t('forms.enabled') : this.$i18n.t('forms.disabled')
-      },
-      handleAdd () {
-        this.$refs['editForm'].resetFields()
-        this.editModal = true
-        this.action = 0
-      },
-      handleAddKeyUp (event, name) {
-        if (event.which === 13) {
-          this.doSave(name)
-        }
-      },
-      doCancel () {
-        this.editModal = false
-      },
-      doSave (name) {
-        switch (this.action) {
-          case 0:
-            this.$refs[name].validate((valid) => {
-              if (valid) {
-                this.modal_loading = true
-                this.$api.request.route.create({
-                  routeId: this.editForm.routeId,
-                  uri: this.editForm.uri,
-                  orderNum: this.editForm.orderNum,
-                  predicates: JSON.stringify(this.editForm.predicates),
-                  filters: JSON.stringify(this.editForm.filters),
-                  enabled: this.editForm.enabled,
-                  remarks: this.editForm.remarks
-                }).then((res) => {
-                  this.modal_loading = false
-                  if (res) {
-                    this.$Message.success(this.$i18n.t('messages.saveSuccess'))
-                    this.editModal = false
-                    this.handleSearch()
-                  }
-                }).catch(() => {
-                  this.modal_loading = false
+        },
+        computed: {
+            jsonEditorLang () {
+                const lang = this.$store.state.app.lang.lang
+                if (lang === 'CN') {
+                    return 'zh'
+                } else {
+                    return 'en'
+                }
+            },
+            enabledList () {
+                return [
+                    { value: 'true', label: this.$i18n.t('forms.enabled') },
+                    { value: 'false', label: this.$i18n.t('forms.disabled') }
+                ]
+            },
+            columns () {
+                const columns = [
+                    {
+                        type: 'selection',
+                        width: 50,
+                        align: 'center'
+                    },
+                    {
+                        key: 'routeId',
+                        title: this.$i18n.t('forms.routeId'),
+                        width: 150,
+                        slot: 'routeId',
+                        sortable: 'custom'
+                    },
+                    {
+                        key: 'uri',
+                        title: this.$i18n.t('forms.uri'),
+                        width: 150,
+                        slot: 'uri'
+                    },
+                    {
+                        key: 'predicates',
+                        title: this.$i18n.t('forms.predicates'),
+                        slot: 'predicates'
+                    },
+                    {
+                        key: 'filters',
+                        title: this.$i18n.t('forms.filters'),
+                        slot: 'filters'
+                    },
+                    {
+                        key: 'remarks',
+                        title: this.$i18n.t('forms.remarks'),
+                        width: 150,
+                        slot: 'remarks'
+                    },
+                    {
+                        key: 'orderNum',
+                        title: this.$i18n.t('forms.sort'),
+                        width: 80,
+                        align: 'center',
+                        slot: 'orderNum',
+                        sortable: 'custom'
+                    },
+                    {
+                        key: 'enabled',
+                        title: this.$i18n.t('forms.enabled'),
+                        width: 100,
+                        align: 'center',
+                        slot: 'enabled',
+                        sortable: 'custom'
+                    },
+                    {
+                        title: this.$i18n.t('forms.action'),
+                        width: 90,
+                        align: 'center',
+                        slot: 'action'
+                    }
+                ]
+                columns.forEach((item) => {
+                    if (item.key === this.searchForm.orderParam.key) {
+                        item.sortType = this.searchForm.orderParam.order
+                        item.sortable = 'custom'
+                    }
                 })
-              }
-            })
-            break
-          case 1:
-            this.$refs[name].validate((valid) => {
-              if (valid) {
+                return columns
+            },
+            ruleAddForm () {
+                return {
+                    routeId: [
+                        {
+                            required: true,
+                            message: this.$i18n.t('forms.routeId') + this.$i18n.t('forms.notEmpty'),
+                            trigger: 'blur'
+                        }
+                    ],
+                    uri: [
+                        {
+                            required: true,
+                            message: this.$i18n.t('forms.uri') + this.$i18n.t('forms.notEmpty'),
+                            trigger: 'blur'
+                        }
+                    ],
+                    orderNum: [
+                        {
+                            type: 'number',
+                            required: true,
+                            message: this.$i18n.t('forms.sort') + this.$i18n.t('forms.notEmpty'),
+                            trigger: 'blur'
+                        }
+                    ],
+                    predicates: [
+                        {
+                            required: true,
+                            type: 'array',
+                            min: 1,
+                            message: this.$i18n.t('forms.predicates') + this.$i18n.t('forms.notEmpty'),
+                            trigger: 'blur'
+                        }
+                    ]
+                }
+            }
+        },
+        methods: {
+            enabledText (enabled) {
+                return enabled ? this.$i18n.t('forms.enabled') : this.$i18n.t('forms.disabled')
+            },
+            handleAdd () {
+                this.$refs['editForm'].resetFields()
+                this.editModal = true
+                this.action = 0
+            },
+            handleAddKeyUp (event, name) {
+                if (event.which === 13) {
+                    this.doSave(name)
+                }
+            },
+            doCancel () {
+                this.editModal = false
+            },
+            doSave (name) {
+                switch (this.action) {
+                    case 0:
+                        this.$refs[name].validate((valid) => {
+                            if (valid) {
+                                this.modal_loading = true
+                                this.$api.request.route.create({
+                                    routeId: this.editForm.routeId,
+                                    uri: this.editForm.uri,
+                                    orderNum: this.editForm.orderNum,
+                                    predicates: JSON.stringify(this.editForm.predicates),
+                                    filters: JSON.stringify(this.editForm.filters),
+                                    enabled: this.editForm.enabled,
+                                    remarks: this.editForm.remarks
+                                }).then((res) => {
+                                    this.modal_loading = false
+                                    if (res) {
+                                        this.$Message.success(this.$i18n.t('messages.saveSuccess'))
+                                        this.editModal = false
+                                        this.handleSearch()
+                                    }
+                                }).catch(() => {
+                                    this.modal_loading = false
+                                })
+                            }
+                        })
+                        break
+                    case 1:
+                        this.$refs[name].validate((valid) => {
+                            if (valid) {
+                                this.modal_loading = true
+                                this.$api.request.route.update({
+                                    id: this.editForm.id,
+                                    routeId: this.editForm.routeId,
+                                    uri: this.editForm.uri,
+                                    orderNum: this.editForm.orderNum,
+                                    predicates: JSON.stringify(this.editForm.predicates),
+                                    filters: JSON.stringify(this.editForm.filters),
+                                    enabled: this.editForm.enabled,
+                                    remarks: this.editForm.remarks
+                                }).then((res) => {
+                                    this.modal_loading = false
+                                    if (res) {
+                                        this.$Message.success(this.$i18n.t('messages.updateSuccess'))
+                                        this.editModal = false
+                                        this.handleSearch()
+                                    }
+                                }).catch(() => {
+                                    this.modal_loading = false
+                                })
+                            }
+                        })
+                        break
+                }
+            },
+            handleDelete (rowIds) {
                 this.modal_loading = true
-                this.$api.request.route.update({
-                  id: this.editForm.id,
-                  routeId: this.editForm.routeId,
-                  uri: this.editForm.uri,
-                  orderNum: this.editForm.orderNum,
-                  predicates: JSON.stringify(this.editForm.predicates),
-                  filters: JSON.stringify(this.editForm.filters),
-                  enabled: this.editForm.enabled,
-                  remarks: this.editForm.remarks
-                }).then((res) => {
-                  this.modal_loading = false
-                  if (res) {
-                    this.$Message.success(this.$i18n.t('messages.updateSuccess'))
-                    this.editModal = false
-                    this.handleSearch()
-                  }
+                this.$api.request.route.delete(rowIds).then((res) => {
+                    this.modal_loading = false
+                    if (res) {
+                        this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
+                        this.handleSearch()
+                    }
                 }).catch(() => {
-                  this.modal_loading = false
+                    this.modal_loading = false
                 })
-              }
-            })
-            break
-        }
-      },
-      handleDelete (rowIds) {
-        this.modal_loading = true
-        this.$api.request.route.delete(rowIds).then((res) => {
-          this.modal_loading = false
-          if (res) {
-            this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
-            this.handleSearch()
-          }
-        }).catch(() => {
-          this.modal_loading = false
-        })
-      },
-      handlePageSearch (page) {
-        this.searchForm.currPage = page
-        this.handleSearch()
-      },
-      handlePageSizeSearch (size) {
-        this.searchForm.pageSize = size
-        this.handleSearch()
-      },
-      handleSearch () {
-        let searchParam = {
-          routeId: this.searchForm.routeId,
-          queryParam: {
-            currPage: this.searchForm.currPage,
-            pageSize: this.searchForm.pageSize
-          }
-        }
-        if (this.searchForm.enabled === 'true') {
-          searchParam.enabled = true
-        } else if (this.searchForm.enabled === 'false') {
-          searchParam.enabled = false
-        }
-        if (this.searchForm.orderParam.order !== 'normal') {
-          searchParam.queryParam.orderName = this.searchForm.orderParam.key
-          searchParam.queryParam.orderCommond = this.searchForm.orderParam.order
-        }
-        this.modal_loading = true
-        this.$api.request.route.query(searchParam).then((res) => {
-          this.modal_loading = false
-          if (res) {
-            this.selectedData = []
-            this.searchForm.currPage = res.data.pageable.pageNumber + 1
-            this.searchForm.totalRows = res.data.totalElements
-            this.searchData = res.data.content.map(item => {
-              if (item.enabled) {
-                item._disabled = true
-              }
-              return item
-            })
-          }
-        }).catch(() => {
-          this.searchData = []
-          this.selectedData = []
-          this.modal_loading = false
-        })
-      },
-      handleSearchKeyUp (event) {
-        if (event.which === 13) {
-          this.handleSearch()
-        }
-      },
-      handleSortChange (param) {
-        this.searchForm.orderParam.key = param.key
-        this.searchForm.orderParam.order = param.order
-        this.handleSearch()
-      },
-      handleSearchReset (name) {
-        this.$refs[name].resetFields()
-      },
-      handleSelect (selection) {
-        this.selectedData = selection
-      },
-      handleDeleteRow (row) {
-        if (row.enabled) {
-          this.$Modal.error({
-            title: this.$i18n.t('dialog.error') + '',
-            content: this.$i18n.t('messages.tableDataCannotDel') + ''
-          })
-        } else {
-          this.$Modal.confirm({
-            title: this.$i18n.t('dialog.confirm') + '',
-            content: this.$i18n.t('messages.deleteDataConfirm') + '',
-            onOk: () => {
-              this.handleDelete([row.id])
-            }
-          })
-        }
-      },
-      handleDeleteMore () {
-        if (this.selectedData.length > 0) {
-          this.$Modal.confirm({
-            title: this.$i18n.t('dialog.confirm') + '',
-            content: this.$i18n.t('messages.deleteDataConfirm') + '',
-            onOk: () => {
-              this.handleDelete(this.selectedData.map(item => item.id))
-            }
-          })
-        } else {
-          this.$Modal.info({
-            title: this.$i18n.t('dialog.info') + '',
-            content: this.$i18n.t('messages.selectDataForDelete') + ''
-          })
-        }
-      },
-      handleEdit (row) {
-        this.$refs['editForm'].resetFields()
-        this.editForm.id = row.id
-        this.editForm.routeId = row.routeId
-        this.editForm.uri = row.uri
-        this.editForm.predicates = JSON.parse(row.predicates)
-        this.editForm.filters = JSON.parse(row.filters)
-        this.editForm.orderNum = row.orderNum
-        this.editForm.enabled = !!row.enabled
-        this.editForm.remarks = row.remarks
-        this.editModal = true
-        this.action = 1
-      },
-      handleRefresh () {
-        this.$Modal.confirm({
-          title: this.$i18n.t('dialog.confirm') + '',
-          content: this.$i18n.t('messages.refreshRouteConfirm') + '',
-          onOk: () => {
-            this.modal_loading = true
-            this.$api.request.route.refreshRoute().then((res) => {
-              this.modal_loading = false
-              if (res) {
-                this.$Message.success(res.data.message)
+            },
+            handlePageSearch (page) {
+                this.searchForm.currPage = page
                 this.handleSearch()
-              }
-            }).catch(() => {
-              this.modal_loading = false
-            })
-          }
-        })
-      }
-    },
-    mounted () {
-      this.handleSearch()
+            },
+            handlePageSizeSearch (size) {
+                this.searchForm.pageSize = size
+                this.handleSearch()
+            },
+            handleSearch () {
+                let searchParam = {
+                    routeId: this.searchForm.routeId,
+                    queryParam: {
+                        currPage: this.searchForm.currPage,
+                        pageSize: this.searchForm.pageSize
+                    }
+                }
+                if (this.searchForm.enabled === 'true') {
+                    searchParam.enabled = true
+                } else if (this.searchForm.enabled === 'false') {
+                    searchParam.enabled = false
+                }
+                if (this.searchForm.orderParam.order !== 'normal') {
+                    searchParam.queryParam.orderName = this.searchForm.orderParam.key
+                    searchParam.queryParam.orderCommond = this.searchForm.orderParam.order
+                }
+                this.modal_loading = true
+                this.$api.request.route.query(searchParam).then((res) => {
+                    this.modal_loading = false
+                    if (res) {
+                        this.selectedData = []
+                        this.searchForm.currPage = res.data.pageable.pageNumber + 1
+                        this.searchForm.totalRows = res.data.totalElements
+                        this.searchData = res.data.content.map(item => {
+                            if (item.enabled) {
+                                item._disabled = true
+                            }
+                            return item
+                        })
+                    }
+                }).catch(() => {
+                    this.searchData = []
+                    this.selectedData = []
+                    this.modal_loading = false
+                })
+            },
+            handleSearchKeyUp (event) {
+                if (event.which === 13) {
+                    this.handleSearch()
+                }
+            },
+            handleSortChange (param) {
+                this.searchForm.orderParam.key = param.key
+                this.searchForm.orderParam.order = param.order
+                this.handleSearch()
+            },
+            handleSearchReset (name) {
+                this.$refs[name].resetFields()
+            },
+            handleSelect (selection) {
+                this.selectedData = selection
+            },
+            handleDeleteRow (row) {
+                if (row.enabled) {
+                    this.$Modal.error({
+                        title: this.$i18n.t('dialog.error') + '',
+                        content: this.$i18n.t('messages.tableDataCannotDel') + ''
+                    })
+                } else {
+                    this.$Modal.confirm({
+                        title: this.$i18n.t('dialog.confirm') + '',
+                        content: this.$i18n.t('messages.deleteDataConfirm') + '',
+                        onOk: () => {
+                            this.handleDelete([row.id])
+                        }
+                    })
+                }
+            },
+            handleDeleteMore () {
+                if (this.selectedData.length > 0) {
+                    this.$Modal.confirm({
+                        title: this.$i18n.t('dialog.confirm') + '',
+                        content: this.$i18n.t('messages.deleteDataConfirm') + '',
+                        onOk: () => {
+                            this.handleDelete(this.selectedData.map(item => item.id))
+                        }
+                    })
+                } else {
+                    this.$Modal.info({
+                        title: this.$i18n.t('dialog.info') + '',
+                        content: this.$i18n.t('messages.selectDataForDelete') + ''
+                    })
+                }
+            },
+            handleEdit (row) {
+                this.$refs['editForm'].resetFields()
+                this.editForm.id = row.id
+                this.editForm.routeId = row.routeId
+                this.editForm.uri = row.uri
+                this.editForm.predicates = JSON.parse(row.predicates)
+                this.editForm.filters = JSON.parse(row.filters)
+                this.editForm.orderNum = row.orderNum
+                this.editForm.enabled = !!row.enabled
+                this.editForm.remarks = row.remarks
+                this.editModal = true
+                this.action = 1
+            },
+            handleRefresh () {
+                this.$Modal.confirm({
+                    title: this.$i18n.t('dialog.confirm') + '',
+                    content: this.$i18n.t('messages.refreshRouteConfirm') + '',
+                    onOk: () => {
+                        this.modal_loading = true
+                        this.$api.request.route.refreshRoute().then((res) => {
+                            this.modal_loading = false
+                            if (res) {
+                                this.$Message.success(res.data.message)
+                                this.handleSearch()
+                            }
+                        }).catch(() => {
+                            this.modal_loading = false
+                        })
+                    }
+                })
+            }
+        },
+        mounted () {
+            this.handleSearch()
+        }
     }
-  }
 </script>
 <style>
   .jsoneditor-vue div.jsoneditor-outer {
