@@ -9,14 +9,14 @@
 </template>
 
 <script>
-  export default {
-    name: 'configCenterButton',
-    methods: {
-      openConfigCenterPage () {
-        this.$api.gotoConfigCenter()
-      }
+    export default {
+        name: 'configCenterButton',
+        methods: {
+            openConfigCenterPage () {
+                this.$api.gotoConfigCenter()
+            }
+        }
     }
-  }
 </script>
 
 <style lang="less">

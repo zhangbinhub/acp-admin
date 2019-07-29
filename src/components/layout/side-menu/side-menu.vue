@@ -19,7 +19,7 @@
         <collapsed-menu v-if="item.children && item.children.length > 0" @on-click="handleSelect" :hide-title="true"
                         :root-icon-size="30" :icon-size="16" :parent-item="item" :is-root="true"
                         :key="`drop-menu-${item.id}`"></collapsed-menu>
-        <Tooltip transfer v-else :content="item.name"
+        <Tooltip :transfer="true" v-else :content="item.name"
                  placement="right" :key="`drop-menu-${item.id}`">
           <a @click="handleSelect(item.path)" class="drop-menu-a"
              :style="{textAlign: 'center'}">
@@ -31,72 +31,72 @@
   </div>
 </template>
 <script>
-  import { getOpenedNamesByActiveName } from '@/libs/tools'
-  import SideMenuItem from './side-menu-item.vue'
-  import CollapsedMenu from './collapsed-menu.vue'
+    import { getOpenedNamesByActiveName } from '@/libs/tools'
+    import SideMenuItem from './side-menu-item.vue'
+    import CollapsedMenu from './collapsed-menu.vue'
 
-  export default {
-    name: 'SideMenu',
-    components: {
-      SideMenuItem,
-      CollapsedMenu
-    },
-    props: {
-      menuList: {
-        type: Array,
-        default () {
-          return []
+    export default {
+        name: 'SideMenu',
+        components: {
+            SideMenuItem,
+            CollapsedMenu
+        },
+        props: {
+            menuList: {
+                type: Array,
+                default () {
+                    return []
+                }
+            },
+            collapsed: {
+                type: Boolean
+            },
+            theme: String,
+            accordion: Boolean,
+            activeName: {
+                type: String,
+                default: ''
+            },
+            openNames: {
+                type: Array,
+                default: () => []
+            }
+        },
+        data () {
+            return {
+                openedNames: []
+            }
+        },
+        methods: {
+            handleSelect (path) {
+                this.$emit('on-select', path)
+            },
+            updateMenuStatus () {
+                this.$nextTick(() => {
+                    this.$refs.menu.updateOpened()
+                    this.$refs.menu.updateActiveName()
+                })
+            }
+        },
+        watch: {
+            menuList () {
+                this.openedNames = this.openedNames.concat(getOpenedNamesByActiveName(this.activeName, this))
+            },
+            activeName (name) {
+                if (this.accordion) {
+                    this.openedNames = getOpenedNamesByActiveName(name, this)
+                } else {
+                    this.openedNames = this.openedNames.concat(getOpenedNamesByActiveName(name, this))
+                }
+            },
+            openNames (newNames) {
+                this.openedNames = newNames
+            },
+            openedNames () {
+                this.updateMenuStatus()
+            }
         }
-      },
-      collapsed: {
-        type: Boolean
-      },
-      theme: String,
-      accordion: Boolean,
-      activeName: {
-        type: String,
-        default: ''
-      },
-      openNames: {
-        type: Array,
-        default: () => []
-      }
-    },
-    data () {
-      return {
-        openedNames: []
-      }
-    },
-    methods: {
-      handleSelect (path) {
-        this.$emit('on-select', path)
-      },
-      updateMenuStatus () {
-        this.$nextTick(() => {
-          this.$refs.menu.updateOpened()
-          this.$refs.menu.updateActiveName()
-        })
-      }
-    },
-    watch: {
-      menuList () {
-        this.openedNames = this.openedNames.concat(getOpenedNamesByActiveName(this.activeName, this))
-      },
-      activeName (name) {
-        if (this.accordion) {
-          this.openedNames = getOpenedNamesByActiveName(name, this)
-        } else {
-          this.openedNames = this.openedNames.concat(getOpenedNamesByActiveName(name, this))
-        }
-      },
-      openNames (newNames) {
-        this.openedNames = newNames
-      },
-      openedNames () {
-        this.updateMenuStatus()
-      }
     }
-  }
 </script>
 <style lang="less">
   @import './side-menu.less';

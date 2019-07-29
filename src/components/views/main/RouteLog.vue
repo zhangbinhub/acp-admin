@@ -4,43 +4,53 @@
           onsubmit="return false;">
       <Row>
         <Form-item :label="$t('forms.remoteIp')" prop="remoteIp">
-          <i-input v-model="searchForm.remoteIp" :disabled="modal_loading" size="small"
+          <label>
+            <Input v-model="searchForm.remoteIp" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.remoteIp')"
-                   @on-enter="handleSearch"></i-input>
+                   @on-enter="handleSearch"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.gatewayIp')" prop="gatewayIp">
-          <i-input v-model="searchForm.gatewayIp" :disabled="modal_loading" size="small"
+          <label>
+            <Input v-model="searchForm.gatewayIp" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.gatewayIp')"
-                   @on-enter="handleSearch"></i-input>
+                   @on-enter="handleSearch"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.path')" prop="path">
-          <i-input v-model="searchForm.path" :disabled="modal_loading" size="small"
+          <label>
+            <Input v-model="searchForm.path" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.path')"
-                   @on-enter="handleSearch"></i-input>
+                   @on-enter="handleSearch"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.serverId')" prop="serverId">
-          <i-input v-model="searchForm.serverId" :disabled="modal_loading" size="small"
+          <label>
+            <Input v-model="searchForm.serverId" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.serverId')"
-                   @on-enter="handleSearch"></i-input>
+                   @on-enter="handleSearch"></Input>
+          </label>
         </Form-item>
       </Row>
       <Row>
         <Form-item :label="$t('forms.responseStatus')" prop="responseStatus">
-          <i-input v-model="searchForm.responseStatus" :disabled="modal_loading" size="small" type="number"
+          <label>
+            <Input v-model="searchForm.responseStatus" :disabled="modal_loading" size="small" type="number"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.responseStatus')"
-                   @on-enter="handleSearch"></i-input>
+                   @on-enter="handleSearch"></Input>
+          </label>
         </Form-item>
         <Form-item :label="$t('forms.startDate')" prop="startTime">
-          <i-date-picker type="date" :disabled="modal_loading" :options="datePickerOptions" size="small"
-                         v-model="searchForm.startTime"
-                         :placeholder="$t('forms.pleaseEnter') + $t('forms.startDate')"
-                         style="width: 170px" @keyup.enter.native="handleSearch"></i-date-picker>
+          <DatePicker type="date" :disabled="modal_loading" :options="datePickerOptions" size="small"
+                      v-model="searchForm.startTime"
+                      :placeholder="$t('forms.pleaseEnter') + $t('forms.startDate')"
+                      style="width: 170px" @keyup.enter.native="handleSearch"></DatePicker>
         </Form-item>
         <Form-item :label="$t('forms.endDate')" prop="endTime">
-          <i-date-picker type="date" :disabled="modal_loading" :options="datePickerOptions" size="small"
-                         v-model="searchForm.endTime"
-                         :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
-                         style="width: 170px" @keyup.enter.native="handleSearch"></i-date-picker>
+          <DatePicker type="date" :disabled="modal_loading" :options="datePickerOptions" size="small"
+                      v-model="searchForm.endTime"
+                      :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
+                      style="width: 170px" @keyup.enter.native="handleSearch"></DatePicker>
         </Form-item>
         <Form-item style="float: right">
           <ButtonGroup style="margin-right: 20px">
@@ -90,8 +100,8 @@
     <div style="margin-top: 10px;overflow: hidden">
       <div style="float: right;">
         <Page :current="searchForm.currPage" :total="searchForm.totalRows" :page-size="searchForm.pageSize"
-              :page-size-opts="searchForm.pageSizeArray" show-total show-elevator show-sizer size="small"
-              @on-change="handlePageSearch" @on-page-size-change="handlePageSizeSearch"/>
+              :page-size-opts="searchForm.pageSizeArray" :show-total="true" :show-elevator="true" :show-sizer="true"
+              size="small" @on-change="handlePageSearch" @on-page-size-change="handlePageSizeSearch"/>
       </div>
     </div>
     <Modal v-model="editModal" :title="$t('forms.info')" :loading="modal_loading" :mask-closable="false">

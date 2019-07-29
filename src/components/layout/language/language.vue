@@ -13,20 +13,20 @@
   </div>
 </template>
 <script>
-  export default {
-    name: 'Language',
-    props: {
-      lang: String
-    },
-    data () {
-      return {
-        langList: this.$store.state.app.lang.langList
-      }
-    },
-    methods: {
-      selectLang (name) {
-        this.$store.commit('SET_LANG', name)
-      }
+    export default {
+        name: 'Language',
+        props: {
+            lang: String
+        },
+        data () {
+            return {
+                langList: this.$store.state.app.lang.langList
+            }
+        },
+        methods: {
+            selectLang (name) {
+                this.$store.commit('SET_LANG', name)
+            }
+        }
     }
-  }
 </script>

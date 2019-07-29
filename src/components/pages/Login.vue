@@ -14,19 +14,22 @@
         </div>
         <div>
           <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
-            <FormItem prop="loginNo">
-              <i-input ref="loginNo" v-model="formValidate.loginNo" type="text" :disabled="modal_loading"
-                       :placeholder="text.usernamePlaceholder"
-                       @keyup.native.enter="handleSubmit('formValidate')">
+            <label>
+              <Input ref="loginNo" v-model="formValidate.loginNo" type="text" :disabled="modal_loading"
+                     :placeholder="text.usernamePlaceholder"
+                     @keyup.native.enter="handleSubmit('formValidate')">
                 <span slot="prepend"><Icon type="md-person"/></span>
-              </i-input>
-            </FormItem>
+              </Input>
+            </label>
             <FormItem prop="password">
-              <i-input v-model="formValidate.password" type="password" :disabled="modal_loading"
-                       :placeholder="text.passwordPlaceholder" autocomplete="off"
-                       @keyup.native.enter="handleSubmit('formValidate')">
-                <span slot="prepend"><Icon type="md-lock"/></span>
-              </i-input>
+              <label>
+                <Input :disabled="modal_loading" :placeholder="text.passwordPlaceholder"
+                       @keyup.native.enter="handleSubmit('formValidate')"
+                       autocomplete="off" type="password"
+                       v-model="formValidate.password">
+                  <span slot="prepend"><Icon type="md-lock"/></span>
+                </Input>
+              </label>
             </FormItem>
             <FormItem style="margin-bottom: 0;">
               <Checkbox v-model="formValidate.remember" :disabled="modal_loading">
@@ -36,7 +39,8 @@
           </Form>
         </div>
         <div slot="footer">
-          <Button type="primary" size="large" long :loading="modal_loading" @click="handleSubmit('formValidate')">
+          <Button type="primary" size="large" :long="true" :loading="modal_loading"
+                  @click="handleSubmit('formValidate')">
             {{$t('forms.buttons.login')}}
           </Button>
           <small style="text-align: center;display: block;margin-top: 10px;">{{copyright}}</small>
@@ -47,86 +51,90 @@
 </template>
 
 <script>
-  export default {
-    name: 'login',
-    data () {
-      return {
-        title: this.$store.state.app.appInfo.appName,
-        version: this.$store.state.app.appInfo.appVersion,
-        copyright: this.$store.state.app.appInfo.copyright,
-        homePath: this.$store.state.app.appInfo.homePath,
-        text: {
-          usernamePlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.loginNo'),
-          passwordPlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.password'),
-          rememberMe: this.$i18n.t('forms.rememberMe')
-        },
-        loginModal: true,
-        modal_loading: false,
-        formValidate: {
-          loginNo: this.$store.state.app.user.loginNo,
-          password: '',
-          remember: this.$store.state.app.user.remember
-        },
-        ruleValidate: {
-          loginNo: [
-            { required: true, message: this.$i18n.t('forms.loginNo') + this.$i18n.t('forms.notEmpty'), trigger: 'blur' }
-          ],
-          password: [
-            {
-              required: true,
-              message: this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty'),
-              trigger: 'blur'
+    export default {
+        name: 'login',
+        data () {
+            return {
+                title: this.$store.state.app.appInfo.appName,
+                version: this.$store.state.app.appInfo.appVersion,
+                copyright: this.$store.state.app.appInfo.copyright,
+                homePath: this.$store.state.app.appInfo.homePath,
+                text: {
+                    usernamePlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.loginNo'),
+                    passwordPlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.password'),
+                    rememberMe: this.$i18n.t('forms.rememberMe')
+                },
+                loginModal: true,
+                modal_loading: false,
+                formValidate: {
+                    loginNo: this.$store.state.app.user.loginNo,
+                    password: '',
+                    remember: this.$store.state.app.user.remember
+                },
+                ruleValidate: {
+                    loginNo: [
+                        {
+                            required: true,
+                            message: this.$i18n.t('forms.loginNo') + this.$i18n.t('forms.notEmpty'),
+                            trigger: 'blur'
+                        }
+                    ],
+                    password: [
+                        {
+                            required: true,
+                            message: this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty'),
+                            trigger: 'blur'
+                        }
+                    ]
+                }
             }
-          ]
+        },
+        methods: {
+            handleSubmit (name) {
+                const currObj = this
+                currObj.$refs[name].validate((valid) => {
+                    if (valid) {
+                        currObj.modal_loading = true
+                        currObj.$api.request.auth.doLogin(currObj.formValidate.loginNo, currObj.formValidate.password).then(res => {
+                            currObj.modal_loading = false
+                            if (res) {
+                                if (res.data.access_token) {
+                                    currObj.$Message.success(currObj.$i18n.t('messages.loginSuccess'))
+                                    currObj.$store.commit('SET_TOKEN', res.data.access_token)
+                                    currObj.$store.commit('SET_TOKEN_TYPE', res.data.token_type)
+                                    currObj.$store.commit('SET_SCOPE', res.data.scope)
+                                    if (currObj.formValidate.remember) {
+                                        currObj.$store.commit('SET_LOGIN_NO', currObj.formValidate.loginNo)
+                                    } else {
+                                        currObj.$store.commit('SET_LOGIN_NO', '')
+                                    }
+                                    currObj.$store.commit('SET_REMEMBER', currObj.formValidate.remember)
+                                    let redirectPath = this.homePath
+                                    if (currObj.$route.params.redirect) {
+                                        redirectPath = currObj.$route.params.redirect
+                                    }
+                                    currObj.$router.replace(redirectPath)
+                                } else {
+                                    currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
+                                }
+                            }
+                        }).catch((error) => {
+                                currObj.modal_loading = false
+                                if (error.response && error.response.status && error.response.status === 400) {
+                                    currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
+                                } else {
+                                    currObj.$api.errorProcess(currObj.$i18n.t('messages.failed403'), currObj.$i18n.t('messages.loginFailed'))
+                                }
+                            }
+                        )
+                    }
+                })
+            }
+        },
+        mounted () {
+            this.$nextTick(() => {
+                this.$refs['loginNo'].focus()
+            })
         }
-      }
-    },
-    methods: {
-      handleSubmit (name) {
-        const currObj = this
-        currObj.$refs[name].validate((valid) => {
-          if (valid) {
-            currObj.modal_loading = true
-            currObj.$api.request.auth.doLogin(currObj.formValidate.loginNo, currObj.formValidate.password).then(res => {
-              currObj.modal_loading = false
-              if (res) {
-                if (res.data.access_token) {
-                  currObj.$Message.success(currObj.$i18n.t('messages.loginSuccess'))
-                  currObj.$store.commit('SET_TOKEN', res.data.access_token)
-                  currObj.$store.commit('SET_TOKEN_TYPE', res.data.token_type)
-                  currObj.$store.commit('SET_SCOPE', res.data.scope)
-                  if (currObj.formValidate.remember) {
-                    currObj.$store.commit('SET_LOGIN_NO', currObj.formValidate.loginNo)
-                  } else {
-                    currObj.$store.commit('SET_LOGIN_NO', '')
-                  }
-                  currObj.$store.commit('SET_REMEMBER', currObj.formValidate.remember)
-                  let redirectPath = this.homePath
-                  if (currObj.$route.params.redirect) {
-                    redirectPath = currObj.$route.params.redirect
-                  }
-                  currObj.$router.replace(redirectPath)
-                } else {
-                  currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
-                }
-              }
-            }).catch((error) => {
-                currObj.modal_loading = false
-                if (error.response && error.response.status && error.response.status === 400) {
-                  currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
-                } else {
-                  currObj.$api.errorProcess(currObj.$i18n.t('messages.failed403'), currObj.$i18n.t('messages.loginFailed'))
-                }
-              }
-            )
-          }
-        })
-      }
-    },
-    mounted () {
-      this.$nextTick(() => {
-        this.$refs['loginNo'].focus()
-      })
     }
-  }
 </script>

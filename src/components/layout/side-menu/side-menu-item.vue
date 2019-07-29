@@ -15,14 +15,14 @@
   </Submenu>
 </template>
 <script>
-  export default {
-    name: 'SideMenuItem',
-    props: {
-      parentItem: {
-        type: Object,
-        default: () => {
+    export default {
+        name: 'SideMenuItem',
+        props: {
+            parentItem: {
+                type: Object,
+                default: () => {
+                }
+            }
         }
-      }
     }
-  }
 </script>

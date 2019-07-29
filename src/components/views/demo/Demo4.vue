@@ -1,11 +1,13 @@
 <template>
   <div>
-    <i-input type="text"/>
+    <label>
+      <Input type="text"/>
+    </label>
     <p>demo4,name={{this.$route.query.name}}</p>
   </div>
 </template>
 <script>
-  export default {
-    name: 'demo4'
-  }
+    export default {
+        name: 'demo4'
+    }
 </script>

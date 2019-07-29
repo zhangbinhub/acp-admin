@@ -8,33 +8,43 @@
         </Tooltip>
       </Form-item>
       <Form-item :label="$t('forms.name')" prop="name">
-        <i-input ref="name" v-model="formValidate.name" @on-enter="handleSubmit('formValidate')"
-                 :disabled="modal_loading" :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"></i-input>
+        <label>
+          <Input ref="name" v-model="formValidate.name" @on-enter="handleSubmit('formValidate')"
+                 :disabled="modal_loading" :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"></Input>
+        </label>
       </Form-item>
       <Form-item :label="$t('forms.mobile')" prop="mobile">
-        <i-input v-model="formValidate.mobile" @on-enter="handleSubmit('formValidate')"
-                 :disabled="modal_loading" :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></i-input>
+        <label>
+          <Input v-model="formValidate.mobile" @on-enter="handleSubmit('formValidate')"
+                 :disabled="modal_loading" :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></Input>
+        </label>
       </Form-item>
       <Form-item :label="$t('forms.changePassword')">
-        <Switch v-model="updatePassword" :disabled="modal_loading" @keyup.enter.native="handleSubmit('formValidate')">
+        <i-switch v-model="updatePassword" :disabled="modal_loading" @keyup.enter.native="handleSubmit('formValidate')">
           <Icon type="md-checkmark" slot="open"></Icon>
           <Icon type="md-close" slot="close"></Icon>
-        </Switch>
+        </i-switch>
       </Form-item>
       <Form-item v-show="updatePassword" :label="$t('forms.old')+$t('forms.password')" prop="oldPassword">
-        <i-input v-model="formValidate.oldPassword" type="password" @on-enter="handleSubmit('formValidate')"
+        <label>
+          <Input v-model="formValidate.oldPassword" type="password" @on-enter="handleSubmit('formValidate')"
                  :disabled="modal_loading"
-                 :placeholder="$t('forms.pleaseEnter') + $t('forms.old')+$t('forms.password')"></i-input>
+                 :placeholder="$t('forms.pleaseEnter') + $t('forms.old')+$t('forms.password')"></Input>
+        </label>
       </Form-item>
       <Form-item v-show="updatePassword" :label="$t('forms.new')+$t('forms.password')" prop="password">
-        <i-input v-model="formValidate.password" :type="passwordType" :icon="passwordIcon"
+        <label>
+          <Input v-model="formValidate.password" :type="passwordType" :icon="passwordIcon"
                  :disabled="modal_loading" @on-enter="handleSubmit('formValidate')" @on-click="showPassword"
-                 :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></i-input>
+                 :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></Input>
+        </label>
       </Form-item>
       <Form-item v-show="updatePassword" :label="$t('forms.confirmPassword')" prop="repeatPassword">
-        <i-input v-model="formValidate.repeatPassword" :type="passwordType" :icon="passwordIcon"
+        <label>
+          <Input v-model="formValidate.repeatPassword" :type="passwordType" :icon="passwordIcon"
                  :disabled="modal_loading" @on-click="showPassword" @on-enter="handleSubmit('formValidate')"
-                 :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></i-input>
+                 :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></Input>
+        </label>
       </Form-item>
       <Form-item>
         <Button type="default" @click="handleReset('formValidate')" :loading="modal_loading">
@@ -45,179 +55,187 @@
         </Button>
       </Form-item>
     </Form>
-    <Modal v-model="avatarUpload" :title="$t('forms.avatarUpload')" footer-hide fullscreen>
+    <Modal v-model="avatarUpload" :title="$t('forms.avatarUpload')" :footer-hide="true" :fullscreen="true">
       <cropper :crop-button-text="$t('i.modal.okText')" @on-crop="handleCroped"></cropper>
     </Modal>
-    <Spin size="large" fix v-if="modal_loading"></Spin>
+    <Spin size="large" :fix="true" v-if="modal_loading"></Spin>
   </Card>
 </template>
 <script>
-  import avatarImg from '@/assets/images/avatar/avatar.jpg'
-  import Cropper from '@/components/cropper'
-  import 'cropperjs/dist/cropper.min.css'
+    import avatarImg from '@/assets/images/avatar/avatar.jpg'
+    import Cropper from '@/components/cropper'
+    import 'cropperjs/dist/cropper.min.css'
 
-  export default {
-    name: 'personalInformation',
-    components: {
-      Cropper
-    },
-    data () {
-      return {
-        formValidate: {
-          avatar: avatarImg,
-          name: '',
-          mobile: '',
-          oldPassword: '',
-          password: '',
-          repeatPassword: ''
+    export default {
+        name: 'personalInformation',
+        components: {
+            Cropper
         },
-        updatePassword: false,
-        avatarUpload: false,
-        modal_loading: false,
-        passwordType: 'password',
-        passwordIcon: 'ios-eye-outline'
-      }
-    },
-    created () {
-      this.resetFieldsValue(this.userInfo)
-    },
-    watch: {
-      userInfo (newUserInfo) {
-        this.resetFieldsValue(newUserInfo)
-      }
-    },
-    computed: {
-      ruleValidate () {
-        return {
-          name: [
-            { required: true, message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'), trigger: 'blur' }
-          ],
-          mobile: [
-            { required: true, message: this.$i18n.t('forms.mobile') + this.$i18n.t('forms.notEmpty'), trigger: 'blur' },
-            {
-              type: 'string',
-              pattern: /^1[0-9]{10}$/,
-              message: this.$i18n.t('forms.mobile') + this.$i18n.t('forms.invalid'),
-              trigger: 'blur'
+        data () {
+            return {
+                formValidate: {
+                    avatar: avatarImg,
+                    name: '',
+                    mobile: '',
+                    oldPassword: '',
+                    password: '',
+                    repeatPassword: ''
+                },
+                updatePassword: false,
+                avatarUpload: false,
+                modal_loading: false,
+                passwordType: 'password',
+                passwordIcon: 'ios-eye-outline'
             }
-          ],
-          oldPassword: [{
-            required: true,
-            validator: (rule, value, callback) => {
-              if (this.updatePassword) {
-                if (value === '') {
-                  callback(new Error(this.$i18n.t('forms.old') + this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty')))
-                  return
-                }
-              }
-              callback()
-            },
-            trigger: 'blur'
-          }],
-          password: [{
-            required: true,
-            validator: (rule, value, callback) => {
-              if (this.updatePassword) {
-                if (value === '') {
-                  callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty')))
-                  return
-                }
-              }
-              callback()
-            },
-            trigger: 'blur'
-          }],
-          repeatPassword: [{
-            required: true,
-            validator: (rule, value, callback) => {
-              if (this.updatePassword) {
-                if (value === '') {
-                  callback(new Error(this.$i18n.t('forms.confirmPassword') + this.$i18n.t('forms.notEmpty')))
-                  return
-                } else if (value !== this.formValidate.password) {
-                  callback(new Error(this.$i18n.t('forms.passwordNotEqual') + ''))
-                  return
-                }
-              }
-              callback()
-            },
-            trigger: 'blur'
-          }]
-        }
-      },
-      userInfo () {
-        return this.$store.state.app.user.userInfo
-      }
-    },
-    methods: {
-      openAvatarUpload () {
-        this.avatarUpload = true
-      },
-      handleCroped (data) {
-        this.avatarUpload = false
-        this.formValidate.avatar = data
-      },
-      handleSubmit (name) {
-        this.$refs[name].validate((valid) => {
-          if (valid) {
-            this.modal_loading = true
-            const userParam = {
-              avatar: this.formValidate.avatar,
-              name: this.formValidate.name,
-              mobile: this.formValidate.mobile
+        },
+        created () {
+            this.resetFieldsValue(this.userInfo)
+        },
+        watch: {
+            userInfo (newUserInfo) {
+                this.resetFieldsValue(newUserInfo)
             }
-            if (this.updatePassword) {
-              userParam.oldPassword = this.formValidate.oldPassword
-              userParam.password = this.formValidate.password
+        },
+        computed: {
+            ruleValidate () {
+                return {
+                    name: [
+                        {
+                            required: true,
+                            message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
+                            trigger: 'blur'
+                        }
+                    ],
+                    mobile: [
+                        {
+                            required: true,
+                            message: this.$i18n.t('forms.mobile') + this.$i18n.t('forms.notEmpty'),
+                            trigger: 'blur'
+                        },
+                        {
+                            type: 'string',
+                            pattern: /^1[0-9]{10}$/,
+                            message: this.$i18n.t('forms.mobile') + this.$i18n.t('forms.invalid'),
+                            trigger: 'blur'
+                        }
+                    ],
+                    oldPassword: [{
+                        required: true,
+                        validator: (rule, value, callback) => {
+                            if (this.updatePassword) {
+                                if (value === '') {
+                                    callback(new Error(this.$i18n.t('forms.old') + this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty')))
+                                    return
+                                }
+                            }
+                            callback()
+                        },
+                        trigger: 'blur'
+                    }],
+                    password: [{
+                        required: true,
+                        validator: (rule, value, callback) => {
+                            if (this.updatePassword) {
+                                if (value === '') {
+                                    callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty')))
+                                    return
+                                }
+                            }
+                            callback()
+                        },
+                        trigger: 'blur'
+                    }],
+                    repeatPassword: [{
+                        required: true,
+                        validator: (rule, value, callback) => {
+                            if (this.updatePassword) {
+                                if (value === '') {
+                                    callback(new Error(this.$i18n.t('forms.confirmPassword') + this.$i18n.t('forms.notEmpty')))
+                                    return
+                                } else if (value !== this.formValidate.password) {
+                                    callback(new Error(this.$i18n.t('forms.passwordNotEqual') + ''))
+                                    return
+                                }
+                            }
+                            callback()
+                        },
+                        trigger: 'blur'
+                    }]
+                }
+            },
+            userInfo () {
+                return this.$store.state.app.user.userInfo
             }
-            this.$api.request.auth.updateUserInfo(userParam).then((res) => {
-              this.$store.commit('SET_USER_INFO', res.data)
-              this.$Message.success(this.$i18n.t('messages.saveSuccess'))
-              if (this.updatePassword) {
-                this.$Modal.info({
-                  title: this.$i18n.t('dialog.info') + '',
-                  content: this.$i18n.t('messages.changedPassword') + '',
-                  onOk: () => {
-                    this.modal_loading = false
-                    this.$api.redirectLogin()
-                  }
+        },
+        methods: {
+            openAvatarUpload () {
+                this.avatarUpload = true
+            },
+            handleCroped (data) {
+                this.avatarUpload = false
+                this.formValidate.avatar = data
+            },
+            handleSubmit (name) {
+                this.$refs[name].validate((valid) => {
+                    if (valid) {
+                        this.modal_loading = true
+                        const userParam = {
+                            avatar: this.formValidate.avatar,
+                            name: this.formValidate.name,
+                            mobile: this.formValidate.mobile
+                        }
+                        if (this.updatePassword) {
+                            userParam.oldPassword = this.formValidate.oldPassword
+                            userParam.password = this.formValidate.password
+                        }
+                        this.$api.request.auth.updateUserInfo(userParam).then((res) => {
+                            this.$store.commit('SET_USER_INFO', res.data)
+                            this.$Message.success(this.$i18n.t('messages.saveSuccess'))
+                            if (this.updatePassword) {
+                                this.$Modal.info({
+                                    title: this.$i18n.t('dialog.info') + '',
+                                    content: this.$i18n.t('messages.changedPassword') + '',
+                                    onOk: () => {
+                                        this.modal_loading = false
+                                        this.$api.redirectLogin()
+                                    }
+                                })
+                            } else {
+                                this.modal_loading = false
+                            }
+                        }).catch(() => {
+                            this.modal_loading = false
+                        })
+                    }
                 })
-              } else {
-                this.modal_loading = false
-              }
-            }).catch(() => {
-              this.modal_loading = false
+            },
+            handleReset (name) {
+                this.$refs[name].resetFields()
+                this.resetFieldsValue(this.userInfo)
+            },
+            resetFieldsValue (userInfo) {
+                if (userInfo.avatar && userInfo.avatar !== '') {
+                    this.formValidate.avatar = userInfo.avatar
+                } else {
+                    this.formValidate.avatar = avatarImg
+                }
+                this.formValidate.name = userInfo.name
+                this.formValidate.mobile = userInfo.mobile
+            },
+            showPassword () {
+                if (this.passwordType === 'password') {
+                    this.passwordType = 'text'
+                    this.passwordIcon = 'ios-eye'
+                } else {
+                    this.passwordType = 'password'
+                    this.passwordIcon = 'ios-eye-outline'
+                }
+            }
+        },
+        activated () {
+            this.$nextTick(() => {
+                this.$refs['name'].focus()
             })
-          }
-        })
-      },
-      handleReset (name) {
-        this.$refs[name].resetFields()
-        this.resetFieldsValue(this.userInfo)
-      },
-      resetFieldsValue (userInfo) {
-        if (userInfo.avatar && userInfo.avatar !== '') {
-          this.formValidate.avatar = userInfo.avatar
-        } else {
-          this.formValidate.avatar = avatarImg
         }
-        this.formValidate.name = userInfo.name
-        this.formValidate.mobile = userInfo.mobile
-      },
-      showPassword () {
-        if (this.passwordType === 'password') {
-          this.passwordType = 'text'
-          this.passwordIcon = 'ios-eye'
-        } else {
-          this.passwordType = 'password'
-          this.passwordIcon = 'ios-eye-outline'
-        }
-      }
-    },
-    activated () {
-      this.$nextTick(() => {
-        this.$refs['name'].focus()
-      })
     }
-  }
 </script>

@@ -9,14 +9,14 @@
 </template>
 
 <script>
-  export default {
-    name: 'logFileButton',
-    methods: {
-      openLogFilePage () {
-        this.$api.gotoLogFile()
-      }
+    export default {
+        name: 'logFileButton',
+        methods: {
+            openLogFilePage () {
+                this.$api.gotoLogFile()
+            }
+        }
     }
-  }
 </script>
 
 <style lang="less">

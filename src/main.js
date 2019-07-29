@@ -9,7 +9,7 @@ import router from './router'
 import './plugins/plugin-axios.js'
 import api from './api'
 import './assets/styles/layout/layout.less'
-import echarts from 'echarts'
+import eCharts from 'echarts'
 import './mock'
 
 // 响应式布局
@@ -31,8 +31,8 @@ window.onresize = function () {
   autoWidth()
 }
 
-// 加载 echarts
-Vue.prototype.$echarts = echarts
+// 加载 eCharts
+Vue.prototype.$echarts = eCharts
 
 // 加载 iView ，并启用 i18n
 const i18n = store.state.app.i18n
