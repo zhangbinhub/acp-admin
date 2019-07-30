@@ -18,7 +18,7 @@ export const userInfo = () => {
   return {
     'id': 'dbfd58aa-19fb-11e9-894e-d8c49792dd7b',
     'name': 'ZhangBin',
-    'loginno': 'admin',
+    'loginNo': 'admin',
     'mobile': '13888888888',
     'levels': 0,
     'enabled': true,

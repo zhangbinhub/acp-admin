@@ -298,7 +298,7 @@
                     if (res) {
                         this.optionalUsers = res.data.map(item => {
                             item.key = item.id
-                            item.label = item.name + '(' + item.loginno + ')'
+                            item.label = item.name + '(' + item.loginNo + ')'
                             return item
                         })
                     }
