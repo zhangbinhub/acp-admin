@@ -9,9 +9,9 @@
                    @on-enter="handleSearch"></Input>
           </label>
         </Form-item>
-        <Form-item :label="$t('forms.loginNo')" prop="loginno">
+        <Form-item :label="$t('forms.loginNo')" prop="loginNo">
           <label>
-            <Input v-model="searchForm.loginno" :disabled="modal_loading" size="small"
+            <Input v-model="searchForm.loginNo" :disabled="modal_loading" size="small"
                    :placeholder="$t('forms.pleaseEnter') + $t('forms.loginNo')"
                    @on-enter="handleSearch"></Input>
           </label>
@@ -67,8 +67,8 @@
       <template slot-scope="{ row }" slot="name">
         <span>{{ row.name }}</span>
       </template>
-      <template slot-scope="{ row }" slot="loginno">
-        <span>{{ row.loginno }}</span>
+      <template slot-scope="{ row }" slot="loginNo">
+        <span>{{ row.loginNo }}</span>
       </template>
       <template slot-scope="{ row }" slot="mobile">
         <span>{{ row.mobile }}</span>
@@ -125,9 +125,9 @@
                          :placeholder=" $t('forms.pleaseEnter') + $t('forms.name')"></Input>
                 </label>
               </Form-item>
-              <Form-item :label="$t('forms.loginNo')" prop="loginno">
+              <Form-item :label="$t('forms.loginNo')" prop="loginNo">
                 <label>
-                  <Input v-model="editForm.loginno" @on-enter="doSave" :disabled="modal_loading"
+                  <Input v-model="editForm.loginNo" @on-enter="doSave" :disabled="modal_loading"
                          style="width: 100%;max-width: 160px;"
                          :placeholder=" $t('forms.pleaseEnter') + $t('forms.loginNo')"></Input>
                 </label>
@@ -222,7 +222,7 @@
                 modal_loading: false,
                 searchForm: {
                     name: '',
-                    loginno: '',
+                    loginNo: '',
                     status: '',
                     organization_name: '',
                     role_name: '',
@@ -240,7 +240,7 @@
                 currObj: {
                     id: '',
                     name: '',
-                    loginno: '',
+                    loginNo: '',
                     mobile: '',
                     levels: 1,
                     enabled: true,
@@ -255,7 +255,7 @@
                 editForm: {
                     id: '',
                     name: '',
-                    loginno: '',
+                    loginNo: '',
                     mobile: '',
                     levels: 1,
                     enabled: true,
@@ -287,9 +287,9 @@
                     title: this.$i18n.t('forms.name'),
                     slot: 'name'
                 }, {
-                    key: 'loginno',
+                    key: 'loginNo',
                     title: this.$i18n.t('forms.loginNo'),
-                    slot: 'loginno'
+                    slot: 'loginNo'
                 }, {
                     key: 'mobile',
                     title: this.$i18n.t('forms.mobile'),
@@ -340,7 +340,7 @@
                             trigger: 'blur'
                         }
                     ],
-                    loginno: [
+                    loginNo: [
                         {
                             required: true,
                             message: this.$i18n.t('forms.loginNo') + this.$i18n.t('forms.notEmpty'),
@@ -481,7 +481,7 @@
             handleSearch () {
                 let searchParam = {
                     name: this.searchForm.name,
-                    loginno: this.searchForm.loginno,
+                    loginNo: this.searchForm.loginNo,
                     org_name: this.searchForm.organization_name,
                     role_name: this.searchForm.role_name,
                     queryParam: {
@@ -569,7 +569,7 @@
                 this.currObj = {
                     id: '',
                     name: '',
-                    loginno: '',
+                    loginNo: '',
                     mobile: '',
                     levels: 1,
                     enabled: true,
@@ -599,7 +599,7 @@
                 this.$refs['editForm'].resetFields()
                 this.editForm.id = this.currObj.id
                 this.editForm.name = this.currObj.name
-                this.editForm.loginno = this.currObj.loginno
+                this.editForm.loginNo = this.currObj.loginNo
                 this.editForm.mobile = this.currObj.mobile
                 this.editForm.levels = this.currObj.levels
                 this.editForm.enabled = this.currObj.enabled
@@ -620,7 +620,7 @@
                 this.$refs['editForm'].validate((valid) => {
                     if (valid) {
                         if (this.editForm.id && this.editForm.id !== '') {
-                            if (this.editForm.loginno !== this.currObj.loginno) {
+                            if (this.editForm.loginNo !== this.currObj.loginNo) {
                                 this.$Modal.confirm({
                                     title: this.$i18n.t('dialog.confirm') + '',
                                     content: this.$i18n.t('messages.modifyLoginNo') + '',
@@ -635,7 +635,7 @@
                             this.modal_loading = true
                             this.$api.request.user.create({
                                 name: this.editForm.name,
-                                loginno: this.editForm.loginno,
+                                loginNo: this.editForm.loginNo,
                                 mobile: this.editForm.mobile,
                                 levels: this.editForm.levels,
                                 enabled: this.editForm.enabled,
@@ -662,7 +662,7 @@
                 this.$api.request.user.update({
                     id: this.editForm.id,
                     name: this.editForm.name,
-                    loginno: this.editForm.loginno,
+                    loginNo: this.editForm.loginNo,
                     mobile: this.editForm.mobile,
                     levels: this.editForm.levels,
                     enabled: this.editForm.enabled,

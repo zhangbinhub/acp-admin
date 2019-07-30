@@ -42,10 +42,10 @@ export default {
   },
   updateUserInfo: (userInfo) => {
     if (userInfo.oldPassword) {
-      userInfo.oldPassword = sha256.sha256(sha256.sha256(userInfo.oldPassword) + ApiComm.$store.state.app.user.userInfo.loginno)
+      userInfo.oldPassword = sha256.sha256(sha256.sha256(userInfo.oldPassword) + ApiComm.$store.state.app.user.userInfo.loginNo)
     }
     if (userInfo.password) {
-      userInfo.password = sha256.sha256(sha256.sha256(userInfo.password) + ApiComm.$store.state.app.user.userInfo.loginno)
+      userInfo.password = sha256.sha256(sha256.sha256(userInfo.password) + ApiComm.$store.state.app.user.userInfo.loginNo)
     }
     return ApiComm.$http.patch('/oauth/userinfo', userInfo)
   },

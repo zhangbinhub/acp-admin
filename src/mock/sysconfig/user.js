@@ -2,7 +2,7 @@ export const getModUserList = () => {
   return [{
     'id': '123',
     'name': 'test',
-    'loginno': 'lll',
+    'loginNo': 'lll',
     'mobile': '111',
     'levels': 1,
     'enabled': true,
@@ -17,7 +17,7 @@ export const getUserList = () => {
     'content': [{
       'id': 'dbfd58aa-19fb-11e9-894e-d8c49792dd7b',
       'name': 'ZhangBin',
-      'loginno': 'admin',
+      'loginNo': 'admin',
       'mobile': '13888888888',
       'levels': 0,
       'enabled': true,
@@ -35,7 +35,7 @@ export const getUserList = () => {
     }, {
       'id': '163c7453-1eef-11e9-8980-d8c49792dd7b',
       'name': 'test',
-      'loginno': 'test',
+      'loginNo': 'test',
       'mobile': '13888888881',
       'levels': 1,
       'enabled': true,
@@ -102,7 +102,7 @@ export const updateUser = () => {
   return {
     'id': '163c7453-1eef-11e9-8980-d8c49792dd7b',
     'name': 'test',
-    'loginno': 'test',
+    'loginNo': 'test',
     'mobile': '13888888881',
     'levels': 1,
     'enabled': true,
