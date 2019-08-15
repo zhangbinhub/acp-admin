@@ -34,7 +34,7 @@
       <Row>
         <Form-item :label="$t('forms.status')" prop="enabled">
           <i-select v-model="searchForm.enabled" :disabled="modal_loading" :clearable="true" size="small"
-                    @keyup.enter.native="handleSearchKeyUp($event)" style="width:170px">
+                    @keyup.enter.native="handleSearchKeyUp($event)" style="width: 162px">
             <Option v-for="item in enabledList" :value="item.value" :key="'search_select_'+item.value">
               {{ item.label }}
             </Option>
