@@ -44,13 +44,13 @@
           <DatePicker type="date" :disabled="modal_loading" :options="datePickerOptions" size="small"
                       v-model="searchForm.startTime"
                       :placeholder="$t('forms.pleaseEnter') + $t('forms.startDate')"
-                      style="width: 170px" @keyup.enter.native="handleSearch"></DatePicker>
+                      style="width: 162px" @keyup.enter.native="handleSearch"></DatePicker>
         </Form-item>
         <Form-item :label="$t('forms.endDate')" prop="endTime">
           <DatePicker type="date" :disabled="modal_loading" :options="datePickerOptions" size="small"
                       v-model="searchForm.endTime"
                       :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
-                      style="width: 170px" @keyup.enter.native="handleSearch"></DatePicker>
+                      style="width: 162px" @keyup.enter.native="handleSearch"></DatePicker>
         </Form-item>
         <Form-item style="float: right">
           <ButtonGroup style="margin-right: 20px">

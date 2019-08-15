@@ -5,12 +5,12 @@
         <DatePicker type="date" :disabled="form_loading" :options="datePickerOptions"
                     v-model="formValidate.startDate"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.startDate')"
-                    style="width: 170px" @keyup.enter.native="handleSearch"></DatePicker>
+                    style="width: 162px" @keyup.enter.native="handleSearch"></DatePicker>
       </Form-item>
       <Form-item :label="$t('forms.endDate')" prop="endDate">
         <DatePicker type="date" :disabled="form_loading" :options="datePickerOptions" v-model="formValidate.endDate"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
-                    style="width: 170px" @keyup.enter.native="handleSearch"></DatePicker>
+                    style="width: 162px" @keyup.enter.native="handleSearch"></DatePicker>
       </Form-item>
       <Form-item>
         <ButtonGroup>

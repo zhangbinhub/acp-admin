@@ -31,7 +31,8 @@
             </Option>
           </i-select>
         </Form-item>
-
+      </Row>
+      <Row>
         <Form-item :label="$t('forms.key')" prop="configKey" style="width: 80%;max-width: 700px">
           <label>
             <Input v-model="searchForm.configKey" :disabled="modal_loading" size="small"
