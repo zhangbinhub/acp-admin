@@ -259,23 +259,31 @@
                     if (menu) {
                         switch (menu.openType) {
                             case 0: // 内嵌模式
-                                this.$router.push(menu.path)
+                                if (this.$router.currentRoute.fullPath !== menu.path) {
+                                    this.$router.push(menu.path)
+                                }
                                 break
                             case 1: // 打开新页面
                                 window.open(menu.path)
                                 break
                             default:
-                                this.$router.push(menu.path)
+                                if (this.$router.currentRoute.fullPath !== menu.path) {
+                                    this.$router.push(menu.path)
+                                }
                         }
                     } else {
-                        this.$router.push(name)
+                        if (this.$router.currentRoute.fullPath !== name) {
+                            this.$router.push(name)
+                        }
                     }
                 } else {
-                    this.$router.push({
-                        name: name,
-                        params: params,
-                        query: query
-                    })
+                    if (this.$router.currentRoute.name !== name) {
+                        this.$router.push({
+                            name: name,
+                            params: params,
+                            query: query
+                        })
+                    }
                 }
             },
             handleCollapsedChange (state) {
