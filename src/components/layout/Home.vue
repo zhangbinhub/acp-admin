@@ -189,10 +189,12 @@
                 this.$store.commit('SET_TAG_NAV_LIST', tagNavList)
             },
             updateTagList (tagNavList, menuList, route) {
-                const newTagNavList = updateTagNavList(tagNavList, menuList, route)
-                if (newTagNavList && newTagNavList.length > 0) {
-                    setTagNavListInLocalstorage(newTagNavList)
-                    this.$store.commit('SET_TAG_NAV_LIST', newTagNavList)
+                if (route.name !== 'E404' && route.name !== 'E500') {
+                    const newTagNavList = updateTagNavList(tagNavList, menuList, route)
+                    if (newTagNavList && newTagNavList.length > 0) {
+                        setTagNavListInLocalstorage(newTagNavList)
+                        this.$store.commit('SET_TAG_NAV_LIST', newTagNavList)
+                    }
                 }
             },
             /**
