@@ -117,44 +117,58 @@ const ApiComm = {
     })
   },
   redirectE404: () => {
-    ApiComm.$router.replace({
-      name: 'E404',
-      params: { redirect: ApiComm.$router.currentRoute.fullPath }
-    })
+    if (ApiComm.$router.currentRoute.name !== 'E404') {
+      ApiComm.$router.push({
+        name: 'E404',
+        params: { redirect: ApiComm.$router.currentRoute.fullPath }
+      })
+    }
   },
   redirectE500: (errorMsg) => {
-    ApiComm.$router.push({
-      name: 'E500',
-      params: {
-        msg: errorMsg,
-        redirect: ApiComm.$router.currentRoute.fullPath
-      }
-    })
+    if (ApiComm.$router.currentRoute.name !== 'E500') {
+      ApiComm.$router.push({
+        name: 'E500',
+        params: {
+          msg: errorMsg,
+          redirect: ApiComm.$router.currentRoute.fullPath
+        }
+      })
+    }
   },
   gotoPersonalInformation: () => {
-    ApiComm.$router.push({
-      name: 'personalInformation'
-    })
+    if (ApiComm.$router.currentRoute.name !== 'personalInformation') {
+      ApiComm.$router.push({
+        name: 'personalInformation'
+      })
+    }
   },
   gotoLogFile: () => {
-    ApiComm.$router.push({
-      name: 'logFile'
-    })
+    if (ApiComm.$router.currentRoute.name !== 'logFile') {
+      ApiComm.$router.push({
+        name: 'logFile'
+      })
+    }
   },
   gotoConfigCenter: () => {
-    ApiComm.$router.push({
-      name: 'configCenter'
-    })
+    if (ApiComm.$router.currentRoute.name !== 'configCenter') {
+      ApiComm.$router.push({
+        name: 'configCenter'
+      })
+    }
   },
   gotoRouteConfig: () => {
-    ApiComm.$router.push({
-      name: 'routeConfig'
-    })
+    if (ApiComm.$router.currentRoute.name !== 'routeConfig') {
+      ApiComm.$router.push({
+        name: 'routeConfig'
+      })
+    }
   },
   gotoRouteLog: () => {
-    ApiComm.$router.push({
-      name: 'routeLog'
-    })
+    if (ApiComm.$router.currentRoute.name !== 'routeLog') {
+      ApiComm.$router.push({
+        name: 'routeLog'
+      })
+    }
   },
   request: {}
 }

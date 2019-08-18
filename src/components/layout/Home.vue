@@ -189,10 +189,12 @@
                 this.$store.commit('SET_TAG_NAV_LIST', tagNavList)
             },
             updateTagList (tagNavList, menuList, route) {
-                const newTagNavList = updateTagNavList(tagNavList, menuList, route)
-                if (newTagNavList && newTagNavList.length > 0) {
-                    setTagNavListInLocalstorage(newTagNavList)
-                    this.$store.commit('SET_TAG_NAV_LIST', newTagNavList)
+                if (route.name !== 'E404' && route.name !== 'E500') {
+                    const newTagNavList = updateTagNavList(tagNavList, menuList, route)
+                    if (newTagNavList && newTagNavList.length > 0) {
+                        setTagNavListInLocalstorage(newTagNavList)
+                        this.$store.commit('SET_TAG_NAV_LIST', newTagNavList)
+                    }
                 }
             },
             /**
@@ -257,23 +259,31 @@
                     if (menu) {
                         switch (menu.openType) {
                             case 0: // 内嵌模式
-                                this.$router.push(menu.path)
+                                if (this.$router.currentRoute.fullPath !== menu.path) {
+                                    this.$router.push(menu.path)
+                                }
                                 break
                             case 1: // 打开新页面
                                 window.open(menu.path)
                                 break
                             default:
-                                this.$router.push(menu.path)
+                                if (this.$router.currentRoute.fullPath !== menu.path) {
+                                    this.$router.push(menu.path)
+                                }
                         }
                     } else {
-                        this.$router.push(name)
+                        if (this.$router.currentRoute.fullPath !== name) {
+                            this.$router.push(name)
+                        }
                     }
                 } else {
-                    this.$router.push({
-                        name: name,
-                        params: params,
-                        query: query
-                    })
+                    if (this.$router.currentRoute.name !== name) {
+                        this.$router.push({
+                            name: name,
+                            params: params,
+                            query: query
+                        })
+                    }
                 }
             },
             handleCollapsedChange (state) {

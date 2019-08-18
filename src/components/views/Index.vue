@@ -55,8 +55,10 @@
         methods: {
             loadLoginChart () {
                 this.$api.request.auth.getLoginInfo().then(res => {
-                    this.loginInfo = res.data
-                    this.initLoginChart()
+                    if (res.data) {
+                        this.loginInfo = res.data
+                        this.initLoginChart()
+                    }
                 })
             },
             initLoginChart () {
@@ -127,7 +129,9 @@
         },
         mounted () {
             this.$api.request.auth.getOnlineInfo().then(res => {
-                this.onlineInfo = res.data
+                if (res.data) {
+                    this.onlineInfo = res.data
+                }
             })
             if (this.showLoginChart) {
                 this.loadLoginChart()
