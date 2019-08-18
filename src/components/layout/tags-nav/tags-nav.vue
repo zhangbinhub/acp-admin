@@ -6,8 +6,8 @@
           <Icon :size="18" type="ios-close-circle-outline"/>
         </Button>
         <DropdownMenu slot="list">
-          <DropdownItem name="close-all">{{$t('home.closeAll')}}</DropdownItem>
           <DropdownItem name="close-others">{{$t('home.closeOther')}}</DropdownItem>
+          <DropdownItem name="close-all">{{$t('home.closeAll')}}</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     </div>
