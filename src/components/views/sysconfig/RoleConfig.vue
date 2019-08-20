@@ -351,7 +351,7 @@
                     name: this.$i18n.t('forms.new') + this.$i18n.t('forms.role'),
                     appId: data.appId,
                     sort: data.children.length + 1,
-                    code: 'OTHER',
+                    code: 'BUSINESS',
                     levels: 999
                 }).then((res) => {
                     this.tree_loading = false
