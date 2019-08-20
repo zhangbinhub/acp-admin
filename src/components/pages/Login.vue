@@ -96,7 +96,6 @@
                     if (valid) {
                         currObj.modal_loading = true
                         currObj.$api.request.auth.doLogin(currObj.formValidate.loginNo, currObj.formValidate.password).then(res => {
-                            currObj.modal_loading = false
                             if (res) {
                                 if (res.data.access_token) {
                                     currObj.$Message.success(currObj.$i18n.t('messages.loginSuccess'))
@@ -118,6 +117,7 @@
                                     currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
                                 }
                             }
+                            currObj.modal_loading = false
                         }).catch((error) => {
                                 currObj.modal_loading = false
                                 if (error.response && error.response.status && error.response.status === 400) {
