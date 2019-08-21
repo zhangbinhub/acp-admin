@@ -1,3 +1,7 @@
+import {
+  setTagNavListInLocalstorage
+} from '@/libs/tools'
+
 const ApiComm = {
   $notice: undefined,
   $i18n: undefined,
@@ -109,12 +113,18 @@ const ApiComm = {
   redirectHome: () => {
     ApiComm.$router.replace(ApiComm.$store.state.app.appInfo.homePath)
   },
-  redirectLogin: () => {
+  redirectLogin: (isHoldTagNavList = false) => {
     ApiComm.$store.commit('LOGIN_OUT')
-    ApiComm.$router.replace({
-      name: 'login',
-      params: { redirect: ApiComm.$router.currentRoute.fullPath }
-    })
+    if (isHoldTagNavList) {
+      ApiComm.$router.replace({
+        name: 'login',
+        params: { redirect: ApiComm.$router.currentRoute.fullPath }
+      })
+    } else {
+      setTagNavListInLocalstorage([])
+      ApiComm.$store.commit('SET_TAG_NAV_LIST', [])
+      ApiComm.$router.replace({ name: 'login' })
+    }
   },
   redirectE404: () => {
     if (ApiComm.$router.currentRoute.name !== 'E404') {
