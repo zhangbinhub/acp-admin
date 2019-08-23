@@ -52,10 +52,10 @@
             </Transfer>
           </TabPane>
           <TabPane :label="$t('forms.menuList')" icon="md-list">
-            <Tree ref="menuTree" :data="menuData" :show-checkbox="true" :multiple="true"></Tree>
+            <Tree ref="menuTree" :data="menuData" :show-checkbox="true" :check-directly="true"></Tree>
           </TabPane>
           <TabPane :label="$t('forms.moduleFuncList')" icon="md-apps">
-            <Tree ref="moduleFuncTree" :data="moduleFuncData" :show-checkbox="true" :multiple="true"></Tree>
+            <Tree ref="moduleFuncTree" :data="moduleFuncData" :show-checkbox="true" :check-directly="true"></Tree>
           </TabPane>
         </Tabs>
         <Divider style="margin: 12px 0;"/>

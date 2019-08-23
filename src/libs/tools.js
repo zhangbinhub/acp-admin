@@ -219,12 +219,12 @@ export const sortTreeNodes = (nodeList, property = 'sort') => {
 /**
  * 将后台返回数据转换为tree组件数据
  * @param nodeList Array
- * @param flag 0-config,1-select
+ * @param flag 0-config,1-select,2-select-strictly
  * @param selectedIds 选中项的id
- * @returns number selectedCount
+ * @returns number checkedCount
  */
 export const processTreeNode = (nodeList, flag = 0, selectedIds = []) => {
-  let selectedCount = 0
+  let checkedCount = 0
   for (let i = 0; i < nodeList.length; i++) {
     if (!nodeList[i].children) {
       nodeList[i].children = []
@@ -232,28 +232,46 @@ export const processTreeNode = (nodeList, flag = 0, selectedIds = []) => {
     nodeList[i].value = nodeList[i].id
     nodeList[i].title = nodeList[i].name
     nodeList[i].label = nodeList[i].name
-    let childrenSelected = 0
+    let childrenCheckedCount = 0
     if (nodeList[i].children.length > 0) {
-      childrenSelected = processTreeNode(nodeList[i].children, flag, selectedIds)
+      childrenCheckedCount = processTreeNode(nodeList[i].children, flag, selectedIds)
     }
-    if (childrenSelected > 0) {
+    // 子孙节点有选中的，就展开
+    if (childrenCheckedCount > 0) {
       nodeList[i].expand = true
     }
-    selectedCount += childrenSelected
-    if (flag === 1 && selectedIds.includes(nodeList[i].id)) {
-      selectedCount++
-      nodeList[i].expand = true
-      if (childrenSelected === nodeList[i].children.length) {
+    // 累加子孙节点所有选中数
+    checkedCount += childrenCheckedCount
+    if (flag === 1) { // 子孙节点相关联，子节点全部选中则自身checked=true，有选中或关联则自身indeterminate=true
+      let childrenChecked = 0
+      let childrenIndeterminate = 0
+      nodeList[i].children.forEach(child => {
+        if (child.checked) {
+          childrenChecked++
+        } else if (child.indeterminate) {
+          childrenIndeterminate++
+        }
+      })
+      if (nodeList[i].children.length > 0 && childrenChecked === nodeList[i].children.length) {
+        checkedCount++
         nodeList[i].checked = true
-      } else {
-        nodeList[i].checked = false
+      } else if (childrenChecked > 0 || childrenIndeterminate > 0) {
+        checkedCount++
         nodeList[i].indeterminate = true
+      } else if (selectedIds.includes(nodeList[i].id)) {
+        checkedCount++
+        nodeList[i].checked = true
       }
-    } else if (flag === 0) {
+    } else if (flag === 2) { // 自身选中，则checked=true
+      if (selectedIds.includes(nodeList[i].id)) {
+        checkedCount++
+        nodeList[i].checked = true
+      }
+    } else if (flag === 0) { // 不选择，直接展开所有节点
       nodeList[i].expand = true
     }
   }
-  return selectedCount
+  return checkedCount
 }
 
 /**

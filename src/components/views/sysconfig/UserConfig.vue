@@ -386,8 +386,8 @@
             orgTreeDataTemp (newData) {
                 const data1 = copy(newData)
                 const data2 = copy(newData)
-                processTreeNode(data1, 1, this.currObj.orgIds)
-                processTreeNode(data2, 1, this.currObj.orgMngIds)
+                processTreeNode(data1, 2, this.currObj.orgIds)
+                processTreeNode(data2, 2, this.currObj.orgMngIds)
                 this.orgTreeDataS1 = data1
                 this.orgTreeDataS2 = data2
             }
@@ -402,7 +402,7 @@
                             item.expand = true
                         }
                         this.orgTreeDataTemp = copy(res.data)
-                        processTreeNode(res.data, 1)
+                        processTreeNode(res.data, 2)
                         this.orgTreeData = res.data
                         if (typeof callBack === 'function') {
                             callBack()
@@ -431,7 +431,7 @@
                         this.$api.request.role.getList().then((res) => {
                             this.modal_loading = false
                             if (res) {
-                                processTreeNode(res.data, 1, this.currObj.roleIds)
+                                processTreeNode(res.data, 2, this.currObj.roleIds)
                                 for (const item of res.data) {
                                     item.parentId = item.appId
                                     for (const root of this.roleTreeData) {
