@@ -287,11 +287,17 @@ const ApiComm = {
             option = menu.path
         }
       }
+      if (this.$router.currentRoute.fullPath === option) {
+        return
+      }
     } else {
       option = {
         name: name,
         params: params,
         query: query
+      }
+      if (this.$router.currentRoute.name === name) {
+        return
       }
     }
     if (replace) {
