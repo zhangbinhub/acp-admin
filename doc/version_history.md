@@ -3,6 +3,7 @@
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 角色编码使用自动补全，可自定义输入
 > - [Upgrade] 优化 tools.js 中 processTreeNode 函数
+> - [Upgrade] 优化统一页面跳转方法
 ##### v3.0.4
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 优化输入框样式

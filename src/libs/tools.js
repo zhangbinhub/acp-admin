@@ -137,18 +137,15 @@ export const scrollTop = (el, from = 0, to, duration = 500, endCallback) => {
   }
   const difference = Math.abs(from - to)
   const step = Math.ceil(difference / duration * 50)
-
   const scroll = (start, end, step) => {
     if (start === end) {
       endCallback && endCallback()
       return
     }
-
     let d = (start + step > end) ? end : start + step
     if (start > end) {
       d = (start - step < end) ? end : start - step
     }
-
     if (el === window) {
       window.scrollTo(d, d)
     } else {

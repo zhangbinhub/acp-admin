@@ -1,8 +1,10 @@
 import {
-  setTagNavListInLocalstorage
+  setTagNavListInLocalstorage,
+  findMenuByPath
 } from '@/libs/tools'
 
 const ApiComm = {
+  $Modal: undefined,
   $notice: undefined,
   $i18n: undefined,
   $http: undefined,
@@ -12,7 +14,8 @@ const ApiComm = {
   $Spin: undefined,
   showSpin: false,
   install: function (Vue, options) {
-    Vue.prototype.$api = ApiComm
+    Vue.prototype.$api = this
+    this.$Modal = options.Modal
     this.$notice = options.notice
     this.$i18n = options.i18n
     this.$http = options.http
@@ -24,50 +27,50 @@ const ApiComm = {
 
     // 请求拦截器
     this.$http.interceptors.request.use(config => {
-      ApiComm.$loading.start()
+      this.$loading.start()
       if (this.showSpin) {
-        ApiComm.$Spin.show()
+        this.$Spin.show()
       }
-      if (ApiComm.$store.state.app.user.token) {
-        config.headers.Authorization = `${ApiComm.$store.state.app.user.tokenType} ${ApiComm.$store.state.app.user.token}`
+      if (this.$store.state.app.user.token) {
+        config.headers.Authorization = `${this.$store.state.app.user.tokenType} ${this.$store.state.app.user.token}`
       }
       return config
     }, error => {
-      ApiComm.$Spin.hide()
-      ApiComm.$loading.error()
-      ApiComm.errorProcess(error)
+      this.$Spin.hide()
+      this.$loading.error()
+      this.errorProcess(error)
       return Promise.reject(error)
     })
 
     // 响应拦截器
     this.$http.interceptors.response.use(data => {
-      ApiComm.$Spin.hide()
-      ApiComm.$loading.finish()
+      this.$Spin.hide()
+      this.$loading.finish()
       return data
     }, error => {
-      ApiComm.$Spin.hide()
-      ApiComm.$loading.error()
+      this.$Spin.hide()
+      this.$loading.error()
       if (error.response) {
         switch (error.response.status) {
           case 400: // 业务错误
             if (!error.config.headers.Process400 || error.config.headers.Process400 !== 'false') {
-              ApiComm.errorProcess(error)
+              this.errorProcess(error)
             }
             break
           case 401: // token 失效
             if (!error.config.headers.Process401 || error.config.headers.Process401 !== 'false') {
-              ApiComm.redirectLogin()
+              this.redirectLogin()
               return
             }
             break
           case 403: // 权限不足
-            error.response.data.errorDescription = ApiComm.$i18n.t('messages.failed403')
+            error.response.data.errorDescription = this.$i18n.t('messages.failed403')
             if (!error.config.headers.Process403 || error.config.headers.Process403 !== 'false') {
-              ApiComm.errorProcess(error)
+              this.errorProcess(error)
             }
             break
           case 404: // 页面找不到
-            ApiComm.redirectE404()
+            this.redirectE404()
             return
           case 500: // 系统内部异常
             let errorMsg = 'Internal System Error'
@@ -82,15 +85,15 @@ const ApiComm = {
                 }
               }
             }
-            ApiComm.redirectE500(errorMsg)
+            this.redirectE500(errorMsg)
             return
         }
         return Promise.reject(error)
       }
-      ApiComm.errorProcess(error)
+      this.errorProcess(error)
     })
   },
-  errorProcess: function (error, title) {
+  errorProcess (error, title) {
     let errorMessage = ''
     if (error.response) {
       if (typeof error.response.data === 'string') {
@@ -105,80 +108,201 @@ const ApiComm = {
     } else {
       errorMessage = error
     }
-    ApiComm.$notice.error({
-      title: title || ApiComm.$i18n.t('messages.requestFailed'),
+    this.$notice.error({
+      title: title || this.$i18n.t('messages.requestFailed'),
       desc: errorMessage
     })
   },
-  redirectHome: () => {
-    ApiComm.$router.replace(ApiComm.$store.state.app.appInfo.homePath)
+  redirectHome () {
+    this.turnToPage(this.$store.state.app.appInfo.homePath,
+      undefined, undefined, false, true)
   },
-  redirectLogin: (isHoldTagNavList = false) => {
-    ApiComm.$store.commit('LOGIN_OUT')
-    if (isHoldTagNavList) {
-      ApiComm.$router.replace({
-        name: 'login',
-        params: { redirect: ApiComm.$router.currentRoute.fullPath }
-      })
+  redirectLogin (asyncFunc, isHoldTagNavList = false) {
+    this.turnToPage({
+      name: 'login'
+    }, (callBackFunc) => {
+      if (asyncFunc && typeof asyncFunc === 'function') {
+        asyncFunc(() => {
+          this.$store.commit('LOGIN_OUT')
+          if (!isHoldTagNavList) {
+            setTagNavListInLocalstorage([])
+            this.$store.commit('SET_TAG_NAV_LIST', [])
+          }
+          callBackFunc(true)
+        })
+      } else {
+        callBackFunc(true)
+      }
+    }, undefined, false, true)
+  },
+  redirectE404 () {
+    this.turnToPage({
+      name: 'E404',
+      params: {
+        redirect: this.$router.currentRoute.fullPath
+      }
+    })
+  },
+  redirectE500 (errorMsg) {
+    this.turnToPage({
+      name: 'E500',
+      params: {
+        msg: errorMsg,
+        redirect: this.$router.currentRoute.fullPath
+      }
+    })
+  },
+  gotoPersonalInformation () {
+    this.turnToPage({
+      name: 'personalInformation'
+    })
+  },
+  gotoLogFile () {
+    this.turnToPage({
+      name: 'logFile'
+    })
+  },
+  gotoConfigCenter () {
+    this.turnToPage({
+      name: 'configCenter'
+    })
+  },
+  gotoRouteConfig () {
+    this.turnToPage({
+      name: 'routeConfig'
+    })
+  },
+  gotoRouteLog () {
+    this.turnToPage({
+      name: 'routeLog'
+    })
+  },
+  /**
+   * 页面跳转
+   * @param obj 跳转参数 stirng | route
+   * @param asyncFunc 跳转前执行的函数, asyncFunc(callBackFunc)
+   * @param pageName 页面名称
+   * @param closeMore 是否关闭多个页面标签
+   * @param replace 是否是replace方式跳转
+   */
+  turnToPage (obj, asyncFunc, pageName, closeMore = false, replace = false) {
+    let path = ''
+    if (typeof obj === 'string') { // string
+      path = obj
+    } else { // route
+      if (obj.path) {
+        path = obj.path
+      }
+    }
+    let targetMenu, currMenu
+    currMenu = findMenuByPath(this.$router.currentRoute.fullPath, this.$store.state.app.user.menuList)
+    if (path.startsWith('/') || path.toLowerCase().startsWith('http')) {
+      if (this.$router.currentRoute.fullPath === path) {
+        return
+      }
+      targetMenu = findMenuByPath(path, this.$store.state.app.user.menuList)
     } else {
-      setTagNavListInLocalstorage([])
-      ApiComm.$store.commit('SET_TAG_NAV_LIST', [])
-      ApiComm.$router.replace({ name: 'login' })
+      if (this.$router.currentRoute.name === path) {
+        return
+      }
     }
-  },
-  redirectE404: () => {
-    if (ApiComm.$router.currentRoute.name !== 'E404') {
-      ApiComm.$router.push({
-        name: 'E404',
-        params: { redirect: ApiComm.$router.currentRoute.fullPath }
-      })
+    let dataLose = false
+    if (!closeMore) {
+      if (this.$router.currentRoute.meta) {
+        dataLose = this.$router.currentRoute.meta.withInput && this.$router.currentRoute.meta.notCache
+      }
+    } else {
+      dataLose = true
     }
-  },
-  redirectE500: (errorMsg) => {
-    if (ApiComm.$router.currentRoute.name !== 'E500') {
-      ApiComm.$router.push({
-        name: 'E500',
-        params: {
-          msg: errorMsg,
-          redirect: ApiComm.$router.currentRoute.fullPath
+    if ((!targetMenu || targetMenu.openType !== 1) && dataLose) {
+      const tagList = this.$store.state.app.tagNavList.filter(item => item.path !== this.$router.currentRoute.fullPath)
+      this.$Modal.confirm({
+        title: this.$i18n.t('dialog.confirm') + '',
+        content: '<br/><p style="color: red">' + this.getPageTitle(pageName, currMenu) + '</p><br/>' +
+          '<p>' + this.$i18n.t('messages.leavePage') + '</p>',
+        onOk: () => {
+          if (asyncFunc && typeof asyncFunc === 'function') {
+            setTimeout(() => {
+              asyncFunc((result) => {
+                if (result) {
+                  setTagNavListInLocalstorage(tagList)
+                  this.$store.commit('SET_TAG_NAV_LIST', tagList)
+                  this.routeSwitch(obj, targetMenu, replace)
+                }
+              })
+            }, 350)
+          } else {
+            setTagNavListInLocalstorage(tagList)
+            this.$store.commit('SET_TAG_NAV_LIST', tagList)
+            this.routeSwitch(obj, targetMenu, replace)
+          }
         }
       })
+    } else {
+      if (asyncFunc && typeof asyncFunc === 'function') {
+        asyncFunc((result) => {
+          if (result) {
+            this.routeSwitch(obj, targetMenu, replace)
+          }
+        })
+      } else {
+        this.routeSwitch(obj, targetMenu, replace)
+      }
     }
   },
-  gotoPersonalInformation: () => {
-    if (ApiComm.$router.currentRoute.name !== 'personalInformation') {
-      ApiComm.$router.push({
-        name: 'personalInformation'
-      })
+  /**
+   * 执行跳转
+   * @param obj 跳转参数 stirng | route
+   * @param menu 目标菜单对象
+   * @param replace 是否是replace方式跳转
+   */
+  routeSwitch (obj, menu, replace) {
+    let { name, params, query } = { name: '' }
+    if (typeof obj === 'string') { // string
+      name = obj
+    } else { // route
+      name = obj.name
+      params = obj.params
+      query = obj.query
+    }
+    let option = name
+    if (name.startsWith('/') || name.toLowerCase().startsWith('http')) {
+      if (menu) {
+        switch (menu.openType) {
+          case 0: // 内嵌模式
+            option = menu.path
+            break
+          case 1: // 打开新页面
+            window.open(menu.path)
+            return
+          default:
+            option = menu.path
+        }
+      }
+    } else {
+      option = {
+        name: name,
+        params: params,
+        query: query
+      }
+    }
+    console.log(1111111111)
+    if (replace) {
+      this.$router.replace(option)
+    } else {
+      this.$router.push(option)
     }
   },
-  gotoLogFile: () => {
-    if (ApiComm.$router.currentRoute.name !== 'logFile') {
-      ApiComm.$router.push({
-        name: 'logFile'
-      })
+  getPageTitle (pageName, pageMenu) {
+    let pageTitle = pageName
+    if (pageMenu) {
+      pageTitle = pageMenu.name
+    } else {
+      if (this.$router.currentRoute.meta.title) {
+        pageTitle = this.$i18n.t(this.$router.currentRoute.meta.title)
+      }
     }
-  },
-  gotoConfigCenter: () => {
-    if (ApiComm.$router.currentRoute.name !== 'configCenter') {
-      ApiComm.$router.push({
-        name: 'configCenter'
-      })
-    }
-  },
-  gotoRouteConfig: () => {
-    if (ApiComm.$router.currentRoute.name !== 'routeConfig') {
-      ApiComm.$router.push({
-        name: 'routeConfig'
-      })
-    }
-  },
-  gotoRouteLog: () => {
-    if (ApiComm.$router.currentRoute.name !== 'routeLog') {
-      ApiComm.$router.push({
-        name: 'routeLog'
-      })
-    }
+    return pageTitle
   },
   request: {}
 }

@@ -163,21 +163,24 @@
         <i-col :md="6" class="card-col">
           <Card>
             <p slot="title">{{$t('forms.orgList')}}</p>
-            <Tree ref="orgTree" :data="orgTreeDataS1" :show-checkbox="true" :check-strictly="true"></Tree>
+            <Tree ref="orgTree" :data="orgTreeDataS1" :show-checkbox="true" :check-strictly="true"
+                  :check-directly="true"></Tree>
             <Spin size="large" :fix="true" v-if="modal_loading"></Spin>
           </Card>
         </i-col>
         <i-col :md="6" class="card-col">
           <Card>
             <p slot="title">{{$t('forms.orgMngList')}}</p>
-            <Tree ref="orgMngTree" :data="orgTreeDataS2" :show-checkbox="true"></Tree>
+            <Tree ref="orgMngTree" :data="orgTreeDataS2" :show-checkbox="true" :check-strictly="true"
+                  :check-directly="true"></Tree>
             <Spin size="large" :fix="true" v-if="modal_loading"></Spin>
           </Card>
         </i-col>
         <i-col :md="6" class="card-col">
           <Card>
             <p slot="title">{{$t('forms.roleList')}}</p>
-            <Tree ref="roleTree" :data="roleTreeData" :show-checkbox="true" :check-strictly="true"></Tree>
+            <Tree ref="roleTree" :data="roleTreeData" :show-checkbox="true" :check-strictly="true"
+                  :check-directly="true"></Tree>
             <Spin size="large" :fix="true" v-if="modal_loading"></Spin>
           </Card>
         </i-col>
@@ -640,7 +643,7 @@
                                 levels: this.editForm.levels,
                                 enabled: this.editForm.enabled,
                                 sort: this.editForm.sort,
-                                orgIds: this.$refs['orgTree'].getCheckedNodes().map(item => item.id),
+                                orgIds: this.$refs['orgTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
                                 orgMngIds: this.$refs['orgMngTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
                                 roleIds: this.$refs['roleTree'].getCheckedNodes().map(item => item.id)
                             }).then((res) => {
@@ -667,7 +670,7 @@
                     levels: this.editForm.levels,
                     enabled: this.editForm.enabled,
                     sort: this.editForm.sort,
-                    orgIds: this.$refs['orgTree'].getCheckedNodes().map(item => item.id),
+                    orgIds: this.$refs['orgTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
                     orgMngIds: this.$refs['orgMngTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
                     roleIds: this.$refs['roleTree'].getCheckedNodes().map(item => item.id)
                 }).then((res) => {

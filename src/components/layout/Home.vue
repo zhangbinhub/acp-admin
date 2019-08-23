@@ -3,7 +3,7 @@
     <Sider :hide-trigger="true" :collapsible="true" :width="220" :collapsed-width="63" v-model="isCollapsed"
            class="left-sider" :style="{overflow: 'hidden'}">
       <side-menu :accordion="true" ref="sideMenu" :active-name="fullPath" :collapsed="isCollapsed"
-                 @on-select="gotoPage" :menu-list="menuList" :open-names="openedNames" :theme="theme">
+                 @on-select="handleClick" :menu-list="menuList" :open-names="openedNames" :theme="theme">
         <div class="logo-con">
           <img v-show="!isCollapsed" :src="mainLogo" alt=""/>
           <img v-show="isCollapsed" :src="minLogo" alt=""/>
@@ -62,7 +62,6 @@
     import './Home.less'
     import {
         getOpenedNamesByActiveName,
-        findMenuByPath,
         getTagNavListFromLocalstorage,
         setTagNavListInLocalstorage,
         updateTagNavList
@@ -197,95 +196,6 @@
                     }
                 }
             },
-            /**
-             * 标签页面跳转
-             * @param obj 跳转参数 stirng | route
-             * @param beforeTurnFunc 跳转前执行的函数
-             * @param pageName 页面名称
-             * @param closeMore 是否关闭多个页面
-             */
-            turnToPage (obj, beforeTurnFunc, pageName, closeMore = false) {
-                let path = ''
-                if (typeof obj === 'string') { // string
-                    path = obj
-                } else { // route
-                    path = obj.path
-                }
-                const menu = findMenuByPath(path, this.$store.state.app.user.menuList)
-                let dataLose = false
-                if (!closeMore) {
-                    if (this.$route.meta) {
-                        dataLose = this.$route.meta.withInput && this.$route.meta.notCache
-                    }
-                } else {
-                    dataLose = true
-                }
-                if ((!menu || menu.openType !== 1) && dataLose) {
-                    this.$Modal.confirm({
-                        title: this.$i18n.t('dialog.confirm') + '',
-                        content: '<br/><p style="color: red">' + pageName + '</p><br/>' +
-                            '<p>' + this.$i18n.t('messages.leavePage') + '</p>',
-                        onOk: () => {
-                            if (beforeTurnFunc && typeof beforeTurnFunc === 'function') {
-                                if (beforeTurnFunc()) {
-                                    this.gotoPage(obj)
-                                }
-                            } else {
-                                this.gotoPage(obj)
-                            }
-                        }
-                    })
-                    return false
-                }
-                if (beforeTurnFunc && typeof beforeTurnFunc === 'function') {
-                    if (beforeTurnFunc()) {
-                        this.gotoPage(obj)
-                    }
-                } else {
-                    this.gotoPage(obj)
-                }
-            },
-            gotoPage (obj) {
-                let { name, params, query } = { name: '' }
-                if (typeof obj === 'string') { // string
-                    name = obj
-                } else { // route
-                    name = obj.name
-                    params = obj.params
-                    query = obj.query
-                }
-                if (name.startsWith('/') || name.toLowerCase().startsWith('http')) {
-                    const menu = findMenuByPath(name, this.$store.state.app.user.menuList)
-                    if (menu) {
-                        switch (menu.openType) {
-                            case 0: // 内嵌模式
-                                if (this.$router.currentRoute.fullPath !== menu.path) {
-                                    this.$router.push(menu.path)
-                                }
-                                break
-                            case 1: // 打开新页面
-                                window.open(menu.path)
-                                break
-                            default:
-                                if (this.$router.currentRoute.fullPath !== menu.path) {
-                                    this.$router.push(menu.path)
-                                }
-                        }
-                    } else {
-                        if (this.$router.currentRoute.fullPath !== name) {
-                            this.$router.push(name)
-                        }
-                    }
-                } else {
-                    if (this.$router.currentRoute.name !== name) {
-                        this.$router.push({
-                            name: name,
-                            params: params,
-                            query: query
-                        })
-                    }
-                }
-            },
             handleCollapsedChange (state) {
                 if (state) {
                     this.$store.commit('CLOSE_SLIDEBAR')
@@ -295,30 +205,30 @@
             },
             handleCloseTag (tagList, type, nextPath, pageName) {
                 if (type === 'all') {
-                    this.turnToPage(this.homePath, () => {
+                    this.$api.turnToPage(this.homePath, (callBackFunc) => {
                         setTagNavListInLocalstorage(tagList)
                         this.$store.commit('SET_TAG_NAV_LIST', tagList)
-                        return true
+                        callBackFunc(true)
                     }, this.$i18n.t('messages.allPages'), true)
                 } else if (type === 'others') {
-                    this.turnToPage(this.fullPath, () => {
+                    this.$api.turnToPage(this.fullPath, (callBackFunc) => {
                         setTagNavListInLocalstorage(tagList)
                         this.$store.commit('SET_TAG_NAV_LIST', tagList)
-                        return true
+                        callBackFunc(true)
                     }, this.$i18n.t('messages.otherPages'), true)
                 } else if (type !== 'others' && this.fullPath !== nextPath) {
-                    this.turnToPage(nextPath, () => {
+                    this.$api.turnToPage(nextPath, (callBackFunc) => {
                         setTagNavListInLocalstorage(tagList)
                         this.$store.commit('SET_TAG_NAV_LIST', tagList)
-                        return true
+                        callBackFunc(true)
                     }, pageName)
                 } else {
                     setTagNavListInLocalstorage(tagList)
                     this.$store.commit('SET_TAG_NAV_LIST', tagList)
                 }
             },
-            handleClick (item) {
-                this.gotoPage(item)
+            handleClick (path) {
+                this.$api.turnToPage(path)
             }
         }
     }
