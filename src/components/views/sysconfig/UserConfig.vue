@@ -245,9 +245,9 @@
                     levels: 1,
                     enabled: true,
                     sort: 1,
-                    org_ids: [],
+                    orgIds: [],
                     organizationSet: [],
-                    org_mng_ids: [],
+                    orgMngIds: [],
                     organizationMngSet: [],
                     roleIds: [],
                     roleSet: []
@@ -383,8 +383,8 @@
             orgTreeDataTemp (newData) {
                 const data1 = copy(newData)
                 const data2 = copy(newData)
-                processTreeNode(data1, 1, this.currObj.org_ids)
-                processTreeNode(data2, 1, this.currObj.org_mng_ids)
+                processTreeNode(data1, 1, this.currObj.orgIds)
+                processTreeNode(data2, 1, this.currObj.orgMngIds)
                 this.orgTreeDataS1 = data1
                 this.orgTreeDataS2 = data2
             }
@@ -574,9 +574,9 @@
                     levels: 1,
                     enabled: true,
                     sort: 1,
-                    org_ids: [],
+                    orgIds: [],
                     organizationSet: [],
-                    org_mng_ids: [],
+                    orgMngIds: [],
                     organizationMngSet: [],
                     roleIds: [],
                     roleSet: []
@@ -605,10 +605,10 @@
                 this.editForm.enabled = this.currObj.enabled
                 this.editForm.sort = this.currObj.sort
                 if (this.currObj.organizationSet.length > 0) {
-                    this.currObj.org_ids = this.currObj.organizationSet.map(item => item.id)
+                    this.currObj.orgIds = this.currObj.organizationSet.map(item => item.id)
                 }
                 if (this.currObj.organizationMngSet.length > 0) {
-                    this.currObj.org_mng_ids = this.currObj.organizationMngSet.map(item => item.id)
+                    this.currObj.orgMngIds = this.currObj.organizationMngSet.map(item => item.id)
                 }
                 if (this.currObj.roleSet.length > 0) {
                     this.currObj.roleIds = this.currObj.roleSet.map(item => item.id)
@@ -640,8 +640,8 @@
                                 levels: this.editForm.levels,
                                 enabled: this.editForm.enabled,
                                 sort: this.editForm.sort,
-                                org_ids: this.$refs['orgTree'].getCheckedNodes().map(item => item.id),
-                                org_mng_ids: this.$refs['orgMngTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
+                                orgIds: this.$refs['orgTree'].getCheckedNodes().map(item => item.id),
+                                orgMngIds: this.$refs['orgMngTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
                                 roleIds: this.$refs['roleTree'].getCheckedNodes().map(item => item.id)
                             }).then((res) => {
                                 this.modal_loading = false
@@ -667,8 +667,8 @@
                     levels: this.editForm.levels,
                     enabled: this.editForm.enabled,
                     sort: this.editForm.sort,
-                    org_ids: this.$refs['orgTree'].getCheckedNodes().map(item => item.id),
-                    org_mng_ids: this.$refs['orgMngTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
+                    orgIds: this.$refs['orgTree'].getCheckedNodes().map(item => item.id),
+                    orgMngIds: this.$refs['orgMngTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
                     roleIds: this.$refs['roleTree'].getCheckedNodes().map(item => item.id)
                 }).then((res) => {
                     this.modal_loading = false

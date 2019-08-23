@@ -239,10 +239,14 @@ export const processTreeNode = (nodeList, flag = 0, selectedIds = []) => {
     if (nodeList[i].children.length > 0) {
       childrenSelected = processTreeNode(nodeList[i].children, flag, selectedIds)
     }
+    if (childrenSelected > 0) {
+      nodeList[i].expand = true
+    }
+    selectedCount += childrenSelected
     if (flag === 1 && selectedIds.includes(nodeList[i].id)) {
+      selectedCount++
       nodeList[i].expand = true
       if (childrenSelected === nodeList[i].children.length) {
-        selectedCount++
         nodeList[i].checked = true
       } else {
         nodeList[i].checked = false
