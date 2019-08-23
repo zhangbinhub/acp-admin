@@ -197,13 +197,17 @@ const ApiComm = {
     let targetMenu, currMenu
     currMenu = findMenuByPath(this.$router.currentRoute.fullPath, this.$store.state.app.user.menuList)
     if (path.startsWith('/') || path.toLowerCase().startsWith('http')) {
-      if (this.$router.currentRoute.fullPath === path) {
-        return
+      if (!closeMore) {
+        if (this.$router.currentRoute.fullPath === path) {
+          return
+        }
       }
       targetMenu = findMenuByPath(path, this.$store.state.app.user.menuList)
     } else {
-      if (this.$router.currentRoute.name === path) {
-        return
+      if (!closeMore) {
+        if (this.$router.currentRoute.name === path) {
+          return
+        }
       }
     }
     let dataLose = false
@@ -225,15 +229,19 @@ const ApiComm = {
             setTimeout(() => {
               asyncFunc((result) => {
                 if (result) {
-                  setTagNavListInLocalstorage(tagList)
-                  this.$store.commit('SET_TAG_NAV_LIST', tagList)
+                  if (!closeMore) {
+                    setTagNavListInLocalstorage(tagList)
+                    this.$store.commit('SET_TAG_NAV_LIST', tagList)
+                  }
                   this.routeSwitch(obj, targetMenu, replace)
                 }
               })
             }, 350)
           } else {
-            setTagNavListInLocalstorage(tagList)
-            this.$store.commit('SET_TAG_NAV_LIST', tagList)
+            if (!closeMore) {
+              setTagNavListInLocalstorage(tagList)
+              this.$store.commit('SET_TAG_NAV_LIST', tagList)
+            }
             this.routeSwitch(obj, targetMenu, replace)
           }
         }
@@ -294,11 +302,13 @@ const ApiComm = {
   },
   getPageTitle (pageName, pageMenu) {
     let pageTitle = pageName
-    if (pageMenu) {
-      pageTitle = pageMenu.name
-    } else {
-      if (this.$router.currentRoute.meta.title) {
-        pageTitle = this.$i18n.t(this.$router.currentRoute.meta.title)
+    if (!pageTitle) {
+      if (pageMenu) {
+        pageTitle = pageMenu.name
+      } else {
+        if (this.$router.currentRoute.meta.title) {
+          pageTitle = this.$i18n.t(this.$router.currentRoute.meta.title)
+        }
       }
     }
     return pageTitle
