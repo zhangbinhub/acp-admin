@@ -286,7 +286,6 @@ const ApiComm = {
         query: query
       }
     }
-    console.log(1111111111)
     if (replace) {
       this.$router.replace(option)
     } else {
