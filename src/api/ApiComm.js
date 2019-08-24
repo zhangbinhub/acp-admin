@@ -326,6 +326,19 @@ const ApiComm = {
     }
     return pageTitle
   },
+  closeThisTagImmediately () {
+    const tagList = this.$store.state.app.tagNavList.filter(item => item.path !== this.$router.currentRoute.fullPath)
+    const currIndex = this.$store.state.app.tagNavList.findIndex(item => item.path === this.$router.currentRoute.fullPath)
+    let nextPath = this.$store.state.app.appInfo.homePath
+    if (currIndex === this.$store.state.app.tagNavList.length - 1) {
+      nextPath = this.$store.state.app.tagNavList[this.$store.state.app.tagNavList.length - 2].path
+    } else {
+      nextPath = this.$store.state.app.tagNavList[currIndex + 1].path
+    }
+    setTagNavListInLocalstorage(tagList)
+    this.$store.commit('SET_TAG_NAV_LIST', tagList)
+    this.routeSwitch(nextPath)
+  },
   request: {}
 }
 export default ApiComm
