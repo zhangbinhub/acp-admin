@@ -220,32 +220,39 @@ const ApiComm = {
     }
     if ((!targetMenu || targetMenu.openType !== 1) && dataLose) {
       const tagList = this.$store.state.app.tagNavList.filter(item => item.path !== this.$router.currentRoute.fullPath)
-      this.$Modal.confirm({
-        title: this.$i18n.t('dialog.confirm') + '',
-        content: '<br/><p style="color: red">' + this.getPageTitle(pageName, currMenu) + '</p><br/>' +
-          '<p>' + this.$i18n.t('messages.leavePage') + '</p>',
-        onOk: () => {
-          if (asyncFunc && typeof asyncFunc === 'function') {
-            setTimeout(() => {
-              asyncFunc((result) => {
-                if (result) {
-                  if (!closeMore) {
-                    setTagNavListInLocalstorage(tagList)
-                    this.$store.commit('SET_TAG_NAV_LIST', tagList)
-                  }
-                  this.routeSwitch(obj, targetMenu, replace)
+      const dataLoseProcess = () => {
+        if (asyncFunc && typeof asyncFunc === 'function') {
+          setTimeout(() => {
+            asyncFunc((result) => {
+              if (result) {
+                if (!closeMore) {
+                  setTagNavListInLocalstorage(tagList)
+                  ApiComm.$store.commit('SET_TAG_NAV_LIST', tagList)
                 }
-              })
-            }, 350)
-          } else {
-            if (!closeMore) {
-              setTagNavListInLocalstorage(tagList)
-              this.$store.commit('SET_TAG_NAV_LIST', tagList)
-            }
-            this.routeSwitch(obj, targetMenu, replace)
+                ApiComm.routeSwitch(obj, targetMenu, replace)
+              }
+            })
+          }, 350)
+        } else {
+          if (!closeMore) {
+            setTagNavListInLocalstorage(tagList)
+            ApiComm.$store.commit('SET_TAG_NAV_LIST', tagList)
           }
+          ApiComm.routeSwitch(obj, targetMenu, replace)
         }
-      })
+      }
+      if (obj.path === '/404' || obj.path === '/500' || obj.name === 'E404' || obj.name === 'E500') {
+        dataLoseProcess()
+      } else {
+        this.$Modal.confirm({
+          title: this.$i18n.t('dialog.confirm') + '',
+          content: '<br/><p style="color: red">' + this.getPageTitle(pageName, currMenu) + '</p><br/>' +
+            '<p>' + this.$i18n.t('messages.leavePage') + '</p>',
+          onOk: () => {
+            dataLoseProcess()
+          }
+        })
+      }
     } else {
       if (asyncFunc && typeof asyncFunc === 'function') {
         asyncFunc((result) => {
