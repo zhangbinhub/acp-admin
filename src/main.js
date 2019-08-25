@@ -44,6 +44,7 @@ Vue.use(iView, {
   }
 })
 Vue.use(api, {
+  Modal: Vue.prototype.$Modal,
   notice: Vue.prototype.$Notice,
   i18n: i18n,
   http: Vue.prototype.$http,

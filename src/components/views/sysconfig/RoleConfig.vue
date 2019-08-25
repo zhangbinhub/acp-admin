@@ -22,10 +22,8 @@
                 </label>
               </Form-item>
               <Form-item :label="$t('forms.code')" prop="code">
-                <i-select v-model="editForm.code" :filterable="true" :disabled="treeLoading"
-                          @keyup.enter.native="doSave">
-                  <Option v-for="item in roleCodeList" :value="item" :key="item">{{ item }}</Option>
-                </i-select>
+                <AutoComplete v-model="editForm.code" :filterable="true" :disabled="treeLoading" :data="roleCode"
+                              @keyup.enter.native="doSave"></AutoComplete>
               </Form-item>
               <Form-item :label="$t('forms.level')" prop="levels">
                 <InputNumber v-model="editForm.levels" :disabled="treeLoading" style="width: 100%;max-width: 150px;"
@@ -54,10 +52,10 @@
             </Transfer>
           </TabPane>
           <TabPane :label="$t('forms.menuList')" icon="md-list">
-            <Tree ref="menuTree" :data="menuData" :show-checkbox="true" :multiple="true"></Tree>
+            <Tree ref="menuTree" :data="menuData" :show-checkbox="true" :check-directly="true"></Tree>
           </TabPane>
           <TabPane :label="$t('forms.moduleFuncList')" icon="md-apps">
-            <Tree ref="moduleFuncTree" :data="moduleFuncData" :show-checkbox="true" :multiple="true"></Tree>
+            <Tree ref="moduleFuncTree" :data="moduleFuncData" :show-checkbox="true" :check-directly="true"></Tree>
           </TabPane>
         </Tabs>
         <Divider style="margin: 12px 0;"/>
@@ -140,9 +138,6 @@
             },
             treeLoading () {
                 return this.tree_loading
-            },
-            roleCodeList () {
-                return this.roleCode
             }
         },
         methods: {

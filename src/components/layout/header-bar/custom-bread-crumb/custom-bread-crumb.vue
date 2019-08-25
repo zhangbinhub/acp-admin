@@ -1,8 +1,7 @@
 <template>
   <div class="custom-bread-crumb">
     <Breadcrumb :style="{fontSize: `${fontSize}px`}">
-      <BreadcrumbItem v-for="(item, index) in list" :key="`bread-crumb-${index}`"
-                      :to="index !== list.length - 1 ? item.path : ''">
+      <BreadcrumbItem v-for="(item, index) in list" :key="`bread-crumb-${index}`">
         <Icon style="margin-right: 4px;" :type="item.iconType"></Icon>
         <span>{{ item.name }}</span>
       </BreadcrumbItem>

@@ -209,8 +209,8 @@
             scale (d) {
                 this.cropper[`scale${d}`](-this.cropper.getData()[`scale${d}`])
             },
-            move (...argu) {
-                this.cropper.move(...argu)
+            move (...args) {
+                this.cropper.move(...args)
             },
             aspact (value) {
                 this.cropper.setAspectRatio(value)

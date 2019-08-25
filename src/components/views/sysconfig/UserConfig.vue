@@ -163,21 +163,24 @@
         <i-col :md="6" class="card-col">
           <Card>
             <p slot="title">{{$t('forms.orgList')}}</p>
-            <Tree ref="orgTree" :data="orgTreeDataS1" :show-checkbox="true" :check-strictly="true"></Tree>
+            <Tree ref="orgTree" :data="orgTreeDataS1" :show-checkbox="true" :check-strictly="true"
+                  :check-directly="true"></Tree>
             <Spin size="large" :fix="true" v-if="modal_loading"></Spin>
           </Card>
         </i-col>
         <i-col :md="6" class="card-col">
           <Card>
             <p slot="title">{{$t('forms.orgMngList')}}</p>
-            <Tree ref="orgMngTree" :data="orgTreeDataS2" :show-checkbox="true"></Tree>
+            <Tree ref="orgMngTree" :data="orgTreeDataS2" :show-checkbox="true" :check-strictly="true"
+                  :check-directly="true"></Tree>
             <Spin size="large" :fix="true" v-if="modal_loading"></Spin>
           </Card>
         </i-col>
         <i-col :md="6" class="card-col">
           <Card>
             <p slot="title">{{$t('forms.roleList')}}</p>
-            <Tree ref="roleTree" :data="roleTreeData" :show-checkbox="true" :check-strictly="true"></Tree>
+            <Tree ref="roleTree" :data="roleTreeData" :show-checkbox="true" :check-strictly="true"
+                  :check-directly="true"></Tree>
             <Spin size="large" :fix="true" v-if="modal_loading"></Spin>
           </Card>
         </i-col>
@@ -245,9 +248,9 @@
                     levels: 1,
                     enabled: true,
                     sort: 1,
-                    org_ids: [],
+                    orgIds: [],
                     organizationSet: [],
-                    org_mng_ids: [],
+                    orgMngIds: [],
                     organizationMngSet: [],
                     roleIds: [],
                     roleSet: []
@@ -383,8 +386,8 @@
             orgTreeDataTemp (newData) {
                 const data1 = copy(newData)
                 const data2 = copy(newData)
-                processTreeNode(data1, 1, this.currObj.org_ids)
-                processTreeNode(data2, 1, this.currObj.org_mng_ids)
+                processTreeNode(data1, 2, this.currObj.orgIds)
+                processTreeNode(data2, 2, this.currObj.orgMngIds)
                 this.orgTreeDataS1 = data1
                 this.orgTreeDataS2 = data2
             }
@@ -399,7 +402,7 @@
                             item.expand = true
                         }
                         this.orgTreeDataTemp = copy(res.data)
-                        processTreeNode(res.data, 1)
+                        processTreeNode(res.data, 2)
                         this.orgTreeData = res.data
                         if (typeof callBack === 'function') {
                             callBack()
@@ -428,7 +431,7 @@
                         this.$api.request.role.getList().then((res) => {
                             this.modal_loading = false
                             if (res) {
-                                processTreeNode(res.data, 1, this.currObj.roleIds)
+                                processTreeNode(res.data, 2, this.currObj.roleIds)
                                 for (const item of res.data) {
                                     item.parentId = item.appId
                                     for (const root of this.roleTreeData) {
@@ -574,9 +577,9 @@
                     levels: 1,
                     enabled: true,
                     sort: 1,
-                    org_ids: [],
+                    orgIds: [],
                     organizationSet: [],
-                    org_mng_ids: [],
+                    orgMngIds: [],
                     organizationMngSet: [],
                     roleIds: [],
                     roleSet: []
@@ -605,10 +608,10 @@
                 this.editForm.enabled = this.currObj.enabled
                 this.editForm.sort = this.currObj.sort
                 if (this.currObj.organizationSet.length > 0) {
-                    this.currObj.org_ids = this.currObj.organizationSet.map(item => item.id)
+                    this.currObj.orgIds = this.currObj.organizationSet.map(item => item.id)
                 }
                 if (this.currObj.organizationMngSet.length > 0) {
-                    this.currObj.org_mng_ids = this.currObj.organizationMngSet.map(item => item.id)
+                    this.currObj.orgMngIds = this.currObj.organizationMngSet.map(item => item.id)
                 }
                 if (this.currObj.roleSet.length > 0) {
                     this.currObj.roleIds = this.currObj.roleSet.map(item => item.id)
@@ -640,8 +643,8 @@
                                 levels: this.editForm.levels,
                                 enabled: this.editForm.enabled,
                                 sort: this.editForm.sort,
-                                org_ids: this.$refs['orgTree'].getCheckedNodes().map(item => item.id),
-                                org_mng_ids: this.$refs['orgMngTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
+                                orgIds: this.$refs['orgTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
+                                orgMngIds: this.$refs['orgMngTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
                                 roleIds: this.$refs['roleTree'].getCheckedNodes().map(item => item.id)
                             }).then((res) => {
                                 this.modal_loading = false
@@ -667,8 +670,8 @@
                     levels: this.editForm.levels,
                     enabled: this.editForm.enabled,
                     sort: this.editForm.sort,
-                    org_ids: this.$refs['orgTree'].getCheckedNodes().map(item => item.id),
-                    org_mng_ids: this.$refs['orgMngTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
+                    orgIds: this.$refs['orgTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
+                    orgMngIds: this.$refs['orgMngTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
                     roleIds: this.$refs['roleTree'].getCheckedNodes().map(item => item.id)
                 }).then((res) => {
                     this.modal_loading = false
