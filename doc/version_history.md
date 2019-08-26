@@ -5,6 +5,7 @@
 > - [Upgrade] 优化 tools.js 中 processTreeNode 函数
 > - [Upgrade] 优化统一页面跳转方法
 > - [Upgrade] 优化代码树形选择
+> - [Upgrade] 修改后端请求地址baseURL及代理配置，解决跨域问题
 ##### v3.0.4
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 优化输入框样式
