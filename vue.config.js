@@ -2,7 +2,7 @@
 // 官方vue.config.js 参考文档 https://cli.vuejs.org/zh/config/#css-loaderoptions
 // 这里只列一部分，具体配置参考文档
 module.exports = {
-  publicPath: '/', // 部署应用时的根路径(默认'/'),也可用相对路径(存在使用限制)
+  publicPath: '/', // 部署应用时的根路径(默认'/'),也可用相对路径(当使用相对路径时，router中也需要配置base为对应的路径)
   outputDir: 'dist', // 运行时生成的生产环境构建文件的目录(默认''dist''，构建之前会被清除)
   assetsDir: 'public', // 放置生成的静态资源(s、css、img、fonts)的(相对于 outputDir 的)目录(默认'')
   indexPath: 'index.html', // 指定生成的 index.html 的输出路径(相对于 outputDir)也可以是一个绝对路径。
@@ -29,25 +29,24 @@ module.exports = {
     },
     modules: false // 启用 CSS modules for all css / pre-processor files.
   },
-  // 它支持webPack-dev-server的所有选项
-  // devServer: {
-  //   // 环境配置
-  //   host: '192.168.1.53',
-  //   port: 8080,
-  //   https: false,
-  //   hotOnly: false,
-  //   open: true, //配置自动启动浏览器
-  //   proxy: {
-  //     // 配置多个代理(配置一个 proxy: 'http://localhost:4000' )
-  //     // '/api': {
-  //     //   target: 'http://192.168.1.248:9888',
-  //     //   // target: 'http://192.168.1.4:8999',
-  //     //   pathRewrite: {
-  //     //     '^/api': '/api'
-  //     //   }
-  //     // }
-  //   }
-  // },
+  // 本地开发环境代理设置，它支持webPack-dev-server的所有选项
+  devServer: {
+    // 环境配置
+    // host: '192.168.1.53',
+    // port: 8080,
+    // https: false,
+    // hotOnly: false,
+    // open: true, //配置自动启动浏览器
+    proxy: {
+      // 配置多个代理(配置一个 proxy: 'http://localhost:4000' )
+      '/vi/api': {
+        target: 'http://127.0.0.1:8771/api',
+        pathRewrite: {
+          '^/vi/api': '/'
+        }
+      }
+    }
+  },
   chainWebpack: config => {
     config.module
       .rule('vue')

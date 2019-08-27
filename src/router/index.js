@@ -7,6 +7,7 @@ import iView from 'iview'
 Vue.use(Router)
 const router = new Router({
   mode: 'history',
+  base: '/',
   routes: routes,
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
