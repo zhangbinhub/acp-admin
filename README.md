@@ -1,5 +1,5 @@
 # acp-admin
-###### v3.0.5 [版本更新日志](doc/version_history.md)
+###### v3.0.6 [版本更新日志](doc/version_history.md)
 兼容的浏览器及版本
 - IE 9+
 - Edge

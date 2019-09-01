@@ -3,6 +3,8 @@ import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 import 'iview/dist/styles/iview.css'
 import iView from 'iview'
 import router from './router'
@@ -36,6 +38,13 @@ Vue.prototype.$echarts = eCharts
 
 // 加载 iView ，并启用 i18n
 const i18n = store.state.app.i18n
+Vue.use(ElementUI, {
+  i18n: function (path, options) {
+    let value = i18n.t(path, options)
+    if (value !== null && value !== undefined) return value
+    return ''
+  }
+})
 Vue.use(iView, {
   i18n: function (path, options) {
     let value = i18n.t(path, options)
