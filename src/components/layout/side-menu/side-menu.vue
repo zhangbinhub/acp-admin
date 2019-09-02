@@ -1,45 +1,33 @@
 <template>
   <div class="side-menu-wrapper">
     <slot></slot>
-    <div class="menu-area" v-show="!collapsed">
-      <Menu ref="menu" :active-name="activeName" :open-names="openedNames" :accordion="accordion"
-            :theme="theme" width="auto" @on-select="handleSelect">
-        <template v-for="item in menuList">
-          <side-menu-item v-if="item.children && item.children.length > 0" :key="`menu-${item.id}`"
-                          :parent-item="item"></side-menu-item>
-          <menu-item v-else :name="item.path" :key="`menu-${item.id}`">
-            <Icon :type="item.iconType"></Icon>
-            <span>{{ item.name }}</span>
-          </menu-item>
-        </template>
-      </Menu>
-    </div>
-    <div class="menu-area menu-collapsed" v-show="collapsed" :list="menuList">
+    <el-menu class="menu-root" :collapse="collapsed" :unique-opened="accordion"
+             background-color="#001529"
+             text-color="rgba(255, 255, 255, 0.7)"
+             active-text-color="#409eff"
+             :default-active="activeName"
+             :default-openeds="openedNames"
+             @select="handleSelect">
       <template v-for="item in menuList">
-        <collapsed-menu v-if="item.children && item.children.length > 0" @on-click="handleSelect" :hide-title="true"
-                        :root-icon-size="30" :icon-size="16" :parent-item="item" :is-root="true"
-                        :key="`drop-menu-${item.id}`"></collapsed-menu>
-        <Tooltip :transfer="true" v-else :content="item.name"
-                 placement="right" :key="`drop-menu-${item.id}`">
-          <a @click="handleSelect(item.path)" class="drop-menu-a"
-             :style="{textAlign: 'center'}">
-            <Icon :type="item.iconType" :size="30"></Icon>
-          </a>
-        </Tooltip>
+        <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"></side-menu-item>
+        <el-menu-item v-else :index="item.path">
+          <template slot="title">
+            <i :class="item.iconType"></i>
+            <span>{{item.name}}</span>
+          </template>
+        </el-menu-item>
       </template>
-    </div>
+    </el-menu>
   </div>
 </template>
 <script>
     import { getOpenedNamesByActiveName } from '@/libs/tools'
     import SideMenuItem from './side-menu-item.vue'
-    import CollapsedMenu from './collapsed-menu.vue'
 
     export default {
         name: 'SideMenu',
         components: {
-            SideMenuItem,
-            CollapsedMenu
+            SideMenuItem
         },
         props: {
             menuList: {
@@ -70,12 +58,6 @@
         methods: {
             handleSelect (path) {
                 this.$emit('on-select', path)
-            },
-            updateMenuStatus () {
-                this.$nextTick(() => {
-                    this.$refs.menu.updateOpened()
-                    this.$refs.menu.updateActiveName()
-                })
             }
         },
         watch: {
@@ -91,9 +73,6 @@
             },
             openNames (newNames) {
                 this.openedNames = newNames
-            },
-            openedNames () {
-                this.updateMenuStatus()
             }
         }
     }

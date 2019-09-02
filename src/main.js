@@ -5,8 +5,6 @@ import App from './App.vue'
 import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import 'iview/dist/styles/iview.css'
-import iView from 'iview'
 import router from './router'
 import './plugins/plugin-axios.js'
 import api from './api'
@@ -36,7 +34,7 @@ window.onresize = function () {
 // 加载 eCharts
 Vue.prototype.$echarts = eCharts
 
-// 加载 iView ，并启用 i18n
+// 加载 ElementUI ，并启用 i18n
 const i18n = store.state.app.i18n
 Vue.use(ElementUI, {
   i18n: function (path, options) {
@@ -45,22 +43,14 @@ Vue.use(ElementUI, {
     return ''
   }
 })
-Vue.use(iView, {
-  i18n: function (path, options) {
-    let value = i18n.t(path, options)
-    if (value !== null && value !== undefined) return value
-    return ''
-  }
-})
 Vue.use(api, {
-  Modal: Vue.prototype.$Modal,
-  notice: Vue.prototype.$Notice,
+  confirm: Vue.prototype.$confirm,
+  notify: Vue.prototype.$notify,
   i18n: i18n,
   http: Vue.prototype.$http,
   store: store,
   router: router,
-  loading: Vue.prototype.$Loading,
-  spin: Vue.prototype.$Spin
+  loading: Vue.prototype.$loading
 })
 new Vue({
   router,

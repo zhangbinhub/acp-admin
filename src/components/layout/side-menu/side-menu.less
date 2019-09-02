@@ -1,65 +1,18 @@
 .side-menu-wrapper {
   user-select: none;
+  height: 100%;
+  background-color: #001529;
 
-  .menu-area {
-    width: ~"calc(100% + 18px)";
-    overflow-x: hidden;
+  .menu-root {
+    height: ~"calc(100% - 60px)";
+    overflow-x: auto;
     overflow-y: scroll;
-    left: 0;
-    bottom: 0;
-    margin-right: -18px;
-    position: absolute;
-    top: 64px;
-
-    .ivu-menu-vertical {
-      margin-right: -18px;
-    }
+    margin-right: -20px;
+    top: 60px;
   }
 
-  .menu-collapsed {
-    padding-top: 10px;
-
-    .ivu-dropdown {
-      width: 100%;
-      padding: 10px 0 10px 0;
-
-      .ivu-dropdown-rel a {
-        width: 100%;
-      }
-    }
-
-    .ivu-tooltip {
-      width: 100%;
-      padding: 10px 0 10px 0;
-
-      .ivu-tooltip-rel {
-        width: 100%;
-      }
-
-      .ivu-tooltip-popper .ivu-tooltip-content {
-        .ivu-tooltip-arrow {
-          border-right-color: #fff;
-        }
-
-        .ivu-tooltip-inner {
-          background: #fff;
-          color: #495060;
-        }
-      }
-    }
-
-
+  .menu-root.el-menu--collapse.el-menu {
+    width: 83px;
   }
 
-  a.drop-menu-a {
-    padding: 10px 15px 10px 16px;
-    width: 100%;
-    text-align: center;
-    color: #495060;
-  }
-
-}
-
-.menu-title {
-  padding-left: 6px;
 }

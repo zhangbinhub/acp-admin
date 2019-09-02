@@ -1,4 +1,4 @@
-import twLocale from 'iview/src/locale/lang/zh-TW'
+import twLocale from 'element-ui/lib/locale/lang/zh-TW'
 
 const messages = Object.assign(twLocale, {
   lang: '語言',

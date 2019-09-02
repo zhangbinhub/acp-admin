@@ -1,31 +1,31 @@
 <template>
   <div class="index">
-    <Row>
-      <Card>
-        <p slot="title">{{$t('forms.numberOfOnlineUsers')}}</p>
-        <Row :gutter="8">
-          <i-col :lg='{span:6}' v-for="(item,index) in onlineMessage" :key="index"
-                 style="font-size: 38px;padding: 0">
-            <Card style="margin: 0 8px">
-              <Row>
-                <i-col span="8">
-                  <Icon type="md-pulse" :size="38"></Icon>
-                </i-col>
-                <i-col span="16">
-                  <p style="color: #9ea7b4;">{{item.appName}}</p>
+    <el-row>
+      <el-card shadow="always">
+        <div slot="header">{{$t('forms.numberOfOnlineUsers')}}</div>
+        <el-row :gutter="8">
+          <el-col :lg='{span:6}' v-for="(item,index) in onlineMessage" :key="index"
+                  style="padding: 0">
+            <el-card shadow="hover" style="margin: 0 8px">
+              <el-row>
+                <el-col :span="8">
+                  <i class="el-icon-odometer" style="font-size: 38px"></i>
+                </el-col>
+                <el-col :span="16">
+                  <div style="color: #9ea7b4;">{{item.appName}}</div>
                   <h3>{{item.count}}</h3>
-                </i-col>
-              </Row>
-            </Card>
-          </i-col>
-        </Row>
-      </Card>
-    </Row>
-    <Row v-show="showLoginChart" style="margin-top: 16px;">
-      <Card>
+                </el-col>
+              </el-row>
+            </el-card>
+          </el-col>
+        </el-row>
+      </el-card>
+    </el-row>
+    <el-row v-show="showLoginChart" style="margin-top: 16px;">
+      <el-card shadow="always">
         <div id="loginChart" :style="{height: '300px'}"></div>
-      </Card>
-    </Row>
+      </el-card>
+    </el-row>
   </div>
 </template>
 <script>
@@ -63,12 +63,12 @@
             },
             initLoginChart () {
                 let loginChart = this.$echarts.init(document.getElementById('loginChart'))
-                let xAxisdata = []
+                let xAxisData = []
                 let appNames = []
                 let series = []
                 this.loginInfo.forEach(info => {
-                    if (!xAxisdata.includes(info.date)) {
-                        xAxisdata.push(info.date)
+                    if (!xAxisData.includes(info.date)) {
+                        xAxisData.push(info.date)
                     }
                     if (!appNames.includes(info.appName)) {
                         appNames.push(info.appName)
@@ -86,7 +86,7 @@
                         })[0].data.push([info.date, info.count])
                     }
                 })
-                xAxisdata.sort()
+                xAxisData.sort()
                 loginChart.setOption({
                     title: {
                         text: this.$i18n.t('forms.loginStatistics')
@@ -117,7 +117,7 @@
                     xAxis: [{
                         type: 'category',
                         splitNumber: 10,
-                        data: xAxisdata
+                        data: xAxisData
                     }],
                     yAxis: [{
                         type: 'value',

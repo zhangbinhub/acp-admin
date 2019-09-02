@@ -1,49 +1,26 @@
 <template>
-  <div class="tags-nav">
+  <div class="header-tabs">
     <div class="close-con">
-      <Dropdown :transfer="true" @on-click="handleTagsOption" style="margin-top:7px;">
-        <Button size="small" type="text">
-          <Icon :size="18" type="ios-close-circle-outline"/>
-        </Button>
-        <DropdownMenu slot="list">
-          <DropdownItem name="close-others">{{$t('home.closeOther')}}</DropdownItem>
-          <DropdownItem name="close-all">{{$t('home.closeAll')}}</DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
+      <el-dropdown trigger="click" @command="handleTagsOption">
+        <el-button type="text">
+          <i style="font-size: 18px" class="el-icon-error"></i>
+        </el-button>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="close-others">{{$t('home.closeOther')}}</el-dropdown-item>
+          <el-dropdown-item command="close-all">{{$t('home.closeAll')}}</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
-    <div class="btn-con left-btn">
-      <Button type="text" @click="handleScroll(240)">
-        <Icon :size="18" type="ios-arrow-back"/>
-      </Button>
-    </div>
-    <ul v-show="visible" :style="{left: contextMenuLeft + 'px', top: contextMenuTop + 'px'}" class="contextmenu">
-      <li v-for="(item, key) of contextMenuList" @click="handleTagsOption(key)" :key="key">{{item}}</li>
-    </ul>
-    <div class="btn-con right-btn">
-      <Button type="text" @click="handleScroll(-240)">
-        <Icon :size="18" type="ios-arrow-forward"/>
-      </Button>
-    </div>
-    <div class="scroll-outer" ref="scrollOuter" @DOMMouseScroll="handleScrollMouse" @mousewheel="handleScrollMouse">
-      <div ref="scrollBody" class="scroll-body" :style="{left: tagBodyLeft + 'px'}">
-        <transition-group name="taglist-moving-animation">
-          <Tag
-            type="dot"
-            v-for="(item, index) in tagList"
-            ref="tagsPageOpened"
-            :key="`tag-nav-${index}`"
-            :name="item.path"
-            :data-route-item="item"
-            @on-close="handleClose(item)"
-            @click.native="handleClick(item)"
-            :closable="!item.isHome"
-            :color="isCurrentTag(item) ? 'primary' : 'default'"
-            @contextmenu.prevent.native="contextMenu(item, $event)"
-          >{{ showTitleInside(item) }}
-          </Tag>
-        </transition-group>
-      </div>
-    </div>
+    <el-tabs type="card" ref="header-tabs" v-model="currPath" @tab-click="handleClick" @tab-remove="handleClose">
+      <el-tab-pane
+        :key="item.name"
+        v-for="(item, index) in tagList"
+        :label="showTitleInside(item)"
+        :name="item.path"
+        :data-route-item="item"
+        :closable="!item.isHome">
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
@@ -62,7 +39,12 @@
                 type: Array,
                 default: () => []
             },
-            fullPath: String
+            fullPath: {
+                type: String,
+                default () {
+                    return ''
+                }
+            }
         },
         data () {
             return {
@@ -72,7 +54,8 @@
                 contextMenuLeft: 0,
                 contextMenuTop: 0,
                 visible: false,
-                homePath: this.$store.state.app.appInfo.homePath
+                homePath: this.$store.state.app.appInfo.homePath,
+                currPath: this.fullPath
             }
         },
         computed: {
@@ -87,29 +70,6 @@
             }
         },
         methods: {
-            handleScrollMouse (e) {
-                const type = e.type
-                let delta = 0
-                if (type === 'DOMMouseScroll' || type === 'mousewheel') {
-                    delta = (e.wheelDelta) ? e.wheelDelta : -(e.detail || 0) * 40
-                }
-                this.handleScroll(delta)
-            },
-            handleScroll (offset) {
-                const outerWidth = this.$refs.scrollOuter.offsetWidth
-                const bodyWidth = this.$refs.scrollBody.offsetWidth
-                if (offset > 0) {
-                    this.tagBodyLeft = Math.min(0, this.tagBodyLeft + offset)
-                } else {
-                    if (outerWidth < bodyWidth) {
-                        if (this.tagBodyLeft >= -(bodyWidth - outerWidth)) {
-                            this.tagBodyLeft = Math.max(this.tagBodyLeft + offset, outerWidth - bodyWidth)
-                        }
-                    } else {
-                        this.tagBodyLeft = 0
-                    }
-                }
-            },
             handleTagsOption (type) {
                 if (type.includes('all')) {
                     const res = this.list.filter(item => item.path === this.homePath)
@@ -120,16 +80,14 @@
                     this.focusTagElementByFullPath(this.fullPath)
                 }
             },
-            handleClose (current) {
-                if (current.path !== this.fullPath) {
-                    this.handleClick(current)
-                } else {
-                    this.close(current.path, this.showTitleInside(current))
-                }
+            handleClose (path) {
+                this.close(path)
             },
-            close (path, pageName) {
+            close (path) {
                 const res = this.list.filter(item => item.path !== path)
                 const currIndex = this.list.findIndex(item => item.path === path)
+                const currTag = this.list.filter(item => item.path === path)[0]
+                const pageName = this.showTitleInside(currTag)
                 let nextPath = this.homePath
                 if (currIndex === this.list.length - 1) {
                     nextPath = this.list[this.list.length - 2].path
@@ -138,8 +96,8 @@
                 }
                 this.$emit('on-close', res, undefined, nextPath, pageName)
             },
-            handleClick (item) {
-                this.$emit('input', item.path)
+            handleClick (path) {
+                this.$emit('input', path)
             },
             showTitleInside (item) {
                 if (item.isHome) {
@@ -154,43 +112,15 @@
                     }
                 }
             },
-            isCurrentTag (item) {
-                return this.fullPath === item.path
-            },
-            moveToView (tag) {
-                const outerWidth = this.$refs.scrollOuter.offsetWidth
-                const bodyWidth = this.$refs.scrollBody.offsetWidth
-                if (bodyWidth < outerWidth) {
-                    this.tagBodyLeft = 0
-                } else if (tag.offsetLeft < -this.tagBodyLeft) {
-                    // 标签在可视区域左侧
-                    this.tagBodyLeft = -tag.offsetLeft + this.outerPadding
-                } else if (tag.offsetLeft > -this.tagBodyLeft && tag.offsetLeft + tag.offsetWidth < -this.tagBodyLeft + outerWidth) {
-                    // 标签在可视区域
-                    this.tagBodyLeft = Math.min(0, outerWidth - tag.offsetWidth - tag.offsetLeft - this.outerPadding)
-                } else {
-                    // 标签在可视区域右侧
-                    this.tagBodyLeft = -(tag.offsetLeft - (outerWidth - this.outerPadding - tag.offsetWidth))
-                }
-            },
             focusTagElementByFullPath (fullPath) {
                 this.$nextTick(() => {
-                        this.refsTag = this.$refs.tagsPageOpened
-                        if (this.refsTag && this.refsTag.length > 0) {
-                            this.refsTag.forEach((item, index) => {
-                                if (item.$attrs['data-route-item'].path === fullPath) {
-                                    this.moveToView(this.refsTag[index].$el)
-                                }
-                            })
-                        }
-                    }
-                )
+                    this.currPath = fullPath
+                })
             },
-            contextMenu (item, e) {
+            contextMenu (e) {
                 this.visible = true
-                const offsetLeft = this.$el.getBoundingClientRect().left
-                this.contextMenuLeft = e.clientX - offsetLeft + 10
-                this.contextMenuTop = e.clientY - 64
+                this.contextMenuLeft = e.clientX + 10
+                this.contextMenuTop = e.clientY - 60
             },
             closeMenu () {
                 this.visible = false
@@ -198,7 +128,9 @@
         },
         watch: {
             '$route' (to) {
-                this.focusTagElementByFullPath(to.fullPath)
+                this.$nextTick(() => {
+                    this.focusTagElementByFullPath(to.fullPath)
+                })
             },
             visible (value) {
                 if (value) {
@@ -207,9 +139,6 @@
                     document.body.removeEventListener('click', this.closeMenu)
                 }
             }
-        },
-        mounted () {
-            this.focusTagElementByFullPath(this.fullPath)
         }
     }
 </script>

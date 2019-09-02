@@ -1,20 +1,19 @@
 <template>
-  <Layout style="height: 100%" :class="`home home-${theme}`">
-    <Sider :hide-trigger="true" :collapsible="true" :width="220" :collapsed-width="63" v-model="isCollapsed"
-           class="left-sider" :style="{overflow: 'hidden'}">
-      <side-menu :accordion="true" ref="sideMenu" :active-name="fullPath" :collapsed="isCollapsed"
+  <el-container style="height: 100%" :class="`home home-${theme}`">
+    <el-aside :width="isCollapsed?'63px':'220px'" :style="{overflow: 'hidden'}">
+      <side-menu :accordion="true" :active-name="fullPath" :collapsed="isCollapsed"
                  @on-select="handleClick" :menu-list="menuList" :open-names="openedNames" :theme="theme">
-        <div class="logo-con">
+        <div class="logo-con" :style="'width: '+(isCollapsed?'43px':'200px')">
           <img v-show="!isCollapsed" :src="mainLogo" alt=""/>
           <img v-show="isCollapsed" :src="minLogo" alt=""/>
         </div>
       </side-menu>
-    </Sider>
-    <Layout>
-      <Header class="header-con">
+    </el-aside>
+    <el-container>
+      <el-header style="padding: 0;height: 60px">
         <header-bar :collapsed="isCollapsed" :full-path="fullPath" :menu-list="menuList"
                     :mini="isMini" @on-coll-change="handleCollapsedChange">
-          <user :user-avator="userAvator" :customer-name="userName"/>
+          <user :user-avatar="userAvatar" :customer-name="userName"/>
           <language style="margin-right: 10px;" :lang="localLang"/>
           <logFileButton v-if="showLogFile" style="margin-right: 10px;"></logFileButton>
           <configCenterButton v-if="showConfigCenter" style="margin-right: 10px;"></configCenterButton>
@@ -22,30 +21,26 @@
           <routeConfigButton v-if="showRouteConfig" style="margin-right: 10px;"></routeConfigButton>
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </header-bar>
-      </Header>
-      <div class="home-content-con">
-        <Layout class="home-layout-con">
-          <div class="tag-nav-wrapper">
-            <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList"
-                      @input="handleClick" @on-close="handleCloseTag"/>
-          </div>
-          <div class="content-wrapper">
-            <div class="content-sticker">
-              <transition name="fade" mode="out-in" :appear="true">
-                <keep-alive :include="cacheList">
-                  <router-view/>
-                </keep-alive>
-              </transition>
-              <ABackTop :height="100" :bottom="80" :right="50" container=".content-wrapper"></ABackTop>
-            </div>
-            <Footer class="content-footer">
-              <small style="text-align: center;">{{copyright}}</small>
-            </Footer>
-          </div>
-        </Layout>
-      </div>
-    </Layout>
-  </Layout>
+      </el-header>
+      <el-container style="overflow: auto">
+        <el-header style="padding: 0;height: 43px">
+          <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList"
+                    @input="handleClick" @on-close="handleCloseTag"/>
+        </el-header>
+        <el-main class="main-content">
+          <transition name="el-fade-in-linear">
+            <keep-alive :include="cacheList">
+              <router-view/>
+            </keep-alive>
+          </transition>
+        </el-main>
+      </el-container>
+      <el-footer class="foot-content" style="height: 30px">
+        <small style="text-align: center;">{{copyright}}</small>
+      </el-footer>
+      <el-backtop :visibility-height="100" target=".main-content"></el-backtop>
+    </el-container>
+  </el-container>
 </template>
 <script>
     import SideMenu from './side-menu'
@@ -130,7 +125,7 @@
             tagNavList () {
                 return this.$store.state.app.tagNavList
             },
-            userAvator () {
+            userAvatar () {
                 return this.$store.state.app.user.userInfo.avatar
             },
             userName () {

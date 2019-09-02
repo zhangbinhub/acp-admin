@@ -1,9 +1,9 @@
 const baseURL = '/vi/api'
 export default {
   appName: 'Acp-Admin',
-  appVersion: '3.0.6',
+  appVersion: '4.0.0',
   copyright: 'Copyright © 2019 by ZhangBin',
-  theme: 'dark', // dark and light
+  theme: 'dark',
   minWidth: 768,
   homePath: '/index',
   cookieExpires: 1, // day

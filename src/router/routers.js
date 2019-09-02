@@ -12,13 +12,6 @@ import demo from './demo'
  * }
  */
 export default [{
-  path: '/test',
-  name: 'test',
-  component: () => import('@/components/test/test.vue'),
-  meta: {
-    title: 'pageTitle.test'
-  }
-}, {
   path: '/login',
   name: 'login',
   component: () => import('@/components/pages/Login.vue'),

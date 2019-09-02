@@ -717,7 +717,7 @@
                 this.$api.request.auth.createMenu({
                     appId: data.appId,
                     name: this.$i18n.t('forms.new') + this.$i18n.t('forms.menu'),
-                    iconType: 'md-funnel',
+                    iconType: 'el-icon-caret-right',
                     path: '/',
                     parentId: data.id,
                     enabled: false,

@@ -1,4 +1,4 @@
-import enLocale from 'iview/src/locale/lang/en-US'
+import enLocale from 'element-ui/lib/locale/lang/en'
 
 const messages = Object.assign(enLocale, {
   lang: 'Lang',

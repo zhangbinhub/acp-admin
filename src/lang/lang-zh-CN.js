@@ -1,4 +1,4 @@
-import zhLocale from 'iview/src/locale/lang/zh-CN'
+import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 
 const messages = Object.assign(zhLocale, {
   lang: '语言',

@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './routers'
 import store from '../store'
-import iView from 'iview'
 
 Vue.use(Router)
 const router = new Router({
@@ -18,7 +17,6 @@ const router = new Router({
   }
 })
 router.beforeEach((to, from, next) => {
-  iView.LoadingBar.start()
   if (to.matched.length === 0) {
     router.replace({
       name: 'E404',
@@ -52,6 +50,5 @@ router.afterEach(to => {
     pageTitle = ' - ' + store.state.app.i18n.t(to.meta.title)
   }
   document.title = store.state.app.appInfo.appName + pageTitle
-  iView.LoadingBar.finish()
 })
 export default router

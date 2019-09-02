@@ -1,11 +1,11 @@
 <template>
   <div class="custom-bread-crumb">
-    <Breadcrumb :style="{fontSize: `${fontSize}px`}">
-      <BreadcrumbItem v-for="(item, index) in list" :key="`bread-crumb-${index}`">
-        <Icon style="margin-right: 4px;" :type="item.iconType"></Icon>
+    <el-breadcrumb :style="{fontSize: `${fontSize}px`}">
+      <el-breadcrumb-item v-for="(item, index) in list" :key="`bread-crumb-${index}`">
+        <i style="margin-right: 4px;" :class="item.iconType"></i>
         <span>{{ item.name }}</span>
-      </BreadcrumbItem>
-    </Breadcrumb>
+      </el-breadcrumb-item>
+    </el-breadcrumb>
   </div>
 </template>
 <script>
@@ -43,7 +43,7 @@
                 return [{
                     name: this.$i18n.t('pageTitle.home'),
                     path: this.homePath,
-                    iconType: 'ios-home'
+                    iconType: 'el-icon-s-home'
                 }, ...breadCrumbList]
             }
         }

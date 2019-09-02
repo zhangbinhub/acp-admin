@@ -95,7 +95,7 @@
                         currObj.$api.request.auth.doLogin(currObj.formValidate.loginNo, currObj.formValidate.password).then(res => {
                             if (res) {
                                 if (res.data.access_token) {
-                                    currObj.$Message.success(currObj.$i18n.t('messages.loginSuccess'))
+                                    currObj.$message.success(currObj.$i18n.t('messages.loginSuccess') + '')
                                     currObj.$store.commit('SET_TOKEN', res.data.access_token)
                                     currObj.$store.commit('SET_TOKEN_TYPE', res.data.token_type)
                                     currObj.$store.commit('SET_SCOPE', res.data.scope)
