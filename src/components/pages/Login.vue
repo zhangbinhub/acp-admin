@@ -15,6 +15,9 @@
         </div>
         <div>
           <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate">
+            <el-form-item>
+              <el-input type="password" style="display: none;"></el-input>
+            </el-form-item>
             <el-form-item prop="loginNo">
               <el-input ref="loginNo" v-model="formValidate.loginNo" type="text" :disabled="modal_loading"
                         :placeholder="text.usernamePlaceholder" prefix-icon="el-icon-user"
@@ -24,12 +27,13 @@
             <el-form-item prop="password">
               <el-input :disabled="modal_loading" :placeholder="text.passwordPlaceholder"
                         @keyup.native.enter="handleSubmit('formValidate')" prefix-icon="el-icon-lock"
-                        autocomplete="off" type="password"
+                        autocomplete="off" type="text" @focus.native="this.type='password'"
                         v-model="formValidate.password">
               </el-input>
             </el-form-item>
             <el-form-item style="margin-bottom: 0;">
-              <el-checkbox v-model="formValidate.remember" :disabled="modal_loading">
+              <el-checkbox v-model="formValidate.remember" :disabled="modal_loading"
+                           @keyup.native.enter="handleSubmit('formValidate')">
                 {{text.rememberMe}}
               </el-checkbox>
             </el-form-item>

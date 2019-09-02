@@ -8,12 +8,15 @@
         </el-tooltip>
       </el-form-item>
       <el-form-item :label="$t('forms.name')" prop="name">
-        <el-input ref="name" v-model="formValidate.name" @keyup.enter.native="handleSubmit('formValidate')"
-                  :disabled="modal_loading" :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"></el-input>
+        <el-input ref="name" type="text" v-model="formValidate.name" @keyup.enter.native="handleSubmit('formValidate')"
+                  :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"></el-input>
       </el-form-item>
       <el-form-item :label="$t('forms.mobile')" prop="mobile">
-        <el-input ref="mobile" v-model="formValidate.mobile" @keyup.enter.native="handleSubmit('formValidate')"
-                  :disabled="modal_loading" :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></el-input>
+        <el-input ref="mobile" type="text" v-model="formValidate.mobile"
+                  @keyup.enter.native="handleSubmit('formValidate')"
+                  :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></el-input>
       </el-form-item>
       <el-form-item :label="$t('forms.changePassword')">
         <el-switch v-model="updatePassword" :disabled="modal_loading"
@@ -22,17 +25,19 @@
                    @keyup.enter.native="handleSubmit('formValidate')"></el-switch>
       </el-form-item>
       <el-form-item v-show="updatePassword" :label="$t('forms.old')+$t('forms.password')" prop="oldPassword">
-        <el-input v-model="formValidate.oldPassword" type="password" @keyup.enter.native="handleSubmit('formValidate')"
-                  :disabled="modal_loading"
+        <el-input v-model="formValidate.oldPassword" @keyup.enter.native="handleSubmit('formValidate')"
+                  autocomplete="off" type="text" @focus.native="this.type='password'" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.old')+$t('forms.password')"></el-input>
       </el-form-item>
       <el-form-item v-show="updatePassword" :label="$t('forms.new')+$t('forms.password')" prop="password">
-        <el-input v-model="formValidate.password" type="password" :show-password="true"
-                  :disabled="modal_loading" @keyup.enter.native="handleSubmit('formValidate')"
+        <el-input v-model="formValidate.password" :show-password="true"
+                  autocomplete="off" type="text" @focus.native="this.type='password'" :disabled="modal_loading"
+                  @keyup.enter.native="handleSubmit('formValidate')"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></el-input>
       </el-form-item>
       <el-form-item v-show="updatePassword" :label="$t('forms.confirmPassword')" prop="repeatPassword">
-        <el-input v-model="formValidate.repeatPassword" type="password" :show-password="true"
+        <el-input v-model="formValidate.repeatPassword" :show-password="true"
+                  autocomplete="off" type="text" @focus.native="this.type='password'"
                   :disabled="modal_loading" @keyup.enter.native="handleSubmit('formValidate')"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></el-input>
       </el-form-item>
