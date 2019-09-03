@@ -1,7 +1,7 @@
 <template>
   <el-card style="min-height: 350px;">
     <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="120px" :inline="true"
-             onsubmit="return false;">
+             size="mini" onsubmit="return false;">
       <el-form-item :label="$t('forms.startDate')" prop="startDate">
         <el-date-picker type="date" :disabled="form_loading" :picker-options="datePickerOptions"
                         v-model="formValidate.startDate"
@@ -31,7 +31,7 @@
               style="text-align: center;min-width: 150px;margin-bottom: 15px;">
         <el-tooltip :content="file" placement="bottom">
           <el-button type="text" :loading="form_loading" @click="downLoadFile(file)">
-            <i :size="50" class="el-icon-document" style="font-size: 50px"></i>
+            <i class="el-icon-document" style="font-size: 50px"></i>
           </el-button>
         </el-tooltip>
         <p>{{file}}</p>

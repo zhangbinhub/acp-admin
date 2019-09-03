@@ -1,7 +1,6 @@
 @height: 30px;
 
 .header-tabs {
-  background-color: #cbcbcb;
   position: relative;
   border-top: 1px solid #F0F0F0;
   border-bottom: 1px solid #F0F0F0;
@@ -16,11 +15,13 @@
   }
 
   .el-tabs__nav-prev, .el-tabs__nav-next {
-    height: @height;
-    line-height: @height;
+    height: ~"calc(@{height} - 1px)";
+    line-height: ~"calc(@{height} - 1px)";
     background: #fff;
     text-align: center;
-    border-bottom: 1px solid #E4E7ED
+    border: 1px solid #E4E7ED;
+    z-index: 3;
+    width: 20px;
   }
 
   .el-tabs__item {
@@ -41,11 +42,12 @@
     position: absolute;
     right: 0;
     top: 0;
-    height: @height;
+    height: ~"calc(@{height} - 1px)";
+    line-height: ~"calc(@{height} - 1px)";
     width: 30px;
     background: #fff;
     text-align: center;
-    z-index: 10;
-    border-bottom: 1px solid #E4E7ED;
+    z-index: 3;
+    border: 1px solid #E4E7ED;
   }
 }

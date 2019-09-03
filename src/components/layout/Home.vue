@@ -23,7 +23,7 @@
         </header-bar>
       </el-header>
       <el-container>
-        <el-header style="padding: 0;height: 32px">
+        <el-header style="padding: 0;height: 33px">
           <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList"
                     @input="handleClick" @on-close="handleCloseTag"/>
         </el-header>
