@@ -1,152 +1,173 @@
 <template>
-  <Card>
-    <Form ref="searchForm" :model="searchForm" :label-width="100" :inline="true" class="search-form"
-          onsubmit="return false;">
-      <Row>
-        <Form-item :label="$t('forms.remoteIp')" prop="remoteIp">
-          <label>
-            <Input v-model="searchForm.remoteIp" :disabled="modal_loading" size="small"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.remoteIp')"
-                   @on-enter="handleSearch"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.gatewayIp')" prop="gatewayIp">
-          <label>
-            <Input v-model="searchForm.gatewayIp" :disabled="modal_loading" size="small"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.gatewayIp')"
-                   @on-enter="handleSearch"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.path')" prop="path">
-          <label>
-            <Input v-model="searchForm.path" :disabled="modal_loading" size="small"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.path')"
-                   @on-enter="handleSearch"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.serverId')" prop="serverId">
-          <label>
-            <Input v-model="searchForm.serverId" :disabled="modal_loading" size="small"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.serverId')"
-                   @on-enter="handleSearch"></Input>
-          </label>
-        </Form-item>
-      </Row>
-      <Row>
-        <Form-item :label="$t('forms.responseStatus')" prop="responseStatus">
-          <label>
-            <Input v-model="searchForm.responseStatus" :disabled="modal_loading" size="small" type="number"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.responseStatus')"
-                   @on-enter="handleSearch"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.startDate')" prop="startTime">
-          <DatePicker type="date" :disabled="modal_loading" :options="datePickerOptions" size="small"
-                      v-model="searchForm.startTime"
-                      :placeholder="$t('forms.pleaseEnter') + $t('forms.startDate')"
-                      style="width: 162px" @keyup.enter.native="handleSearch"></DatePicker>
-        </Form-item>
-        <Form-item :label="$t('forms.endDate')" prop="endTime">
-          <DatePicker type="date" :disabled="modal_loading" :options="datePickerOptions" size="small"
-                      v-model="searchForm.endTime"
-                      :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
-                      style="width: 162px" @keyup.enter.native="handleSearch"></DatePicker>
-        </Form-item>
-        <Form-item style="float: right">
-          <ButtonGroup style="margin-right: 20px">
-            <Button :loading="modal_loading" @click="handleSearch()" type="info" size="small">
-              {{$t('forms.buttons.search')}}
-            </Button>
-            <Button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="info" size="small">
-              {{$t('forms.buttons.reset')}}
-            </Button>
-          </ButtonGroup>
-        </Form-item>
-      </Row>
-    </Form>
-    <Table border="" height="388" size="small" :columns="columns" :data="searchData" class="search-table"
-           :loading="modal_loading" :no-data-text="$t('messages.tableNoData')" @on-row-dblclick="handleView"
-           @on-selection-change="handleSelect" @on-sort-change="handleSortChange">
-      <template slot-scope="{ row }" slot="remoteIp">
-        <span>{{ row.remoteIp }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="gatewayIp">
-        <span>{{ row.gatewayIp }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="path">
-        <span>{{ row.path }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="serverId">
-        <span>{{ row.serverId }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="targetUri">
-        <span>{{ row.targetUri }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="requestTime">
-        <span>{{formatDate(row.requestTime)}}</span>
-      </template>
-      <template slot-scope="{ row }" slot="processTime">
-        <span>{{row.processTime}} {{$t('forms.millisecond')}}</span>
-      </template>
-      <template slot-scope="{ row }" slot="responseStatus">
-        <span :style="row.responseStatus>=200&&row.responseStatus<300 ? 'color:green':'color:red'">{{row.responseStatus}}</span>
-      </template>
-      <template slot-scope="{ row }" slot="action">
-        <Tooltip :content="$t('forms.buttons.view')" placement="top-start">
-          <Icon @click="handleView(row)" type="md-search" size="18" style="cursor: pointer;"></Icon>
-        </Tooltip>
-      </template>
-    </Table>
-    <div style="margin-top: 10px;overflow: hidden">
-      <div style="float: right;">
-        <Page :current="searchForm.currPage" :total="searchForm.totalRows" :page-size="searchForm.pageSize"
-              :page-size-opts="searchForm.pageSizeArray" :show-total="true" :show-elevator="true" :show-sizer="true"
-              size="small" @on-change="handlePageSearch" @on-page-size-change="handlePageSizeSearch"/>
-      </div>
-    </div>
-    <Modal v-model="editModal" :title="$t('forms.info')" :loading="modal_loading" :mask-closable="false">
-      <Form ref="editForm" :model="editForm" :label-width="80" :inline="true" style="padding-right: 25px;">
-        <Row>
-          <Form-item :label="$t('forms.remoteIp')" prop="remoteIp">
-            <Alert>{{editForm.remoteIp}}</Alert>
-          </Form-item>
-          <Form-item :label="$t('forms.gatewayIp')" prop="gatewayIp">
-            <Alert>{{editForm.gatewayIp}}</Alert>
-          </Form-item>
-        </Row>
-        <Row>
-          <Form-item :label="$t('forms.serverId')" prop="serverId">
-            <Alert>{{editForm.serverId}}</Alert>
-          </Form-item>
-          <Form-item :label="$t('forms.responseStatus')" prop="responseStatus">
-            <Alert :type="editForm.responseStatus>=200&&editForm.responseStatus<300?'success':'error'">
+  <el-card>
+    <el-form ref="searchForm" :model="searchForm" label-width="100px" :inline="true" size="mini"
+             onsubmit="return false;">
+      <el-form-item :label="$t('forms.remoteIp')" prop="remoteIp">
+        <el-input v-model="searchForm.remoteIp" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.remoteIp')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.gatewayIp')" prop="gatewayIp">
+        <el-input v-model="searchForm.gatewayIp" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.gatewayIp')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.path')" prop="path">
+        <el-input v-model="searchForm.path" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.path')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.serverId')" prop="serverId">
+        <el-input v-model="searchForm.serverId" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.serverId')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.responseStatus')" prop="responseStatus">
+        <el-input v-model="searchForm.responseStatus" :disabled="modal_loading" type="number"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.responseStatus')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.startDate')" prop="startTime">
+        <el-date-picker type="date" :disabled="modal_loading" :picker-options="datePickerOptions"
+                        v-model="searchForm.startTime"
+                        :placeholder="$t('forms.pleaseEnter') + $t('forms.startDate')"
+                        style="width: 185px" @keyup.enter.native="handleSearch"></el-date-picker>
+      </el-form-item>
+      <el-form-item :label="$t('forms.endDate')" prop="endTime">
+        <el-date-picker type="date" :disabled="modal_loading" :picker-options="datePickerOptions"
+                        v-model="searchForm.endTime"
+                        :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
+                        style="width: 185px" @keyup.enter.native="handleSearch"></el-date-picker>
+      </el-form-item>
+      <el-form-item style="float: right">
+        <el-button-group style="margin-right: 20px">
+          <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
+            {{$t('forms.buttons.search')}}
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
+            {{$t('forms.buttons.reset')}}
+          </el-button>
+        </el-button-group>
+      </el-form-item>
+    </el-form>
+    <el-table border height="388" size="mini" :default-sort="searchForm.orderParam" :data="searchData"
+              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')" @row-dblclick="handleView"
+              @selection-change="handleSelect" @sort-change="handleSortChange"
+              header-cell-class-name="query-table-header">
+      <el-table-column
+        prop="remoteIp"
+        :label="this.$i18n.t('forms.remoteIp')"
+        width="130">
+      </el-table-column>
+      <el-table-column
+        prop="gatewayIp"
+        :label="this.$i18n.t('forms.gatewayIp')"
+        width="130">
+      </el-table-column>
+      <el-table-column
+        prop="path"
+        sortable="custom"
+        :label="this.$i18n.t('forms.path')">
+      </el-table-column>
+      <el-table-column
+        prop="serverId"
+        sortable="custom"
+        :label="this.$i18n.t('forms.serverId')">
+      </el-table-column>
+      <el-table-column
+        prop="targetUri"
+        sortable="custom"
+        :label="this.$i18n.t('forms.targetUri')">
+      </el-table-column>
+      <el-table-column
+        prop="requestTime"
+        sortable="custom"
+        width="150"
+        :label="this.$i18n.t('forms.requestTime')">
+      </el-table-column>
+      <el-table-column
+        prop="processTime"
+        sortable="custom"
+        width="150"
+        :label="this.$i18n.t('forms.processTime')+' '+this.$i18n.t('forms.millisecond')">
+      </el-table-column>
+      <el-table-column
+        prop="responseStatus"
+        sortable="custom"
+        width="150"
+        :label="this.$i18n.t('forms.responseStatus')">
+        <template slot-scope="{ scope }" slot="responseStatus">
+          <span :style="scope.row.responseStatus>=200&&scope.row.responseStatus<300 ? 'color:green':'color:red'">{{scope.row.responseStatus}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="action"
+        :label="this.$i18n.t('forms.action')"
+        align="center"
+        width="50">
+        <template slot-scope="scope">
+          <el-tooltip :content="$t('forms.buttons.view')" placement="bottom">
+            <el-button type="text" @click="handleView(scope.row)">
+              <i style="font-size: 15px" class="el-icon-search"></i>
+            </el-button>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination style="margin-top: 10px;text-align: right"
+                   @size-change="handlePageSizeSearch"
+                   @current-change="handlePageSearch"
+                   :current-page="searchForm.currPage"
+                   :page-sizes="searchForm.pageSizeArray"
+                   :page-size="searchForm.pageSize"
+                   layout="total, sizes, prev, pager, next, jumper"
+                   :total="searchForm.totalRows">
+    </el-pagination>
+    <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false">
+      <el-form ref="editForm" size="mini" :model="editForm" label-width="100px" style="padding-right: 25px;"
+               v-loading="modal_loading">
+        <el-row>
+          <el-form-item :label="$t('forms.remoteIp')" prop="remoteIp">
+            <el-alert type="info" :closable="false">{{editForm.remoteIp}}</el-alert>
+          </el-form-item>
+          <el-form-item :label="$t('forms.gatewayIp')" prop="gatewayIp">
+            <el-alert type="info" :closable="false">{{editForm.gatewayIp}}</el-alert>
+          </el-form-item>
+        </el-row>
+        <el-row>
+          <el-form-item :label="$t('forms.serverId')" prop="serverId">
+            <el-alert type="info" :closable="false">{{editForm.serverId}}</el-alert>
+          </el-form-item>
+          <el-form-item :label="$t('forms.responseStatus')" prop="responseStatus">
+            <el-alert :type="editForm.responseStatus>=200&&editForm.responseStatus<300?'success':'error'"
+                      :closable="false">
               {{editForm.responseStatus}}
-            </Alert>
-          </Form-item>
-        </Row>
-        <Form-item :label="$t('forms.path')" prop="path" style="width: 100%">
-          <Alert>{{editForm.path}}</Alert>
-        </Form-item>
-        <Form-item :label="$t('forms.targetUri')" prop="targetUri" style="width: 100%">
-          <Alert>{{editForm.targetUri}}</Alert>
-        </Form-item>
-        <Form-item :label="$t('forms.requestTime')" prop="requestTime" style="width: 100%">
-          <Alert>{{formatDate(editForm.requestTime)}}</Alert>
-        </Form-item>
-        <Form-item :label="$t('forms.processTime')" prop="processTime" style="width: 100%">
-          <Alert>{{editForm.processTime}} {{$t('forms.millisecond')}}</Alert>
-        </Form-item>
-        <Form-item :label="$t('forms.responseTime')" prop="responseTime" style="width: 100%">
-          <Alert>{{formatDate(editForm.responseTime)}}</Alert>
-        </Form-item>
-      </Form>
+            </el-alert>
+          </el-form-item>
+        </el-row>
+        <el-form-item :label="$t('forms.path')" prop="path" style="width: 100%">
+          <el-alert type="info" :closable="false">{{editForm.path}}</el-alert>
+        </el-form-item>
+        <el-form-item :label="$t('forms.targetUri')" prop="targetUri" style="width: 100%">
+          <el-alert type="info" :closable="false">{{editForm.targetUri}}</el-alert>
+        </el-form-item>
+        <el-form-item :label="$t('forms.requestTime')" prop="requestTime" style="width: 100%">
+          <el-alert type="info" :closable="false">{{formatDate(editForm.requestTime)}}</el-alert>
+        </el-form-item>
+        <el-form-item :label="$t('forms.processTime')" prop="processTime" style="width: 100%">
+          <el-alert type="info" :closable="false">{{editForm.processTime}} {{$t('forms.millisecond')}}</el-alert>
+        </el-form-item>
+        <el-form-item :label="$t('forms.responseTime')" prop="responseTime" style="width: 100%">
+          <el-alert type="info" :closable="false">{{formatDate(editForm.responseTime)}}</el-alert>
+        </el-form-item>
+      </el-form>
       <div slot="footer" style="text-align: center">
-        <Button type="default" :loading="modal_loading" @click="doCancel()">
+        <el-button type="info" :loading="modal_loading" @click="doCancel()">
           {{$t('forms.buttons.cancel')}}
-        </Button>
+        </el-button>
       </div>
-    </Modal>
-  </Card>
+    </el-dialog>
+  </el-card>
 </template>
 <script>
     export default {
@@ -157,7 +178,7 @@
                     disabledDate: (date) => {
                         const now = new Date()
                         now.setHours(0, 0, 0, 0)
-                        return date.getTime() >= now.getTime()
+                        return date.getTime() > now.getTime()
                     }
                 },
                 searchForm: {
@@ -170,7 +191,7 @@
                     responseStatus: '',
                     orderParam: {
                         key: 'requestTime',
-                        order: 'desc'
+                        order: 'descending'
                     },
                     currPage: 1,
                     totalRows: 0,
@@ -194,76 +215,6 @@
                 searchData: [],
                 selectedData: [],
                 action: 0
-            }
-        },
-        computed: {
-            columns () {
-                const columns = [
-                    {
-                        key: 'remoteIp',
-                        title: this.$i18n.t('forms.remoteIp'),
-                        width: 130,
-                        slot: 'remoteIp'
-                    },
-                    {
-                        key: 'gatewayIp',
-                        title: this.$i18n.t('forms.gatewayIp'),
-                        width: 130,
-                        slot: 'gatewayIp'
-                    },
-                    {
-                        key: 'path',
-                        title: this.$i18n.t('forms.path'),
-                        slot: 'path',
-                        sortable: 'custom'
-                    },
-                    {
-                        key: 'serverId',
-                        title: this.$i18n.t('forms.serverId'),
-                        slot: 'serverId',
-                        sortable: 'custom'
-                    },
-                    {
-                        key: 'targetUri',
-                        title: this.$i18n.t('forms.targetUri'),
-                        slot: 'targetUri',
-                        sortable: 'custom'
-                    },
-                    {
-                        key: 'requestTime',
-                        title: this.$i18n.t('forms.requestTime'),
-                        width: 150,
-                        slot: 'requestTime',
-                        sortable: 'custom'
-                    },
-                    {
-                        key: 'processTime',
-                        title: this.$i18n.t('forms.processTime'),
-                        width: 150,
-                        slot: 'processTime',
-                        sortable: 'custom'
-                    },
-                    {
-                        key: 'responseStatus',
-                        title: this.$i18n.t('forms.responseStatus'),
-                        width: 150,
-                        slot: 'responseStatus',
-                        sortable: 'custom'
-                    },
-                    {
-                        title: this.$i18n.t('forms.action'),
-                        width: 90,
-                        align: 'center',
-                        slot: 'action'
-                    }
-                ]
-                columns.forEach((item) => {
-                    if (item.key === this.searchForm.orderParam.key) {
-                        item.sortType = this.searchForm.orderParam.order
-                        item.sortable = 'custom'
-                    }
-                })
-                return columns
             }
         },
         methods: {
