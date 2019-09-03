@@ -1,12 +1,31 @@
+@height: 30px;
+
 .header-tabs {
-  background-color: #F5F7FA;
+  background-color: #cbcbcb;
   position: relative;
   border-top: 1px solid #F0F0F0;
   border-bottom: 1px solid #F0F0F0;
-  height: 41px;
+  height: @height;
 
   .el-tabs {
     padding-right: 30px;
+  }
+
+  .el-tabs__nav-wrap.is-scrollable {
+    padding: 0 11px;
+  }
+
+  .el-tabs__nav-prev, .el-tabs__nav-next {
+    height: @height;
+    line-height: @height;
+    background: #fff;
+    text-align: center;
+    border-bottom: 1px solid #E4E7ED
+  }
+
+  .el-tabs__item {
+    height: @height;
+    line-height: @height;
   }
 
   .el-tabs__item.is-top:nth-child(2) {
@@ -22,7 +41,7 @@
     position: absolute;
     right: 0;
     top: 0;
-    height: 40px;
+    height: @height;
     width: 30px;
     background: #fff;
     text-align: center;
