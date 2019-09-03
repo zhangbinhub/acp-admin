@@ -24,28 +24,28 @@ const ApiComm = {
 
     // 请求拦截器
     this.$http.interceptors.request.use(config => {
-      this.loadingObj = this.$loading({
-        lock: true,
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)',
-        fullscreen: true
-      })
+      // this.loadingObj = this.$loading({
+      //   lock: true,
+      //   spinner: 'el-icon-loading',
+      //   background: 'rgba(0, 0, 0, 0.7)',
+      //   fullscreen: true
+      // })
       if (this.$store.state.app.user.token) {
         config.headers.Authorization = `${this.$store.state.app.user.tokenType} ${this.$store.state.app.user.token}`
       }
       return config
     }, error => {
-      this.loadingObj.close()
+      // this.loadingObj.close()
       this.errorProcess(error)
       return Promise.reject(error)
     })
 
     // 响应拦截器
     this.$http.interceptors.response.use(data => {
-      this.loadingObj.close()
+      // this.loadingObj.close()
       return data
     }, error => {
-      this.loadingObj.close()
+      // this.loadingObj.close()
       if (error.response) {
         switch (error.response.status) {
           case 400: // 业务错误
