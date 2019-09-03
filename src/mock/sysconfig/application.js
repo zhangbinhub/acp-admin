@@ -1,9 +1,9 @@
 export const queryApp = () => {
   return {
     'content': [{
-      'id': 'f6fc9345-1711-11e9-9bf7-d8c49792dd7b',
+      'id': '8a80cb816c0a5d4f016c0a5e0c020000',
       'appName': 'Acp-Admin',
-      'secret': 'E0D3024D-9A22-41EE-AC0F-FC6B56E367AE',
+      'secret': '2523342F2BD345EA9658452A289364AA',
       'accessTokenValiditySeconds': 86400,
       'refreshTokenValiditySeconds': 2592000,
       'covert': false

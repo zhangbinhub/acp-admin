@@ -1,122 +1,141 @@
 <template>
-  <Card>
-    <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form"
-          onsubmit="return false;">
-      <Form-item :label="$t('forms.name')" prop="appName">
-        <label>
-          <Input v-model="searchForm.appName" :disabled="modal_loading" size="small"
-                 :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                 @on-enter="handleSearch"></Input>
-        </label>
-      </Form-item>
-      <Form-item style="float: right">
-        <ButtonGroup>
-          <Button :loading="modal_loading" @click="handleSearch()" type="info" size="small">
+  <el-card>
+    <el-form ref="searchForm" :model="searchForm" label-width="60px" :inline="true" size="mini"
+             onsubmit="return false;">
+      <el-form-item :label="$t('forms.name')" prop="appName">
+        <el-input v-model="searchForm.appName" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item style="float: right">
+        <el-button-group>
+          <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
             {{$t('forms.buttons.search')}}
-          </Button>
-          <Button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="info" size="small">
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
             {{$t('forms.buttons.reset')}}
-          </Button>
-          <Button :loading="modal_loading" @click="handleAdd()" type="info" size="small">
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleAdd()" type="primary">
             {{$t('forms.buttons.add')}}
-          </Button>
-          <Button :loading="modal_loading" @click="handleDeleteMore()" type="info" size="small">
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleDeleteMore()" type="primary">
             {{$t('forms.buttons.delete')}}
-          </Button>
-        </ButtonGroup>
-      </Form-item>
-    </Form>
-    <Table border="" height="433" size="small" :columns="columns" :data="searchData" class="search-table"
-           :loading="modal_loading" :no-data-text="$t('messages.tableNoData')" @on-selection-change="handleSelect"
-           @on-sort-change="handleSortChange">
-      <template slot-scope="{ row }" slot="id">
-        <span>{{ row.id }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="appName">
-        <span>{{ row.appName }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="accessTokenValiditySeconds">
-        <span>{{ row.accessTokenValiditySeconds }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="refreshTokenValiditySeconds">
-        <span>{{ row.refreshTokenValiditySeconds }}</span>
-      </template>
-      <template slot-scope="{ row, index }" slot="action">
-        <div>
-          <Tooltip :content="$t('forms.buttons.edit')" placement="top-start">
-            <Icon @click="handleEdit(row,1)" type="md-create" size="18" style="cursor: pointer;"></Icon>
-          </Tooltip>
-          <Tooltip v-show="row.secret!==$store.state.app.appInfo.appSecret"
-                   :content="$t('forms.buttons.view')" placement="top-start">
-            <Icon @click="handleEdit(row,2,index)" type="md-search" size="18"
-                  style="cursor: pointer;margin-left: 10px;"></Icon>
-          </Tooltip>
-          <Tooltip :content="$t('forms.buttons.delete')" placement="top-start" v-show="row.covert">
-            <Icon @click="handleDeleteRow(row)" type="md-trash" size="18"
-                  style="cursor: pointer;margin-left: 10px;"></Icon>
-          </Tooltip>
-        </div>
-      </template>
-    </Table>
-    <div style="margin-top: 10px;overflow: hidden">
-      <div style="float: right;">
-        <Page :current="searchForm.currPage" :total="searchForm.totalRows" :page-size="searchForm.pageSize"
-              :page-size-opts="searchForm.pageSizeArray" :show-total="true" :show-elevator="true" :show-sizer="true"
-              size="small" @on-change="handlePageSearch" @on-page-size-change="handlePageSizeSearch"/>
-      </div>
-    </div>
-    <Modal v-model="editModal" :title="$t('forms.info')" :loading="modal_loading" :mask-closable="false">
-      <Form ref="editForm" :model="editForm" :rules="ruleEditForm" :label-width="135" style="padding-right: 25px;">
-        <Form-item :label="'appId'" prop="id" v-if="action===2">
-          <Alert type="success">{{editForm.id}}</Alert>
-        </Form-item>
-        <Form-item :label="'secret'" prop="secret" v-if="action===2">
-          <Alert type="error">{{editForm.secret}}</Alert>
-        </Form-item>
-        <Form-item :label="$t('forms.name')" prop="appName">
-          <label>
-            <Input ref="appName" v-model="editForm.appName" :disabled="modal_loading" v-if="action!==2"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                   @on-enter="doSave('editForm')"></Input>
-            <Alert v-else>{{editForm.appName}}</Alert>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.accessTokenValiditySeconds')" prop="accessTokenValiditySeconds">
-          <label>
-            <Input v-model="editForm.accessTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.accessTokenValiditySeconds')"
-                   @on-enter="doSave('editForm')">
-              <span slot="append">{{$t('forms.seconds')}}</span>
-            </Input>
-            <Alert v-else>{{editForm.accessTokenValiditySeconds}} {{$t('forms.seconds')}}</Alert>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.refreshTokenValiditySeconds')" prop="refreshTokenValiditySeconds">
-          <label>
-            <Input v-model="editForm.refreshTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.refreshTokenValiditySeconds')"
-                   @on-enter="doSave('editForm')">
-              <span slot="append">{{$t('forms.seconds')}}</span>
-            </Input>
-            <Alert v-else>{{editForm.accessTokenValiditySeconds}} {{$t('forms.seconds')}}</Alert>
-          </label>
-        </Form-item>
-      </Form>
+          </el-button>
+        </el-button-group>
+      </el-form-item>
+    </el-form>
+    <el-table border height="433" size="mini" :default-sort="searchForm.orderParam" :data="searchData"
+              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')" @selection-change="handleSelect"
+              @sort-change="handleSortChange" header-cell-class-name="query-table-header">
+      <el-table-column
+        type="selection"
+        fixed="left"
+        align="center"
+        width="35">
+      </el-table-column>
+      <el-table-column
+        prop="id"
+        align="center"
+        :label="'ID'">
+      </el-table-column>
+      <el-table-column
+        prop="appName"
+        sortable="custom"
+        :label="this.$i18n.t('forms.name')">
+      </el-table-column>
+      <el-table-column
+        prop="accessTokenValiditySeconds"
+        :label="this.$i18n.t('forms.accessTokenValiditySeconds')">
+      </el-table-column>
+      <el-table-column
+        prop="refreshTokenValiditySeconds"
+        :label="this.$i18n.t('forms.refreshTokenValiditySeconds')">
+      </el-table-column>
+      <el-table-column
+        prop="action"
+        :label="this.$i18n.t('forms.action')"
+        align="center"
+        width="120">
+        <template slot-scope="scope">
+          <el-tooltip :content="$t('forms.buttons.edit')" placement="bottom">
+            <el-button type="text" @click="handleEdit(scope.row,1)">
+              <i style="font-size: 15px" class="el-icon-edit"></i>
+            </el-button>
+          </el-tooltip>
+          <el-tooltip :content="$t('forms.buttons.view')" placement="bottom"
+                      v-if="scope.row.secret!==$store.state.app.appInfo.appSecret">
+            <el-button type="text" @click="handleEdit(scope.row,2,scope.$index)">
+              <i style="font-size: 15px" class="el-icon-search"></i>
+            </el-button>
+          </el-tooltip>
+          <el-tooltip :content="$t('forms.buttons.delete')" placement="bottom" v-if="scope.row.covert">
+            <el-button type="text" @click="handleDeleteRow(scope.row)">
+              <i style="font-size: 15px" class="el-icon-delete"></i>
+            </el-button>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination style="margin-top: 10px;text-align: right"
+                   @size-change="handlePageSizeSearch"
+                   @current-change="handlePageSearch"
+                   :current-page="searchForm.currPage"
+                   :page-sizes="searchForm.pageSizeArray"
+                   :page-size="searchForm.pageSize"
+                   layout="total, sizes, prev, pager, next, jumper"
+                   :total="searchForm.totalRows">
+    </el-pagination>
+    <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false">
+      <el-form ref="editForm" :model="editForm" :rules="ruleEditForm" label-width="150px" style="padding-right: 25px;"
+               size="mini" v-loading="modal_loading">
+        <el-form-item :label="'appId'" prop="id" v-if="action===2">
+          <el-alert type="success" :closable="false">{{editForm.id}}</el-alert>
+        </el-form-item>
+        <el-form-item :label="'secret'" prop="secret" v-if="action===2">
+          <el-alert type="error" :closable="false">{{editForm.secret}}</el-alert>
+        </el-form-item>
+        <el-form-item :label="$t('forms.name')" prop="appName">
+          <el-input ref="appName" v-model="editForm.appName" :disabled="modal_loading" v-if="action!==2"
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
+                    @keyup.enter.native="doSave('editForm')"></el-input>
+          <el-alert v-else type="info" :closable="false">{{editForm.appName}}</el-alert>
+        </el-form-item>
+        <el-form-item :label="$t('forms.accessTokenValiditySeconds')" prop="accessTokenValiditySeconds">
+          <el-input v-model="editForm.accessTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.accessTokenValiditySeconds')"
+                    @keyup.enter.native="doSave('editForm')">
+            <span slot="append">{{$t('forms.seconds')}}</span>
+          </el-input>
+          <el-alert v-else type="info" :closable="false">{{editForm.accessTokenValiditySeconds}}
+            {{$t('forms.seconds')}}
+          </el-alert>
+        </el-form-item>
+        <el-form-item :label="$t('forms.refreshTokenValiditySeconds')" prop="refreshTokenValiditySeconds">
+          <el-input v-model="editForm.refreshTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.refreshTokenValiditySeconds')"
+                    @keyup.enter.native="doSave('editForm')">
+            <span slot="append">{{$t('forms.seconds')}}</span>
+          </el-input>
+          <el-alert v-else type="info" :closable="false">{{editForm.accessTokenValiditySeconds}}
+            {{$t('forms.seconds')}}
+          </el-alert>
+        </el-form-item>
+      </el-form>
       <div slot="footer">
-        <Button type="default" :loading="modal_loading" @click="doCancel()">
+        <el-button type="info" :loading="modal_loading" @click="doCancel()">
           {{$t('forms.buttons.cancel')}}
-        </Button>
-        <Button v-if="action===0||action===1" type="primary" :loading="modal_loading"
-                @click="doSave('editForm')">
+        </el-button>
+        <el-button v-if="action===0||action===1" type="primary" :loading="modal_loading"
+                   @click="doSave('editForm')">
           {{$t('forms.buttons.submit')}}
-        </Button>
-        <Button v-else type="primary" :loading="modal_loading"
-                @click="doSave('editForm')">
+        </el-button>
+        <el-button v-else type="primary" :loading="modal_loading"
+                   @click="doSave('editForm')">
           {{$t('forms.buttons.updateSecret')}}
-        </Button>
+        </el-button>
       </div>
-    </Modal>
-  </Card>
+    </el-dialog>
+  </el-card>
 </template>
 <script>
     export default {
@@ -127,7 +146,7 @@
                     appName: '',
                     orderParam: {
                         key: 'appName',
-                        order: 'asc'
+                        order: 'ascending'
                     },
                     currPage: 1,
                     totalRows: 0,
@@ -161,89 +180,43 @@
             }
         },
         computed: {
-            columns () {
-                const columns = [
-                    {
-                        type: 'selection',
-                        width: 50,
-                        align: 'center'
-                    },
-                    {
-                        key: 'id',
-                        title: 'ID',
-                        slot: 'id'
-                    },
-                    {
-                        key: 'appName',
-                        title: this.$i18n.t('forms.name'),
-                        slot: 'appName'
-                    },
-                    {
-                        key: 'accessTokenValiditySeconds',
-                        title: this.$i18n.t('forms.accessTokenValiditySeconds'),
-                        slot: 'accessTokenValiditySeconds'
-                    },
-                    {
-                        key: 'refreshTokenValiditySeconds',
-                        title: this.$i18n.t('forms.refreshTokenValiditySeconds'),
-                        slot: 'refreshTokenValiditySeconds'
-                    },
-                    {
-                        title: this.$i18n.t('forms.action'),
-                        width: 120,
-                        align: 'center',
-                        slot: 'action'
-                    }
-                ]
-                columns.forEach((item) => {
-                    if (item.key === this.searchForm.orderParam.key) {
-                        item.sortType = this.searchForm.orderParam.order
-                        item.sortable = 'custom'
-                    }
-                })
-                return columns
-            },
             ruleEditForm () {
                 return {
-                    appName: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ],
-                    accessTokenValiditySeconds: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.accessTokenValiditySeconds') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }, {
-                            type: 'string',
-                            pattern: /^[0-9]*$/,
-                            message: this.$i18n.t('forms.accessTokenValiditySeconds') + this.$i18n.t('forms.incorrect'),
-                            trigger: 'blur'
-                        }
-                    ],
-                    refreshTokenValiditySeconds: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.accessTokenValiditySeconds') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }, {
-                            type: 'string',
-                            pattern: /^[0-9]*$/,
-                            message: this.$i18n.t('forms.accessTokenValiditySeconds') + this.$i18n.t('forms.incorrect'),
-                            trigger: 'blur'
-                        }
-                    ]
+                    appName: [{
+                        required: true,
+                        message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
+                        trigger: 'blur'
+                    }],
+                    accessTokenValiditySeconds: [{
+                        required: true,
+                        message: this.$i18n.t('forms.accessTokenValiditySeconds') + this.$i18n.t('forms.notEmpty'),
+                        trigger: 'blur'
+                    }, {
+                        type: 'string',
+                        pattern: /^[0-9]*$/,
+                        message: this.$i18n.t('forms.accessTokenValiditySeconds') + this.$i18n.t('forms.incorrect'),
+                        trigger: 'blur'
+                    }],
+                    refreshTokenValiditySeconds: [{
+                        required: true,
+                        message: this.$i18n.t('forms.accessTokenValiditySeconds') + this.$i18n.t('forms.notEmpty'),
+                        trigger: 'blur'
+                    }, {
+                        type: 'string',
+                        pattern: /^[0-9]*$/,
+                        message: this.$i18n.t('forms.accessTokenValiditySeconds') + this.$i18n.t('forms.incorrect'),
+                        trigger: 'blur'
+                    }]
                 }
             }
         },
         methods: {
             handleAdd () {
-                this.$refs['editForm'].resetFields()
-                this.action = 0
                 this.editModal = true
+                this.$nextTick(() => {
+                    this.$refs['editForm'].resetFields()
+                    this.action = 0
+                })
             },
             doCancel () {
                 this.editModal = false
@@ -261,7 +234,7 @@
                                 }).then((res) => {
                                     this.modal_loading = false
                                     if (res) {
-                                        this.$Message.success(this.$i18n.t('messages.saveSuccess'))
+                                        this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                                         this.editModal = false
                                         this.handleSearch()
                                     }
@@ -283,7 +256,7 @@
                                 }).then((res) => {
                                     this.modal_loading = false
                                     if (res) {
-                                        this.$Message.success(this.$i18n.t('messages.updateSuccess'))
+                                        this.$message.success(this.$i18n.t('messages.updateSuccess') + '')
                                         this.editModal = false
                                         this.handleSearch()
                                     }
@@ -297,7 +270,7 @@
                         this.modal_loading = true
                         this.$api.request.app.getNewSecret(this.editForm.id).then((res) => {
                             this.modal_loading = false
-                            this.$Message.success(this.$i18n.t('messages.updateSuccess'))
+                            this.$message.success(this.$i18n.t('messages.updateSuccess') + '')
                             this.editForm.secret = res.data.secret
                             this.searchData[this.editForm.index].secret = res.data.secret
                         }).catch(() => {
@@ -311,7 +284,7 @@
                 this.$api.request.app.delete(rowIds).then((res) => {
                     this.modal_loading = false
                     if (res) {
-                        this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
+                        this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
                         this.handleSearch()
                     }
                 }).catch(() => {
@@ -371,46 +344,44 @@
             },
             handleDeleteRow (row) {
                 if (!row.covert) {
-                    this.$Modal.error({
-                        title: this.$i18n.t('dialog.error') + '',
-                        content: this.$i18n.t('messages.tableDataCannotDel') + ''
+                    this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
+                        type: 'error'
                     })
                 } else {
-                    this.$Modal.confirm({
-                        title: this.$i18n.t('dialog.confirm') + '',
-                        content: this.$i18n.t('messages.deleteDataConfirm') + '',
-                        onOk: () => {
-                            this.handleDelete([row.id])
-                        }
+                    this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+                        type: 'warning'
+                    }).then(() => {
+                        this.handleDelete([row.id])
+                    }).catch(() => {
                     })
                 }
             },
             handleDeleteMore () {
                 if (this.selectedData.length > 0) {
-                    this.$Modal.confirm({
-                        title: this.$i18n.t('dialog.confirm') + '',
-                        content: this.$i18n.t('messages.deleteDataConfirm') + '',
-                        onOk: () => {
-                            this.handleDelete(this.selectedData.map(item => item.id))
-                        }
+                    this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+                        type: 'warning'
+                    }).then(() => {
+                        this.handleDelete(this.selectedData.map(item => item.id))
+                    }).catch(() => {
                     })
                 } else {
-                    this.$Modal.info({
-                        title: this.$i18n.t('dialog.info') + '',
-                        content: this.$i18n.t('messages.selectDataForDelete') + ''
+                    this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
+                        type: 'error'
                     })
                 }
             },
             handleEdit (row, action, index) {
-                this.$refs['editForm'].resetFields()
-                this.editForm.appName = row.appName
-                this.editForm.accessTokenValiditySeconds = row.accessTokenValiditySeconds + ''
-                this.editForm.refreshTokenValiditySeconds = row.refreshTokenValiditySeconds + ''
-                this.editForm.id = row.id
-                this.editForm.secret = row.secret
-                this.editForm.index = index
                 this.editModal = true
-                this.action = action
+                this.$nextTick(() => {
+                    this.$refs['editForm'].resetFields()
+                    this.editForm.id = row.id
+                    this.editForm.appName = row.appName
+                    this.editForm.accessTokenValiditySeconds = row.accessTokenValiditySeconds + ''
+                    this.editForm.refreshTokenValiditySeconds = row.refreshTokenValiditySeconds + ''
+                    this.editForm.secret = row.secret
+                    this.editForm.index = index
+                    this.action = action
+                })
             }
         },
         mounted () {
