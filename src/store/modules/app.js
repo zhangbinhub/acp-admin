@@ -27,6 +27,7 @@ let cookieProperties = {
 Cookies.set('lang', lang, cookieProperties)
 export default {
   state: {
+    mainHeight: 0,
     appInfo: appInfo,
     cacheList: [],
     tagNavList: [],
@@ -54,6 +55,9 @@ export default {
     }
   },
   mutations: {
+    MAIN_HEIGHT: (state, payload) => {
+      state.mainHeight = payload
+    },
     CLOSE_SLIDEBAR: state => {
       Cookies.set('sidebarStatus', 0, cookieProperties)
       state.sidebar.opened = false

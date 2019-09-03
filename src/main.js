@@ -8,7 +8,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
 import './plugins/plugin-axios.js'
 import api from './api'
-import './assets/styles/layout/layout.less'
+import './assets/styles/layout.less'
+import './assets/styles/transition.less'
 import eCharts from 'echarts'
 import './mock'
 
@@ -23,12 +24,18 @@ const autoWidth = () => {
     store.commit('SET_MINI', false)
   }
 }
+const autoHeight = () => {
+  const winHeight = document.documentElement.clientHeight
+  store.commit('MAIN_HEIGHT', winHeight - 121)
+}
 
 Vue.config.productionTip = false
 
 autoWidth()
+autoHeight()
 window.onresize = function () {
   autoWidth()
+  autoHeight()
 }
 
 // 加载 eCharts

@@ -22,18 +22,20 @@
           <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
         </header-bar>
       </el-header>
-      <el-container style="overflow: auto">
+      <el-container>
         <el-header style="padding: 0;height: 32px">
           <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList"
                     @input="handleClick" @on-close="handleCloseTag"/>
         </el-header>
-        <el-main class="main-content">
-          <transition name="el-fade-in-linear">
-            <keep-alive :include="cacheList">
-              <router-view/>
-            </keep-alive>
-          </transition>
-        </el-main>
+        <el-scrollbar ref="main-scrollbar" class="main-scrollbar" :style="{height:mainHeight+'px'}">
+          <el-main class="main-content">
+            <transition name="fade-transform" mode="out-in" :appear="true">
+              <keep-alive :include="cacheList">
+                <router-view/>
+              </keep-alive>
+            </transition>
+          </el-main>
+        </el-scrollbar>
       </el-container>
       <el-footer class="foot-content" style="height: 30px">
         <small style="text-align: center;">{{copyright}}</small>
@@ -82,7 +84,7 @@
                 copyright: this.$store.state.app.appInfo.copyright,
                 openedNames: [],
                 isFullscreen: false,
-                homePath: this.$store.state.app.appInfo.homePath
+                homePath: this.$store.state.app.appInfo.homePath,
             }
         },
         created () {
@@ -92,6 +94,9 @@
             this.initStoreData()
         },
         computed: {
+            mainHeight () {
+                return this.$store.state.app.mainHeight
+            },
             showRouteConfig () {
                 return this.$store.state.app.user.userInfo.levels <= 0
             },
@@ -144,6 +149,11 @@
         watch: {
             '$route' (newRoute) {
                 this.updateTagList(this.tagNavList, this.menuList, newRoute)
+            },
+            mainHeight () {
+                this.$nextTick(() => {
+                    this.$refs['main-scrollbar'].update()
+                })
             }
         },
         methods: {

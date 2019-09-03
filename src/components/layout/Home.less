@@ -1,4 +1,15 @@
 .home {
+
+  table {
+    overflow: hidden !important;
+
+    .table-fixed {
+      .el-table__fixed-right {
+        height: 100% !important;
+      }
+    }
+  }
+
   .logo-con {
     height: 40px;
     padding: 10px;
@@ -10,6 +21,12 @@
       width: auto;
       display: block;
       margin: 0 auto;
+    }
+  }
+
+  .main-scrollbar {
+    .el-scrollbar__wrap {
+      overflow-x: hidden;
     }
   }
 

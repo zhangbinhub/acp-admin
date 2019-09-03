@@ -1,10 +1,12 @@
 <template>
   <div class="custom-bread-crumb">
     <el-breadcrumb :style="{fontSize: `${fontSize}px`}">
-      <el-breadcrumb-item v-for="(item, index) in list" :key="`bread-crumb-${index}`">
-        <i style="margin-right: 4px;" :class="item.iconType"></i>
-        <span>{{ item.name }}</span>
-      </el-breadcrumb-item>
+      <transition-group name="breadcrumb">
+        <el-breadcrumb-item v-for="(item, index) in list" :key="`bread-crumb-${index}`">
+          <i style="margin-right: 4px;" :class="item.iconType"></i>
+          <span>{{ item.name }}</span>
+        </el-breadcrumb-item>
+      </transition-group>
     </el-breadcrumb>
   </div>
 </template>

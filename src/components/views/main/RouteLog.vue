@@ -50,7 +50,7 @@
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table border height="388" size="mini" :default-sort="searchForm.orderParam" :data="searchData"
+    <el-table ref="table" border height="388" size="mini" :default-sort="searchForm.orderParam" :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')" @row-dblclick="handleView"
               @selection-change="handleSelect" @sort-change="handleSortChange"
               header-cell-class-name="query-table-header">
@@ -275,6 +275,9 @@
                             }
                             return item
                         })
+                        this.$nextTick(() => {
+                            this.$refs['table'].doLayout()
+                        })
                     }
                 }).catch(() => {
                     this.searchData = []
@@ -313,6 +316,11 @@
         },
         mounted () {
             this.handleSearch()
+        },
+        activated () {
+            this.$nextTick(() => {
+                this.$refs['table'].doLayout()
+            })
         }
     }
 </script>

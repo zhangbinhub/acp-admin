@@ -1,23 +1,26 @@
 <template>
   <div class="side-menu-wrapper">
     <slot></slot>
-    <el-menu class="menu-root" :collapse="collapsed" :unique-opened="accordion"
-             background-color="#001529"
-             text-color="rgba(255, 255, 255, 0.7)"
-             active-text-color="#409eff"
-             :default-active="activeName"
-             :default-openeds="openedNames"
-             @select="handleSelect">
-      <template v-for="item in menuList">
-        <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"></side-menu-item>
-        <el-menu-item v-else :index="item.path">
-          <template slot="title">
-            <i :class="item.iconType"></i>
-            <span>{{item.name}}</span>
-          </template>
-        </el-menu-item>
-      </template>
-    </el-menu>
+    <el-scrollbar ref="menu-scrollbar" class="menu-scrollbar">
+      <el-menu class="menu-root" :collapse="collapsed" :unique-opened="accordion"
+               background-color="#1f2d3d"
+               text-color="rgba(255, 255, 255, 0.7)"
+               active-text-color="#409eff"
+               :default-active="activeName"
+               :default-openeds="openedNames"
+               :collapse-transition="false"
+               @select="handleSelect">
+        <template v-for="item in menuList">
+          <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"></side-menu-item>
+          <el-menu-item v-else :index="item.path">
+            <template slot="title">
+              <i :class="item.iconType"></i>
+              <span>{{item.name}}</span>
+            </template>
+          </el-menu-item>
+        </template>
+      </el-menu>
+    </el-scrollbar>
   </div>
 </template>
 <script>
@@ -60,6 +63,11 @@
                 this.$emit('on-select', path)
             }
         },
+        computed: {
+            mainHeight () {
+                return this.$store.state.app.mainHeight
+            }
+        },
         watch: {
             menuList () {
                 this.openedNames = this.openedNames.concat(getOpenedNamesByActiveName(this.activeName, this))
@@ -73,6 +81,11 @@
             },
             openNames (newNames) {
                 this.openedNames = newNames
+            },
+            mainHeight () {
+                this.$nextTick(() => {
+                    this.$refs['menu-scrollbar'].update()
+                })
             }
         }
     }
