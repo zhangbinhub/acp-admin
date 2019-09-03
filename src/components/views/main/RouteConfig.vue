@@ -117,7 +117,7 @@
     <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false"
                :fullscreen="true">
       <el-form ref="editForm" :model="editForm" :rules="ruleAddForm" label-width="80px" size="mini"
-               style="padding-right: 25px;" v-loading="modal_loading">
+               style="padding-right: 25px;" v-loading="modal_loading" onsubmit="return false;">
         <el-row>
           <el-col :lg="8">
             <el-form-item :label="$t('forms.routeId')" prop="routeId" style="width: 100%">

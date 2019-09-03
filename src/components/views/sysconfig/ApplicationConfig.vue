@@ -87,7 +87,7 @@
     </el-pagination>
     <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false">
       <el-form ref="editForm" :model="editForm" :rules="ruleEditForm" label-width="150px" style="padding-right: 25px;"
-               size="mini" v-loading="modal_loading">
+               size="mini" v-loading="modal_loading" onsubmit="return false;">
         <el-form-item :label="'appId'" prop="id" v-if="action===2">
           <el-alert type="success" :closable="false">{{editForm.id}}</el-alert>
         </el-form-item>

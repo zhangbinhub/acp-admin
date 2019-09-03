@@ -125,7 +125,7 @@
     </el-pagination>
     <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false">
       <el-form ref="editForm" size="mini" :model="editForm" label-width="100px" style="padding-right: 25px;"
-               v-loading="modal_loading">
+               v-loading="modal_loading" onsubmit="return false;">
         <el-row>
           <el-form-item :label="$t('forms.remoteIp')" prop="remoteIp">
             <el-alert type="info" :closable="false">{{editForm.remoteIp}}</el-alert>
