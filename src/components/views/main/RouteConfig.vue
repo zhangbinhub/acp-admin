@@ -1,161 +1,190 @@
 <template>
-  <Card>
-    <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form"
-          onsubmit="return false;">
-      <Form-item :label="$t('forms.routeId')" prop="routeId">
-        <label>
-          <Input v-model="searchForm.routeId" :disabled="modal_loading" size="small"
-                 :placeholder="$t('forms.pleaseEnter') + $t('forms.routeId')"
-                 @on-enter="handleSearch"></Input>
-        </label>
-      </Form-item>
-      <Form-item :label="$t('forms.status')" prop="enabled">
-        <i-select v-model="searchForm.enabled" :clearable="true" size="small" :disabled="modal_loading"
-                  @keyup.enter.native="handleSearchKeyUp($event)" style="width:100px">
-          <Option v-for="item in enabledList" :value="item.value" :key="'search_select_'+item.value">
-            {{ item.label }}
-          </Option>
-        </i-select>
-      </Form-item>
-      <Form-item style="float: right">
-        <ButtonGroup style="margin-right: 20px">
-          <Button :loading="modal_loading" @click="handleSearch()" type="info" size="small">
+  <el-card>
+    <el-form ref="searchForm" :model="searchForm" label-width="60px" :inline="true" size="mini"
+             onsubmit="return false;">
+      <el-form-item :label="$t('forms.routeId')" prop="routeId">
+        <el-input v-model="searchForm.routeId" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.routeId')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.status')" prop="enabled">
+        <el-select v-model="searchForm.enabled" :clearable="true" :disabled="modal_loading" value=""
+                   @keyup.enter.native="handleSearchKeyUp($event)" style="width:100px">
+          <el-option v-for="item in enabledList" :value="item.value" :label="item.label"
+                     :key="'search_select_'+item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item style="float: right">
+        <el-button-group style="margin-right: 20px">
+          <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
             {{$t('forms.buttons.search')}}
-          </Button>
-          <Button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="info" size="small">
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
             {{$t('forms.buttons.reset')}}
-          </Button>
-          <Button :loading="modal_loading" @click="handleAdd()" type="info" size="small">
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleAdd()" type="primary">
             {{$t('forms.buttons.add')}}
-          </Button>
-          <Button :loading="modal_loading" @click="handleDeleteMore()" type="info" size="small">
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleDeleteMore()" type="primary">
             {{$t('forms.buttons.delete')}}
-          </Button>
-        </ButtonGroup>
-        <Button :loading="modal_loading" @click="handleRefresh()" type="success" size="small">
+          </el-button>
+        </el-button-group>
+        <el-button :loading="modal_loading" @click="handleRefresh()" type="success">
           {{$t('forms.buttons.refreshRoute')}}
-        </Button>
-      </Form-item>
-    </Form>
-    <Table border="" height="433" size="small" :columns="columns" :data="searchData" class="search-table"
-           :loading="modal_loading" :no-data-text="$t('messages.tableNoData')" @on-row-dblclick="handleEdit"
-           @on-selection-change="handleSelect" @on-sort-change="handleSortChange">
-      <template slot-scope="{ row }" slot="routeId">
-        <span>{{ row.routeId }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="uri">
-        <span>{{ row.uri }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="predicates">
-        <span>{{ row.predicates }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="filters">
-        <span>{{ row.filters }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="remarks">
-        <span>{{ row.remarks }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="orderNum">
-        <span>{{ row.orderNum }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="enabled">
-        <span :style="row.enabled ? 'color:green':'color:red'">{{enabledText(row.enabled)}}</span>
-      </template>
-      <template slot-scope="{ row }" slot="action">
-        <Tooltip :content="$t('forms.buttons.edit')" placement="top-start">
-          <Icon @click="handleEdit(row)" type="md-create" size="18" style="cursor: pointer;"></Icon>
-        </Tooltip>
-        <Tooltip :content="$t('forms.buttons.delete')" placement="top-start" v-show="!row.enabled">
-          <Icon @click="handleDeleteRow(row)" type="md-trash" size="18"
-                style="cursor: pointer;margin-left: 10px;"></Icon>
-        </Tooltip>
-      </template>
-    </Table>
-    <div style="margin-top: 10px;overflow: hidden">
-      <div style="float: right;">
-        <Page :current="searchForm.currPage" :total="searchForm.totalRows" :page-size="searchForm.pageSize"
-              :page-size-opts="searchForm.pageSizeArray" :show-total="true" :show-elevator="true" :show-sizer="true"
-              size="small" @on-change="handlePageSearch" @on-page-size-change="handlePageSizeSearch"/>
-      </div>
-    </div>
-    <Modal v-model="editModal" :title="$t('forms.info')" :loading="modal_loading" :mask-closable="false"
-           :fullscreen="true">
-      <Form ref="editForm" :model="editForm" :rules="ruleAddForm" :label-width="80" :inline="true"
-            style="padding-right: 25px;">
-        <Row>
-          <i-col :xl="8">
-            <Form-item :label="$t('forms.routeId')" prop="routeId" style="width: 100%">
-              <label>
-                <Input v-model="editForm.routeId" :disabled="modal_loading" ref="routeId"
-                       :placeholder="$t('forms.pleaseEnter') + $t('forms.routeId')"
-                       @on-enter="doSave('editForm')"></Input>
-              </label>
-            </Form-item>
-          </i-col>
-          <i-col :xl="8">
-            <Form-item :label="$t('forms.uri')" prop="uri" style="width: 100%">
-              <label>
-                <Input v-model="editForm.uri" :disabled="modal_loading"
-                       :placeholder="$t('forms.pleaseEnter') + $t('forms.uri')"
-                       @on-enter="doSave('editForm')"></Input>
-              </label>
-            </Form-item>
-          </i-col>
-          <i-col :xl="4">
-            <Form-item :label="$t('forms.sort')" prop="orderNum">
-              <InputNumber v-model="editForm.orderNum" :disabled="modal_loading" style="width: 100%;max-width: 160px;"
-                           :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" :min="0"
-                           @keyup.enter.native="doSave('editForm')"></InputNumber>
-            </Form-item>
-          </i-col>
-          <i-col :xl="4">
-            <Form-item :label="$t('forms.enabled')" prop="enabled">
-              <i-switch v-model="editForm.enabled" :disabled="modal_loading"
-                        @keyup.native="handleAddKeyUp($event, 'editForm')">
-                <Icon type="md-checkmark" slot="open"></Icon>
-                <Icon type="md-close" slot="close"></Icon>
-              </i-switch>
-            </Form-item>
-          </i-col>
-        </Row>
-        <Row>
-          <i-col :xl="24">
-            <Form-item :label="$t('forms.remarks')" prop="remarks" style="width: 100%;">
-              <label>
-                <Input v-model="editForm.remarks" :disabled="modal_loading"
-                       :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')"
-                       @on-enter="doSave('editForm')"></Input>
-              </label>
-            </Form-item>
-          </i-col>
-        </Row>
-        <Row>
-          <i-col :xl="12">
-            <Form-item :label="$t('forms.predicates')" prop="predicates" style="width: 100%">
+        </el-button>
+      </el-form-item>
+    </el-form>
+    <el-table border height="433" size="mini" :default-sort="searchForm.orderParam" :data="searchData"
+              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')" @row-dblclick="handleEdit"
+              @selection-change="handleSelect" @sort-change="handleSortChange"
+              header-cell-class-name="query-table-header">
+      <el-table-column
+        type="selection"
+        fixed="left"
+        align="center"
+        width="35">
+      </el-table-column>
+      <el-table-column
+        prop="routeId"
+        sortable="custom"
+        :label="this.$i18n.t('forms.routeId')"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="uri"
+        :label="this.$i18n.t('forms.uri')"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="predicates"
+        :label="this.$i18n.t('forms.predicates')">
+      </el-table-column>
+      <el-table-column
+        prop="filters"
+        :label="this.$i18n.t('forms.filters')">
+      </el-table-column>
+      <el-table-column
+        prop="remarks"
+        :label="this.$i18n.t('forms.remarks')"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="orderNum"
+        sortable="custom"
+        align="center"
+        :label="this.$i18n.t('forms.sort')"
+        width="80">
+      </el-table-column>
+      <el-table-column
+        prop="enabled"
+        sortable="custom"
+        align="center"
+        :label="this.$i18n.t('forms.enabled')"
+        width="100">
+        <template slot-scope="scope">
+          <span :style="scope.row.enabled ? 'color:green':'color:red'">{{enabledText(scope.row.enabled)}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="action"
+        :label="this.$i18n.t('forms.action')"
+        align="center"
+        width="90">
+        <template slot-scope="scope">
+          <el-tooltip :content="$t('forms.buttons.edit')" placement="bottom">
+            <el-button type="text" @click="handleEdit(scope.row)">
+              <i style="font-size: 15px" class="el-icon-edit"></i>
+            </el-button>
+          </el-tooltip>
+          <el-tooltip :content="$t('forms.buttons.delete')" placement="bottom">
+            <el-button type="text" @click="handleDeleteRow(scope.row)">
+              <i style="font-size: 15px" class="el-icon-delete"></i>
+            </el-button>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination style="margin-top: 10px;text-align: right"
+                   @size-change="handlePageSizeSearch"
+                   @current-change="handlePageSearch"
+                   :current-page="searchForm.currPage"
+                   :page-sizes="searchForm.pageSizeArray"
+                   :page-size="searchForm.pageSize"
+                   layout="total, sizes, prev, pager, next, jumper"
+                   :total="searchForm.totalRows">
+    </el-pagination>
+    <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false"
+               :fullscreen="true">
+      <el-form ref="editForm" :model="editForm" :rules="ruleAddForm" label-width="80px" size="mini"
+               style="padding-right: 25px;" v-loading="modal_loading">
+        <el-row>
+          <el-col :lg="8">
+            <el-form-item :label="$t('forms.routeId')" prop="routeId" style="width: 100%">
+              <el-input v-model="editForm.routeId" :disabled="modal_loading" ref="routeId"
+                        :placeholder="$t('forms.pleaseEnter') + $t('forms.routeId')"
+                        @keyup.enter.native="doSave('editForm')"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :lg="8">
+            <el-form-item :label="$t('forms.uri')" prop="uri" style="width: 100%">
+              <el-input v-model="editForm.uri" :disabled="modal_loading"
+                        :placeholder="$t('forms.pleaseEnter') + $t('forms.uri')"
+                        @keyup.enter.native="doSave('editForm')"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :lg="8">
+            <el-form-item :label="$t('forms.sort')" prop="orderNum">
+              <el-input-number v-model="editForm.orderNum" :disabled="modal_loading"
+                               style="width: 100%;max-width: 160px;"
+                               :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" :min="0"
+                               @keyup.enter.native="doSave('editForm')"></el-input-number>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :lg="8">
+            <el-form-item :label="$t('forms.enabled')" prop="enabled">
+              <el-switch v-model="editForm.enabled" :disabled="modal_loading"
+                         @keyup.native="handleAddKeyUp($event, 'editForm')">
+              </el-switch>
+            </el-form-item>
+          </el-col>
+          <el-col :lg="16">
+            <el-form-item :label="$t('forms.remarks')" prop="remarks" style="width: 100%;">
+              <el-input v-model="editForm.remarks" :disabled="modal_loading"
+                        :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')"
+                        @keyup.enter.native="doSave('editForm')"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :lg="12">
+            <el-form-item :label="$t('forms.predicates')" prop="predicates" style="width: 100%">
               <vueJsonEditor v-model="editForm.predicates" :lang="jsonEditorLang" :showBtns="false"
                              :modes="jsonEditModes"
                              :mode="'tree'"></vueJsonEditor>
-            </Form-item>
-          </i-col>
-          <i-col :xl="12">
-            <Form-item :label="$t('forms.filters')" prop="filters" style="width: 100%">
+            </el-form-item>
+          </el-col>
+          <el-col :lg="12">
+            <el-form-item :label="$t('forms.filters')" prop="filters" style="width: 100%">
               <vueJsonEditor v-model="editForm.filters" :lang="jsonEditorLang" :showBtns="false"
                              :modes="jsonEditModes"
                              :mode="'tree'"></vueJsonEditor>
-            </Form-item>
-          </i-col>
-        </Row>
-      </Form>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
       <div slot="footer" style="text-align: center">
-        <Button type="default" :loading="modal_loading" @click="doCancel()">
+        <el-button type="default" :loading="modal_loading" @click="doCancel()">
           {{$t('forms.buttons.cancel')}}
-        </Button>
-        <Button type="primary" :loading="modal_loading" @click="doSave('editForm')">
+        </el-button>
+        <el-button type="primary" :loading="modal_loading" @click="doSave('editForm')">
           {{$t('forms.buttons.submit')}}
-        </Button>
+        </el-button>
       </div>
-    </Modal>
-  </Card>
+    </el-dialog>
+  </el-card>
 </template>
 <script>
     import vueJsonEditor from 'vue-json-editor'
@@ -173,7 +202,7 @@
                     enabled: '',
                     orderParam: {
                         key: 'routeId',
-                        order: 'asc'
+                        order: 'ascending'
                     },
                     currPage: 1,
                     totalRows: 0,
@@ -221,73 +250,6 @@
                     { value: 'false', label: this.$i18n.t('forms.disabled') }
                 ]
             },
-            columns () {
-                const columns = [
-                    {
-                        type: 'selection',
-                        width: 50,
-                        align: 'center'
-                    },
-                    {
-                        key: 'routeId',
-                        title: this.$i18n.t('forms.routeId'),
-                        width: 150,
-                        slot: 'routeId',
-                        sortable: 'custom'
-                    },
-                    {
-                        key: 'uri',
-                        title: this.$i18n.t('forms.uri'),
-                        width: 150,
-                        slot: 'uri'
-                    },
-                    {
-                        key: 'predicates',
-                        title: this.$i18n.t('forms.predicates'),
-                        slot: 'predicates'
-                    },
-                    {
-                        key: 'filters',
-                        title: this.$i18n.t('forms.filters'),
-                        slot: 'filters'
-                    },
-                    {
-                        key: 'remarks',
-                        title: this.$i18n.t('forms.remarks'),
-                        width: 150,
-                        slot: 'remarks'
-                    },
-                    {
-                        key: 'orderNum',
-                        title: this.$i18n.t('forms.sort'),
-                        width: 80,
-                        align: 'center',
-                        slot: 'orderNum',
-                        sortable: 'custom'
-                    },
-                    {
-                        key: 'enabled',
-                        title: this.$i18n.t('forms.enabled'),
-                        width: 100,
-                        align: 'center',
-                        slot: 'enabled',
-                        sortable: 'custom'
-                    },
-                    {
-                        title: this.$i18n.t('forms.action'),
-                        width: 90,
-                        align: 'center',
-                        slot: 'action'
-                    }
-                ]
-                columns.forEach((item) => {
-                    if (item.key === this.searchForm.orderParam.key) {
-                        item.sortType = this.searchForm.orderParam.order
-                        item.sortable = 'custom'
-                    }
-                })
-                return columns
-            },
             ruleAddForm () {
                 return {
                     routeId: [
@@ -329,9 +291,11 @@
                 return enabled ? this.$i18n.t('forms.enabled') : this.$i18n.t('forms.disabled')
             },
             handleAdd () {
-                this.$refs['editForm'].resetFields()
                 this.editModal = true
-                this.action = 0
+                this.$nextTick(() => {
+                    this.$refs['editForm'].resetFields()
+                    this.action = 0
+                })
             },
             handleAddKeyUp (event, name) {
                 if (event.which === 13) {
@@ -358,7 +322,7 @@
                                 }).then((res) => {
                                     this.modal_loading = false
                                     if (res) {
-                                        this.$Message.success(this.$i18n.t('messages.saveSuccess'))
+                                        this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                                         this.editModal = false
                                         this.handleSearch()
                                     }
@@ -384,7 +348,7 @@
                                 }).then((res) => {
                                     this.modal_loading = false
                                     if (res) {
-                                        this.$Message.success(this.$i18n.t('messages.updateSuccess'))
+                                        this.$message.success(this.$i18n.t('messages.updateSuccess') + '')
                                         this.editModal = false
                                         this.handleSearch()
                                     }
@@ -401,7 +365,7 @@
                 this.$api.request.route.delete(rowIds).then((res) => {
                     this.modal_loading = false
                     if (res) {
-                        this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
+                        this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
                         this.handleSearch()
                     }
                 }).catch(() => {
@@ -471,65 +435,62 @@
             },
             handleDeleteRow (row) {
                 if (row.enabled) {
-                    this.$Modal.error({
-                        title: this.$i18n.t('dialog.error') + '',
-                        content: this.$i18n.t('messages.tableDataCannotDel') + ''
+                    this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
+                        type: 'error'
                     })
                 } else {
-                    this.$Modal.confirm({
-                        title: this.$i18n.t('dialog.confirm') + '',
-                        content: this.$i18n.t('messages.deleteDataConfirm') + '',
-                        onOk: () => {
-                            this.handleDelete([row.id])
-                        }
+                    this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+                        type: 'warning'
+                    }).then(() => {
+                        this.handleDelete([row.id])
+                    }).catch(() => {
                     })
                 }
             },
             handleDeleteMore () {
                 if (this.selectedData.length > 0) {
-                    this.$Modal.confirm({
-                        title: this.$i18n.t('dialog.confirm') + '',
-                        content: this.$i18n.t('messages.deleteDataConfirm') + '',
-                        onOk: () => {
-                            this.handleDelete(this.selectedData.map(item => item.id))
-                        }
+                    this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+                        type: 'warning'
+                    }).then(() => {
+                        this.handleDelete(this.selectedData.map(item => item.id))
+                    }).catch(() => {
                     })
                 } else {
-                    this.$Modal.info({
-                        title: this.$i18n.t('dialog.info') + '',
-                        content: this.$i18n.t('messages.selectDataForDelete') + ''
+                    this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
+                        type: 'error'
                     })
                 }
             },
             handleEdit (row) {
-                this.$refs['editForm'].resetFields()
-                this.editForm.id = row.id
-                this.editForm.routeId = row.routeId
-                this.editForm.uri = row.uri
-                this.editForm.predicates = JSON.parse(row.predicates)
-                this.editForm.filters = JSON.parse(row.filters)
-                this.editForm.orderNum = row.orderNum
-                this.editForm.enabled = !!row.enabled
-                this.editForm.remarks = row.remarks
                 this.editModal = true
-                this.action = 1
+                this.$nextTick(() => {
+                    this.$refs['editForm'].resetFields()
+                    this.editForm.id = row.id
+                    this.editForm.routeId = row.routeId
+                    this.editForm.uri = row.uri
+                    this.editForm.predicates = JSON.parse(row.predicates)
+                    this.editForm.filters = JSON.parse(row.filters)
+                    this.editForm.orderNum = row.orderNum
+                    this.editForm.enabled = !!row.enabled
+                    this.editForm.remarks = row.remarks
+                    this.action = 1
+                })
             },
             handleRefresh () {
-                this.$Modal.confirm({
-                    title: this.$i18n.t('dialog.confirm') + '',
-                    content: this.$i18n.t('messages.refreshRouteConfirm') + '',
-                    onOk: () => {
-                        this.modal_loading = true
-                        this.$api.request.route.refreshRoute().then((res) => {
-                            this.modal_loading = false
-                            if (res) {
-                                this.$Message.success(res.data.message)
-                                this.handleSearch()
-                            }
-                        }).catch(() => {
-                            this.modal_loading = false
-                        })
-                    }
+                this.$confirm(this.$i18n.t('messages.refreshRouteConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+                    type: 'warning'
+                }).then(() => {
+                    this.modal_loading = true
+                    this.$api.request.route.refreshRoute().then((res) => {
+                        this.modal_loading = false
+                        if (res) {
+                            this.$message.success(res.data.message)
+                            this.handleSearch()
+                        }
+                    }).catch(() => {
+                        this.modal_loading = false
+                    })
+                }).catch(() => {
                 })
             }
         },

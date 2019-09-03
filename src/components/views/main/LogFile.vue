@@ -1,6 +1,7 @@
 <template>
   <el-card style="min-height: 350px;">
-    <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="120px" :inline="true">
+    <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="120px" :inline="true"
+             onsubmit="return false;">
       <el-form-item :label="$t('forms.startDate')" prop="startDate">
         <el-date-picker type="date" :disabled="form_loading" :picker-options="datePickerOptions"
                         v-model="formValidate.startDate"

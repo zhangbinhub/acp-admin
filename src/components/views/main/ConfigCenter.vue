@@ -1,6 +1,7 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="60px" :inline="true" size="mini">
+    <el-form ref="searchForm" :model="searchForm" label-width="60px" :inline="true" size="mini"
+             onsubmit="return false;">
       <el-form-item :label="$t('forms.name')" prop="configApplication">
         <el-input v-model="searchForm.configApplication" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
@@ -51,10 +52,12 @@
     </el-form>
     <el-table border height="388" :data="searchData" size="mini" :default-sort="searchForm.orderParam"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')" @row-dblclick="handleEdit"
-              @selection-change="handleSelect" @sort-change="handleSortChange">
+              @selection-change="handleSelect" @sort-change="handleSortChange"
+              header-cell-class-name="query-table-header">
       <el-table-column
         type="selection"
         fixed="left"
+        align="center"
         width="35">
       </el-table-column>
       <el-table-column
@@ -100,19 +103,19 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="enabled"
+        prop="action"
         :label="this.$i18n.t('forms.action')"
         align="center"
         width="90">
         <template slot-scope="scope">
           <el-tooltip :content="$t('forms.buttons.edit')" placement="bottom">
             <el-button type="text" @click="handleEdit(scope.row)">
-              <i class="el-icon-edit"></i>
+              <i style="font-size: 15px" class="el-icon-edit"></i>
             </el-button>
           </el-tooltip>
           <el-tooltip :content="$t('forms.buttons.delete')" placement="bottom">
             <el-button type="text" @click="handleDeleteRow(scope.row)">
-              <i class="el-icon-delete"></i>
+              <i style="font-size: 15px" class="el-icon-delete"></i>
             </el-button>
           </el-tooltip>
         </template>
@@ -127,10 +130,9 @@
                    layout="total, sizes, prev, pager, next, jumper"
                    :total="searchForm.totalRows">
     </el-pagination>
-    <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :loading="modal_loading"
-               :close-on-click-modal="false">
+    <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false">
       <el-form ref="editForm" :model="editForm" :rules="ruleAddForm" label-width="80px" style="padding-right: 25px;"
-               size="mini">
+               size="mini" onsubmit="return false;" v-loading="modal_loading">
         <el-form-item :label="$t('forms.name')" prop="configApplication">
           <el-input v-model="editForm.configApplication" :disabled="modal_loading" ref="configApplication"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
@@ -176,9 +178,9 @@
         </el-button>
       </div>
     </el-dialog>
-    <el-dialog :visible.sync="refreshModal" :title="$t('forms.buttons.refreshService')" :close-on-click-modal="false"
-               :loading="modal_loading">
-      <el-form ref="refreshForm" :model="refreshForm" style="padding: 0 25px;">
+    <el-dialog :visible.sync="refreshModal" :title="$t('forms.buttons.refreshService')" :close-on-click-modal="false">
+      <el-form ref="refreshForm" :model="refreshForm" style="padding: 0 25px;" onsubmit="return false;"
+               v-loading="modal_loading">
         <el-form-item>
           <el-radio-group v-model="refreshForm.refreshType">
             <el-radio label="1">{{$t('forms.configRefreshServer')}}</el-radio>
@@ -320,9 +322,11 @@
                 return enabled ? this.$i18n.t('forms.enabled') : this.$i18n.t('forms.disabled')
             },
             handleAdd () {
-                this.$refs['editForm'].resetFields()
                 this.editModal = true
-                this.action = 0
+                this.$nextTick(() => {
+                    this.$refs['editForm'].resetFields()
+                    this.action = 0
+                })
             },
             handleAddKeyUp (event, name) {
                 if (event.which === 13) {

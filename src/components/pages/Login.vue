@@ -14,7 +14,7 @@
           </h1>
         </div>
         <div>
-          <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate">
+          <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" onsubmit="return false;">
             <el-form-item>
               <el-input type="password" style="display: none;"></el-input>
             </el-form-item>
