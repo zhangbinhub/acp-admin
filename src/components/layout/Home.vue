@@ -84,7 +84,7 @@
                 copyright: this.$store.state.app.appInfo.copyright,
                 openedNames: [],
                 isFullscreen: false,
-                homePath: this.$store.state.app.appInfo.homePath,
+                homePath: this.$store.state.app.appInfo.homePath
             }
         },
         created () {
