@@ -1,7 +1,10 @@
+//全局变量
+@import "../../../assets/styles/variable";
+
 .side-menu-wrapper {
   user-select: none;
   height: 100%;
-  background-color: #1f2d3d !important;
+  background-color: @menuBgColor !important;
 
   .menu-scrollbar {
     height: ~"calc(100% - 60px)";
@@ -18,16 +21,12 @@
 
     & .nest-menu .el-submenu > .el-submenu__title,
     & .el-submenu .el-menu-item {
-      background-color: #1f2d3d !important;
+      background-color: @menuSubMenuAndItemBgColor !important;
 
       &:hover {
-        background-color: #001528 !important;
+        background-color: @menuSubMenuAndItemHoverColor !important;
       }
     }
-  }
-
-  .menu-root.el-menu--collapse.el-menu {
-    width: 63px;
   }
 
 }

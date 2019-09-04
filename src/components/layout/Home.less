@@ -1,3 +1,6 @@
+//全局变量
+@import "../../assets/styles/variable";
+
 .home {
 
   table {
@@ -31,8 +34,7 @@
   }
 
   .el-header {
-    background-color: #fff;
-    color: #333;
+    background-color: @headerBgColor;
 
     .header-tabs {
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
@@ -42,24 +44,20 @@
   }
 
   .main-content {
-    background-color: #f5f7f9;
+    background-color: @mainBgColor;
   }
 
   .foot-content {
     font-size: 10px;
-    color: #ABA498;
+    color: @footerFontColor;
     padding-top: 8px;
-    background-color: #fff;
+    background-color: @footerBgColor;
     text-align: center;
   }
 
   .el-table {
     .query-table-header {
-      background-color: #f5f7f9;
+      background-color: @tableQueryHeaderBgColor;
     }
-
-    //.el-table__row.hover-row {
-    //  background-color: #409EFF;
-    //}
   }
 }

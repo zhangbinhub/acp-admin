@@ -1,10 +1,15 @@
-@height: 30px;
+//全局变量
+@import "../../../assets/styles/variable";
+
+.el-tabs__item {
+  color: @fontColor;
+}
 
 .header-tabs {
   position: relative;
-  border-top: 1px solid #F0F0F0;
-  border-bottom: 1px solid #F0F0F0;
-  height: @height;
+  border-top: 1px solid @tagBorderColor;
+  border-bottom: 1px solid @tagBorderColor;
+  height: @tagBarHeight;
 
   .el-tabs {
     padding-right: 30px;
@@ -15,18 +20,29 @@
   }
 
   .el-tabs__nav-prev, .el-tabs__nav-next {
-    height: ~"calc(@{height} - 1px)";
-    line-height: ~"calc(@{height} - 1px)";
-    background: #fff;
+    height: ~"calc(@{tagBarHeight} - 1px)";
+    line-height: ~"calc(@{tagBarHeight} - 1px)";
+    background: @tagBarBgColor;
     text-align: center;
-    border: 1px solid #E4E7ED;
+    border: 1px solid @tagItemBorderColor;
     z-index: 3;
     width: 20px;
   }
 
   .el-tabs__item {
-    height: @height;
-    line-height: @height;
+    height: @tagBarHeight;
+    line-height: @tagBarHeight;
+  }
+
+  .el-tabs__item:before {
+    content: "";
+    background: @tagItemDotColor;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    position: relative;
+    margin-right: 15px;
   }
 
   .el-tabs__item.is-top:nth-child(2) {
@@ -34,24 +50,24 @@
   }
 
   .el-tabs__item.is-top.is-active {
-    border-bottom: 1px solid #E4E7ED;
-    background-color: #fff;
+    border-bottom: 1px solid @tagItemBorderColor;
+    background-color: @tagBarBgColor;
+  }
+
+  .el-tabs__item.is-top.is-active:before {
+    background-color: @tagActiveColor;
   }
 
   .close-con {
     position: absolute;
     right: 0;
     top: 0;
-    height: ~"calc(@{height} - 1px)";
-    line-height: ~"calc(@{height} - 1px)";
+    height: ~"calc(@{tagBarHeight} - 1px)";
+    line-height: ~"calc(@{tagBarHeight} - 1px)";
     width: 30px;
-    background: #fff;
+    background: @tagBarBgColor;
     text-align: center;
     z-index: 3;
-    border: 1px solid #E4E7ED;
+    border: 1px solid @tagItemBorderColor;
   }
-}
-
-.el-tabs__item {
-  color: #606266;
 }

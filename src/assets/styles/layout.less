@@ -1,10 +1,13 @@
 //全局变量
+@import "variable";
+
 html {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif !important;
 }
 
 body {
-  background-color: #f5f7f9 !important;
+  background-color: @bgColor !important;
+  color: @fontColor;
 
   .el-table th.gutter {
     display: table-cell !important;

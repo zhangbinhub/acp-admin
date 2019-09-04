@@ -1,9 +1,9 @@
 <template>
   <el-container style="height: 100%" :class="`home home-${theme}`">
-    <el-aside :width="isCollapsed?'63px':'220px'" :style="{overflow: 'hidden'}">
+    <el-aside :width="isCollapsed?'64px':'220px'" :style="{overflow: 'hidden'}">
       <side-menu :accordion="true" :active-name="fullPath" :collapsed="isCollapsed"
                  @on-select="handleClick" :menu-list="menuList" :open-names="openedNames" :theme="theme">
-        <div class="logo-con" :style="'width: '+(isCollapsed?'43px':'200px')">
+        <div class="logo-con" :style="'width: '+(isCollapsed?'44px':'200px')">
           <img v-show="!isCollapsed" :src="mainLogo" alt=""/>
           <img v-show="isCollapsed" :src="minLogo" alt=""/>
         </div>
