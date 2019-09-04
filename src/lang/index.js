@@ -13,9 +13,9 @@ let langInfo = {
 }
 
 let langArrays = []
-Object.keys(langInfo.messages).forEach(function (key) {
+for (let key of Object.keys(langInfo.messages)) {
   langArrays.push(key)
-})
+}
 langInfo.langArrays = langArrays
 
 export default langInfo

@@ -21,8 +21,6 @@
       </el-form-item>
       <el-form-item :label="$t('forms.changePassword')">
         <el-switch v-model="updatePassword" :disabled="modal_loading"
-                   active-icon-class="el-icon-check"
-                   inactive-icon-class="el-icon-close"
                    @keyup.enter.native="handleSubmit('formValidate')"></el-switch>
       </el-form-item>
       <el-form-item v-show="updatePassword" :label="$t('forms.old')+$t('forms.password')" prop="oldPassword">

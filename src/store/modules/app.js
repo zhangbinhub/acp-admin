@@ -7,12 +7,12 @@ import appInfo from '../config/appInfo'
 // 配置 i18n 国际化
 Vue.use(VueI18n)
 let langList = []
-Object.keys(langInfo.messages).forEach(function (key) {
+for (let key of Object.keys(langInfo.messages)) {
   langList.push({
     value: key,
     label: langInfo.messages[key].langName
   })
-})
+}
 let lang = Cookies.get('lang')
 if (!lang || !langInfo.langArrays.includes(lang)) {
   lang = langInfo.defaultLang

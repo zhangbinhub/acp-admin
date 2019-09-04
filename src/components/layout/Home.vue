@@ -35,12 +35,12 @@
               </keep-alive>
             </transition>
           </el-main>
+          <el-backtop :visibility-height="100" target=".main-scrollbar .el-scrollbar__wrap"></el-backtop>
         </el-scrollbar>
       </el-container>
       <el-footer class="foot-content" style="height: 30px">
         <small style="text-align: center;">{{copyright}}</small>
       </el-footer>
-      <el-backtop :visibility-height="100" target=".main-content"></el-backtop>
     </el-container>
   </el-container>
 </template>
@@ -49,7 +49,6 @@
     import HeaderBar from './header-bar'
     import TagsNav from './tags-nav'
     import User from './user'
-    import ABackTop from './a-back-top'
     import Fullscreen from './fullscreen'
     import Language from './language'
     import logFileButton from './log-file-button'
@@ -73,7 +72,6 @@
             TagsNav,
             Fullscreen,
             User,
-            ABackTop,
             routeConfigButton,
             configCenterButton,
             logFileButton,

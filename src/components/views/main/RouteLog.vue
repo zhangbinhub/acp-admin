@@ -96,7 +96,7 @@
         sortable="custom"
         width="150"
         :label="this.$i18n.t('forms.responseStatus')">
-        <template slot-scope="{ scope }" slot="responseStatus">
+        <template slot-scope="scope">
           <span :style="scope.row.responseStatus>=200&&scope.row.responseStatus<300 ? 'color:green':'color:red'">{{scope.row.responseStatus}}</span>
         </template>
       </el-table-column>
@@ -106,7 +106,7 @@
         align="center"
         width="50">
         <template slot-scope="scope">
-          <el-tooltip :content="$t('forms.buttons.view')" placement="bottom">
+          <el-tooltip :content="$t('forms.buttons.view')" placement="top-start">
             <el-button type="text" @click="handleView(scope.row)">
               <i style="font-size: 15px" class="el-icon-search"></i>
             </el-button>

@@ -66,7 +66,7 @@
                 let xAxisData = []
                 let appNames = []
                 let series = []
-                this.loginInfo.forEach(info => {
+                for (let info of this.loginInfo) {
                     if (!xAxisData.includes(info.date)) {
                         xAxisData.push(info.date)
                     }
@@ -85,7 +85,7 @@
                             return item.name === info.appName
                         })[0].data.push([info.date, info.count])
                     }
-                })
+                }
                 xAxisData.sort()
                 loginChart.setOption({
                     title: {

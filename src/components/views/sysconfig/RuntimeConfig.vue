@@ -74,7 +74,9 @@
       </el-table-column>
       <el-table-column
         prop="enabled"
+        align="center"
         sortable="custom"
+        width="100"
         :label="this.$i18n.t('forms.enabled')">
         <template slot-scope="scope">
           <el-switch v-if="editIndex === scope.$index" v-model="editEnabled"
@@ -101,12 +103,12 @@
             </el-tooltip>
           </div>
           <div v-else>
-            <el-tooltip :content="$t('forms.buttons.edit')" placement="bottom">
+            <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
               <el-button type="text" @click="handleEdit(scope.row,scope.$index)">
                 <i style="font-size: 15px" class="el-icon-edit"></i>
               </el-button>
             </el-tooltip>
-            <el-tooltip :content="$t('forms.buttons.delete')" placement="bottom" v-if="scope.row.covert">
+            <el-tooltip :content="$t('forms.buttons.delete')" placement="top-start" v-if="scope.row.covert">
               <el-button type="text" @click="handleDeleteRow(scope.row)">
                 <i style="font-size: 15px" class="el-icon-delete"></i>
               </el-button>
