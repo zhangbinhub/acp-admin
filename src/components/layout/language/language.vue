@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="header-bar-button">
     <el-dropdown trigger="click" @command="selectLang">
       <el-link href="javascript:void(0)" :underline="false" style="font-size: 12px">
         {{ $t('lang') }}

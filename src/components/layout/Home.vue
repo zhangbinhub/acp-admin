@@ -14,12 +14,12 @@
         <header-bar :collapsed="isCollapsed" :full-path="fullPath" :menu-list="menuList"
                     :mini="isMini" @on-coll-change="handleCollapsedChange">
           <user :user-avatar="userAvatar" :customer-name="userName"/>
-          <language style="margin-right: 10px;" :lang="localLang"/>
-          <logFileButton v-if="showLogFile" style="margin-right: 10px;"></logFileButton>
-          <configCenterButton v-if="showConfigCenter" style="margin-right: 10px;"></configCenterButton>
-          <routeLogButton v-if="showRouteLog" style="margin-right: 10px;"></routeLogButton>
-          <routeConfigButton v-if="showRouteConfig" style="margin-right: 10px;"></routeConfigButton>
-          <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
+          <language :lang="localLang"/>
+          <logFileButton v-if="showLogFile"></logFileButton>
+          <configCenterButton v-if="showConfigCenter"></configCenterButton>
+          <routeLogButton v-if="showRouteLog"></routeLogButton>
+          <routeConfigButton v-if="showRouteConfig"></routeConfigButton>
+          <fullscreen v-model="isFullscreen"/>
         </header-bar>
       </el-header>
       <el-container>
