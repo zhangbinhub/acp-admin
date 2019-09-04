@@ -13,6 +13,7 @@
             </el-row>
           </h1>
         </div>
+        <el-divider></el-divider>
         <div>
           <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" onsubmit="return false;">
             <el-form-item>
@@ -39,6 +40,7 @@
             </el-form-item>
           </el-form>
         </div>
+        <el-divider></el-divider>
         <div slot="footer">
           <el-button type="primary" :loading="modal_loading" style="width: 100%"
                      @click="handleSubmit('formValidate')">
@@ -50,7 +52,15 @@
     </div>
   </div>
 </template>
+<style lang="less">
+  .el-dialog__body {
+    padding: 0 20px;
+  }
 
+  .el-divider {
+    margin: 0;
+  }
+</style>
 <script>
     export default {
         name: 'login',

@@ -26,7 +26,7 @@ const autoWidth = () => {
 }
 const autoHeight = () => {
   const winHeight = document.documentElement.clientHeight
-  store.commit('MAIN_HEIGHT', winHeight - 122)
+  store.commit('MAIN_HEIGHT', winHeight - 120)
 }
 
 Vue.config.productionTip = false
