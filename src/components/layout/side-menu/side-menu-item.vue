@@ -7,10 +7,8 @@
     <template v-for="item in this.parentItem.children">
       <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"></side-menu-item>
       <el-menu-item v-else :index="item.path">
-        <template slot="title">
-          <i :class="item.iconType"></i>
-          <span>{{item.name}}</span>
-        </template>
+        <i :class="item.iconType"></i>
+        <span slot="title">{{item.name}}</span>
       </el-menu-item>
     </template>
   </el-submenu>
