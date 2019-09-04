@@ -51,8 +51,8 @@
       </el-form-item>
     </el-form>
     <el-table ref="table" border height="388" :data="searchData" size="mini" :default-sort="searchForm.orderParam"
-              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')" @row-dblclick="handleEdit"
-              @selection-change="handleSelect" @sort-change="handleSortChange"
+              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
+              @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
               header-cell-class-name="query-table-header">
       <el-table-column
         type="selection"
@@ -458,6 +458,9 @@
                 if (event.which === 13) {
                     this.handleSearch()
                 }
+            },
+            handleRowClick (row) {
+                this.$refs['table'].toggleRowSelection(row)
             },
             handleSortChange (param) {
                 this.searchForm.orderParam.prop = param.prop

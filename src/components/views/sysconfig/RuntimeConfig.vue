@@ -38,8 +38,8 @@
       </el-form-item>
     </el-form>
     <el-table ref="table" border height="433" size="mini" :default-sort="searchForm.orderParam" :data="searchData"
-              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')" @row-dblclick="handleEdit"
-              @selection-change="handleSelect" @sort-change="handleSortChange"
+              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
+              @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
               header-cell-class-name="query-table-header">
       <el-table-column
         type="selection"
@@ -169,7 +169,7 @@
                     value: '',
                     enabled: '',
                     orderParam: {
-                        key: 'name',
+                        prop: 'name',
                         order: 'ascending'
                     },
                     currPage: 1,
@@ -318,7 +318,7 @@
                     searchParam.enabled = false
                 }
                 if (this.searchForm.orderParam.order !== 'normal') {
-                    searchParam.queryParam.orderName = this.searchForm.orderParam.key
+                    searchParam.queryParam.orderName = this.searchForm.orderParam.prop
                     searchParam.queryParam.orderCommond = this.searchForm.orderParam.order
                 }
                 this.modal_loading = true
@@ -349,8 +349,11 @@
                     this.handleSearch()
                 }
             },
+            handleRowClick (row) {
+                this.$refs['table'].toggleRowSelection(row)
+            },
             handleSortChange (param) {
-                this.searchForm.orderParam.key = param.key
+                this.searchForm.orderParam.prop = param.prop
                 this.searchForm.orderParam.order = param.order
                 this.handleSearch()
             },
