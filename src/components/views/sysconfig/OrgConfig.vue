@@ -67,7 +67,7 @@
           </el-col>
           <el-col :sm="{ span: 24 }">
             <el-form-item :label="$t('forms.userList')">
-              <el-transfer :data="optionalUsers" v-model="editForm.userIds"
+              <el-transfer :data="optionalUsers" v-model="editForm.userIds" v-loading="treeLoading"
                            :filterable="true" :props="{key:'id'}"
                            :titles="[$t('forms.optional'),$t('forms.selected')]"
                            :button-texts="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
