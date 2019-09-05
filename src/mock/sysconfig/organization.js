@@ -29,7 +29,7 @@ export const getOrgInfo = () => {
     'code': '',
     'parentId': 'root',
     'sort': 3,
-    'userIds': []
+    'userIds': ['163c7453-1eef-11e9-8980-d8c49792dd7b']
   }
 }
 export const deleteOrg = () => {

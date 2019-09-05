@@ -181,24 +181,30 @@
         <el-col :lg="6" class="card-col">
           <el-card>
             <div slot="header">{{$t('forms.orgList')}}</div>
-            <el-tree ref="orgTree" :data="orgTreeDataS1" node-key="id" v-loading="modal_loading"
-                     :show-checkbox="true" :check-strictly="true"
-                     :default-expanded-keys="currObj.orgIds"></el-tree>
+            <div style="overflow-x: auto">
+              <el-tree ref="orgTree" :data="orgTreeDataS1" node-key="id" v-loading="modal_loading"
+                       :show-checkbox="true" :check-strictly="true"
+                       :default-expanded-keys="currObj.orgIds"></el-tree>
+            </div>
           </el-card>
         </el-col>
         <el-col :lg="6" class="card-col">
           <el-card>
             <div slot="header">{{$t('forms.orgMngList')}}</div>
-            <el-tree ref="orgMngTree" :data="orgTreeDataS2" node-key="id" v-loading="modal_loading"
-                     :show-checkbox="true" :check-strictly="true"
-                     :default-expanded-keys="currObj.orgMngIds"></el-tree>
+            <div style="overflow-x: auto">
+              <el-tree ref="orgMngTree" :data="orgTreeDataS2" node-key="id" v-loading="modal_loading"
+                       :show-checkbox="true" :check-strictly="true"
+                       :default-expanded-keys="currObj.orgMngIds"></el-tree>
+            </div>
           </el-card>
         </el-col>
         <el-col :lg="6" class="card-col">
           <el-card>
             <div slot="header">{{$t('forms.roleList')}}</div>
-            <el-tree ref="roleTree" :data="roleTreeData" node-key="id" v-loading="modal_loading"
-                     :default-expand-all="true" :show-checkbox="true" :check-strictly="true"></el-tree>
+            <div style="overflow-x: auto">
+              <el-tree ref="roleTree" :data="roleTreeData" node-key="id" v-loading="modal_loading"
+                       :default-expand-all="true" :show-checkbox="true" :check-strictly="true"></el-tree>
+            </div>
           </el-card>
         </el-col>
       </el-row>
