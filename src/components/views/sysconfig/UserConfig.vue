@@ -329,11 +329,11 @@
                     if (res) {
                         const data1 = copy(res.data)
                         const data2 = copy(res.data)
-                        processTreeNode(data1, 2, this.currObj.orgIds)
-                        processTreeNode(data2, 2, this.currObj.orgMngIds)
+                        processTreeNode(data1)
+                        processTreeNode(data2)
                         this.orgTreeDataS1 = data1
                         this.orgTreeDataS2 = data2
-                        processTreeNode(res.data, 2)
+                        processTreeNode(res.data)
                         this.orgTreeData = res.data
                         if (typeof callBack === 'function') {
                             callBack()
@@ -361,7 +361,7 @@
                         this.$api.request.role.getList().then((res) => {
                             this.modal_loading = false
                             if (res) {
-                                processTreeNode(res.data, 2, this.currObj.roleIds)
+                                processTreeNode(res.data)
                                 const treeNode = res.data
                                 for (const item of treeNode) {
                                     item.parentId = item.appId
