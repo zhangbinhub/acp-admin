@@ -181,7 +181,7 @@
         <el-col :lg="6" class="card-col">
           <el-card>
             <div slot="header">{{$t('forms.orgList')}}</div>
-            <div style="overflow-x: auto">
+            <div style="overflow-x: auto;overflow-y: hidden">
               <el-tree ref="orgTree" :data="orgTreeDataS1" node-key="id" v-loading="modal_loading"
                        :show-checkbox="true" :check-strictly="true"
                        :default-expanded-keys="currObj.orgIds"></el-tree>
@@ -191,7 +191,7 @@
         <el-col :lg="6" class="card-col">
           <el-card>
             <div slot="header">{{$t('forms.orgMngList')}}</div>
-            <div style="overflow-x: auto">
+            <div style="overflow-x: auto;overflow-y: hidden">
               <el-tree ref="orgMngTree" :data="orgTreeDataS2" node-key="id" v-loading="modal_loading"
                        :show-checkbox="true" :check-strictly="true"
                        :default-expanded-keys="currObj.orgMngIds"></el-tree>
@@ -201,7 +201,7 @@
         <el-col :lg="6" class="card-col">
           <el-card>
             <div slot="header">{{$t('forms.roleList')}}</div>
-            <div style="overflow-x: auto">
+            <div style="overflow-x: auto;overflow-y: hidden">
               <el-tree ref="roleTree" :data="roleTreeData" node-key="id" v-loading="modal_loading"
                        :default-expand-all="true" :show-checkbox="true" :check-strictly="true"></el-tree>
             </div>
