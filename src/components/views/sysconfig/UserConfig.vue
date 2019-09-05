@@ -352,7 +352,6 @@
             refreshRoleTree (callBack) {
                 this.modal_loading = true
                 this.$api.request.app.getList().then((appRes) => {
-                    this.modal_loading = false
                     if (appRes) {
                         const appData = appRes.data
                         appData.map(item => {

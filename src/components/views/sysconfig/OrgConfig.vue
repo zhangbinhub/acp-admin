@@ -2,7 +2,7 @@
   <el-row :gutter="16">
     <el-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
       <el-card>
-        <div style="overflow-x: auto;">
+        <div style="overflow-x: auto;overflow-y: hidden">
           <el-tree style="margin-right: 16px;min-height: 100px;" :data="treeData" v-loading="treeLoading"
                    :default-expand-all="true"
                    :expand-on-click-node="false">
