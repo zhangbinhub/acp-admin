@@ -7,7 +7,8 @@
                    :default-expand-all="true"
                    :expand-on-click-node="false">
             <span class="config-tree-node" slot-scope="{ node, data }">
-              <span @click="orgClick(data)">{{ node.label }}</span>
+              <span v-if="data.id!=='root'" @click="orgClick(data)">{{ node.label }}</span>
+              <span v-else>{{ node.label }}</span>
               <span>
                 <el-button
                   v-if="data.id!=='root'"
@@ -52,8 +53,8 @@
           </el-col>
           <el-col :sm="{ span: 12 }">
             <el-form-item :label="$t('forms.parent')" prop="parentArray">
-              <el-cascader :options="cascaderData" v-model="editForm.parentArray" :disabled="treeLoading"
-                           @keyup.enter.native="doSave" style="width: 100%"
+              <el-cascader :options="cascaderData" v-model="editForm.parentArray" v-loading="treeLoading"
+                           :disabled="treeLoading" @keyup.enter.native="doSave" style="width: 100%"
                            :props="{checkStrictly: true,value:'id'}"></el-cascader>
             </el-form-item>
           </el-col>

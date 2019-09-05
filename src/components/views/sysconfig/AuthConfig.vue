@@ -1,188 +1,221 @@
 <template>
-  <Tabs :capture-focus="true">
-    <TabPane :label="$t('forms.menuList')" icon="md-list">
-      <Row :gutter="16">
-        <i-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
-          <Card>
-            <div style="max-height: 500px;overflow: auto;">
-              <Tree style="margin-right: 16px;" :data="menuTreeData" :render="menuRenderContent"></Tree>
+  <el-tabs v-model="activeName">
+    <el-tab-pane name="menuList">
+      <span slot="label"><i class="el-icon-s-order" style="margin-right: 5px"></i>{{$t('forms.menuList')}}</span>
+      <el-row :gutter="16">
+        <el-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
+          <el-card>
+            <div style="overflow-x: auto;overflow-y: hidden">
+              <el-tree style="margin-right: 16px;min-height: 100px;" :data="menuTreeData" v-loading="treeLoading"
+                       :default-expand-all="true"
+                       :expand-on-click-node="false">
+                <span class="config-tree-node" slot-scope="{ node, data }">
+                  <span v-if="!data.isApp" @click="menuClick(data)">
+                    <i :class="data.iconType" style="margin-right: 5px"></i>{{node.label}}</span>
+                  <span v-else>{{node.label}}</span>
+                  <span>
+                    <el-button
+                      v-if="!data.isApp"
+                      type="text"
+                      size="mini"
+                      icon="el-icon-minus"
+                      :loading="treeLoading"
+                      @click="removeMenu(node, data)">
+                    </el-button>
+                    <el-button
+                      type="text"
+                      size="mini"
+                      icon="el-icon-plus"
+                      :loading="treeLoading"
+                      @click="appendMenu(data)">
+                    </el-button>
+                  </span>
+                </span>
+              </el-tree>
             </div>
-          </Card>
-        </i-col>
-        <i-col :lg="{ span: 15 }" v-show="currMenu.id&&currMenu.id!==''" style="margin-bottom: 16px;">
-          <Card>
+          </el-card>
+        </el-col>
+        <el-col :lg="{ span: 15 }" v-show="currMenu.id&&currMenu.id!==''" style="margin-bottom: 16px;">
+          <el-card>
             <p style="margin: 0 16px;">{{currMenuFullPath}}</p>
-            <Divider style="margin: 12px 0;"/>
-            <Form ref="menuEditForm" :model="menuEditForm" :rules="ruleMenuEditForm" :label-width="100">
-              <Row>
-                <i-col :sm="{ span: 12 }">
-                  <Form-item :label="$t('forms.name')" prop="name">
-                    <label>
-                      <Input v-model="menuEditForm.name" :disabled="treeLoading" size="small"
-                             :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                             @on-enter="doSaveMenu"></Input>
-                    </label>
-                  </Form-item>
-                </i-col>
-                <i-col :sm="{ span: 12 }">
-                  <Form-item :label="$t('forms.iconType')" prop="iconType">
-                    <label>
-                      <Input v-model="menuEditForm.iconType" :disabled="treeLoading" size="small"
-                             :placeholder="$t('forms.pleaseEnter') + $t('forms.iconType')"
-                             @on-enter="doSaveMenu"></Input>
-                    </label>
-                  </Form-item>
-                </i-col>
-              </Row>
-              <Row>
-                <i-col :sm="{ span: 12 }">
-                  <Form-item :label="$t('forms.parent')" prop="menuParentArray">
-                    <Cascader :data="menuCascaderData" v-model="menuEditForm.menuParentArray" :disabled="treeLoading"
-                              :change-on-select="true" @keyup.enter.native="doSaveMenu"></Cascader>
-                  </Form-item>
-                </i-col>
-                <i-col :sm="{ span: 12 }">
-                  <Form-item :label="$t('forms.path')" prop="path">
-                    <label>
-                      <Input v-model="menuEditForm.path" :disabled="treeLoading" size="small"
-                             :placeholder="$t('forms.pleaseEnter') + $t('forms.path')"
-                             @on-enter="doSaveMenu"></Input>
-                    </label>
-                  </Form-item>
-                </i-col>
-              </Row>
-              <Row>
-                <i-col :sm="{ span: 12 }">
-                  <Form-item :label="$t('forms.openType')" prop="openType">
-                    <i-select v-model="menuEditForm.openType" @keyup.enter.native="doSaveMenu">
-                      <i-option v-for="item in openType" :value="item.value" :key="'openType-'+item.value">
-                        {{item.label}}
-                      </i-option>
-                    </i-select>
-                  </Form-item>
-                </i-col>
-                <i-col :sm="{ span: 12 }">
-                  <Form-item :label="$t('forms.sort')" prop="sort">
-                    <InputNumber v-model="menuEditForm.sort" :disabled="treeLoading" :min="0"
-                                 style="width: 100%;max-width: 150px;"
-                                 size="small" :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')"
-                                 @keyup.enter.native="doSaveMenu">
-                    </InputNumber>
-                  </Form-item>
-                </i-col>
-              </Row>
-              <Row>
-                <i-col :sm="{ span: 12 }">
-                  <Form-item :label="$t('forms.enabled')" prop="enabled" :required="true">
-                    <i-switch v-model="menuEditForm.enabled" @keyup.enter.native="doSaveMenu">
-                      <Icon type="md-checkmark" slot="open"></Icon>
-                      <Icon type="md-close" slot="close"></Icon>
-                    </i-switch>
-                  </Form-item>
-                </i-col>
-              </Row>
-              <Form-item :label="$t('forms.roleList')">
-                <Transfer :data="optionalMenuRoles" :target-keys="menuEditForm.roleIds" :list-style="listStyle"
-                          :filterable="true"
-                          :titles="[$t('forms.optional'),$t('forms.selected')]"
-                          :operations="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
-                          @on-change="handleMenuRoleListChange">
-                  <div :style="{float: 'right', margin: '5px'}">
-                    <Button size="small" @click="reloadMenuRoleList" :loading="treeLoading">
-                      {{$t('forms.buttons.refresh')}}
-                    </Button>
-                  </div>
-                </Transfer>
-              </Form-item>
-              <Divider style="margin: 12px 0;"/>
+            <el-divider style="margin: 12px 0;"/>
+            <el-form ref="menuEditForm" size="mini" :model="menuEditForm" :rules="ruleMenuEditForm" label-width="100px"
+                     v-loading="treeLoading" onsubmit="return false;">
+              <el-row>
+                <el-col :sm="{ span: 12 }">
+                  <el-form-item :label="$t('forms.name')" prop="name">
+                    <el-input v-model="menuEditForm.name" :disabled="treeLoading"
+                              :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
+                              @keyup.enter.native="doSaveMenu"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :sm="{ span: 12 }">
+                  <el-form-item :label="$t('forms.iconType')" prop="iconType">
+                    <el-input v-model="menuEditForm.iconType" :disabled="treeLoading"
+                              :placeholder="$t('forms.pleaseEnter') + $t('forms.iconType')"
+                              @keyup.enter.native="doSaveMenu"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :sm="{ span: 12 }">
+                  <el-form-item :label="$t('forms.parent')" prop="menuParentArray">
+                    <el-cascader :options="menuCascaderData" v-model="menuEditForm.menuParentArray"
+                                 :disabled="treeLoading"
+                                 @keyup.enter.native="doSaveMenu" style="width: 100%"
+                                 :props="{checkStrictly: true,value:'id'}"></el-cascader>
+                  </el-form-item>
+                </el-col>
+                <el-col :sm="{ span: 12 }">
+                  <el-form-item :label="$t('forms.path')" prop="path">
+                    <el-input v-model="menuEditForm.path" :disabled="treeLoading"
+                              :placeholder="$t('forms.pleaseEnter') + $t('forms.path')"
+                              @keyup.enter.native="doSaveMenu"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :sm="{ span: 12 }">
+                  <el-form-item :label="$t('forms.openType')" prop="openType">
+                    <el-select v-model="menuEditForm.openType" @keyup.enter.native="doSaveMenu" :disabled="treeLoading"
+                               value="">
+                      <el-option v-for="item in openType" :value="item.value" :label="item.label"
+                                 :key="'openType-'+item.value"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :sm="{ span: 12 }">
+                  <el-form-item :label="$t('forms.sort')" prop="sort">
+                    <el-input-number v-model="menuEditForm.sort" :disabled="treeLoading" :min="0"
+                                     style="width: 100%;max-width: 150px;"
+                                     :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')"
+                                     @keyup.enter.native="doSaveMenu">
+                    </el-input-number>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :sm="{ span: 12 }">
+                  <el-form-item :label="$t('forms.enabled')" prop="enabled" :required="true">
+                    <el-switch v-model="menuEditForm.enabled" @keyup.enter.native="doSaveMenu"
+                               :disabled="treeLoading"></el-switch>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-form-item :label="$t('forms.roleList')">
+                <el-transfer :data="optionalMenuRoles" v-model="menuEditForm.roleIds" v-loading="treeLoading"
+                             :filterable="true" :props="{key:'id'}"
+                             :titles="[$t('forms.optional'),$t('forms.selected')]"
+                             :button-texts="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
+                             @change="handleMenuRoleListChange">
+                </el-transfer>
+              </el-form-item>
+              <el-divider style="margin: 12px 0;"/>
               <div style="text-align: center">
-                <Button type="default" size="small" :loading="treeLoading" style="margin-right: 20px;"
-                        @click="doResetMenu">
+                <el-button type="info" :loading="treeLoading" style="margin-right: 20px;"
+                           @click="doResetMenu">
                   {{$t('forms.buttons.reset')}}
-                </Button>
-                <Button type="primary" size="small" :loading="treeLoading" @click="doSaveMenu">
+                </el-button>
+                <el-button type="primary" :loading="treeLoading" @click="doSaveMenu">
                   {{$t('forms.buttons.submit')}}
-                </Button>
+                </el-button>
               </div>
-            </Form>
-            <Spin size="large" :fix="true" v-if="treeLoading"></Spin>
-          </Card>
-        </i-col>
-      </Row>
-    </TabPane>
-    <TabPane :label="$t('forms.moduleFuncList')" icon="md-apps">
-      <Row :gutter="16">
-        <i-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
-          <Card>
-            <div style="max-height: 500px;overflow: auto;">
-              <Tree style="margin-right: 16px;" :data="moduleFuncTreeData" :render="moduleFuncRenderContent"></Tree>
+            </el-form>
+          </el-card>
+        </el-col>
+      </el-row>
+    </el-tab-pane>
+    <el-tab-pane name="moduleFuncList">
+      <span slot="label"><i class="el-icon-s-grid" style="margin-right: 5px"></i>{{$t('forms.moduleFuncList')}}</span>
+      <el-row :gutter="16">
+        <el-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
+          <el-card>
+            <div style="overflow-x: auto;overflow-y: hidden">
+              <el-tree style="margin-right: 16px;min-height: 100px;" :data="moduleFuncTreeData" v-loading="treeLoading"
+                       :default-expand-all="true"
+                       :expand-on-click-node="false">
+                <span class="config-tree-node" slot-scope="{ node, data }">
+                  <span v-if="!data.isApp" @click="moduleFuncClick(data)">{{ node.label }}</span>
+                  <span v-else>{{ node.label }}</span>
+                  <span>
+                    <el-button
+                      v-if="!data.isApp"
+                      type="text"
+                      size="mini"
+                      icon="el-icon-minus"
+                      :loading="treeLoading"
+                      @click="removeModuleFunc(node, data)">
+                    </el-button>
+                    <el-button
+                      type="text"
+                      size="mini"
+                      icon="el-icon-plus"
+                      :loading="treeLoading"
+                      @click="appendModuleFunc(data)">
+                    </el-button>
+                  </span>
+                </span>
+              </el-tree>
             </div>
-          </Card>
-        </i-col>
-        <i-col :lg="{ span: 15 }" v-show="currModuleFunc.id&&currModuleFunc.id!==''" style="margin-bottom: 16px;">
-          <Card>
+          </el-card>
+        </el-col>
+        <el-col :lg="{ span: 15 }" v-show="currModuleFunc.id&&currModuleFunc.id!==''" style="margin-bottom: 16px;">
+          <el-card>
             <p style="margin: 0 16px;">{{currModuleFuncFullPath}}</p>
-            <Divider style="margin: 12px 0;"/>
-            <Form ref="moduleFuncEditForm" :model="moduleFuncEditForm" :rules="ruleModuleFuncEditForm"
-                  :label-width="100">
-              <Row>
-                <i-col :sm="{ span: 12 }">
-                  <Form-item :label="$t('forms.name')" prop="name">
-                    <label>
-                      <Input v-model="moduleFuncEditForm.name" :disabled="treeLoading" size="small"
-                             :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                             @on-enter="doSaveModuleFunc"></Input>
-                    </label>
-                  </Form-item>
-                </i-col>
-                <i-col :sm="{ span: 12 }">
-                  <Form-item :label="$t('forms.code')" prop="code">
-                    <i-select v-model="moduleFuncEditForm.code" :filterable="true" :disabled="treeLoading" size="small"
-                              @keyup.enter.native="doSaveModuleFunc">
-                      <Option v-for="item in moduleFuncCodeList" :value="item" :key="item">{{ item }}</Option>
-                    </i-select>
-                  </Form-item>
-                </i-col>
-              </Row>
-              <Row>
-                <i-col :sm="{ span: 24 }">
-                  <Form-item :label="$t('forms.parent')" prop="moduleFuncParentArray">
-                    <Cascader :data="moduleFuncCascaderData" v-model="moduleFuncEditForm.moduleFuncParentArray"
-                              :disabled="treeLoading" :change-on-select="true"
-                              @keyup.enter.native="doSaveModuleFunc"></Cascader>
-                  </Form-item>
-                </i-col>
-              </Row>
-              <Form-item :label="$t('forms.roleList')">
-                <Transfer :data="optionalModuleFuncRoles" :target-keys="moduleFuncEditForm.roleIds"
-                          :list-style="listStyle" :filterable="true"
-                          :titles="[$t('forms.optional'),$t('forms.selected')]"
-                          :operations="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
-                          @on-change="handleModuleFuncRoleListChange">
-                  <div :style="{float: 'right', margin: '5px'}">
-                    <Button size="small" @click="reloadModuleFuncRoleList" :loading="treeLoading">
-                      {{$t('forms.buttons.refresh')}}
-                    </Button>
-                  </div>
-                </Transfer>
-              </Form-item>
-              <Divider style="margin: 12px 0;"/>
+            <el-divider style="margin: 12px 0;"/>
+            <el-form ref="moduleFuncEditForm" size="mini" :model="moduleFuncEditForm" :rules="ruleModuleFuncEditForm"
+                     label-width="100px" v-loading="treeLoading" onsubmit="return false;">
+              <el-row>
+                <el-col :sm="{ span: 12 }">
+                  <el-form-item :label="$t('forms.name')" prop="name">
+                    <el-input v-model="moduleFuncEditForm.name" :disabled="treeLoading"
+                              :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
+                              @keyup.enter.native="doSaveModuleFunc"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :sm="{ span: 12 }">
+                  <el-form-item :label="$t('forms.code')" prop="code">
+                    <el-select v-model="moduleFuncEditForm.code" :filterable="true" :disabled="treeLoading" value=""
+                               @keyup.enter.native="doSaveModuleFunc">
+                      <el-option v-for="item in moduleFuncCodeList" :value="item.value" :label="item.value"></el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-row>
+                <el-col :sm="{ span: 24 }">
+                  <el-form-item :label="$t('forms.parent')" prop="moduleFuncParentArray">
+                    <el-cascader :options="moduleFuncCascaderData"
+                                 v-model="moduleFuncEditForm.moduleFuncParentArray"
+                                 :disabled="treeLoading"
+                                 @keyup.enter.native="doSaveModuleFunc" style="width: 100%"
+                                 :props="{checkStrictly: true,value:'id'}"></el-cascader>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <el-form-item :label="$t('forms.roleList')">
+                <el-transfer :data="optionalModuleFuncRoles" v-model="moduleFuncEditForm.roleIds"
+                             v-loading="treeLoading" :filterable="true" :props="{key:'id'}"
+                             :titles="[$t('forms.optional'),$t('forms.selected')]"
+                             :button-texts="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
+                             @change="handleModuleFuncRoleListChange"></el-transfer>
+              </el-form-item>
+              <el-divider style="margin: 12px 0;"/>
               <div style="text-align: center">
-                <Button type="default" size="small" :loading="treeLoading" style="margin-right: 20px;"
-                        @click="doResetModuleFunc">
+                <el-button type="info" :loading="treeLoading" style="margin-right: 20px;"
+                           @click="doResetModuleFunc">
                   {{$t('forms.buttons.reset')}}
-                </Button>
-                <Button type="primary" size="small" :loading="treeLoading" @click="doSaveModuleFunc">
+                </el-button>
+                <el-button type="primary" :loading="treeLoading" @click="doSaveModuleFunc">
                   {{$t('forms.buttons.submit')}}
-                </Button>
+                </el-button>
               </div>
-            </Form>
-            <Spin size="large" :fix="true" v-if="treeLoading"></Spin>
-          </Card>
-        </i-col>
-      </Row>
-    </TabPane>
-  </Tabs>
+            </el-form>
+          </el-card>
+        </el-col>
+      </el-row>
+    </el-tab-pane>
+  </el-tabs>
 </template>
 <script>
     import {
@@ -198,16 +231,9 @@
         name: 'authConfig',
         data () {
             return {
-                listStyle: {
-                    width: '210px',
-                    height: '283px'
-                },
+                activeName: 'menuList',
                 menuTreeData: [],
                 moduleFuncTreeData: [],
-                buttonProps: {
-                    type: 'default',
-                    size: 'small'
-                },
                 tree_loading: false,
                 moduleFuncCode: [],
                 currMenuFullPath: '',
@@ -266,27 +292,21 @@
             },
             ruleMenuEditForm () {
                 return {
-                    name: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ],
-                    iconType: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.iconType') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ],
-                    path: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.path') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ],
+                    name: [{
+                        required: true,
+                        message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
+                        trigger: 'blur'
+                    }],
+                    iconType: [{
+                        required: true,
+                        message: this.$i18n.t('forms.iconType') + this.$i18n.t('forms.notEmpty'),
+                        trigger: 'blur'
+                    }],
+                    path: [{
+                        required: true,
+                        message: this.$i18n.t('forms.path') + this.$i18n.t('forms.notEmpty'),
+                        trigger: 'blur'
+                    }],
                     openType: [{
                         type: 'integer',
                         required: true,
@@ -309,13 +329,11 @@
             },
             ruleModuleFuncEditForm () {
                 return {
-                    name: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ],
+                    name: [{
+                        required: true,
+                        message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
+                        trigger: 'blur'
+                    }],
                     code: [{
                         type: 'string',
                         required: true,
@@ -348,204 +366,16 @@
             }
         },
         methods: {
-            rootMenuRenderContent (h, { root, node, data }) {
-                return h('span', {
-                    style: {
-                        display: 'inline-block',
-                        width: '100%'
-                    }
-                }, [
-                    h('span', [
-                        h('Icon', {
-                            props: {
-                                type: 'md-list'
-                            },
-                            style: {
-                                marginRight: '8px'
-                            }
-                        }),
-                        h('span', data.title)
-                    ]),
-                    h('span', {
-                        style: {
-                            display: 'inline-block',
-                            float: 'right',
-                            marginRight: '32px'
-                        }
-                    }, [
-                        h('Button', {
-                            props: Object.assign({}, this.buttonProps, {
-                                icon: 'ios-add',
-                                type: 'primary',
-                                loading: this.treeLoading
-                            }),
-                            style: {
-                                width: '64px'
-                            },
-                            on: {
-                                click: () => {
-                                    this.appendMenu(data)
-                                }
-                            }
-                        })
-                    ])
-                ])
-            },
-            rootModuleFuncRenderContent (h, { root, node, data }) {
-                return h('span', {
-                    style: {
-                        display: 'inline-block',
-                        width: '100%'
-                    }
-                }, [
-                    h('span', [
-                        h('Icon', {
-                            props: {
-                                type: 'md-apps'
-                            },
-                            style: {
-                                marginRight: '8px'
-                            }
-                        }),
-                        h('span', data.title)
-                    ]),
-                    h('span', {
-                        style: {
-                            display: 'inline-block',
-                            float: 'right',
-                            marginRight: '32px'
-                        }
-                    }, [
-                        h('Button', {
-                            props: Object.assign({}, this.buttonProps, {
-                                icon: 'ios-add',
-                                type: 'primary',
-                                loading: this.treeLoading
-                            }),
-                            style: {
-                                width: '64px'
-                            },
-                            on: {
-                                click: () => {
-                                    this.appendModuleFunc(data)
-                                }
-                            }
-                        })
-                    ])
-                ])
-            },
-            menuRenderContent (h, { root, node, data }) {
-                return h('span', {
-                    style: {
-                        cursor: 'pointer',
-                        display: 'inline-block',
-                        width: '100%'
-                    }
-                }, [
-                    h('span', [
-                        h('span', {
-                            class: 'ivu-tree-title',
-                            on: {
-                                click: () => {
-                                    this.menuClick(root, node, data)
-                                }
-                            }
-                        }, data.title)
-                    ]),
-                    h('span', {
-                        style: {
-                            display: 'inline-block',
-                            float: 'right',
-                            marginRight: '32px'
-                        }
-                    }, [
-                        h('Button', {
-                            props: Object.assign({}, this.buttonProps, {
-                                icon: 'ios-add',
-                                loading: this.treeLoading
-                            }),
-                            style: {
-                                marginRight: '8px'
-                            },
-                            on: {
-                                click: () => {
-                                    this.appendMenu(data)
-                                }
-                            }
-                        }),
-                        h('Button', {
-                            props: Object.assign({}, this.buttonProps, {
-                                icon: 'ios-remove',
-                                loading: this.treeLoading
-                            }),
-                            on: {
-                                click: () => {
-                                    this.removeMenu(root, node, data)
-                                }
-                            }
-                        })
-                    ])
-                ])
-            },
-            moduleFuncRenderContent (h, { root, node, data }) {
-                return h('span', {
-                    style: {
-                        cursor: 'pointer',
-                        display: 'inline-block',
-                        width: '100%'
-                    }
-                }, [
-                    h('span', [
-                        h('span', {
-                            class: 'ivu-tree-title',
-                            on: {
-                                click: () => {
-                                    this.moduleFuncClick(root, node, data)
-                                }
-                            }
-                        }, data.title)
-                    ]),
-                    h('span', {
-                        style: {
-                            display: 'inline-block',
-                            float: 'right',
-                            marginRight: '32px'
-                        }
-                    }, [
-                        h('Button', {
-                            props: Object.assign({}, this.buttonProps, {
-                                icon: 'ios-add',
-                                loading: this.treeLoading
-                            }),
-                            style: {
-                                marginRight: '8px'
-                            },
-                            on: {
-                                click: () => {
-                                    this.appendModuleFunc(data)
-                                }
-                            }
-                        }),
-                        h('Button', {
-                            props: Object.assign({}, this.buttonProps, {
-                                icon: 'ios-remove',
-                                loading: this.treeLoading
-                            }),
-                            on: {
-                                click: () => {
-                                    this.removeModuleFunc(root, node, data)
-                                }
-                            }
-                        })
-                    ])
-                ])
-            },
             refreshModuleFuncCodeList () {
                 this.tree_loading = true
                 this.$api.request.auth.getModuleFuncCodeList().then((res) => {
                     this.tree_loading = false
                     if (res) {
-                        this.moduleFuncCode = res.data
+                        this.moduleFuncCode = res.data.map(item => {
+                            const obj = {}
+                            obj.value = item
+                            return obj
+                        })
                     }
                 }).catch(() => {
                     this.tree_loading = false
@@ -557,7 +387,6 @@
                     this.tree_loading = false
                     if (res) {
                         this.optionalMenuRoles = res.data.map(item => {
-                            item.key = item.id
                             item.label = item.name
                             return item
                         })
@@ -572,7 +401,6 @@
                     this.tree_loading = false
                     if (res) {
                         this.optionalModuleFuncRoles = res.data.map(item => {
-                            item.key = item.id
                             item.label = item.name
                             return item
                         })
@@ -583,18 +411,15 @@
             },
             refreshMenuTree () {
                 this.tree_loading = true
-                this.$api.request.app.getList().then((appres) => {
-                    if (appres) {
-                        const appData = appres.data
+                this.$api.request.app.getList().then((appRes) => {
+                    if (appRes) {
+                        const appData = appRes.data
                         for (let i = 0; i < appData.length; i++) {
                             const item = appData[i]
-                            item.value = item.id
+                            item.isApp = true
                             item.appId = item.id
                             item.name = item.appName
                             item.label = item.appName
-                            item.render = this.rootMenuRenderContent
-                            item.expand = true
-                            item.title = item.appName
                             item.sort = i
                             item.children = []
                         }
@@ -623,18 +448,15 @@
             },
             refreshModuleFuncTree () {
                 this.tree_loading = true
-                this.$api.request.app.getList().then((appres) => {
-                    if (appres) {
-                        const appData = appres.data
+                this.$api.request.app.getList().then((appRes) => {
+                    if (appRes) {
+                        const appData = appRes.data
                         for (let i = 0; i < appData.length; i++) {
                             const item = appData[i]
-                            item.value = item.id
+                            item.isApp = true
                             item.appId = item.id
                             item.name = item.appName
                             item.label = item.appName
-                            item.render = this.rootModuleFuncRenderContent
-                            item.expand = true
-                            item.title = item.appName
                             item.children = []
                         }
                         this.moduleFuncTreeData = appData
@@ -726,7 +548,7 @@
                 }).then((res) => {
                     this.tree_loading = false
                     if (res) {
-                        this.$Message.success(this.$i18n.t('messages.createSuccess'))
+                        this.$message.success(this.$i18n.t('messages.createSuccess') + '')
                         const children = data.children || []
                         processTreeNode([res.data])
                         children.push(res.data)
@@ -747,7 +569,7 @@
                 }).then((res) => {
                     this.tree_loading = false
                     if (res) {
-                        this.$Message.success(this.$i18n.t('messages.createSuccess'))
+                        this.$message.success(this.$i18n.t('messages.createSuccess') + '')
                         const children = data.children || []
                         processTreeNode([res.data])
                         children.push(res.data)
@@ -758,65 +580,65 @@
                     this.tree_loading = false
                 })
             },
-            removeMenu (root, node, data) {
+            removeMenu (node, data) {
                 if (!data.covert) {
-                    this.$Modal.error({
-                        title: this.$i18n.t('dialog.error') + '',
-                        content: this.$i18n.t('messages.tableDataCannotDel') + '<br/>' + getTreeFullPathTitle(this.menuTreeData, data.id)
-                    })
+                    this.$alert(this.$i18n.t('messages.tableDataCannotDel') + ': ' + getTreeFullPathTitle(this.menuTreeData, data.id),
+                        this.$i18n.t('dialog.error') + '', {
+                            type: 'error'
+                        })
                     return
                 }
-                this.$Modal.confirm({
-                    title: this.$i18n.t('dialog.confirm') + '',
-                    content: this.$i18n.t('messages.deleteDataConfirm') + '<br/>' + getTreeFullPathTitle(this.menuTreeData, data.id),
-                    onOk: () => {
-                        this.tree_loading = true
-                        this.$api.request.auth.deleteMenu([data.id]).then((res) => {
-                            this.tree_loading = false
-                            if (res) {
-                                this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
-                                const parentKey = root.find(el => el === node).parent
-                                const parent = root.find(el => el.nodeKey === parentKey).node
-                                const index = parent.children.indexOf(data)
-                                parent.children.splice(index, 1)
-                                this.clearMenuCurrObj(data.id)
-                            }
-                        }).catch(() => {
-                            this.tree_loading = false
-                        })
-                    }
+                this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + ': ' + getTreeFullPathTitle(this.menuTreeData, data.id),
+                    this.$i18n.t('dialog.confirm') + '', {
+                        type: 'warning'
+                    }).then(() => {
+                    this.tree_loading = true
+                    this.$api.request.auth.deleteMenu([data.id]).then((res) => {
+                        this.tree_loading = false
+                        if (res) {
+                            this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
+                            const parentKey = root.find(el => el === node).parent
+                            const parent = root.find(el => el.nodeKey === parentKey).node
+                            const index = parent.children.indexOf(data)
+                            parent.children.splice(index, 1)
+                            this.clearMenuCurrObj(data.id)
+                        }
+                    }).catch(() => {
+                        this.tree_loading = false
+                    })
+                }).catch(() => {
                 })
             },
-            removeModuleFunc (root, node, data) {
+            removeModuleFunc (node, data) {
                 if (!data.covert) {
-                    this.$Modal.error({
-                        title: this.$i18n.t('dialog.error') + '',
-                        content: this.$i18n.t('messages.tableDataCannotDel') + '<br/>' + getTreeFullPathTitle(this.menuTreeData, data.id)
-                    })
+                    this.$alert(this.$i18n.t('messages.tableDataCannotDel') + ': ' + getTreeFullPathTitle(this.moduleFuncTreeData, data.id),
+                        this.$i18n.t('dialog.error') + '', {
+                            type: 'error'
+                        })
                     return
                 }
-                this.$Modal.confirm({
-                    title: this.$i18n.t('dialog.confirm') + '',
-                    content: this.$i18n.t('messages.deleteDataConfirm') + '<br/>' + getTreeFullPathTitle(this.moduleFuncTreeData, data.id),
-                    onOk: () => {
-                        this.tree_loading = true
-                        this.$api.request.auth.deleteModuleFunc([data.id]).then((res) => {
-                            this.tree_loading = false
-                            if (res) {
-                                this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
-                                const parentKey = root.find(el => el === node).parent
-                                const parent = root.find(el => el.nodeKey === parentKey).node
-                                const index = parent.children.indexOf(data)
-                                parent.children.splice(index, 1)
-                                this.clearModuleFuncCurrObj(data.id)
-                            }
-                        }).catch(() => {
-                            this.tree_loading = false
-                        })
-                    }
+                this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + ': ' + getTreeFullPathTitle(this.moduleFuncTreeData, data.id),
+                    this.$i18n.t('dialog.confirm') + '', {
+                        type: 'warning'
+                    }).then(() => {
+                    this.tree_loading = true
+                    this.$api.request.auth.deleteModuleFunc([data.id]).then((res) => {
+                        this.tree_loading = false
+                        if (res) {
+                            this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
+                            const parentKey = root.find(el => el === node).parent
+                            const parent = root.find(el => el.nodeKey === parentKey).node
+                            const index = parent.children.indexOf(data)
+                            parent.children.splice(index, 1)
+                            this.clearModuleFuncCurrObj(data.id)
+                        }
+                    }).catch(() => {
+                        this.tree_loading = false
+                    })
+                }).catch(() => {
                 })
             },
-            menuClick (root, node, data) {
+            menuClick (data) {
                 this.tree_loading = true
                 this.$api.request.auth.getMenuInfo(data.id).then((res) => {
                     this.tree_loading = false
@@ -841,7 +663,7 @@
                     this.tree_loading = false
                 })
             },
-            moduleFuncClick (root, node, data) {
+            moduleFuncClick (data) {
                 this.tree_loading = true
                 this.$api.request.auth.getModuleFuncInfo(data.id).then((res) => {
                     this.tree_loading = false
@@ -882,7 +704,7 @@
                             if (res) {
                                 let oldParentId = this.currMenuData.parentId
                                 this.reloadMenuRoleList()
-                                this.$Message.success(this.$i18n.t('messages.saveSuccess'))
+                                this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                                 this.currMenuData.name = this.menuEditForm.name
                                 this.currMenuData.title = this.menuEditForm.name
                                 this.currMenuData.label = this.menuEditForm.name
@@ -934,7 +756,7 @@
                             if (res) {
                                 let oldParentId = this.currModuleFuncData.parentId
                                 this.reloadModuleFuncRoleList()
-                                this.$Message.success(this.$i18n.t('messages.saveSuccess'))
+                                this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                                 this.currModuleFuncData.name = this.moduleFuncEditForm.name
                                 this.currModuleFuncData.title = this.moduleFuncEditForm.name
                                 this.currModuleFuncData.label = this.moduleFuncEditForm.name

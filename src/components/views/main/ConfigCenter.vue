@@ -189,7 +189,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item v-if="refreshForm.refreshType === '1'">
-          <el-select v-model="refreshForm.applicationName" value="">
+          <el-select v-model="refreshForm.applicationName" value="" :disabled="modal_loading">
             <el-option v-for="item in refreshForm.applicationList" :value="item" :key="item">{{ item }}</el-option>
           </el-select>
         </el-form-item>

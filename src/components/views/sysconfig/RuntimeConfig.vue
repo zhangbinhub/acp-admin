@@ -79,7 +79,7 @@
         width="100"
         :label="this.$i18n.t('forms.enabled')">
         <template slot-scope="scope">
-          <el-switch v-if="editIndex === scope.$index" v-model="editEnabled"
+          <el-switch v-if="editIndex === scope.$index" v-model="editEnabled" :disabled="modal_loading"
                      @keyup.native="handleKeyUp($event, scope.$index)"></el-switch>
           <span v-else :style="scope.row.enabled ? 'color:green':'color:red'">{{enabledText(scope.row.enabled)}}</span>
         </template>
