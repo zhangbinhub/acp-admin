@@ -7,7 +7,7 @@ export const getOrgList = () => {
     'sort': 1,
     'children': [{
       'id': 'b1d5d7ca-1a78-11e9-894e-d8c49792dd7b',
-      'name': '新机构',
+      'name': '新机构1-1',
       'code': '',
       'parentId': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
       'sort': 1,
@@ -15,7 +15,7 @@ export const getOrgList = () => {
     }]
   }, {
     'id': 'f83346f2-1a6a-11e9-894e-d8c49792dd7b',
-    'name': '新机构3',
+    'name': '新机构2',
     'code': '',
     'parentId': 'root',
     'sort': 3,

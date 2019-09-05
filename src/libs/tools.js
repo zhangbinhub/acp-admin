@@ -125,6 +125,62 @@ export const updateTagNavList = (tagNavList, menuList, route) => {
 }
 
 /**
+ * 将后台返回数据转换为tree组件数据
+ * @param nodeList Array
+ * @param flag 0-config,1-select,2-select-strictly
+ * @param selectedIds 选中项的id
+ * @returns number checkedCount
+ */
+export const processTreeNode = (nodeList, flag = 0, selectedIds = []) => {
+  let checkedCount = 0
+  for (let i = 0; i < nodeList.length; i++) {
+    if (!nodeList[i].children) {
+      nodeList[i].children = []
+    }
+    nodeList[i].label = nodeList[i].name
+    let childrenCheckedCount = 0
+    if (nodeList[i].children.length > 0) {
+      childrenCheckedCount = processTreeNode(nodeList[i].children, flag, selectedIds)
+    }
+    // 子孙节点有选中的，就展开
+    if (childrenCheckedCount > 0) {
+      nodeList[i].expand = true
+    }
+    // 累加子孙节点所有选中数
+    checkedCount += childrenCheckedCount
+    if (flag === 1) { // 子孙节点相关联，子节点全部选中则自身checked=true，有选中或关联则自身indeterminate=true
+      let childrenChecked = 0
+      let childrenIndeterminate = 0
+      nodeList[i].children.forEach(child => {
+        if (child.checked) {
+          childrenChecked++
+        } else if (child.indeterminate) {
+          childrenIndeterminate++
+        }
+      })
+      if (nodeList[i].children.length > 0 && childrenChecked === nodeList[i].children.length) {
+        checkedCount++
+        nodeList[i].checked = true
+      } else if (childrenChecked > 0 || childrenIndeterminate > 0) {
+        checkedCount++
+        nodeList[i].indeterminate = true
+      } else if (selectedIds.includes(nodeList[i].id)) {
+        checkedCount++
+        nodeList[i].checked = true
+      }
+    } else if (flag === 2) { // 自身选中，则checked=true
+      if (selectedIds.includes(nodeList[i].id)) {
+        checkedCount++
+        nodeList[i].checked = true
+      }
+    } else if (flag === 0) { // 不选择，直接展开所有节点
+      nodeList[i].expand = true
+    }
+  }
+  return checkedCount
+}
+
+/**
  * 树节点排序，根据sort属性
  * @param nodeList Array
  * @param property

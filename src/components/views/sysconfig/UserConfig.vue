@@ -86,12 +86,12 @@
       <el-table-column
         prop="organizationSet"
         :label="this.$i18n.t('forms.organization')">
-        <template slot-scope="scope"> {{ orgNames(scope.row.organizationSet) }}</template>
+        <template slot-scope="scope">{{orgNames(scope.row.organizationSet).join('\n')}}</template>
       </el-table-column>
       <el-table-column
         prop="roleSet"
         :label="this.$i18n.t('forms.role')">
-        <template slot-scope="scope"> {{ scope.row.roleSet.map(role => role.name).join(',') }}</template>
+        <template slot-scope="scope"> {{scope.row.roleSet.map(role => role.name).join(',')}}</template>
       </el-table-column>
       <el-table-column
         prop="enabled"
@@ -181,25 +181,24 @@
         <el-col :lg="6" class="card-col">
           <el-card>
             <div slot="header">{{$t('forms.orgList')}}</div>
-            <el-tree ref="orgTree" :data="orgTreeDataS1" node-key="id"
+            <el-tree ref="orgTree" :data="orgTreeDataS1" node-key="id" v-loading="modal_loading"
                      :show-checkbox="true" :check-strictly="true"
-                     :default-checked-keys="currObj.orgIds" :default-expanded-keys="currObj.orgIds"></el-tree>
+                     :default-expanded-keys="currObj.orgIds"></el-tree>
           </el-card>
         </el-col>
         <el-col :lg="6" class="card-col">
           <el-card>
             <div slot="header">{{$t('forms.orgMngList')}}</div>
-            <el-tree ref="orgMngTree" :data="orgTreeDataS2" node-key="id"
+            <el-tree ref="orgMngTree" :data="orgTreeDataS2" node-key="id" v-loading="modal_loading"
                      :show-checkbox="true" :check-strictly="true"
-                     :default-checked-keys="currObj.orgMngIds" :default-expanded-keys="currObj.orgMngIds"></el-tree>
+                     :default-expanded-keys="currObj.orgMngIds"></el-tree>
           </el-card>
         </el-col>
         <el-col :lg="6" class="card-col">
           <el-card>
             <div slot="header">{{$t('forms.roleList')}}</div>
-            <el-tree ref="roleTree" :data="roleTreeData" node-key="id" :default-expand-all="true"
-                     :show-checkbox="true" :check-strictly="true"
-                     :default-checked-keys="currObj.roleIds" :default-expanded-keys="currObj.roleIds"></el-tree>
+            <el-tree ref="roleTree" :data="roleTreeData" node-key="id" v-loading="modal_loading"
+                     :default-expand-all="true" :show-checkbox="true" :check-strictly="true"></el-tree>
           </el-card>
         </el-col>
       </el-row>
@@ -223,7 +222,7 @@
   }
 </style>
 <script>
-    import { copy, getTreeFullPathTitle, sortTreeNodes } from '@/libs/tools'
+    import { copy, processTreeNode, getTreeFullPathTitle, sortTreeNodes } from '@/libs/tools'
 
     export default {
         name: 'userConfig',
@@ -231,7 +230,6 @@
             return {
                 roleTreeData: [],
                 orgTreeData: [],
-                orgTreeDataTemp: [],
                 orgTreeDataS1: [],
                 orgTreeDataS2: [],
                 editModal: false,
@@ -323,31 +321,20 @@
                 }
             }
         },
-        watch: {
-            orgTreeDataTemp (newData) {
-                const data1 = copy(newData)
-                const data2 = copy(newData)
-                this.orgTreeDataS1 = data1.map((item) => {
-                    item.label = item.name
-                    return item
-                })
-                this.orgTreeDataS2 = data2.map((item) => {
-                    item.label = item.name
-                    return item
-                })
-            }
-        },
         methods: {
             refreshOrgTree (callBack) {
                 this.modal_loading = true
                 this.$api.request.org.getOrgList().then((res) => {
                     this.modal_loading = false
                     if (res) {
-                        this.orgTreeDataTemp = copy(res.data)
-                        this.orgTreeData = res.data.map(item => {
-                            item.label = item.name
-                            return item
-                        })
+                        const data1 = copy(res.data)
+                        const data2 = copy(res.data)
+                        processTreeNode(data1, 2, this.currObj.orgIds)
+                        processTreeNode(data2, 2, this.currObj.orgMngIds)
+                        this.orgTreeDataS1 = data1
+                        this.orgTreeDataS2 = data2
+                        processTreeNode(res.data, 2)
+                        this.orgTreeData = res.data
                         if (typeof callBack === 'function') {
                             callBack()
                         }
@@ -359,6 +346,7 @@
             refreshRoleTree (callBack) {
                 this.modal_loading = true
                 this.$api.request.app.getList().then((appRes) => {
+                    this.modal_loading = false
                     if (appRes) {
                         const appData = appRes.data
                         appData.map(item => {
@@ -369,13 +357,12 @@
                             return item
                         })
                         this.roleTreeData = appData
+                        this.modal_loading = true
                         this.$api.request.role.getList().then((res) => {
                             this.modal_loading = false
                             if (res) {
-                                const treeNode = res.data.map((item) => {
-                                    item.label = item.name
-                                    return item
-                                })
+                                processTreeNode(res.data, 2, this.currObj.roleIds)
+                                const treeNode = res.data
                                 for (const item of treeNode) {
                                     item.parentId = item.appId
                                     for (const root of this.roleTreeData) {
@@ -402,7 +389,7 @@
             orgNames (organizationSet) {
                 const data = copy(organizationSet)
                 sortTreeNodes(data)
-                return data.map(org => getTreeFullPathTitle(this.orgTreeData, org.id)).join('\n')
+                return data.map(org => getTreeFullPathTitle(this.orgTreeData, org.id))
             },
             handleSearchKeyUp (event) {
                 if (event.which === 13) {
@@ -550,6 +537,9 @@
             },
             doReset () {
                 this.$refs['editForm'].resetFields()
+                this.currObj.orgIds = this.currObj.organizationSet.map(item => item.id)
+                this.currObj.orgMngIds = this.currObj.organizationMngSet.map(item => item.id)
+                this.currObj.roleIds = this.currObj.roleSet.map(item => item.id)
                 this.editForm.id = this.currObj.id
                 this.editForm.name = this.currObj.name
                 this.editForm.loginNo = this.currObj.loginNo
@@ -557,17 +547,17 @@
                 this.editForm.levels = this.currObj.levels
                 this.editForm.enabled = this.currObj.enabled
                 this.editForm.sort = this.currObj.sort
-                if (this.currObj.organizationSet.length > 0) {
-                    this.currObj.orgIds = this.currObj.organizationSet.map(item => item.id)
-                }
-                if (this.currObj.organizationMngSet.length > 0) {
-                    this.currObj.orgMngIds = this.currObj.organizationMngSet.map(item => item.id)
-                }
-                if (this.currObj.roleSet.length > 0) {
-                    this.currObj.roleIds = this.currObj.roleSet.map(item => item.id)
-                }
-                this.refreshOrgTree()
-                this.refreshRoleTree()
+                this.refreshOrgTree(() => {
+                    this.$nextTick(() => {
+                        this.$refs['orgTree'].setCheckedKeys(this.currObj.orgIds)
+                        this.$refs['orgMngTree'].setCheckedKeys(this.currObj.orgMngIds)
+                    })
+                })
+                this.refreshRoleTree(() => {
+                    this.$nextTick(() => {
+                        this.$refs['roleTree'].setCheckedKeys(this.currObj.roleIds)
+                    })
+                })
             },
             doSave () {
                 this.$refs['editForm'].validate((valid) => {

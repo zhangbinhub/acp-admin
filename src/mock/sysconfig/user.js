@@ -26,7 +26,7 @@ export const getUserList = () => {
       'organizationMngSet': [],
       'roleSet': [{
         'id': 'dbe88dbc-19fb-11e9-894e-d8c49792dd7b',
-        'appId': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'appId': '8a80cb816c0a5d4f016c0a5e0c020000',
         'name': '超级管理员',
         'code': 'ADMIN',
         'levels': 0,
@@ -41,38 +41,38 @@ export const getUserList = () => {
       'enabled': true,
       'sort': 1,
       'organizationSet': [{
-        'parentId': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
-        'children': [],
-        'id': '386d4aae-1afc-11e9-a49e-d8c49792dd7b',
-        'name': '新机构112',
-        'code': '',
-        'sort': 1
-      }],
-      'organizationMngSet': [{
-        'parentId': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
-        'children': [],
-        'id': '386d4aae-1afc-11e9-a49e-d8c49792dd7b',
-        'name': '新机构112',
-        'code': '',
-        'sort': 1
-      }, {
-        'parentId': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
-        'children': [],
-        'id': '99c30635-1ccb-11e9-a49e-d8c49792dd7b',
-        'name': '新机构2',
-        'code': '',
-        'sort': 0
-      }, {
-        'parentId': 'root',
-        'children': [],
         'id': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
         'name': '新机构1',
         'code': '',
-        'sort': 1
+        'parentId': 'root',
+        'sort': 1,
+        'children': []
+      }, {
+        'id': 'b1d5d7ca-1a78-11e9-894e-d8c49792dd7b',
+        'name': '新机构1-1',
+        'code': '',
+        'parentId': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
+        'sort': 1,
+        'children': []
+      }],
+      'organizationMngSet': [{
+        'id': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
+        'name': '新机构1',
+        'code': '',
+        'parentId': 'root',
+        'sort': 1,
+        'children': []
+      }, {
+        'id': 'b1d5d7ca-1a78-11e9-894e-d8c49792dd7b',
+        'name': '新机构1-1',
+        'code': '',
+        'parentId': 'a1f6bef2-1a76-11e9-894e-d8c49792dd7b',
+        'sort': 1,
+        'children': []
       }],
       'roleSet': [{
         'id': 'fd3bb9d8-1bf1-11e9-a49e-d8c49792dd7b',
-        'appId': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
+        'appId': '8a80cb816c0a5d4f016c0a5e0c020000',
         'name': '测试人员',
         'code': 'TEST',
         'levels': 1,
