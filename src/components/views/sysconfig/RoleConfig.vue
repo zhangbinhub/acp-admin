@@ -77,12 +77,12 @@
           <el-tab-pane name="menuList">
             <span slot="label"><i class="el-icon-menu"></i>{{$t('forms.menuList')}}</span>
             <el-tree ref="menuTree" :data="menuData" :show-checkbox="true" node-key="id"
-                     v-loading="treeLoading"></el-tree>
+                     v-loading="treeLoading" :default-expanded-keys="editForm.menuIds"></el-tree>
           </el-tab-pane>
           <el-tab-pane name="moduleFuncList">
             <span slot="label"><i class="el-icon-s-grid"></i>{{$t('forms.moduleFuncList')}}</span>
             <el-tree ref="moduleFuncTree" :data="moduleFuncData" :show-checkbox="true" node-key="id"
-                     v-loading="treeLoading"></el-tree>
+                     v-loading="treeLoading" :default-expanded-keys="editForm.moduleFuncIds"></el-tree>
           </el-tab-pane>
         </el-tabs>
         <el-divider style="margin: 12px 0;"/>
@@ -119,7 +119,17 @@
                 currRoleFullPath: '',
                 currRoleData: {},
                 currRole: {},
-                editForm: {},
+                editForm: {
+                    id: '',
+                    appId: '',
+                    name: '',
+                    code: '',
+                    levels: 999,
+                    sort: 1,
+                    userIds: [],
+                    menuIds: [],
+                    moduleFuncIds: []
+                },
                 optionalUsers: []
             }
         },
@@ -230,25 +240,31 @@
                     this.tree_loading = false
                 })
             },
-            reloadMenuList () {
+            reloadMenuList (callBack) {
                 this.tree_loading = true
                 this.$api.request.auth.getMenuList(this.currRole.appId).then((res) => {
                     this.tree_loading = false
                     if (res) {
                         processTreeNode(res.data)
                         this.menuData = res.data
+                        if (typeof callBack === 'function') {
+                            callBack()
+                        }
                     }
                 }).catch(() => {
                     this.tree_loading = false
                 })
             },
-            reloadModuleFuncList () {
+            reloadModuleFuncList (callBack) {
                 this.tree_loading = true
                 this.$api.request.auth.getModuleFuncList(this.currRole.appId).then((res) => {
                     this.tree_loading = false
                     if (res) {
                         processTreeNode(res.data)
                         this.moduleFuncData = res.data
+                        if (typeof callBack === 'function') {
+                            callBack()
+                        }
                     }
                 }).catch(() => {
                     this.tree_loading = false
@@ -364,8 +380,8 @@
                             levels: this.editForm.levels,
                             sort: this.editForm.sort,
                             userIds: this.editForm.userIds,
-                            menuIds: this.$refs['menuTree'].getCheckedNodes().map(item => item.id),
-                            moduleFuncIds: this.$refs['moduleFuncTree'].getCheckedNodes().map(item => item.id)
+                            menuIds: this.$refs['menuTree'].getCheckedNodes(false, true).map(item => item.id),
+                            moduleFuncIds: this.$refs['moduleFuncTree'].getCheckedNodes(false, true).map(item => item.id)
                         }).then((res) => {
                             this.tree_loading = false
                             if (res) {
@@ -378,8 +394,8 @@
                                 this.currRoleData.levels = this.editForm.levels
                                 this.currRoleData.sort = this.editForm.sort
                                 this.currRoleData.userIds = this.editForm.userIds
-                                this.currRoleData.menuIds = this.$refs['menuTree'].getCheckedNodes().map(item => item.id)
-                                this.currRoleData.moduleFuncIds = this.$refs['moduleFuncTree'].getCheckedNodes().map(item => item.id)
+                                this.currRoleData.menuIds = this.$refs['menuTree'].getCheckedNodes(false, true).map(item => item.id)
+                                this.currRoleData.moduleFuncIds = this.$refs['moduleFuncTree'].getCheckedNodes(false, true).map(item => item.id)
                                 this.currRole = {
                                     id: this.editForm.id,
                                     appId: this.editForm.appId,
@@ -388,11 +404,19 @@
                                     levels: this.editForm.levels,
                                     sort: this.editForm.sort,
                                     userIds: this.editForm.userIds,
-                                    menuIds: this.$refs['menuTree'].getCheckedNodes().map(item => item.id),
-                                    moduleFuncIds: this.$refs['moduleFuncTree'].getCheckedNodes().map(item => item.id)
+                                    menuIds: this.$refs['menuTree'].getCheckedNodes(false, true).map(item => item.id),
+                                    moduleFuncIds: this.$refs['moduleFuncTree'].getCheckedNodes(false, true).map(item => item.id)
                                 }
-                                this.reloadMenuList()
-                                this.reloadModuleFuncList()
+                                this.reloadMenuList(() => {
+                                    this.$nextTick(() => {
+                                        this.$refs['menuTree'].setCheckedKeys(this.currRole.menuIds)
+                                    })
+                                })
+                                this.reloadModuleFuncList(() => {
+                                    this.$nextTick(() => {
+                                        this.$refs['moduleFuncTree'].setCheckedKeys(this.currRole.moduleFuncIds)
+                                    })
+                                })
                                 this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)
                                 sortTreeNodes(this.treeData)
                             }
@@ -416,8 +440,16 @@
                     menuIds: this.currRole.menuIds,
                     moduleFuncIds: this.currRole.moduleFuncIds
                 }
-                this.reloadMenuList()
-                this.reloadModuleFuncList()
+                this.reloadMenuList(() => {
+                    this.$nextTick(() => {
+                        this.$refs['menuTree'].setCheckedKeys(this.editForm.menuIds)
+                    })
+                })
+                this.reloadModuleFuncList(() => {
+                    this.$nextTick(() => {
+                        this.$refs['moduleFuncTree'].setCheckedKeys(this.editForm.moduleFuncIds)
+                    })
+                })
                 this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)
             },
             handleUserListChange (newTargetKeys) {

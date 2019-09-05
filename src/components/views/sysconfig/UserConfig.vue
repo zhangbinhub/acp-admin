@@ -593,8 +593,8 @@
                     levels: this.editForm.levels,
                     enabled: this.editForm.enabled,
                     sort: this.editForm.sort,
-                    orgIds: this.$refs['orgTree'].getCheckedNodes(false, true).map(item => item.id),
-                    orgMngIds: this.$refs['orgMngTree'].getCheckedNodes(false, true).map(item => item.id),
+                    orgIds: this.$refs['orgTree'].getCheckedNodes().map(item => item.id),
+                    orgMngIds: this.$refs['orgMngTree'].getCheckedNodes().map(item => item.id),
                     roleIds: this.$refs['roleTree'].getCheckedNodes().map(item => item.id)
                 }).then((res) => {
                     this.modal_loading = false
@@ -617,8 +617,8 @@
                     levels: this.editForm.levels,
                     enabled: this.editForm.enabled,
                     sort: this.editForm.sort,
-                    orgIds: this.$refs['orgTree'].getCheckedNodes(false, true).map(item => item.id),
-                    orgMngIds: this.$refs['orgMngTree'].getCheckedNodes(false, true).map(item => item.id),
+                    orgIds: this.$refs['orgTree'].getCheckedNodes().map(item => item.id),
+                    orgMngIds: this.$refs['orgMngTree'].getCheckedNodes().map(item => item.id),
                     roleIds: this.$refs['roleTree'].getCheckedNodes().map(item => item.id)
                 }).then((res) => {
                     this.modal_loading = false
