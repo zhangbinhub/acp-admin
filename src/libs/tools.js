@@ -141,6 +141,73 @@ export const processTreeNode = (nodeList) => {
 }
 
 /**
+ * 区分全选和半选节点ID
+ * @param nodeList Array
+ * @param idList Array
+ * @return findResult = { checkedIdList: [], halfCheckedIdList: [] } 筛选后的结果对象
+ */
+export const findCheckedTreeNode = (nodeList, idList) => {
+  const findResult = {
+    checkedIdList: [],
+    halfCheckedIdList: []
+  }
+  for (let item of nodeList) {
+    if (item.children && item.children.length > 0) {
+      const childrenFindResult = findCheckedTreeNode(item.children, idList)
+      if (arrayIsFullContainOtherArray(childrenFindResult.checkedIdList, item.children.map(child => child.id))) {
+        findResult.checkedIdList.push(item.id)
+      } else {
+        if (arrayIsContainOtherArray(childrenFindResult.checkedIdList, item.children.map(child => child.id)) ||
+          arrayIsContainOtherArray(childrenFindResult.halfCheckedIdList, item.children.map(child => child.id))) {
+          findResult.halfCheckedIdList.push(item.id)
+        }
+      }
+      findResult.checkedIdList = findResult.checkedIdList.concat(childrenFindResult.checkedIdList)
+      findResult.halfCheckedIdList = findResult.halfCheckedIdList.concat(childrenFindResult.halfCheckedIdList)
+    } else {
+      if (idList.includes(item.id)) {
+        findResult.checkedIdList.push(item.id)
+      }
+    }
+  }
+  return findResult
+}
+
+/**
+ * 判断数组是否完全包含另一个数组的所有元素
+ * @param srcArray 原数组
+ * @param searchArray 目标查询数组
+ * @returns {boolean}
+ */
+export const arrayIsFullContainOtherArray = (srcArray, searchArray) => {
+  let result = true
+  for (let item of searchArray) {
+    if (!srcArray.includes(item)) {
+      result = false
+      break
+    }
+  }
+  return result
+}
+
+/**
+ * 判断数组是否包含另一个数组的至少一个元素
+ * @param srcArray 原数组
+ * @param searchArray 目标查询数组
+ * @returns {boolean}
+ */
+export const arrayIsContainOtherArray = (srcArray, searchArray) => {
+  let result = false
+  for (let item of searchArray) {
+    if (srcArray.includes(item)) {
+      result = true
+      break
+    }
+  }
+  return result
+}
+
+/**
  * 树节点排序，根据sort属性
  * @param nodeList Array
  * @param property

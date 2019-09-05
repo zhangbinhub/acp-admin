@@ -106,7 +106,8 @@
     import {
         sortTreeNodes,
         processTreeNode,
-        getTreeFullPathTitle
+        getTreeFullPathTitle,
+        findCheckedTreeNode
     } from '@/libs/tools'
 
     export default {
@@ -410,14 +411,18 @@
                                     menuIds: this.$refs['menuTree'].getCheckedNodes(false, true).map(item => item.id),
                                     moduleFuncIds: this.$refs['moduleFuncTree'].getCheckedNodes(false, true).map(item => item.id)
                                 }
+                                this.editForm.menuIds = this.currRole.menuIds
+                                this.editForm.moduleFuncIds = this.currRole.moduleFuncIds
                                 this.reloadMenuList(() => {
                                     this.$nextTick(() => {
-                                        this.$refs['menuTree'].setCheckedKeys(this.currRole.menuIds)
+                                        const checkedResult = findCheckedTreeNode(this.menuData, this.editForm.menuIds)
+                                        this.$refs['menuTree'].setCheckedKeys(checkedResult.checkedIdList)
                                     })
                                 })
                                 this.reloadModuleFuncList(() => {
                                     this.$nextTick(() => {
-                                        this.$refs['moduleFuncTree'].setCheckedKeys(this.currRole.moduleFuncIds)
+                                        const checkedResult = findCheckedTreeNode(this.moduleFuncData, this.editForm.moduleFuncIds)
+                                        this.$refs['moduleFuncTree'].setCheckedKeys(checkedResult.checkedIdList)
                                     })
                                 })
                                 this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)
@@ -445,12 +450,14 @@
                 }
                 this.reloadMenuList(() => {
                     this.$nextTick(() => {
-                        this.$refs['menuTree'].setCheckedKeys(this.editForm.menuIds)
+                        const checkedResult = findCheckedTreeNode(this.menuData, this.editForm.menuIds)
+                        this.$refs['menuTree'].setCheckedKeys(checkedResult.checkedIdList)
                     })
                 })
                 this.reloadModuleFuncList(() => {
                     this.$nextTick(() => {
-                        this.$refs['moduleFuncTree'].setCheckedKeys(this.editForm.moduleFuncIds)
+                        const checkedResult = findCheckedTreeNode(this.moduleFuncData, this.editForm.moduleFuncIds)
+                        this.$refs['moduleFuncTree'].setCheckedKeys(checkedResult.checkedIdList)
                     })
                 })
                 this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)

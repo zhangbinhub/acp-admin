@@ -209,7 +209,6 @@
                 })
             },
             append (data) {
-                console.log(data)
                 this.tree_loading = true
                 this.$api.request.org.createOrg({
                     name: this.$i18n.t('forms.new') + this.$i18n.t('forms.organization'),

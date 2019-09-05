@@ -66,13 +66,17 @@ Mock.mock(/\/oauth\/auth\/menulist\/.*/, /get/i, getMenuListByAppId)
 Mock.mock(/\/oauth\/auth\/modulefunclist\/.*/, /get/i, getModuleFuncListByAppId)
 Mock.mock(/\/oauth\/auth\/modulefunccodes/, /get/i, getModuleFuncCodeList)
 Mock.mock(/\/oauth\/auth\/menu/, /get/i, getAllMenuList)
-Mock.mock(/\/oauth\/auth\/menu/, /put/i, getMenuInfo)
+Mock.mock(/\/oauth\/auth\/menu/, /put/i, function (options) {
+  return Object.assign({ id: 'testId' }, JSON.parse(options.body))
+})
 Mock.mock(/\/oauth\/auth\/menu\/.*/, /get/i, getMenuInfo)
 Mock.mock(/\/oauth\/auth\/menu/, /patch/i, function (options) {
   return Object.assign(getMenuInfo(), JSON.parse(options.body))
 })
 Mock.mock(/\/oauth\/auth\/menu/, /delete/i, deleteAuth)
-Mock.mock(/\/oauth\/auth\/modulefunc/, /get/i, getAllModuleFuncList)
+Mock.mock(/\/oauth\/auth\/modulefunc/, /get/i, function (options) {
+  return Object.assign({ id: 'testId' }, JSON.parse(options.body))
+})
 Mock.mock(/\/oauth\/auth\/modulefunc/, /put/i, getModuleFuncInfo)
 Mock.mock(/\/oauth\/auth\/modulefunc\/.*/, /get/i, getModuleFuncInfo)
 Mock.mock(/\/oauth\/auth\/modulefunc/, /patch/i, function (options) {
