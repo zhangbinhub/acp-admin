@@ -47,18 +47,6 @@ module.exports = {
       }
     }
   },
-  chainWebpack: config => {
-    config.module
-      .rule('vue')
-      .test(/\.vue$/)
-      .use('iview-loader')
-      .loader('iview-loader')
-      .tap(options => {
-        return {
-          prefix: true
-        }
-      })
-  },
   pluginOptions: {
     // 第三方插件配置
     // ...
