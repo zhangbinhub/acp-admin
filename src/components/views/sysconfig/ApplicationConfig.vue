@@ -31,7 +31,7 @@
         type="selection"
         fixed="left"
         align="center"
-        width="50">
+        width="40">
       </el-table-column>
       <el-table-column
         prop="id"

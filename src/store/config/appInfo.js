@@ -1,4 +1,4 @@
-const baseURL = '/vi/api'
+const baseURL = '/v1/api'
 export default {
   appName: 'Acp-Admin',
   appVersion: '4.0.0',
