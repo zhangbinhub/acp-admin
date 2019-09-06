@@ -14,7 +14,7 @@
     <el-tabs type="card" ref="header-tabs" v-model="currPath" @tab-click="handleClick" @tab-remove="handleClose">
       <el-tab-pane
         :key="item.name"
-        v-for="(item, index) in tagList"
+        v-for="(item) in tagList"
         :label="showTitleInside(item)"
         :name="item.path"
         :data-route-item="item"
@@ -61,12 +61,6 @@
         computed: {
             tagList () {
                 return this.list
-            },
-            contextMenuList () {
-                return {
-                    others: this.$i18n.t('home.closeOther'),
-                    all: this.$i18n.t('home.closeAll')
-                }
             }
         },
         methods: {
@@ -116,11 +110,6 @@
                 this.$nextTick(() => {
                     this.currPath = fullPath
                 })
-            },
-            contextMenu (e) {
-                this.visible = true
-                this.contextMenuLeft = e.clientX + 10
-                this.contextMenuTop = e.clientY - 60
             },
             closeMenu () {
                 this.visible = false

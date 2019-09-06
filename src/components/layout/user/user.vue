@@ -40,12 +40,13 @@
         methods: {
             logout () {
                 this.$api.redirectLogin((callBackFunc) => {
-                    this.$confirm(this.$i18n.t('messages.logoutConfirm'), this.$i18n.t('dialog.confirm'))
-                        .then(() => {
-                            this.$api.request.auth.doLogOut().then(() => {
-                                callBackFunc()
-                            })
-                        }).catch(() => {
+                    this.$confirm(this.$i18n.t('messages.logoutConfirm'), this.$i18n.t('dialog.confirm'), {
+                        type: 'warning'
+                    }).then(() => {
+                        this.$api.request.auth.doLogOut().then(() => {
+                            callBackFunc()
+                        })
+                    }).catch(() => {
                     })
                 })
             },

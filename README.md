@@ -26,7 +26,6 @@
 - vuex
 - vue-router
 - axios
-- iview3
 - echarts
 - cropperjs
 - mockjs
@@ -150,9 +149,6 @@ npm install
 ![images](doc/images/pages/login.png)
 - 首页
 ![images](doc/images/pages/index.png)
-- 目前支持主题：dark 和 light
-    - light 主题
-![images](doc/images/pages/light.png)
 - 个人信息
 ![images](doc/images/pages/userinfo.png)
 - 头像裁剪
@@ -160,6 +156,7 @@ npm install
 - 应用配置
 ![images](doc/images/pages/appconfig.png)
 ![images](doc/images/pages/appedit.png)
+![images](doc/images/pages/appupdate.png)
 - 菜单配置
 ![images](doc/images/pages/menu.png)
 - 模块功能配置
@@ -195,37 +192,6 @@ npm install
 - demo
     - 文件上传
 ![images](doc/images/pages/upload.png)
-
-## 六、nodejs 常用命令
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
