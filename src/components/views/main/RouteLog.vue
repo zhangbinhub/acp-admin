@@ -31,13 +31,13 @@
         <el-date-picker type="date" :disabled="modal_loading" :picker-options="datePickerOptions"
                         v-model="searchForm.startTime"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.startDate')"
-                        style="width: 185px" @keyup.enter.native="handleSearch"></el-date-picker>
+                        style="width: 185px"></el-date-picker>
       </el-form-item>
       <el-form-item :label="$t('forms.endDate')" prop="endTime">
         <el-date-picker type="date" :disabled="modal_loading" :picker-options="datePickerOptions"
                         v-model="searchForm.endTime"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
-                        style="width: 185px" @keyup.enter.native="handleSearch"></el-date-picker>
+                        style="width: 185px"></el-date-picker>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group style="margin-right: 20px">

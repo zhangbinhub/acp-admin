@@ -31,7 +31,7 @@
         type="selection"
         fixed="left"
         align="center"
-        width="35">
+        width="50">
       </el-table-column>
       <el-table-column
         prop="id"
@@ -116,7 +116,7 @@
                     @keyup.enter.native="doSave('editForm')">
             <span slot="append">{{$t('forms.seconds')}}</span>
           </el-input>
-          <el-alert v-else type="info" :closable="false">{{editForm.accessTokenValiditySeconds}}
+          <el-alert v-else type="info" :closable="false">{{editForm.refreshTokenValiditySeconds}}
             {{$t('forms.seconds')}}
           </el-alert>
         </el-form-item>

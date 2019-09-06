@@ -20,8 +20,7 @@
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></el-input>
       </el-form-item>
       <el-form-item :label="$t('forms.changePassword')">
-        <el-switch v-model="updatePassword" :disabled="modal_loading"
-                   @keyup.enter.native="handleSubmit('formValidate')"></el-switch>
+        <el-switch v-model="updatePassword" :disabled="modal_loading"></el-switch>
       </el-form-item>
       <el-form-item v-show="updatePassword" :label="$t('forms.old')+$t('forms.password')" prop="oldPassword">
         <el-input v-model="formValidate.oldPassword" @keyup.enter.native="handleSubmit('formValidate')"

@@ -178,6 +178,7 @@
                 cb(results)
             },
             refreshTree () {
+                this.clearCurrObj()
                 this.tree_loading = true
                 this.$api.request.app.getList().then((appRes) => {
                     if (appRes) {
@@ -191,7 +192,6 @@
                             item.sort = i
                             item.children = []
                         }
-                        this.treeData = appData
                         this.tree_loading = true
                         this.$api.request.role.getList().then((res) => {
                             this.tree_loading = false
@@ -199,13 +199,13 @@
                                 processTreeNode(res.data)
                                 for (const item of res.data) {
                                     item.parentId = item.appId
-                                    for (const root of this.treeData) {
+                                    for (const root of appData) {
                                         if (root.id === item.appId) {
                                             root.children.push(item)
                                         }
                                     }
                                 }
-                                this.clearCurrObj()
+                                this.treeData = appData
                             }
                         }).catch(() => {
                             this.tree_loading = false
@@ -316,6 +316,7 @@
                         processTreeNode([res.data])
                         children.push(res.data)
                         sortTreeNodes(children)
+                        this.treeClick(res.data)
                         this.$set(data, 'children', children)
                     }
                 }).catch(() => {

@@ -19,7 +19,7 @@
       </el-form-item>
       <el-form-item :label="$t('forms.status')" prop="enabled">
         <el-select v-model="searchForm.enabled" value="" :clearable="true" :disabled="modal_loading"
-                   @keyup.enter.native="handleSearchKeyUp($event)" style="width:100px">
+                   style="width:100px">
           <el-option v-for="item in enabledList" :value="item.value" :label="item.label"
                      :key="'search_select_'+item.value">
           </el-option>
@@ -58,7 +58,7 @@
         type="selection"
         fixed="left"
         align="center"
-        width="35">
+        width="40">
       </el-table-column>
       <el-table-column
         prop="configApplication"
@@ -164,8 +164,7 @@
                     @keyup.enter.native="doSave('editForm')"></el-input>
         </el-form-item>
         <el-form-item :label="$t('forms.enabled')" prop="enabled">
-          <el-switch v-model="editForm.enabled" :disabled="modal_loading"
-                     @keyup.native="handleAddKeyUp($event, 'editForm')">
+          <el-switch v-model="editForm.enabled" :disabled="modal_loading">
           </el-switch>
         </el-form-item>
       </el-form>
@@ -328,11 +327,6 @@
                     this.action = 0
                 })
             },
-            handleAddKeyUp (event, name) {
-                if (event.which === 13) {
-                    this.doSave(name)
-                }
-            },
             doCancel () {
                 this.editModal = false
             },
@@ -453,11 +447,6 @@
                     this.selectedData = []
                     this.modal_loading = false
                 })
-            },
-            handleSearchKeyUp (event) {
-                if (event.which === 13) {
-                    this.handleSearch()
-                }
             },
             handleRowClick (row) {
                 this.$refs['table'].toggleRowSelection(row)

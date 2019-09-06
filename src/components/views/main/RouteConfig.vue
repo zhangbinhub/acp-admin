@@ -9,7 +9,7 @@
       </el-form-item>
       <el-form-item :label="$t('forms.status')" prop="enabled">
         <el-select v-model="searchForm.enabled" :clearable="true" :disabled="modal_loading" value=""
-                   @keyup.enter.native="handleSearchKeyUp($event)" style="width:100px">
+                   style="width:100px">
           <el-option v-for="item in enabledList" :value="item.value" :label="item.label"
                      :key="'search_select_'+item.value">
           </el-option>
@@ -43,7 +43,7 @@
         type="selection"
         fixed="left"
         align="center"
-        width="35">
+        width="40">
       </el-table-column>
       <el-table-column
         prop="routeId"
@@ -145,8 +145,7 @@
         <el-row>
           <el-col :lg="8">
             <el-form-item :label="$t('forms.enabled')" prop="enabled">
-              <el-switch v-model="editForm.enabled" :disabled="modal_loading"
-                         @keyup.native="handleAddKeyUp($event, 'editForm')">
+              <el-switch v-model="editForm.enabled" :disabled="modal_loading">
               </el-switch>
             </el-form-item>
           </el-col>
@@ -296,11 +295,6 @@
                     this.$refs['editForm'].resetFields()
                     this.action = 0
                 })
-            },
-            handleAddKeyUp (event, name) {
-                if (event.which === 13) {
-                    this.doSave(name)
-                }
             },
             doCancel () {
                 this.editModal = false

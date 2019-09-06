@@ -61,8 +61,7 @@
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.parent')" prop="menuParentArray">
                     <el-cascader :options="menuCascaderData" v-model="menuEditForm.menuParentArray"
-                                 :disabled="treeLoading"
-                                 @keyup.enter.native="doSaveMenu" style="width: 100%"
+                                 :disabled="treeLoading" style="width: 100%"
                                  :props="{checkStrictly: true,value:'id'}"></el-cascader>
                   </el-form-item>
                 </el-col>
@@ -77,8 +76,7 @@
               <el-row>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.openType')" prop="openType">
-                    <el-select v-model="menuEditForm.openType" @keyup.enter.native="doSaveMenu" :disabled="treeLoading"
-                               value="">
+                    <el-select v-model="menuEditForm.openType" :disabled="treeLoading" value="">
                       <el-option v-for="item in openType" :value="item.value" :label="item.label"
                                  :key="'openType-'+item.value"></el-option>
                     </el-select>
@@ -97,8 +95,7 @@
               <el-row>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.enabled')" prop="enabled" :required="true">
-                    <el-switch v-model="menuEditForm.enabled" @keyup.enter.native="doSaveMenu"
-                               :disabled="treeLoading"></el-switch>
+                    <el-switch v-model="menuEditForm.enabled" :disabled="treeLoading"></el-switch>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -175,8 +172,7 @@
                 </el-col>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.code')" prop="code">
-                    <el-select v-model="moduleFuncEditForm.code" :filterable="true" :disabled="treeLoading" value=""
-                               @keyup.enter.native="doSaveModuleFunc">
+                    <el-select v-model="moduleFuncEditForm.code" :filterable="true" :disabled="treeLoading" value="">
                       <el-option v-for="item in moduleFuncCodeList" :value="item.value" :label="item.value"></el-option>
                     </el-select>
                   </el-form-item>
@@ -187,8 +183,7 @@
                   <el-form-item :label="$t('forms.parent')" prop="moduleFuncParentArray">
                     <el-cascader :options="moduleFuncCascaderData"
                                  v-model="moduleFuncEditForm.moduleFuncParentArray"
-                                 :disabled="treeLoading"
-                                 @keyup.enter.native="doSaveModuleFunc" style="width: 100%"
+                                 :disabled="treeLoading" style="width: 100%"
                                  :props="{checkStrictly: true,value:'id'}"></el-cascader>
                   </el-form-item>
                 </el-col>
@@ -266,20 +261,24 @@
             },
             menuCascaderData () {
                 const menuTree = copy(this.menuTreeData)
-                for (let i = 0; i < menuTree.length; i++) {
-                    if (menuTree[i].id !== this.menuEditForm.appId) {
-                        menuTree.splice(i, 1)
-                        break
+                if (!this.menuEditForm.appId && this.menuEditForm.appId !== '') {
+                    for (let i = 0; i < menuTree.length; i++) {
+                        if (menuTree[i].id !== this.menuEditForm.appId) {
+                            menuTree.splice(i, 1)
+                            break
+                        }
                     }
                 }
                 return filterTreeNode(menuTree, [this.menuEditForm.id])
             },
             moduleFuncCascaderData () {
                 const moduleFuncTree = copy(this.moduleFuncTreeData)
-                for (let i = 0; i < moduleFuncTree.length; i++) {
-                    if (moduleFuncTree[i].id !== this.moduleFuncEditForm.appId) {
-                        moduleFuncTree.splice(i, 1)
-                        break
+                if (!this.moduleFuncEditForm.appId && this.moduleFuncEditForm.appId !== '') {
+                    for (let i = 0; i < moduleFuncTree.length; i++) {
+                        if (moduleFuncTree[i].id !== this.moduleFuncEditForm.appId) {
+                            moduleFuncTree.splice(i, 1)
+                            break
+                        }
                     }
                 }
                 return filterTreeNode(moduleFuncTree, [this.moduleFuncEditForm.id])
@@ -410,6 +409,7 @@
                 })
             },
             refreshMenuTree () {
+                this.clearMenuCurrObj()
                 this.tree_loading = true
                 this.$api.request.app.getList().then((appRes) => {
                     if (appRes) {
@@ -423,20 +423,19 @@
                             item.sort = i
                             item.children = []
                         }
-                        this.menuTreeData = appData
                         this.$api.request.auth.getAllMenuList().then((res) => {
                             this.tree_loading = false
                             if (res) {
                                 processTreeNode(res.data)
                                 for (const item of res.data) {
                                     item.parentId = item.appId
-                                    for (const root of this.menuTreeData) {
+                                    for (const root of appData) {
                                         if (root.id === item.appId) {
                                             root.children.push(item)
                                         }
                                     }
                                 }
-                                this.clearMenuCurrObj()
+                                this.menuTreeData = appData
                             }
                         }).catch(() => {
                             this.tree_loading = false
@@ -447,6 +446,7 @@
                 })
             },
             refreshModuleFuncTree () {
+                this.clearModuleFuncCurrObj()
                 this.tree_loading = true
                 this.$api.request.app.getList().then((appRes) => {
                     if (appRes) {
@@ -459,20 +459,19 @@
                             item.label = item.appName
                             item.children = []
                         }
-                        this.moduleFuncTreeData = appData
                         this.$api.request.auth.getAllModuleFuncList().then((res) => {
                             this.tree_loading = false
                             if (res) {
                                 processTreeNode(res.data)
                                 for (const item of res.data) {
                                     item.parentId = item.appId
-                                    for (const root of this.moduleFuncTreeData) {
+                                    for (const root of appData) {
                                         if (root.id === item.appId) {
                                             root.children.push(item)
                                         }
                                     }
                                 }
-                                this.clearModuleFuncCurrObj()
+                                this.moduleFuncTreeData = appData
                             }
                         }).catch(() => {
                             this.tree_loading = false
@@ -553,6 +552,7 @@
                         processTreeNode([res.data])
                         children.push(res.data)
                         sortTreeNodes(children)
+                        this.menuClick(res.data)
                         this.$set(data, 'children', children)
                     }
                 }).catch(() => {
@@ -574,6 +574,7 @@
                         processTreeNode([res.data])
                         children.push(res.data)
                         sortTreeNodes(children, 'code')
+                        this.moduleFuncClick(res.data)
                         this.$set(data, 'children', children)
                     }
                 }).catch(() => {
@@ -597,11 +598,11 @@
                         this.tree_loading = false
                         if (res) {
                             this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
-                            const parentKey = root.find(el => el === node).parent
-                            const parent = root.find(el => el.nodeKey === parentKey).node
-                            const index = parent.children.indexOf(data)
-                            parent.children.splice(index, 1)
                             this.clearMenuCurrObj(data.id)
+                            const parent = node.parent
+                            const children = parent.data.children
+                            const index = children.findIndex(d => d.id === data.id)
+                            children.splice(index, 1)
                         }
                     }).catch(() => {
                         this.tree_loading = false
@@ -626,11 +627,11 @@
                         this.tree_loading = false
                         if (res) {
                             this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
-                            const parentKey = root.find(el => el === node).parent
-                            const parent = root.find(el => el.nodeKey === parentKey).node
-                            const index = parent.children.indexOf(data)
-                            parent.children.splice(index, 1)
                             this.clearModuleFuncCurrObj(data.id)
+                            const parent = node.parent
+                            const children = parent.data.children
+                            const index = children.findIndex(d => d.id === data.id)
+                            children.splice(index, 1)
                         }
                     }).catch(() => {
                         this.tree_loading = false
@@ -706,7 +707,6 @@
                                 this.reloadMenuRoleList()
                                 this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                                 this.currMenuData.name = this.menuEditForm.name
-                                this.currMenuData.title = this.menuEditForm.name
                                 this.currMenuData.label = this.menuEditForm.name
                                 this.currMenuData.iconType = this.menuEditForm.iconType
                                 this.currMenuData.path = this.menuEditForm.path

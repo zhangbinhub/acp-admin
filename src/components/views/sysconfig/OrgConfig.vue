@@ -54,7 +54,7 @@
           <el-col :sm="{ span: 12 }">
             <el-form-item :label="$t('forms.parent')" prop="parentArray">
               <el-cascader :options="cascaderData" v-model="editForm.parentArray" v-loading="treeLoading"
-                           :disabled="treeLoading" @keyup.enter.native="doSave" style="width: 100%"
+                           :disabled="treeLoading" style="width: 100%"
                            :props="{checkStrictly: true,value:'id'}"></el-cascader>
             </el-form-item>
           </el-col>
@@ -182,13 +182,13 @@
                 }
             },
             refreshOrgTree () {
+                this.clearCurrOrg()
                 this.tree_loading = true
                 this.$api.request.org.getOrgList().then((res) => {
                     this.tree_loading = false
                     if (res) {
                         processTreeNode(res.data)
                         this.treeData[0].children = res.data
-                        this.clearCurrOrg()
                     }
                 }).catch(() => {
                     this.tree_loading = false
@@ -222,6 +222,7 @@
                         processTreeNode([res.data])
                         children.push(res.data)
                         sortTreeNodes(children)
+                        this.orgClick(res.data)
                         this.$set(data, 'children', children)
                     }
                 }).catch(() => {

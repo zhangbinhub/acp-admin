@@ -6,13 +6,13 @@
         <el-date-picker type="date" :disabled="form_loading" :picker-options="datePickerOptions"
                         v-model="formValidate.startDate"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.startDate')"
-                        style="width: 162px" @keyup.enter.native="handleSearch"></el-date-picker>
+                        style="width: 162px"></el-date-picker>
       </el-form-item>
       <el-form-item :label="$t('forms.endDate')" prop="endDate">
         <el-date-picker type="date" :disabled="form_loading" :picker-options="datePickerOptions"
                         v-model="formValidate.endDate"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
-                        style="width: 162px" @keyup.enter.native="handleSearch"></el-date-picker>
+                        style="width: 162px"></el-date-picker>
       </el-form-item>
       <el-form-item>
         <el-button-group>
