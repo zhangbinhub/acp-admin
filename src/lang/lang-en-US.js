@@ -111,6 +111,7 @@ const messages = Object.assign(enLocale, {
     new: 'New ',
     confirmPassword: 'Confirm password',
     passwordNotEqual: 'Confirm password is not equal new password',
+    scope: 'scope',
     accessTokenValiditySeconds: 'token validity',
     refreshTokenValiditySeconds: 'refresh Token validity',
     seconds: 'seconds',

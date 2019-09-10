@@ -36,6 +36,7 @@
       <el-table-column
         prop="id"
         align="center"
+        width="250"
         :label="'ID'">
       </el-table-column>
       <el-table-column
@@ -50,6 +51,10 @@
       <el-table-column
         prop="refreshTokenValiditySeconds"
         :label="this.$i18n.t('forms.refreshTokenValiditySeconds')">
+      </el-table-column>
+      <el-table-column
+        prop="scope"
+        :label="this.$i18n.t('forms.scope')">
       </el-table-column>
       <el-table-column
         prop="action"
@@ -99,6 +104,13 @@
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                     @keyup.enter.native="doSave('editForm')"></el-input>
           <el-alert v-else type="info" :closable="false">{{editForm.appName}}</el-alert>
+        </el-form-item>
+        <el-form-item :label="$t('forms.scope')" prop="scope"
+                      v-if="editForm.secret!==$store.state.app.appInfo.appSecret">
+          <el-input v-model="editForm.scope" :disabled="modal_loading" v-if="action!==2"
+                    type="textarea" :rows="2"
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.scope')"></el-input>
+          <el-alert v-else type="info" :closable="false">{{editForm.scope}}</el-alert>
         </el-form-item>
         <el-form-item :label="$t('forms.accessTokenValiditySeconds')" prop="accessTokenValiditySeconds">
           <el-input v-model="editForm.accessTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
@@ -156,6 +168,7 @@
                 editForm: {
                     id: '',
                     appName: '',
+                    scope: '',
                     accessTokenValiditySeconds: '',
                     refreshTokenValiditySeconds: '',
                     secret: '',
@@ -229,6 +242,7 @@
                                 this.modal_loading = true
                                 this.$api.request.app.create({
                                     appName: this.editForm.appName,
+                                    scope: this.editForm.scope,
                                     accessTokenValiditySeconds: Number(this.editForm.accessTokenValiditySeconds),
                                     refreshTokenValiditySeconds: Number(this.editForm.refreshTokenValiditySeconds)
                                 }).then((res) => {
@@ -251,6 +265,7 @@
                                 this.$api.request.app.update({
                                     id: this.editForm.id,
                                     appName: this.editForm.appName,
+                                    scope: this.editForm.scope,
                                     accessTokenValiditySeconds: Number(this.editForm.accessTokenValiditySeconds),
                                     refreshTokenValiditySeconds: Number(this.editForm.refreshTokenValiditySeconds)
                                 }).then((res) => {
@@ -385,6 +400,7 @@
                     this.editForm.accessTokenValiditySeconds = row.accessTokenValiditySeconds + ''
                     this.editForm.refreshTokenValiditySeconds = row.refreshTokenValiditySeconds + ''
                     this.editForm.secret = row.secret
+                    this.editForm.scope = row.scope
                     this.editForm.index = index
                     this.action = action
                 })

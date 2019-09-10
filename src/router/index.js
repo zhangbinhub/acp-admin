@@ -6,7 +6,7 @@ import store from '../store'
 Vue.use(Router)
 const router = new Router({
   mode: 'history',
-  base: '/',
+  base: '/admin',
   routes: routes,
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {

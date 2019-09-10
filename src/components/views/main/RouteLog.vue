@@ -263,7 +263,7 @@
                     searchParam.queryParam.orderCommond = this.searchForm.orderParam.order
                 }
                 this.modal_loading = true
-                this.$api.request.route.queryLog(searchParam).then((res) => {
+                this.$api.request.log.queryLog(searchParam).then((res) => {
                     this.modal_loading = false
                     if (res) {
                         this.selectedData = []

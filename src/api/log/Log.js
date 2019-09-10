@@ -23,5 +23,8 @@ export default {
       },
       responseType: 'blob'
     })
+  },
+  queryLog: (query) => {
+    return ApiComm.$http.post('/log/gatewayroutelog', query)
   }
 }

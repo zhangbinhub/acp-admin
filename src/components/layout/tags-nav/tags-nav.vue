@@ -13,8 +13,8 @@
     </div>
     <el-tabs type="card" ref="header-tabs" v-model="currPath" @tab-click="handleClick" @tab-remove="handleClose">
       <el-tab-pane
-        :key="item.name"
-        v-for="(item) in tagList"
+        v-for="(item,index) in tagList"
+        :key="item.path+'-'+index"
         :label="showTitleInside(item)"
         :name="item.path"
         :data-route-item="item"
@@ -83,10 +83,14 @@
                 const currTag = this.list.filter(item => item.path === path)[0]
                 const pageName = this.showTitleInside(currTag)
                 let nextPath = this.homePath
-                if (currIndex === this.list.length - 1) {
-                    nextPath = this.list[this.list.length - 2].path
+                if (path === this.$route.fullPath) {
+                    if (currIndex === this.list.length - 1) {
+                        nextPath = this.list[this.list.length - 2].path
+                    } else {
+                        nextPath = this.list[currIndex + 1].path
+                    }
                 } else {
-                    nextPath = this.list[currIndex + 1].path
+                    nextPath = this.$route.fullPath
                 }
                 this.$emit('on-close', res, undefined, nextPath, pageName)
             },

@@ -111,6 +111,7 @@ const messages = Object.assign(twLocale, {
     new: '新',
     confirmPassword: '確認密碼',
     passwordNotEqual: '兩次輸入的密碼不相等',
+    scope: '權限範圍',
     accessTokenValiditySeconds: 'token有效期',
     refreshTokenValiditySeconds: 'refreshToken有效期',
     seconds: '秒',

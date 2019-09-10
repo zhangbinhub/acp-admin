@@ -4,7 +4,10 @@
 > - [Upgrade] 页面组件由 iView 替换为 Element-UI
 > - [Upgrade] 优化部分页面逻辑
 > - [Upgrade] 重写树形组件相关算法
-> - [Upgrade] 对应后端版本为 v3.0.6
+> - [Upgrade] 应用配置界面增加 scope 字段配置
+> - [Upgrade] 调整路由日志查询接口
+> - [Upgrade] 对应后端版本为 v3.1.0
+> - [Fix] 修复关闭其他标签页时控制台报错的问题
 ##### v3.0.5
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 角色编码使用自动补全，可自定义输入
