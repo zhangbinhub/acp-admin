@@ -107,7 +107,7 @@
                     },
                     dataZoom: {
                         show: true,
-                        start: 70
+                        start: 30
                     },
                     grid: {
                         left: '3%',
