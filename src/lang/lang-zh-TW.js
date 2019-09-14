@@ -119,6 +119,8 @@ const messages = Object.assign(twLocale, {
     organization: '機構',
     role: '角色',
     menu: '菜單',
+    clientName: '客戶端名稱',
+    user: '用戶',
     moduleFunc: '模塊功能',
     basicInfo: '基本信息',
     menuList: '菜單列表',

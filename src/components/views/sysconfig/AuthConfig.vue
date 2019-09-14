@@ -173,7 +173,8 @@
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.code')" prop="code">
                     <el-select v-model="moduleFuncEditForm.code" :filterable="true" :disabled="treeLoading" value="">
-                      <el-option v-for="item in moduleFuncCodeList" :value="item.value" :label="item.value"></el-option>
+                      <el-option v-for="item in moduleFuncCodeList" :value="item.value" :label="item.value"
+                                 :key="'module_func_code_'+item.value"></el-option>
                     </el-select>
                   </el-form-item>
                 </el-col>

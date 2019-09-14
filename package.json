@@ -38,7 +38,7 @@
     "less-loader": "^5.0.0",
     "lint-staged": "^9.2.5",
     "vue-template-compiler": "^2.6.10",
-    "webpack": "^4.40.1"
+    "webpack": "^4.40.2"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

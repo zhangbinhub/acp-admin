@@ -119,6 +119,8 @@ const messages = Object.assign(enLocale, {
     organization: 'Organization',
     role: 'Role',
     menu: 'Menu',
+    clientName: 'Client Name',
+    user: 'User',
     moduleFunc: 'ModuleFunction',
     basicInfo: 'Basic Info',
     menuList: 'menu list',

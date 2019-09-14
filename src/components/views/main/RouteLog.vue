@@ -22,9 +22,14 @@
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.serverId')"
                   @keyup.enter.native="handleSearch"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('forms.responseStatus')" prop="responseStatus">
-        <el-input v-model="searchForm.responseStatus" :disabled="modal_loading" type="number"
-                  :placeholder="$t('forms.pleaseEnter') + $t('forms.responseStatus')"
+      <el-form-item :label="$t('forms.clientName')" prop="clientName">
+        <el-input v-model="searchForm.clientName" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.clientName')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.userName')" prop="userName">
+        <el-input v-model="searchForm.userName" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.userName')"
                   @keyup.enter.native="handleSearch"></el-input>
       </el-form-item>
       <el-form-item :label="$t('forms.startDate')" prop="startTime">
@@ -38,6 +43,19 @@
                         v-model="searchForm.endTime"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
                         style="width: 185px"></el-date-picker>
+      </el-form-item>
+      <el-form-item :label="$t('forms.responseStatus')" prop="responseStatus">
+        <el-input v-model="searchForm.responseStatus" :disabled="modal_loading" type="number"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.responseStatus')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.infoType')" prop="responseStatus">
+        <el-select v-model="searchForm.history" :disabled="modal_loading" value=""
+                   style="width:100px">
+          <el-option v-for="item in infoTypeList" :value="item.value" :label="item.label"
+                     :key="'search_select_'+item.value">
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group style="margin-right: 20px">
@@ -75,29 +93,38 @@
         :label="this.$i18n.t('forms.serverId')">
       </el-table-column>
       <el-table-column
-        prop="targetUri"
+        prop="clientName"
         sortable="custom"
-        :label="this.$i18n.t('forms.targetUri')">
+        :label="this.$i18n.t('forms.clientName')">
+      </el-table-column>
+      <el-table-column
+        prop="identify"
+        sortable="custom"
+        width="80"
+        :label="this.$i18n.t('forms.identify')">
       </el-table-column>
       <el-table-column
         prop="requestTime"
         sortable="custom"
         width="150"
         :label="this.$i18n.t('forms.requestTime')">
+        <template slot-scope="scope">
+          <span>{{dateTimeFormat(scope.row.requestTime)}}</span>
+        </template>
       </el-table-column>
       <el-table-column
         prop="processTime"
         sortable="custom"
-        width="150"
-        :label="this.$i18n.t('forms.processTime')+' '+this.$i18n.t('forms.millisecond')">
+        width="80"
+        :label="this.$i18n.t('forms.processTime')+'('+this.$i18n.t('forms.millisecond')+')'">
       </el-table-column>
       <el-table-column
         prop="responseStatus"
         sortable="custom"
-        width="150"
+        width="80"
         :label="this.$i18n.t('forms.responseStatus')">
         <template slot-scope="scope">
-          <span :style="scope.row.responseStatus>=200&&scope.row.responseStatus<300 ? 'color:green':'color:red'">{{scope.row.responseStatus}}</span>
+          <span :style="{color:scope.row.responseStatus>=200&&scope.row.responseStatus<300 ? 'green':'red'}">{{scope.row.responseStatus}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -123,42 +150,53 @@
                    layout="total, sizes, prev, pager, next, jumper"
                    :total="searchForm.totalRows">
     </el-pagination>
-    <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false">
-      <el-form ref="editForm" size="mini" :model="editForm" label-width="100px" style="padding-right: 25px;"
+    <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false" width="600px">
+      <el-form ref="editForm" size="mini" :model="editForm" label-width="100px" :inline="true"
                v-loading="modal_loading" onsubmit="return false;">
-        <el-row>
-          <el-form-item :label="$t('forms.remoteIp')" prop="remoteIp">
-            <el-alert type="info" :closable="false">{{editForm.remoteIp}}</el-alert>
-          </el-form-item>
-          <el-form-item :label="$t('forms.gatewayIp')" prop="gatewayIp">
-            <el-alert type="info" :closable="false">{{editForm.gatewayIp}}</el-alert>
-          </el-form-item>
-        </el-row>
-        <el-row>
-          <el-form-item :label="$t('forms.serverId')" prop="serverId">
-            <el-alert type="info" :closable="false">{{editForm.serverId}}</el-alert>
-          </el-form-item>
-          <el-form-item :label="$t('forms.responseStatus')" prop="responseStatus">
-            <el-alert :type="editForm.responseStatus>=200&&editForm.responseStatus<300?'success':'error'"
-                      :closable="false">
-              {{editForm.responseStatus}}
-            </el-alert>
-          </el-form-item>
-        </el-row>
-        <el-form-item :label="$t('forms.path')" prop="path" style="width: 100%">
-          <el-alert type="info" :closable="false">{{editForm.path}}</el-alert>
+        <el-form-item :label="$t('forms.remoteIp')+':'" prop="remoteIp">
+          <span>{{editForm.remoteIp}}</span>
         </el-form-item>
-        <el-form-item :label="$t('forms.targetUri')" prop="targetUri" style="width: 100%">
-          <el-alert type="info" :closable="false">{{editForm.targetUri}}</el-alert>
+        <el-form-item :label="$t('forms.gatewayIp')+':'" prop="gatewayIp">
+          <span>{{editForm.gatewayIp}}</span>
         </el-form-item>
-        <el-form-item :label="$t('forms.requestTime')" prop="requestTime" style="width: 100%">
-          <el-alert type="info" :closable="false">{{formatDate(editForm.requestTime)}}</el-alert>
+        <el-form-item :label="$t('forms.serverId')+':'" prop="serverId">
+          <span>{{editForm.serverId}}</span>
         </el-form-item>
-        <el-form-item :label="$t('forms.processTime')" prop="processTime" style="width: 100%">
-          <el-alert type="info" :closable="false">{{editForm.processTime}} {{$t('forms.millisecond')}}</el-alert>
+        <el-form-item :label="$t('forms.responseStatus')+':'" prop="responseStatus">
+          <span :style="{color:editForm.responseStatus>=200&&editForm.responseStatus<300 ? 'green':'red'}">{{editForm.responseStatus}}</span>
         </el-form-item>
-        <el-form-item :label="$t('forms.responseTime')" prop="responseTime" style="width: 100%">
-          <el-alert type="info" :closable="false">{{formatDate(editForm.responseTime)}}</el-alert>
+        <el-form-item :label="$t('forms.path')+':'" prop="path" style="width: 100%">
+          <span>{{editForm.path}}</span>
+        </el-form-item>
+        <el-form-item :label="$t('forms.targetUri')+':'" prop="targetUri" style="width: 100%">
+          <span>{{editForm.targetUri}}</span>
+        </el-form-item>
+        <el-form-item :label="$t('forms.targetPath')+':'" prop="targetPath" style="width: 100%">
+          <span>{{editForm.targetPath}}</span>
+        </el-form-item>
+        <el-form-item :label="$t('forms.method')+':'" prop="method" style="width: 100%">
+          <span>{{editForm.method}}</span>
+        </el-form-item>
+        <el-form-item :label="$t('forms.token')+':'" prop="token" style="width: 100%">
+          <span>{{editForm.token}}</span>
+        </el-form-item>
+        <el-form-item :label="$t('forms.clientName')+':'" prop="clientName" style="width: 100%">
+          <span>{{editForm.clientName}}</span>
+        </el-form-item>
+        <el-form-item :label="$t('forms.identify')+':'" prop="identify" style="width: 100%">
+          <span>{{editForm.identify}}</span>
+        </el-form-item>
+        <el-form-item :label="$t('forms.userName')+':'" prop="userName" style="width: 100%">
+          <span>{{editForm.userName}}</span>
+        </el-form-item>
+        <el-form-item :label="$t('forms.requestTime')+':'" prop="requestTime" style="width: 100%">
+          <span>{{dateTimeMisFormat(editForm.requestTime)}}</span>
+        </el-form-item>
+        <el-form-item :label="$t('forms.processTime')+':'" prop="processTime" style="width: 100%">
+          <span>{{editForm.processTime}} {{$t('forms.millisecond')}}</span>
+        </el-form-item>
+        <el-form-item :label="$t('forms.responseTime')+':'" prop="responseTime" style="width: 100%">
+          <span>{{dateTimeMisFormat(editForm.responseTime)}}</span>
         </el-form-item>
       </el-form>
       <div slot="footer" style="text-align: center">
@@ -170,6 +208,8 @@
   </el-card>
 </template>
 <script>
+    import moment from 'moment'
+
     export default {
         name: 'routeLog',
         data () {
@@ -186,6 +226,9 @@
                     gatewayIp: '',
                     path: '',
                     serverId: '',
+                    clientName: '',
+                    userName: '',
+                    history: 'false',
                     startTime: '',
                     endTime: '',
                     responseStatus: '',
@@ -217,21 +260,20 @@
                 action: 0
             }
         },
+        computed: {
+            infoTypeList () {
+                return [
+                    { value: 'true', label: this.$i18n.t('forms.historyInfo') },
+                    { value: 'false', label: this.$i18n.t('forms.todayInfo') }
+                ]
+            }
+        },
         methods: {
-            formatDate: function (value) {
-                let date = new Date(value)
-                let y = date.getFullYear()
-                let MM = date.getMonth() + 1
-                MM = MM < 10 ? ('0' + MM) : MM
-                let d = date.getDate()
-                d = d < 10 ? ('0' + d) : d
-                let h = date.getHours()
-                h = h < 10 ? ('0' + h) : h
-                let m = date.getMinutes()
-                m = m < 10 ? ('0' + m) : m
-                let s = date.getSeconds()
-                s = s < 10 ? ('0' + s) : s
-                return y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s
+            dateTimeFormat (time) {
+                return moment(time).format('YYYY-MM-DD HH:mm:ss')
+            },
+            dateTimeMisFormat (time) {
+                return moment(time).format('YYYY-MM-DD HH:mm:ss.SSS')
             },
             doCancel () {
                 this.editModal = false
@@ -250,6 +292,9 @@
                     gatewayIp: this.searchForm.gatewayIp,
                     path: this.searchForm.path,
                     serverId: this.searchForm.serverId,
+                    clientName: this.searchForm.clientName,
+                    userName: this.searchForm.userName,
+                    history: this.searchForm.history === 'true',
                     startTime: this.searchForm.startTime !== '' ? this.searchForm.startTime.getTime() : null,
                     endTime: this.searchForm.endTime !== '' ? this.searchForm.endTime.getTime() : null,
                     responseStatus: this.searchForm.responseStatus !== '' ? parseInt(this.searchForm.responseStatus) : null,
@@ -263,7 +308,7 @@
                     searchParam.queryParam.orderCommond = this.searchForm.orderParam.order
                 }
                 this.modal_loading = true
-                this.$api.request.log.queryLog(searchParam).then((res) => {
+                this.$api.request.log.queryRouteLog(searchParam).then((res) => {
                     this.modal_loading = false
                     if (res) {
                         this.selectedData = []
@@ -302,15 +347,7 @@
                 this.selectedData = selection
             },
             handleView (row) {
-                this.editForm.remoteIp = row.remoteIp
-                this.editForm.gatewayIp = row.gatewayIp
-                this.editForm.path = row.path
-                this.editForm.serverId = row.serverId
-                this.editForm.targetUri = row.targetUri
-                this.editForm.requestTime = row.requestTime
-                this.editForm.processTime = row.processTime
-                this.editForm.responseTime = row.responseTime
-                this.editForm.responseStatus = row.responseStatus
+                this.editForm = row
                 this.editModal = true
             }
         },
