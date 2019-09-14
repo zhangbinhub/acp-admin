@@ -16,7 +16,7 @@ import {
   deleteAuth,
   getModuleFuncInfo
 } from './sysconfig/auth'
-import { logFileList, downLoadLogFile, queryRouteLog } from './log/log'
+import { logFileList, downLoadLogFile, queryRouteLog, queryOperateLog, queryLoginLog } from './log/log'
 import { deleteConfig, queryConfig, updateConfig, refreshConfig, configServerList } from './config/configCenter'
 import { deleteRoute, queryRoute, updateRoute, refreshRoute } from './route/routeConfig'
 
@@ -100,3 +100,5 @@ Mock.mock(/\/route\/gatewayroute/, /post/i, queryRoute)
 Mock.mock(/\/log\/files/, /post/i, logFileList)
 Mock.mock(/\/log\/files\/.*/, /get/i, downLoadLogFile)
 Mock.mock(/\/log\/gatewayroutelog/, /post/i, queryRouteLog)
+Mock.mock(/\/log\/operatelog/, /post/i, queryOperateLog())
+Mock.mock(/\/log\/loginlog/, /post/i, queryLoginLog())
