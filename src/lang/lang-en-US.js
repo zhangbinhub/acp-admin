@@ -40,7 +40,6 @@ const messages = Object.assign(enLocale, {
     logFile: 'Log File',
     operateLog: 'Operate Log',
     loginLog: 'Login Log',
-    onlineUser: 'Online User',
     appConfig: 'Application Configure',
     authConfig: 'Authority Configure',
     orgConfig: 'Organization Configure',

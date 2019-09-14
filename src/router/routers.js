@@ -108,14 +108,6 @@ export default [{
       requireAuth: true
     }
   }, {
-    path: '/onlineuser',
-    name: 'onlineUser',
-    component: () => import('@/components/views/monitor/OnlineUser.vue'),
-    meta: {
-      title: 'pageTitle.onlineUser',
-      requireAuth: true
-    }
-  }, {
     path: '/appconfig',
     name: 'appConfig',
     component: () => import('@/components/views/sysconfig/ApplicationConfig.vue'),

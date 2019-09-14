@@ -40,7 +40,6 @@ const messages = Object.assign(twLocale, {
     logFile: '日誌文件',
     operateLog: '操作日誌',
     loginLog: '登錄日誌',
-    onlineUser: '在線用戶',
     appConfig: '應用配置',
     authConfig: '權限配置',
     orgConfig: '機構配置',
