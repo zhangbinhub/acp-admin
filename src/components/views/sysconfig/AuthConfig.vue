@@ -302,11 +302,6 @@
                         message: this.$i18n.t('forms.iconType') + this.$i18n.t('forms.notEmpty'),
                         trigger: 'blur'
                     }],
-                    path: [{
-                        required: true,
-                        message: this.$i18n.t('forms.path') + this.$i18n.t('forms.notEmpty'),
-                        trigger: 'blur'
-                    }],
                     openType: [{
                         type: 'integer',
                         required: true,

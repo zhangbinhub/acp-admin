@@ -11,6 +11,6 @@ export default {
   uploadURL: baseURL + '/file/upload', // upload url
   timeOut: 60000,
 
-  appId: '8a80cb816c0a5d4f016c0a5e0c020000',
+  appId: '8a80cb816d2eb97f016d2eba04710000',
   appSecret: '2523342F2BD345EA9658452A289364AA'
 }
