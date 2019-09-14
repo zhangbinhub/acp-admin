@@ -92,6 +92,30 @@ export default [{
       requireAuth: true
     }
   }, {
+    path: '/operatelog',
+    name: 'operateLog',
+    component: () => import('@/components/views/monitor/OperateLog.vue'),
+    meta: {
+      title: 'pageTitle.operateLog',
+      requireAuth: true
+    }
+  }, {
+    path: '/loginlog',
+    name: 'loginLog',
+    component: () => import('@/components/views/monitor/LoginLog.vue'),
+    meta: {
+      title: 'pageTitle.loginLog',
+      requireAuth: true
+    }
+  }, {
+    path: '/onlineuser',
+    name: 'onlineUser',
+    component: () => import('@/components/views/monitor/OnlineUser.vue'),
+    meta: {
+      title: 'pageTitle.onlineUser',
+      requireAuth: true
+    }
+  }, {
     path: '/appconfig',
     name: 'appConfig',
     component: () => import('@/components/views/sysconfig/ApplicationConfig.vue'),

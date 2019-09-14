@@ -49,7 +49,7 @@
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.responseStatus')"
                   @keyup.enter.native="handleSearch"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('forms.infoType')" prop="history">
+      <el-form-item :label="$t('forms.infoType')" prop="responseStatus">
         <el-select v-model="searchForm.history" :disabled="modal_loading" value=""
                    style="width:100px">
           <el-option v-for="item in infoTypeList" :value="item.value" :label="item.label"
@@ -211,7 +211,7 @@
     import moment from 'moment'
 
     export default {
-        name: 'routeLog',
+        name: 'onlineUser',
         data () {
             return {
                 datePickerOptions: {
@@ -241,7 +241,18 @@
                     pageSize: 10,
                     pageSizeArray: [10, 20, 30, 40]
                 },
-                editForm: {},
+                editForm: {
+                    id: '',
+                    remoteIp: '',
+                    gatewayIp: '',
+                    path: '',
+                    serverId: '',
+                    targetUri: '',
+                    requestTime: 0,
+                    processTime: 0,
+                    responseTime: 0,
+                    responseStatus: 0
+                },
                 editModal: false,
                 modal_loading: false,
                 searchData: [],
@@ -297,7 +308,7 @@
                     searchParam.queryParam.orderCommond = this.searchForm.orderParam.order
                 }
                 this.modal_loading = true
-                this.$api.request.log.queryRouteLog(searchParam).then((res) => {
+                this.$api.request.log.queryOperateLog(searchParam).then((res) => {
                     this.modal_loading = false
                     if (res) {
                         this.selectedData = []

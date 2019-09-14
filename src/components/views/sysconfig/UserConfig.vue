@@ -91,7 +91,7 @@
       <el-table-column
         prop="roleSet"
         :label="this.$i18n.t('forms.role')">
-        <template slot-scope="scope"> {{scope.row.roleSet.map(role => role.name).join(',')}}</template>
+        <template slot-scope="scope">{{roleNames(scope.row.roleSet)}}</template>
       </el-table-column>
       <el-table-column
         prop="enabled"
@@ -394,6 +394,18 @@
                 const data = copy(organizationSet)
                 sortTreeNodes(data)
                 return data.map(org => getTreeFullPathTitle(this.orgTreeData, org.id))
+            },
+            roleNames (roleSet) {
+                const data = copy(roleSet)
+                return data.sort((obj1, obj2) => {
+                    if (obj1.sort > obj2.sort) {
+                        return 1
+                    } else if (obj1.sort === obj2.sort) {
+                        return 0
+                    } else {
+                        return -1
+                    }
+                }).map(role => role.name).join(',')
             },
             handleSortChange (param) {
                 this.searchForm.orderParam.prop = param.prop

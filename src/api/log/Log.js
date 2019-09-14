@@ -26,5 +26,11 @@ export default {
   },
   queryRouteLog: (query) => {
     return ApiComm.$http.post('/log/gatewayroutelog', query)
+  },
+  queryOperateLog: (query) => {
+    return ApiComm.$http.post('/log/operatelog', query)
+  },
+  queryLoginLog: (query) => {
+    return ApiComm.$http.post('/log/loginlog', query)
   }
 }
