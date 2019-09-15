@@ -9,7 +9,7 @@ import api from './api'
 import './assets/styles/layout.less'
 import './assets/styles/transition.less'
 import eCharts from 'echarts'
-// import './mock'
+import './mock'
 
 // 响应式布局
 const autoWidth = () => {
