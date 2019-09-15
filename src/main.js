@@ -1,5 +1,3 @@
-import 'babel-polyfill'
-
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
@@ -40,7 +38,6 @@ window.onresize = function () {
 
 // 加载 eCharts
 Vue.prototype.$echarts = eCharts
-
 // 加载 ElementUI ，并启用 i18n
 const i18n = store.state.app.i18n
 Vue.use(ElementUI, {

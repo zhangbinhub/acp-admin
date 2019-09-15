@@ -1,7 +1,7 @@
 <template>
   <div class="custom-bread-crumb">
     <el-breadcrumb :style="{fontSize: `${fontSize}px`}">
-      <transition-group name="breadcrumb" :appear="true">
+      <transition-group name="breadcrumb">
         <el-breadcrumb-item v-for="(item, index) in list" :key="`bread-crumb-${index}`">
           <i style="margin-right: 4px;" :class="item.iconType"></i>
           <span>{{ item.name }}</span>

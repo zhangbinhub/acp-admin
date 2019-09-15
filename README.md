@@ -1,7 +1,7 @@
 # acp-admin
 ###### v4.0.0 [版本更新日志](doc/version_history.md)
 兼容的浏览器及版本
-- IE 9+
+- IE 10+
 - Edge
 - Chrome latest
 - Firefox latest

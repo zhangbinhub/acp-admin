@@ -28,7 +28,7 @@
             <el-form-item prop="password">
               <el-input :disabled="modal_loading" :placeholder="text.passwordPlaceholder"
                         @keyup.native.enter="handleSubmit('formValidate')" prefix-icon="el-icon-lock"
-                        autocomplete="off" type="text" @focus.native="this.type='password'"
+                        autocomplete="off" type="text" @focus="passwordFocus"
                         v-model="formValidate.password">
               </el-input>
             </el-form-item>
@@ -101,6 +101,9 @@
             }
         },
         methods: {
+            passwordFocus (event) {
+                event.target.type = 'password'
+            },
             handleSubmit (name) {
                 const currObj = this
                 currObj.$refs[name].validate((valid) => {

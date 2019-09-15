@@ -18,17 +18,7 @@ module.exports = {
     }
   },
   lintOnSave: false, // 是否在保存的时候检查
-  productionSourceMap: true, // 生产环境是否生成 sourceMap 文件
-  css: {
-    extract: true, // 是否使用css分离插件 ExtractTextPlugin
-    sourceMap: false, // 开启 CSS source maps
-    loaderOptions: { // css预设器配置项
-      less: {
-        javascriptEnabled: true
-      }
-    },
-    modules: false // 启用 CSS modules for all css / pre-processor files.
-  },
+  productionSourceMap: false, // 生产环境是否生成 sourceMap 文件
   // 本地开发环境代理设置，它支持webPack-dev-server的所有选项
   devServer: {
     // 环境配置
@@ -37,6 +27,10 @@ module.exports = {
     // https: false,
     // hotOnly: false,
     // open: true, //配置自动启动浏览器
+    overlay: {
+      warnings: true,
+      errors: true
+    },
     proxy: {
       // 配置多个代理(配置一个 proxy: 'http://localhost:4000' )
       '/v1/api': {
