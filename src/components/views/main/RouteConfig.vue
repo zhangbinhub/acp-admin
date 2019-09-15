@@ -414,11 +414,6 @@
                     this.modal_loading = false
                 })
             },
-            handleSearchKeyUp (event) {
-                if (event.which === 13) {
-                    this.handleSearch()
-                }
-            },
             handleRowClick (row) {
                 this.$refs['table'].toggleRowSelection(row)
             },

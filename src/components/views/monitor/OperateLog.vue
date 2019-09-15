@@ -297,11 +297,6 @@
                     this.modal_loading = false
                 })
             },
-            handleSearchKeyUp (event) {
-                if (event.which === 13) {
-                    this.handleSearch()
-                }
-            },
             handleSortChange (param) {
                 this.searchForm.orderParam.prop = param.prop
                 this.searchForm.orderParam.order = param.order

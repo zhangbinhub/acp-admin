@@ -13,7 +13,14 @@
                 </el-col>
                 <el-col :span="16">
                   <div style="color: #9ea7b4;">{{item.appName}}</div>
-                  <h3>{{item.count}}</h3>
+                  <count-to style="font-size: 30px;color: #409EFF"
+                            :start-val="0"
+                            :end-val="item.count"
+                            :duration="2000"
+                            :separator="','"
+                            :prefix="''"
+                            :suffix="''"
+                            :autoplay="true"/>
                 </el-col>
               </el-row>
             </el-card>
@@ -29,8 +36,11 @@
   </div>
 </template>
 <script>
+    import countTo from 'vue-count-to'
+
     export default {
         name: 'index',
+        components: { countTo },
         data () {
             return {
                 onlineInfo: [],

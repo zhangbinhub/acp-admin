@@ -9,7 +9,7 @@
         </div>
       </side-menu>
     </el-aside>
-    <el-container>
+    <el-container style="width: 100%">
       <el-header style="padding: 0;height: 60px">
         <header-bar :collapsed="isCollapsed" :full-path="fullPath" :menu-list="menuList"
                     :mini="isMini" @on-coll-change="handleCollapsedChange">
