@@ -1,13 +1,13 @@
 # acp-admin
 ###### v4.0.0 [版本更新日志](doc/version_history.md)
 兼容的浏览器及版本
-- IE 10+
-- Edge
-- Chrome latest
-- Firefox latest
+- Chrome latest（推荐，完美）
+- Firefox latest（完全支持）
+- Edge（完全支持）
+- IE 10+（不推荐，支持但体验不佳）
 
-使用vue全家桶(Vue+Vue-router+Vuex+axios)、iview样式库构建的前端项目。该项目是前后端分离架构中的“前端部分”
-。后端工程[V3.0.6](https://github.com/zhangbin1010/acp-admin-cloud)
+使用vue全家桶(Vue+Vue-router+Vuex+axios)、ElementUI样式库构建的前端项目。该项目是前后端分离架构中的“前端部分”
+。后端工程[V4.0.0](https://github.com/zhangbin1010/acp-admin-cloud)
 
 系统仍持续完善和优化中，数据初始化及后端数据结构请参看[后端工程](https://github.com/zhangbin1010/acp-admin-cloud)
 
@@ -32,6 +32,7 @@
 - js-sha256
 - vue-json-editor
 - Element-UI
+- vue-count-to
 
 ## 总体架构
 ![Architecture diagram](doc/images/总体架构.jpg)
