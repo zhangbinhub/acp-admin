@@ -1,65 +1,32 @@
+//全局变量
+@import "../../../assets/styles/variable";
+
 .side-menu-wrapper {
   user-select: none;
+  height: 100%;
+  background-color: @menuBgColor !important;
 
-  .menu-area {
-    width: ~"calc(100% + 18px)";
-    overflow-x: hidden;
-    overflow-y: scroll;
-    left: 0;
-    bottom: 0;
-    margin-right: -18px;
-    position: absolute;
-    top: 64px;
+  .menu-scrollbar {
+    height: ~"calc(100% - 60px)";
+    top: 60px;
 
-    .ivu-menu-vertical {
-      margin-right: -18px;
+    .el-scrollbar__wrap {
+      overflow-x: hidden;
     }
   }
 
-  .menu-collapsed {
-    padding-top: 10px;
+  .menu-root {
+    height: ~"calc(100% - 60px)";
+    border-right: 0;
 
-    .ivu-dropdown {
-      width: 100%;
-      padding: 10px 0 10px 0;
+    & .nest-menu .el-submenu > .el-submenu__title,
+    & .el-submenu .el-menu-item {
+      background-color: @menuSubMenuAndItemBgColor !important;
 
-      .ivu-dropdown-rel a {
-        width: 100%;
+      &:hover {
+        background-color: @menuSubMenuAndItemHoverColor !important;
       }
     }
-
-    .ivu-tooltip {
-      width: 100%;
-      padding: 10px 0 10px 0;
-
-      .ivu-tooltip-rel {
-        width: 100%;
-      }
-
-      .ivu-tooltip-popper .ivu-tooltip-content {
-        .ivu-tooltip-arrow {
-          border-right-color: #fff;
-        }
-
-        .ivu-tooltip-inner {
-          background: #fff;
-          color: #495060;
-        }
-      }
-    }
-
-
   }
 
-  a.drop-menu-a {
-    padding: 10px 15px 10px 16px;
-    width: 100%;
-    text-align: center;
-    color: #495060;
-  }
-
-}
-
-.menu-title {
-  padding-left: 6px;
 }

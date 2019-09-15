@@ -1,80 +1,94 @@
 <template>
-  <Row :gutter="16">
-    <i-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
-      <Card>
-        <div style="max-height: 500px;overflow: auto;">
-          <Tree style="margin-right: 16px;" :data="treeData" :render="renderContent"></Tree>
+  <el-row :gutter="16">
+    <el-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
+      <el-card>
+        <div style="overflow-x: auto;overflow-y: hidden">
+          <el-tree style="margin-right: 16px;min-height: 100px;" :data="treeData" v-loading="treeLoading"
+                   :default-expand-all="true"
+                   :expand-on-click-node="false">
+            <span class="config-tree-node" slot-scope="{ node, data }">
+              <span v-if="data.id!=='root'" @click="orgClick(data)">{{ node.label }}</span>
+              <span v-else>{{ node.label }}</span>
+              <span>
+                <el-button
+                  v-if="data.id!=='root'"
+                  type="text"
+                  size="mini"
+                  icon="el-icon-minus"
+                  :loading="treeLoading"
+                  @click="remove(node, data)">
+                </el-button>
+                <el-button
+                  type="text"
+                  size="mini"
+                  icon="el-icon-plus"
+                  :loading="treeLoading"
+                  @click="append(data)">
+                </el-button>
+              </span>
+            </span>
+          </el-tree>
         </div>
-      </Card>
-    </i-col>
-    <i-col :lg="{ span: 15 }" v-show="currOrg.id&&currOrg.id!==''" style="margin-bottom: 16px;">
-      <Card>
+      </el-card>
+    </el-col>
+    <el-col :lg="{ span: 15 }" v-show="currOrg.id&&currOrg.id!==''" style="margin-bottom: 16px;">
+      <el-card>
         <p style="margin: 0 16px;">{{currOrgFullPath}}</p>
-        <Divider style="margin: 12px 0;"/>
-        <Form ref="editForm" :model="editForm" :rules="ruleEditForm" :label-width="60">
-          <Row>
-            <i-col :sm="{ span: 12 }">
-              <Form-item :label="$t('forms.name')" prop="name">
-                <label>
-                  <Input ref="name" v-model="editForm.name" :disabled="treeLoading" size="small"
-                         :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                         @on-enter="doSave"></Input>
-                </label>
-              </Form-item>
-            </i-col>
-            <i-col :sm="{ span: 12 }">
-              <Form-item :label="$t('forms.parent')" prop="parentArray">
-                <Cascader :data="cascaderData" v-model="editForm.parentArray" :disabled="treeLoading"
-                          :change-on-select="true" @on-enter="doSave"></Cascader>
-              </Form-item>
-            </i-col>
-          </Row>
-          <Row>
-            <i-col :sm="{ span: 12 }">
-              <Form-item :label="$t('forms.code')" prop="code">
-                <label>
-                  <Input v-model="editForm.code" :disabled="treeLoading" size="small"
-                         :placeholder="$t('forms.pleaseEnter') + $t('forms.code')"
-                         @on-enter="doSave"></Input>
-                </label>
-              </Form-item>
-            </i-col>
-            <i-col :sm="{ span: 12 }">
-              <Form-item :label="$t('forms.sort')" prop="sort">
-                <InputNumber v-model="editForm.sort" :disabled="treeLoading" style="width: 100%;max-width: 150px;"
-                             size="small" :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" :min="0"
-                             @keyup.enter.native="doSave">
-                </InputNumber>
-              </Form-item>
-            </i-col>
-          </Row>
-          <Form-item :label="$t('forms.userList')">
-            <Transfer :data="optionalUsers" :target-keys="editForm.userIds" :list-style="listStyle" :filterable="true"
-                      :titles="[$t('forms.optional'),$t('forms.selected')]"
-                      :operations="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
-                      @on-change="handleUserListChange">
-              <div :style="{float: 'right', margin: '5px'}">
-                <Button size="small" @click="reloadUserList" :loading="treeLoading">
-                  {{$t('forms.buttons.refresh')}}
-                </Button>
-              </div>
-            </Transfer>
-          </Form-item>
-          <Divider style="margin: 12px 0;"/>
+        <el-divider style="margin: 12px 0;"></el-divider>
+        <el-form ref="editForm" size="mini" :model="editForm" :rules="ruleEditForm" label-width="80px"
+                 v-loading="treeLoading" onsubmit="return false;">
+          <el-col :sm="{ span: 12 }">
+            <el-form-item :label="$t('forms.name')" prop="name">
+              <el-input ref="name" v-model="editForm.name" :disabled="treeLoading"
+                        :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
+                        @keyup.enter.native="doSave"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :sm="{ span: 12 }">
+            <el-form-item :label="$t('forms.code')" prop="code">
+              <el-input v-model="editForm.code" :disabled="treeLoading"
+                        :placeholder="$t('forms.pleaseEnter') + $t('forms.code')"
+                        @keyup.enter.native="doSave"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :sm="{ span: 12 }">
+            <el-form-item :label="$t('forms.parent')" prop="parentArray">
+              <el-cascader :options="cascaderData" v-model="editForm.parentArray" v-loading="treeLoading"
+                           :disabled="treeLoading" style="width: 100%"
+                           :props="{checkStrictly: true,value:'id'}"></el-cascader>
+            </el-form-item>
+          </el-col>
+          <el-col :sm="{ span: 12 }">
+            <el-form-item :label="$t('forms.sort')" prop="sort">
+              <el-input-number v-model="editForm.sort" :disabled="treeLoading"
+                               :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" :min="0"
+                               @keyup.enter.native="doSave">
+              </el-input-number>
+            </el-form-item>
+          </el-col>
+          <el-col :sm="{ span: 24 }">
+            <el-form-item :label="$t('forms.userList')">
+              <el-transfer :data="optionalUsers" v-model="editForm.userIds" v-loading="treeLoading"
+                           :filterable="true" :props="{key:'id'}"
+                           :titles="[$t('forms.optional'),$t('forms.selected')]"
+                           :button-texts="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
+                           @change="handleUserListChange">
+              </el-transfer>
+            </el-form-item>
+          </el-col>
           <div style="text-align: center">
-            <Button type="default" size="small" :loading="treeLoading" style="margin-right: 20px;"
-                    @click="doReset">
+            <el-button type="info" :loading="treeLoading" style="margin-right: 20px;"
+                       @click="doReset">
               {{$t('forms.buttons.reset')}}
-            </Button>
-            <Button type="primary" size="small" :loading="treeLoading" @click="doSave">
+            </el-button>
+            <el-button type="primary" :loading="treeLoading" @click="doSave">
               {{$t('forms.buttons.submit')}}
-            </Button>
+            </el-button>
           </div>
-        </Form>
-        <Spin size="large" :fix="true" v-if="treeLoading"></Spin>
-      </Card>
-    </i-col>
-  </Row>
+        </el-form>
+      </el-card>
+    </el-col>
+  </el-row>
 </template>
 <script>
     import {
@@ -90,24 +104,11 @@
         name: 'orgConfig',
         data () {
             return {
-                listStyle: {
-                    width: '210px',
-                    height: '283px'
-                },
                 treeData: [{
                     id: 'root',
-                    value: 'root',
-                    title: this.$i18n.t('forms.organization'),
-                    name: this.$i18n.t('forms.organization'),
                     label: this.$i18n.t('forms.organization'),
-                    expand: true,
-                    render: this.rootRenderContent,
                     children: []
                 }],
-                buttonProps: {
-                    type: 'default',
-                    size: 'small'
-                },
                 tree_loading: false,
                 currOrgFullPath: '',
                 currOrgData: {},
@@ -119,13 +120,11 @@
         computed: {
             ruleEditForm () {
                 return {
-                    name: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ],
+                    name: [{
+                        required: true,
+                        message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
+                        trigger: 'blur'
+                    }],
                     sort: [{
                         type: 'integer',
                         required: true,
@@ -160,102 +159,6 @@
             }
         },
         methods: {
-            rootRenderContent (h, { root, node, data }) {
-                return h('span', {
-                    style: {
-                        display: 'inline-block',
-                        width: '100%'
-                    }
-                }, [
-                    h('span', [
-                        h('Icon', {
-                            props: {
-                                type: 'md-git-network'
-                            },
-                            style: {
-                                marginRight: '8px'
-                            }
-                        }),
-                        h('span', data.title)
-                    ]),
-                    h('span', {
-                        style: {
-                            display: 'inline-block',
-                            float: 'right',
-                            marginRight: '32px'
-                        }
-                    }, [
-                        h('Button', {
-                            props: Object.assign({}, this.buttonProps, {
-                                icon: 'ios-add',
-                                type: 'primary',
-                                loading: this.treeLoading
-                            }),
-                            style: {
-                                width: '64px'
-                            },
-                            on: {
-                                click: () => {
-                                    this.append(data)
-                                }
-                            }
-                        })
-                    ])
-                ])
-            },
-            renderContent (h, { root, node, data }) {
-                return h('span', {
-                    style: {
-                        cursor: 'pointer',
-                        display: 'inline-block',
-                        width: '100%'
-                    }
-                }, [
-                    h('span', [
-                        h('span', {
-                            class: 'ivu-tree-title',
-                            on: {
-                                click: () => {
-                                    this.orgClick(root, node, data)
-                                }
-                            }
-                        }, data.title)
-                    ]),
-                    h('span', {
-                        style: {
-                            display: 'inline-block',
-                            float: 'right',
-                            marginRight: '32px'
-                        }
-                    }, [
-                        h('Button', {
-                            props: Object.assign({}, this.buttonProps, {
-                                icon: 'ios-add',
-                                loading: this.treeLoading
-                            }),
-                            style: {
-                                marginRight: '8px'
-                            },
-                            on: {
-                                click: () => {
-                                    this.append(data)
-                                }
-                            }
-                        }),
-                        h('Button', {
-                            props: Object.assign({}, this.buttonProps, {
-                                icon: 'ios-remove',
-                                loading: this.treeLoading
-                            }),
-                            on: {
-                                click: () => {
-                                    this.remove(root, node, data)
-                                }
-                            }
-                        })
-                    ])
-                ])
-            },
             clearCurrOrg (currOrgId) {
                 if (!currOrgId || (currOrgId && currOrgId === this.currOrg.id)) {
                     this.editForm = {
@@ -279,13 +182,13 @@
                 }
             },
             refreshOrgTree () {
+                this.clearCurrOrg()
                 this.tree_loading = true
                 this.$api.request.org.getOrgList().then((res) => {
                     this.tree_loading = false
                     if (res) {
                         processTreeNode(res.data)
                         this.treeData[0].children = res.data
-                        this.clearCurrOrg()
                     }
                 }).catch(() => {
                     this.tree_loading = false
@@ -297,7 +200,6 @@
                     this.tree_loading = false
                     if (res) {
                         this.optionalUsers = res.data.map(item => {
-                            item.key = item.id
                             item.label = item.name + '(' + item.loginNo + ')'
                             return item
                         })
@@ -315,40 +217,41 @@
                 }).then((res) => {
                     this.tree_loading = false
                     if (res) {
-                        this.$Message.success(this.$i18n.t('messages.createSuccess'))
+                        this.$message.success(this.$i18n.t('messages.createSuccess') + '')
                         const children = data.children || []
                         processTreeNode([res.data])
                         children.push(res.data)
                         sortTreeNodes(children)
+                        this.orgClick(res.data)
                         this.$set(data, 'children', children)
                     }
                 }).catch(() => {
                     this.tree_loading = false
                 })
             },
-            remove (root, node, data) {
-                this.$Modal.confirm({
-                    title: this.$i18n.t('dialog.confirm') + '',
-                    content: this.$i18n.t('messages.deleteDataConfirm') + '<br/>' + getTreeFullPathTitle(this.treeData, data.id),
-                    onOk: () => {
-                        this.tree_loading = true
-                        this.$api.request.org.deleteOrg([data.id]).then((res) => {
-                            this.tree_loading = false
-                            if (res) {
-                                this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
-                                const parentKey = root.find(el => el === node).parent
-                                const parent = root.find(el => el.nodeKey === parentKey).node
-                                const index = parent.children.indexOf(data)
-                                parent.children.splice(index, 1)
-                                this.clearCurrOrg(data.id)
-                            }
-                        }).catch(() => {
-                            this.tree_loading = false
-                        })
-                    }
+            remove (node, data) {
+                this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + ': ' + getTreeFullPathTitle(this.treeData, data.id),
+                    this.$i18n.t('dialog.confirm') + '', {
+                        type: 'warning'
+                    }).then(() => {
+                    this.tree_loading = true
+                    this.$api.request.org.deleteOrg([data.id]).then((res) => {
+                        this.tree_loading = false
+                        if (res) {
+                            this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
+                            const parent = node.parent
+                            const children = parent.data.children
+                            const index = children.findIndex(d => d.id === data.id)
+                            children.splice(index, 1)
+                            this.clearCurrOrg(data.id)
+                        }
+                    }).catch(() => {
+                        this.tree_loading = false
+                    })
+                }).catch(() => {
                 })
             },
-            orgClick (root, node, data) {
+            orgClick (data) {
                 this.tree_loading = true
                 this.$api.request.org.getOrgInfo(data.id).then((res) => {
                     this.tree_loading = false
@@ -388,7 +291,7 @@
                             if (res) {
                                 let oldParentId = this.currOrgData.parentId
                                 this.reloadUserList()
-                                this.$Message.success(this.$i18n.t('messages.saveSuccess'))
+                                this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                                 this.currOrgData.name = this.editForm.name
                                 this.currOrgData.title = this.editForm.name
                                 this.currOrgData.label = this.editForm.name

@@ -1,10 +1,10 @@
 <template>
-  <div class="log-file-button">
-    <Tooltip :content="$t('pageTitle.routeLog')" placement="bottom">
-      <Button type="text" @click="openRouteLogPage">
-        <Icon :size="20" type="ios-book"/>
-      </Button>
-    </Tooltip>
+  <div class="header-bar-button">
+    <el-tooltip :content="$t('pageTitle.routeLog')" placement="bottom">
+      <el-button type="text" @click="openRouteLogPage">
+        <i style="font-size: 20px" class="el-icon-reading"></i>
+      </el-button>
+    </el-tooltip>
   </div>
 </template>
 
@@ -18,17 +18,3 @@
         }
     }
 </script>
-
-<style lang="less">
-  .log-file-button {
-    margin-right: 12px;
-
-    .ivu-badge-dot {
-      top: 20px;
-    }
-
-    .ivu-btn.ivu-btn-text {
-      padding: 5px 1px 6px;
-    }
-  }
-</style>

@@ -1,58 +1,54 @@
 <template>
-  <Layout style="height: 100%" :class="`home home-${theme}`">
-    <Sider :hide-trigger="true" :collapsible="true" :width="220" :collapsed-width="63" v-model="isCollapsed"
-           class="left-sider" :style="{overflow: 'hidden'}">
-      <side-menu :accordion="true" ref="sideMenu" :active-name="fullPath" :collapsed="isCollapsed"
+  <el-container style="height: 100%" :class="`home home-${theme}`">
+    <el-aside :width="isCollapsed?'64px':'220px'" :style="{overflow: 'hidden'}">
+      <side-menu :accordion="true" :active-name="fullPath" :collapsed="isCollapsed"
                  @on-select="handleClick" :menu-list="menuList" :open-names="openedNames" :theme="theme">
-        <div class="logo-con">
+        <div class="logo-con" :style="'width: '+(isCollapsed?'44px':'200px')">
           <img v-show="!isCollapsed" :src="mainLogo" alt=""/>
           <img v-show="isCollapsed" :src="minLogo" alt=""/>
         </div>
       </side-menu>
-    </Sider>
-    <Layout>
-      <Header class="header-con">
+    </el-aside>
+    <el-container style="width: 100%">
+      <el-header style="padding: 0;height: 60px">
         <header-bar :collapsed="isCollapsed" :full-path="fullPath" :menu-list="menuList"
                     :mini="isMini" @on-coll-change="handleCollapsedChange">
-          <user :user-avator="userAvator" :customer-name="userName"/>
-          <language style="margin-right: 10px;" :lang="localLang"/>
-          <logFileButton v-if="showLogFile" style="margin-right: 10px;"></logFileButton>
-          <configCenterButton v-if="showConfigCenter" style="margin-right: 10px;"></configCenterButton>
-          <routeLogButton v-if="showRouteLog" style="margin-right: 10px;"></routeLogButton>
-          <routeConfigButton v-if="showRouteConfig" style="margin-right: 10px;"></routeConfigButton>
-          <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
+          <user :user-avatar="userAvatar" :customer-name="userName"/>
+          <language :lang="localLang"/>
+          <logFileButton v-if="showLogFile"></logFileButton>
+          <configCenterButton v-if="showConfigCenter"></configCenterButton>
+          <routeLogButton v-if="showRouteLog"></routeLogButton>
+          <routeConfigButton v-if="showRouteConfig"></routeConfigButton>
+          <fullscreen v-model="isFullscreen"/>
         </header-bar>
-      </Header>
-      <div class="home-content-con">
-        <Layout class="home-layout-con">
-          <div class="tag-nav-wrapper">
-            <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList"
-                      @input="handleClick" @on-close="handleCloseTag"/>
-          </div>
-          <div class="content-wrapper">
-            <div class="content-sticker">
-              <transition name="fade" mode="out-in" :appear="true">
-                <keep-alive :include="cacheList">
-                  <router-view/>
-                </keep-alive>
-              </transition>
-              <ABackTop :height="100" :bottom="80" :right="50" container=".content-wrapper"></ABackTop>
-            </div>
-            <Footer class="content-footer">
-              <small style="text-align: center;">{{copyright}}</small>
-            </Footer>
-          </div>
-        </Layout>
-      </div>
-    </Layout>
-  </Layout>
+      </el-header>
+      <el-container>
+        <el-header style="padding: 0;height: 33px">
+          <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList"
+                    @input="handleClick" @on-close="handleCloseTag"/>
+        </el-header>
+        <el-scrollbar ref="main-scrollbar" class="main-scrollbar" :style="{height:mainHeight+'px'}">
+          <el-main class="main-content">
+            <transition name="fade-transform" mode="out-in" :appear="true">
+              <keep-alive :include="cacheList">
+                <router-view/>
+              </keep-alive>
+            </transition>
+          </el-main>
+          <el-backtop :visibility-height="100" target=".main-scrollbar .el-scrollbar__wrap"></el-backtop>
+        </el-scrollbar>
+      </el-container>
+      <el-footer class="foot-content" style="height: 30px">
+        <small style="text-align: center;">{{copyright}}</small>
+      </el-footer>
+    </el-container>
+  </el-container>
 </template>
 <script>
     import SideMenu from './side-menu'
     import HeaderBar from './header-bar'
     import TagsNav from './tags-nav'
     import User from './user'
-    import ABackTop from './a-back-top'
     import Fullscreen from './fullscreen'
     import Language from './language'
     import logFileButton from './log-file-button'
@@ -76,7 +72,6 @@
             TagsNav,
             Fullscreen,
             User,
-            ABackTop,
             routeConfigButton,
             configCenterButton,
             logFileButton,
@@ -97,6 +92,9 @@
             this.initStoreData()
         },
         computed: {
+            mainHeight () {
+                return this.$store.state.app.mainHeight
+            },
             showRouteConfig () {
                 return this.$store.state.app.user.userInfo.levels <= 0
             },
@@ -130,7 +128,7 @@
             tagNavList () {
                 return this.$store.state.app.tagNavList
             },
-            userAvator () {
+            userAvatar () {
                 return this.$store.state.app.user.userInfo.avatar
             },
             userName () {
@@ -149,6 +147,11 @@
         watch: {
             '$route' (newRoute) {
                 this.updateTagList(this.tagNavList, this.menuList, newRoute)
+            },
+            mainHeight () {
+                this.$nextTick(() => {
+                    this.$refs['main-scrollbar'].update()
+                })
             }
         },
         methods: {
@@ -170,10 +173,13 @@
             },
             initStoreData () {
                 // 初始化主页子路由缓存列表
-                const routeList = this.$router.options.routes
+                let routeList = []
+                this.$router.options.routes
                     .filter(item => item.name === 'home')
-                    .flatMap(item => item.children)
-                    .filter(item => !item.meta.notCache)
+                    .forEach(item => {
+                        routeList.push(...item.children)
+                    })
+                routeList = routeList.filter(item => !item.meta.notCache)
                     .map(item => item.name)
                 this.$store.commit('SET_CACHE_LIST', routeList)
 

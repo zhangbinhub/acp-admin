@@ -1,10 +1,10 @@
 <template>
-  <div class="log-file-button">
-    <Tooltip :content="$t('pageTitle.configCenter')" placement="bottom">
-      <Button type="text" @click="openConfigCenterPage">
-        <Icon :size="20" type="ios-construct"/>
-      </Button>
-    </Tooltip>
+  <div class="header-bar-button">
+    <el-tooltip :content="$t('pageTitle.configCenter')" placement="bottom">
+      <el-button type="text" @click="openConfigCenterPage">
+        <i style="font-size: 20px" class="el-icon-setting"></i>
+      </el-button>
+    </el-tooltip>
   </div>
 </template>
 
@@ -18,17 +18,3 @@
         }
     }
 </script>
-
-<style lang="less">
-  .log-file-button {
-    margin-right: 12px;
-
-    .ivu-badge-dot {
-      top: 20px;
-    }
-
-    .ivu-btn.ivu-btn-text {
-      padding: 5px 1px 6px;
-    }
-  }
-</style>

@@ -1,18 +1,17 @@
 <template>
-  <Submenu :name="`${this.parentItem.id}`">
+  <el-submenu :index="`${this.parentItem.id}`">
     <template slot="title">
-      <Icon :type="this.parentItem.iconType"></Icon>
+      <i :class="this.parentItem.iconType"></i>
       <span>{{ this.parentItem.name }}</span>
     </template>
     <template v-for="item in this.parentItem.children">
-      <side-menu-item v-if="item.children && item.children.length > 0" :key="`menu-${item.id}`"
-                      :parent-item="item"></side-menu-item>
-      <menu-item v-else :name="item.path" :key="`menu-${item.id}`">
-        <Icon :type="item.iconType"></Icon>
-        <span>{{ item.name }}</span>
-      </menu-item>
+      <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"></side-menu-item>
+      <el-menu-item v-else :index="item.path">
+        <i :class="item.iconType"></i>
+        <span slot="title">{{item.name}}</span>
+      </el-menu-item>
     </template>
-  </Submenu>
+  </el-submenu>
 </template>
 <script>
     export default {

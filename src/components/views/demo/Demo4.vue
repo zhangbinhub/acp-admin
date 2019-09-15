@@ -1,10 +1,7 @@
 <template>
-  <div>
-    <label>
-      <Input type="text"/>
-    </label>
-    <p>demo4,name={{this.$route.query.name}}</p>
-  </div>
+  <el-card>
+    <iframe src='http://www.baidu.com' style="min-height:800px; width: 100%;border: 0"></iframe>
+  </el-card>
 </template>
 <script>
     export default {

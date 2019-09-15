@@ -86,76 +86,6 @@ export const getOpenedNamesByActiveName = (name, vm) => {
   }
 }
 
-/**
- * @description 绑定事件 on(element, event, handler)
- */
-export const on = (function () {
-  if (document.addEventListener) {
-    return function (element, event, handler) {
-      if (element && event && handler) {
-        element.addEventListener(event, handler, false)
-      }
-    }
-  } else {
-    return function (element, event, handler) {
-      if (element && event && handler) {
-        element.attachEvent('on' + event, handler)
-      }
-    }
-  }
-})()
-
-/**
- * @description 解绑事件 off(element, event, handler)
- */
-export const off = (function () {
-  if (document.removeEventListener) {
-    return function (element, event, handler) {
-      if (element && event) {
-        element.removeEventListener(event, handler, false)
-      }
-    }
-  } else {
-    return function (element, event, handler) {
-      if (element && event) {
-        element.detachEvent('on' + event, handler)
-      }
-    }
-  }
-})()
-
-export const scrollTop = (el, from = 0, to, duration = 500, endCallback) => {
-  if (!window.requestAnimationFrame) {
-    window.requestAnimationFrame = (
-      window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.msRequestAnimationFrame ||
-      function (callback) {
-        return window.setTimeout(callback, 1000 / 60)
-      }
-    )
-  }
-  const difference = Math.abs(from - to)
-  const step = Math.ceil(difference / duration * 50)
-  const scroll = (start, end, step) => {
-    if (start === end) {
-      endCallback && endCallback()
-      return
-    }
-    let d = (start + step > end) ? end : start + step
-    if (start > end) {
-      d = (start - step < end) ? end : start - step
-    }
-    if (el === window) {
-      window.scrollTo(d, d)
-    } else {
-      el.scrollTop = d
-    }
-    window.requestAnimationFrame(() => scroll(d, end, step))
-  }
-  scroll(from, to, step)
-}
-
 export const findNodeUpperByClasses = (ele, classes) => {
   let parentNode = ele.parentNode
   if (parentNode) {
@@ -195,6 +125,89 @@ export const updateTagNavList = (tagNavList, menuList, route) => {
 }
 
 /**
+ * 将后台返回数据转换为tree组件数据
+ * @param nodeList Array
+ */
+export const processTreeNode = (nodeList) => {
+  for (let item of nodeList) {
+    if (!item.children) {
+      item.children = []
+    }
+    item.label = item.name
+    if (item.children.length > 0) {
+      processTreeNode(item.children)
+    }
+  }
+}
+
+/**
+ * 区分全选和半选节点ID
+ * @param nodeList Array
+ * @param idList Array
+ * @return findResult = { checkedIdList: [], halfCheckedIdList: [] } 筛选后的结果对象
+ */
+export const findCheckedTreeNode = (nodeList, idList) => {
+  const findResult = {
+    checkedIdList: [],
+    halfCheckedIdList: []
+  }
+  for (let item of nodeList) {
+    if (item.children && item.children.length > 0) {
+      const childrenFindResult = findCheckedTreeNode(item.children, idList)
+      if (arrayIsFullContainOtherArray(childrenFindResult.checkedIdList, item.children.map(child => child.id))) {
+        findResult.checkedIdList.push(item.id)
+      } else {
+        if (arrayIsContainOtherArray(childrenFindResult.checkedIdList, item.children.map(child => child.id)) ||
+          arrayIsContainOtherArray(childrenFindResult.halfCheckedIdList, item.children.map(child => child.id))) {
+          findResult.halfCheckedIdList.push(item.id)
+        }
+      }
+      findResult.checkedIdList = findResult.checkedIdList.concat(childrenFindResult.checkedIdList)
+      findResult.halfCheckedIdList = findResult.halfCheckedIdList.concat(childrenFindResult.halfCheckedIdList)
+    } else {
+      if (idList.includes(item.id)) {
+        findResult.checkedIdList.push(item.id)
+      }
+    }
+  }
+  return findResult
+}
+
+/**
+ * 判断数组是否完全包含另一个数组的所有元素
+ * @param srcArray 原数组
+ * @param searchArray 目标查询数组
+ * @returns {boolean}
+ */
+export const arrayIsFullContainOtherArray = (srcArray, searchArray) => {
+  let result = true
+  for (let item of searchArray) {
+    if (!srcArray.includes(item)) {
+      result = false
+      break
+    }
+  }
+  return result
+}
+
+/**
+ * 判断数组是否包含另一个数组的至少一个元素
+ * @param srcArray 原数组
+ * @param searchArray 目标查询数组
+ * @returns {boolean}
+ */
+export const arrayIsContainOtherArray = (srcArray, searchArray) => {
+  let result = false
+  for (let item of searchArray) {
+    if (srcArray.includes(item)) {
+      result = true
+      break
+    }
+  }
+  return result
+}
+
+/**
  * 树节点排序，根据sort属性
  * @param nodeList Array
  * @param property
@@ -217,72 +230,14 @@ export const sortTreeNodes = (nodeList, property = 'sort') => {
 }
 
 /**
- * 将后台返回数据转换为tree组件数据
- * @param nodeList Array
- * @param flag 0-config,1-select,2-select-strictly
- * @param selectedIds 选中项的id
- * @returns number checkedCount
- */
-export const processTreeNode = (nodeList, flag = 0, selectedIds = []) => {
-  let checkedCount = 0
-  for (let i = 0; i < nodeList.length; i++) {
-    if (!nodeList[i].children) {
-      nodeList[i].children = []
-    }
-    nodeList[i].value = nodeList[i].id
-    nodeList[i].title = nodeList[i].name
-    nodeList[i].label = nodeList[i].name
-    let childrenCheckedCount = 0
-    if (nodeList[i].children.length > 0) {
-      childrenCheckedCount = processTreeNode(nodeList[i].children, flag, selectedIds)
-    }
-    // 子孙节点有选中的，就展开
-    if (childrenCheckedCount > 0) {
-      nodeList[i].expand = true
-    }
-    // 累加子孙节点所有选中数
-    checkedCount += childrenCheckedCount
-    if (flag === 1) { // 子孙节点相关联，子节点全部选中则自身checked=true，有选中或关联则自身indeterminate=true
-      let childrenChecked = 0
-      let childrenIndeterminate = 0
-      nodeList[i].children.forEach(child => {
-        if (child.checked) {
-          childrenChecked++
-        } else if (child.indeterminate) {
-          childrenIndeterminate++
-        }
-      })
-      if (nodeList[i].children.length > 0 && childrenChecked === nodeList[i].children.length) {
-        checkedCount++
-        nodeList[i].checked = true
-      } else if (childrenChecked > 0 || childrenIndeterminate > 0) {
-        checkedCount++
-        nodeList[i].indeterminate = true
-      } else if (selectedIds.includes(nodeList[i].id)) {
-        checkedCount++
-        nodeList[i].checked = true
-      }
-    } else if (flag === 2) { // 自身选中，则checked=true
-      if (selectedIds.includes(nodeList[i].id)) {
-        checkedCount++
-        nodeList[i].checked = true
-      }
-    } else if (flag === 0) { // 不选择，直接展开所有节点
-      nodeList[i].expand = true
-    }
-  }
-  return checkedCount
-}
-
-/**
- * 获取树中某个节点的全路径title字符串
+ * 获取树中某个节点的全路径 label 字符串
  * @param treeData 树全数据 Array
  * @param targetId 指定节点id
- * @param property 拼接的属性名，default='title'
+ * @param property 拼接的属性名，default='label'
  * @param separate 分隔字符串，default=' > '
  * @returns String
  */
-export const getTreeFullPathTitle = (treeData, targetId, property = 'title', separate = ' > ') => {
+export const getTreeFullPathTitle = (treeData, targetId, property = 'label', separate = ' > ') => {
   for (let item of treeData) {
     if (item.id === targetId) {
       return item[property]

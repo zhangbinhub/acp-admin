@@ -1,4 +1,4 @@
-import twLocale from 'iview/src/locale/lang/zh-TW'
+import twLocale from 'element-ui/lib/locale/lang/zh-TW'
 
 const messages = Object.assign(twLocale, {
   lang: '語言',
@@ -38,6 +38,8 @@ const messages = Object.assign(twLocale, {
     routeLog: '路由日誌',
     configCenter: '配置中心',
     logFile: '日誌文件',
+    operateLog: '操作日誌',
+    loginLog: '登錄日誌',
     appConfig: '應用配置',
     authConfig: '權限配置',
     orgConfig: '機構配置',
@@ -111,6 +113,7 @@ const messages = Object.assign(twLocale, {
     new: '新',
     confirmPassword: '確認密碼',
     passwordNotEqual: '兩次輸入的密碼不相等',
+    scope: '權限範圍',
     accessTokenValiditySeconds: 'token有效期',
     refreshTokenValiditySeconds: 'refreshToken有效期',
     seconds: '秒',
@@ -118,6 +121,8 @@ const messages = Object.assign(twLocale, {
     organization: '機構',
     role: '角色',
     menu: '菜單',
+    clientName: '客戶端名稱',
+    user: '用戶',
     moduleFunc: '模塊功能',
     basicInfo: '基本信息',
     menuList: '菜單列表',
@@ -145,6 +150,16 @@ const messages = Object.assign(twLocale, {
     processTime: '處理時長',
     responseTime: '響應時間',
     responseStatus: '響應狀態碼',
+    historyInfo: '歷史信息',
+    todayInfo: '當日信息',
+    infoType: '信息類型',
+    targetIp: '目標服務IP',
+    targetPath: '目標服務路徑',
+    method: '請求方法',
+    token: '請求token',
+    clientId: '客戶端ID',
+    identify: '標識',
+    userName: '用戶名稱',
     configRefreshServer: '服務名',
     configRefreshMatcher: '匹配表達式',
     configRefreshMatcherDescribe: '請在下方輸入服務ID的匹配表達式（模糊匹配可用"**"），服務ID格式如下：',

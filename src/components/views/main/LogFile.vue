@@ -1,41 +1,43 @@
 <template>
-  <Card style="min-height: 350px;">
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120" :inline="true">
-      <Form-item :label="$t('forms.startDate')" prop="startDate">
-        <DatePicker type="date" :disabled="form_loading" :options="datePickerOptions"
-                    v-model="formValidate.startDate"
-                    :placeholder="$t('forms.pleaseEnter') + $t('forms.startDate')"
-                    style="width: 162px" @keyup.enter.native="handleSearch"></DatePicker>
-      </Form-item>
-      <Form-item :label="$t('forms.endDate')" prop="endDate">
-        <DatePicker type="date" :disabled="form_loading" :options="datePickerOptions" v-model="formValidate.endDate"
-                    :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
-                    style="width: 162px" @keyup.enter.native="handleSearch"></DatePicker>
-      </Form-item>
-      <Form-item>
-        <ButtonGroup>
-          <Button :loading="form_loading" @click="handleSearch()" type="info">
+  <el-card style="min-height: 350px;">
+    <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="120px" :inline="true"
+             size="mini" onsubmit="return false;">
+      <el-form-item :label="$t('forms.startDate')" prop="startDate">
+        <el-date-picker type="date" :disabled="form_loading" :picker-options="datePickerOptions"
+                        v-model="formValidate.startDate"
+                        :placeholder="$t('forms.pleaseEnter') + $t('forms.startDate')"
+                        style="width: 162px"></el-date-picker>
+      </el-form-item>
+      <el-form-item :label="$t('forms.endDate')" prop="endDate">
+        <el-date-picker type="date" :disabled="form_loading" :picker-options="datePickerOptions"
+                        v-model="formValidate.endDate"
+                        :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
+                        style="width: 162px"></el-date-picker>
+      </el-form-item>
+      <el-form-item>
+        <el-button-group>
+          <el-button :loading="form_loading" @click="handleSearch()" type="primary">
             {{$t('forms.buttons.search')}}
-          </Button>
-          <Button :loading="form_loading" @click="handleSearchReset()" type="info">
+          </el-button>
+          <el-button :loading="form_loading" @click="handleSearchReset()" type="primary">
             {{$t('forms.buttons.reset')}}
-          </Button>
-        </ButtonGroup>
-      </Form-item>
-    </Form>
-    <Divider/>
-    <Row>
-      <i-col span="3" v-for="(file,index) in logFileList" :key="index"
-             style="text-align: center;min-width: 150px;margin-bottom: 15px;">
-        <Tooltip :content="file" placement="bottom">
-          <Button type="text" :loading="form_loading" @click="downLoadFile(file)">
-            <Icon :size="50" type="md-document"/>
-          </Button>
-        </Tooltip>
+          </el-button>
+        </el-button-group>
+      </el-form-item>
+    </el-form>
+    <el-divider/>
+    <el-row>
+      <el-col :span="3" v-for="(file,index) in logFileList" :key="index"
+              style="text-align: center;min-width: 150px;margin-bottom: 15px;">
+        <el-tooltip :content="file" placement="bottom">
+          <el-button type="text" :loading="form_loading" @click="downLoadFile(file)">
+            <i class="el-icon-document" style="font-size: 50px"></i>
+          </el-button>
+        </el-tooltip>
         <p>{{file}}</p>
-      </i-col>
-    </Row>
-  </Card>
+      </el-col>
+    </el-row>
+  </el-card>
 </template>
 <script>
     import { doDownLoadFile } from '@/libs/tools'

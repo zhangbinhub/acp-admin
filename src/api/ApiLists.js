@@ -5,7 +5,7 @@ import auth from './sysconfig/authConfig'
 import org from './sysconfig/orgConfig'
 import user from './sysconfig/userConfig'
 import role from './sysconfig/roleConfig'
-import log from './log/LogFile'
+import log from './log/Log'
 import config from './config/ConfigCenter'
 import route from './route/RouteConfig'
 

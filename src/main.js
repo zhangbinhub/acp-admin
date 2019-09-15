@@ -1,14 +1,13 @@
-import 'babel-polyfill'
-
 import Vue from 'vue'
 import App from './App.vue'
 import store from './store'
-import 'iview/dist/styles/iview.css'
-import iView from 'iview'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 import router from './router'
 import './plugins/plugin-axios.js'
 import api from './api'
-import './assets/styles/layout/layout.less'
+import './assets/styles/layout.less'
+import './assets/styles/transition.less'
 import eCharts from 'echarts'
 import './mock'
 
@@ -23,20 +22,25 @@ const autoWidth = () => {
     store.commit('SET_MINI', false)
   }
 }
+const autoHeight = () => {
+  const winHeight = document.documentElement.clientHeight
+  store.commit('MAIN_HEIGHT', winHeight - 120)
+}
 
 Vue.config.productionTip = false
 
 autoWidth()
+autoHeight()
 window.onresize = function () {
   autoWidth()
+  autoHeight()
 }
 
 // 加载 eCharts
 Vue.prototype.$echarts = eCharts
-
-// 加载 iView ，并启用 i18n
+// 加载 ElementUI ，并启用 i18n
 const i18n = store.state.app.i18n
-Vue.use(iView, {
+Vue.use(ElementUI, {
   i18n: function (path, options) {
     let value = i18n.t(path, options)
     if (value !== null && value !== undefined) return value
@@ -44,14 +48,13 @@ Vue.use(iView, {
   }
 })
 Vue.use(api, {
-  Modal: Vue.prototype.$Modal,
-  notice: Vue.prototype.$Notice,
+  confirm: Vue.prototype.$confirm,
+  notify: Vue.prototype.$notify,
   i18n: i18n,
   http: Vue.prototype.$http,
   store: store,
   router: router,
-  loading: Vue.prototype.$Loading,
-  spin: Vue.prototype.$Spin
+  loading: Vue.prototype.$loading
 })
 new Vue({
   router,

@@ -1,17 +1,17 @@
 <template>
   <div class="cropper-wrapper">
-    <Card class="cropper-card">
-      <Row>
+    <el-card class="cropper-card">
+      <el-row>
         <div class="img-box">
           <img class="cropper-image" :id="imgId" alt="" style="max-width: 100%" src="">
         </div>
         <div class="right-con">
-          <Row style="height: 185px;">
+          <el-row style="height: 185px;">
             <div class="preview-box preview-lg">
               <div class="img-preview"></div>
             </div>
-          </Row>
-          <Row style="height: 170px;">
+          </el-row>
+          <el-row style="height: 170px;">
             <div class="preview-box preview-md">
               <div class="img-preview"></div>
             </div>
@@ -21,115 +21,108 @@
             <div class="preview-box preview-xs">
               <div class="img-preview"></div>
             </div>
-          </Row>
-          <Row style="margin-top: 33px;display: inline-block;">
+          </el-row>
+          <el-row style="margin-top: 33px;display: inline-block;">
             <div style="float: left">
-              <Upload action="image/upload" :before-upload="beforeUpload">
-                <Button style="width: 150px;" type="primary">{{$t('forms.buttons.upload')}}</Button>
-              </Upload>
+              <el-upload action="image/upload" :before-upload="beforeUpload">
+                <el-button size="small" style="width: 150px;" type="primary">{{$t('forms.buttons.upload')}}</el-button>
+              </el-upload>
             </div>
             <div style="float: left;margin-left: 20px;">
-              <Button v-show="insideSrc" style="width: 150px;" type="primary" @click="crop">{{ cropButtonText }}
-              </Button>
+              <el-button v-show="insideSrc" style="width: 150px;" size="small" type="primary" @click="crop">
+                {{ cropButtonText }}
+              </el-button>
             </div>
-          </Row>
+          </el-row>
         </div>
-      </Row>
-      <Row v-show="insideSrc" :gutter="16">
+      </el-row>
+      <el-row v-show="insideSrc" :gutter="16">
         <div class="input-box">
-          <i-col span="6">
-            <label>
-              <Input v-model="X" @on-blur="reSize" @on-enter="reSize">
-                <span slot="prepend">X</span>
-                <span slot="append">px</span>
-              </Input>
-            </label>
-          </i-col>
-          <i-col span="6">
-            <label>
-              <Input v-model="Y" @on-blur="reSize" @on-enter="reSize">
-                <span slot="prepend">Y</span>
-                <span slot="append">px</span>
-              </Input>
-            </label>
-          </i-col>
-          <i-col span="6">
-            <label>
-              <Input v-model="width" @on-blur="reSize" @on-enter="reSize">
-                <span slot="prepend">{{$t('forms.width')}}</span>
-                <span slot="append">px</span>
-              </Input>
-            </label>
-          </i-col>
-          <i-col span="6">
-            <label>
-              <Input v-model="height" @on-blur="reSize" @on-enter="reSize">
-                <span slot="prepend">{{$t('forms.height')}}</span>
-                <span slot="append">px</span>
-              </Input>
-            </label>
-          </i-col>
+          <el-col :span="6">
+            <el-input v-model="X" @blur="reSize" @keyup.enter.native="reSize" size="small">
+              <span slot="prepend">X</span>
+              <span slot="append">px</span>
+            </el-input>
+          </el-col>
+          <el-col :span="6">
+            <el-input v-model="Y" @on-blur="reSize" @keyup.enter.native="reSize" size="small">
+              <span slot="prepend">Y</span>
+              <span slot="append">px</span>
+            </el-input>
+          </el-col>
+          <el-col :span="6">
+            <el-input v-model="width" @on-blur="reSize" @keyup.enter.native="reSize" size="small">
+              <span slot="prepend">{{$t('forms.width')}}</span>
+              <span slot="append">px</span>
+            </el-input>
+          </el-col>
+          <el-col :span="6">
+            <el-input v-model="height" @on-blur="reSize" @keyup.enter.native="reSize" size="small">
+              <span slot="prepend">{{$t('forms.height')}}</span>
+              <span slot="append">px</span>
+            </el-input>
+          </el-col>
         </div>
-      </Row>
-      <Row v-show="insideSrc">
+      </el-row>
+      <el-row v-show="insideSrc">
         <div class="button-box">
-          <ButtonGroup shape="circle">
-            <Button type="primary" @click="reset">
-              <Icon type="md-undo"/>
-            </Button>
-            <Button type="primary" @click="mode('move')">
-              <Icon type="md-move"/>
-            </Button>
-            <Button type="primary" @click="mode('crop')">
-              <Icon type="md-crop"/>
-            </Button>
-          </ButtonGroup>
-          <ButtonGroup shape="circle">
-            <Button type="primary" @click="shrink">
-              <Icon type="md-remove"/>
-            </Button>
-            <Button type="primary" @click="magnify">
-              <Icon type="md-add"/>
-            </Button>
-          </ButtonGroup>
-          <ButtonGroup shape="circle">
-            <Button type="primary" @click="rotate(-1)">
-              <Icon type="md-refresh" class="icon-refresh-left"/>
-            </Button>
-            <Button type="primary" @click="rotate(1)">
-              <Icon type="md-refresh"/>
-            </Button>
-            <Button type="primary" @click="scale('X')">
-              <Icon type="md-resize" class="icon-leftAndRight"/>
-            </Button>
-            <Button type="primary" @click="scale('Y')">
-              <Icon type="md-resize" class="icon-upAndDown"/>
-            </Button>
-          </ButtonGroup>
-          <ButtonGroup shape="circle">
-            <Button type="primary" @click="move(0, -moveStep)">
-              <Icon type="md-arrow-round-up"/>
-            </Button>
-            <Button type="primary" @click="move(-moveStep, 0)">
-              <Icon type="md-arrow-round-back"/>
-            </Button>
-            <Button type="primary" @click="move(0, moveStep)">
-              <Icon type="md-arrow-round-down"/>
-            </Button>
-            <Button type="primary" @click="move(moveStep, 0)">
-              <Icon type="md-arrow-round-forward"/>
-            </Button>
-          </ButtonGroup>
-          <ButtonGroup shape="circle">
-            <Button type="primary" @click="aspact(16/9)">16:9</Button>
-            <Button type="primary" @click="aspact(4/3)">4:3</Button>
-            <Button type="primary" @click="aspact(1)">1:1</Button>
-            <Button type="primary" @click="aspact(2/3)">2:3</Button>
-            <Button type="primary" @click="aspact(NaN)">{{$t('forms.buttons.free')}}</Button>
-          </ButtonGroup>
+          <el-button-group style="margin-right: 10px">
+            <el-button type="primary" @click="reset" size="small">
+              <i class="el-icon-refresh"></i>
+            </el-button>
+            <el-button type="primary" @click="mode('move')" size="small">
+              <i class="el-icon-rank"></i>
+            </el-button>
+            <el-button type="primary" @click="mode('crop')" size="small">
+              <i class="el-icon-crop"></i>
+            </el-button>
+          </el-button-group>
+          <el-button-group style="margin-right: 10px">
+            <el-button type="primary" @click="shrink" size="small">
+              <i class="el-icon-zoom-out"></i>
+            </el-button>
+            <el-button type="primary" @click="magnify" size="small">
+              <i class="el-icon-zoom-in"></i>
+            </el-button>
+          </el-button-group>
+          <el-button-group style="margin-right: 10px">
+            <el-button type="primary" @click="rotate(-1)" size="small">
+              <i class="el-icon-refresh-left"></i>
+            </el-button>
+            <el-button type="primary" @click="rotate(1)" size="small">
+              <i class="el-icon-refresh-right"></i>
+            </el-button>
+            <el-button type="primary" @click="scale('X')" size="small">
+              <i class="el-icon-d-caret icon-leftAndRight"></i>
+            </el-button>
+            <el-button type="primary" @click="scale('Y')" size="small">
+              <i class="el-icon-d-caret"></i>
+            </el-button>
+          </el-button-group>
+          <el-button-group style="margin-right: 10px">
+            <el-button type="primary" @click="move(0, -moveStep)" size="small">
+              <i class="el-icon-caret-top"></i>
+            </el-button>
+            <el-button type="primary" @click="move(-moveStep, 0)" size="small">
+              <i class="el-icon-caret-left"></i>
+            </el-button>
+            <el-button type="primary" @click="move(0, moveStep)" size="small">
+              <i class="el-icon-caret-bottom"></i>
+            </el-button>
+            <el-button type="primary" @click="move(moveStep, 0)" size="small">
+              <i class="el-icon-caret-right"></i>
+            </el-button>
+          </el-button-group>
+          <el-button-group>
+            <el-button type="primary" @click="aspact(16/9)" size="small">16:9</el-button>
+            <el-button type="primary" @click="aspact(4/3)" size="small">4:3</el-button>
+            <el-button type="primary" @click="aspact(1)" size="small">1:1</el-button>
+            <el-button type="primary" @click="aspact(2/3)" size="small">2:3</el-button>
+            <el-button type="primary" @click="aspact(NaN)" size="small">{{$t('forms.buttons.free')}}</el-button>
+          </el-button-group>
         </div>
-      </Row>
-    </Card>
+      </el-row>
+    </el-card>
   </div>
 </template>
 

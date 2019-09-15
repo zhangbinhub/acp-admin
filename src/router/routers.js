@@ -12,13 +12,6 @@ import demo from './demo'
  * }
  */
 export default [{
-  path: '/test',
-  name: 'test',
-  component: () => import('@/components/test/test.vue'),
-  meta: {
-    title: 'pageTitle.test'
-  }
-}, {
   path: '/login',
   name: 'login',
   component: () => import('@/components/pages/Login.vue'),
@@ -59,7 +52,7 @@ export default [{
     component: () => import('@/components/views/main/PersonalInformation.vue'),
     meta: {
       title: 'pageTitle.personalInformation',
-      icon: 'md-person',
+      icon: 'el-icon-user',
       requireAuth: true
     }
   }, {
@@ -68,7 +61,7 @@ export default [{
     component: () => import('@/components/views/main/RouteConfig.vue'),
     meta: {
       title: 'pageTitle.routeConfig',
-      icon: 'md-code-working',
+      icon: 'el-icon-share',
       requireAuth: true
     }
   }, {
@@ -77,7 +70,7 @@ export default [{
     component: () => import('@/components/views/main/RouteLog.vue'),
     meta: {
       title: 'pageTitle.routeLog',
-      icon: 'ios-book',
+      icon: 'el-icon-reading',
       requireAuth: true
     }
   }, {
@@ -86,7 +79,7 @@ export default [{
     component: () => import('@/components/views/main/ConfigCenter.vue'),
     meta: {
       title: 'pageTitle.configCenter',
-      icon: 'ios-construct',
+      icon: 'el-icon-s-operation',
       requireAuth: true
     }
   }, {
@@ -95,7 +88,23 @@ export default [{
     component: () => import('@/components/views/main/LogFile.vue'),
     meta: {
       title: 'pageTitle.logFile',
-      icon: 'ios-bug',
+      icon: 'el-icon-document',
+      requireAuth: true
+    }
+  }, {
+    path: '/operatelog',
+    name: 'operateLog',
+    component: () => import('@/components/views/monitor/OperateLog.vue'),
+    meta: {
+      title: 'pageTitle.operateLog',
+      requireAuth: true
+    }
+  }, {
+    path: '/loginlog',
+    name: 'loginLog',
+    component: () => import('@/components/views/monitor/LoginLog.vue'),
+    meta: {
+      title: 'pageTitle.loginLog',
       requireAuth: true
     }
   }, {

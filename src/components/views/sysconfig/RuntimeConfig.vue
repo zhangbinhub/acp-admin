@@ -1,142 +1,163 @@
 <template>
-  <Card>
-    <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form">
-      <Form-item :label="$t('forms.name')" prop="name">
-        <label>
-          <Input v-model="searchForm.name" :disabled="modal_loading" size="small"
-                 :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                 @on-enter="handleSearch"></Input>
-        </label>
-      </Form-item>
-      <Form-item :label="$t('forms.value')" prop="value">
-        <label>
-          <Input v-model="searchForm.value" :disabled="modal_loading" size="small"
-                 :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
-                 @on-enter="handleSearch"></Input>
-        </label>
-      </Form-item>
-      <Form-item :label="$t('forms.status')" prop="enabled">
-        <i-select v-model="searchForm.enabled" :clearable="true" size="small" :disabled="modal_loading"
-                  @keyup.enter.native="handleSearchKeyUp($event)" style="width:200px">
-          <Option v-for="item in enabledList" :value="item.value" :key="'search_select_'+item.value">
-            {{ item.label }}
-          </Option>
-        </i-select>
-      </Form-item>
-      <Form-item style="float: right">
-        <ButtonGroup>
-          <Button :loading="modal_loading" @click="handleSearch()" type="info" size="small">
+  <el-card>
+    <el-form ref="searchForm" :model="searchForm" label-width="60px" :inline="true" onsubmit="return false;"
+             size="mini">
+      <el-form-item :label="$t('forms.name')" prop="name">
+        <el-input v-model="searchForm.name" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.value')" prop="value">
+        <el-input v-model="searchForm.value" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.status')" prop="enabled">
+        <el-select v-model="searchForm.enabled" :clearable="true" :disabled="modal_loading" value=""
+                   style="width:200px">
+          <el-option v-for="item in enabledList" :value="item.value" :label="item.label"
+                     :key="'search_select_'+item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item style="float: right">
+        <el-button-group>
+          <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
             {{$t('forms.buttons.search')}}
-          </Button>
-          <Button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="info" size="small">
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
             {{$t('forms.buttons.reset')}}
-          </Button>
-          <Button :loading="modal_loading" @click="handleAdd()" type="info" size="small">
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleAdd()" type="primary">
             {{$t('forms.buttons.add')}}
-          </Button>
-          <Button :loading="modal_loading" @click="handleDeleteMore()" type="info" size="small">
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleDeleteMore()" type="primary">
             {{$t('forms.buttons.delete')}}
-          </Button>
-        </ButtonGroup>
-      </Form-item>
-    </Form>
-    <Table border="" height="433" size="small" :columns="columns" :data="searchData" class="search-table"
-           :loading="modal_loading" :no-data-text="$t('messages.tableNoData')" @on-row-dblclick="handleEdit"
-           @on-selection-change="handleSelect" @on-sort-change="handleSortChange">
-      <template slot-scope="{ row }" slot="name">
-        <span>{{ row.name }}</span>
-      </template>
-      <template slot-scope="{ row, index }" slot="value">
-        <label>
-          <Input type="text" v-model="editValue" v-if="editIndex === index" @on-enter="handleSave(index)"
-                 @on-keyup="handleCancel($event)"/>
-          <span v-else>{{ row.value }}</span>
-        </label>
-      </template>
-      <template slot-scope="{ row, index }" slot="configDes">
-        <label>
-          <Input type="text" v-model="editDes" v-if="editIndex === index" @on-enter="handleSave(index)"
-                 @on-keyup="handleCancel($event)"/>
-          <span v-else>{{ row.configDes }}</span>
-        </label>
-      </template>
-      <template slot-scope="{ row, index }" slot="enabled">
-        <i-switch v-if="editIndex === index" v-model="editEnabled" @keyup.native="handleKeyUp($event, index)">
-          <Icon type="md-checkmark" slot="open"></Icon>
-          <Icon type="md-close" slot="close"></Icon>
-        </i-switch>
-        <span v-else :style="row.enabled ? 'color:green':'color:red'">{{enabledText(row.enabled)}}</span>
-      </template>
-      <template slot-scope="{ row, index }" slot="action">
-        <div v-if="editIndex === index">
-          <Tooltip :content="$t('forms.buttons.save')" placement="top-start">
-            <Icon @click="handleSave(index)" type="md-checkmark" color="green" size="18"
-                  style="cursor: pointer;"></Icon>
-          </Tooltip>
-          <Tooltip :content="$t('forms.buttons.cancel')" placement="top-start">
-            <Icon @click="editIndex = -1" type="md-close" color="red" size="18"
-                  style="cursor: pointer;margin-left: 10px;"></Icon>
-          </Tooltip>
-        </div>
-        <div v-else>
-          <Tooltip :content="$t('forms.buttons.edit')" placement="top-start">
-            <Icon @click="handleEdit(row, index)" type="md-create" size="18" style="cursor: pointer;"></Icon>
-          </Tooltip>
-          <Tooltip :content="$t('forms.buttons.delete')" placement="top-start" v-show="row.covert">
-            <Icon @click="handleDeleteRow(row)" type="md-trash" size="18"
-                  style="cursor: pointer;margin-left: 10px;"></Icon>
-          </Tooltip>
-        </div>
-      </template>
-    </Table>
-    <div style="margin-top: 10px;overflow: hidden">
-      <div style="float: right;">
-        <Page :current="searchForm.currPage" :total="searchForm.totalRows" :page-size="searchForm.pageSize"
-              :page-size-opts="searchForm.pageSizeArray" :show-total="true" :show-elevator="true" :show-sizer="true"
-              size="small" @on-change="handlePageSearch" @on-page-size-change="handlePageSizeSearch"/>
-      </div>
-    </div>
-    <Modal v-model="addModal" :title="$t('forms.buttons.add')" :loading="modal_loading" :mask-closable="false">
-      <Form ref="addForm" :model="addForm" :rules="ruleAddForm" :label-width="60" style="padding-right: 25px;">
-        <Form-item :label="$t('forms.name')" prop="name">
-          <label>
-            <Input v-model="addForm.name" :disabled="modal_loading" ref="name"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                   @on-enter="doAdd('addForm')"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.value')" prop="value">
-          <label>
-            <Input v-model="addForm.value" :disabled="modal_loading"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
-                   @on-enter="doAdd('addForm')"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.describe')" prop="describe">
-          <label>
-            <Input v-model="addForm.describe" :disabled="modal_loading"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.describe')"
-                   @on-enter="doAdd('addForm')"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.enabled')" prop="enabled">
-          <i-switch v-model="addForm.enabled" :disabled="modal_loading"
-                    @keyup.native="handleAddKeyUp($event, 'addForm')">
-            <Icon type="md-checkmark" slot="open"></Icon>
-            <Icon type="md-close" slot="close"></Icon>
-          </i-switch>
-        </Form-item>
-      </Form>
+          </el-button>
+        </el-button-group>
+      </el-form-item>
+    </el-form>
+    <el-table ref="table" border height="433" size="mini" :default-sort="searchForm.orderParam" :data="searchData"
+              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
+              @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
+              header-cell-class-name="query-table-header">
+      <el-table-column
+        type="selection"
+        fixed="left"
+        align="center"
+        width="40">
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        sortable="custom"
+        :label="this.$i18n.t('forms.name')">
+      </el-table-column>
+      <el-table-column
+        prop="value"
+        :label="this.$i18n.t('forms.value')">
+        <template slot-scope="scope">
+          <el-input type="text" v-model="editValue" v-if="editIndex === scope.$index"
+                    @keyup.enter.native="handleSave(scope.$index)"
+                    @keyup.native="handleCancel($event)"/>
+          <span v-else>{{ scope.row.value }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="configDes"
+        :label="this.$i18n.t('forms.describe')">
+        <template slot-scope="scope">
+          <el-input type="text" v-model="editDes" v-if="editIndex === scope.$index"
+                    @keyup.enter.native="handleSave(scope.$index)"
+                    @keyup.native="handleCancel($event)"/>
+          <span v-else>{{ scope.row.configDes }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="enabled"
+        align="center"
+        sortable="custom"
+        width="100"
+        :label="this.$i18n.t('forms.enabled')">
+        <template slot-scope="scope">
+          <el-switch v-if="editIndex === scope.$index" v-model="editEnabled" :disabled="modal_loading"
+                     @keyup.native="handleKeyUp($event, scope.$index)"></el-switch>
+          <span v-else :style="scope.row.enabled ? 'color:green':'color:red'">{{enabledText(scope.row.enabled)}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="action"
+        :label="this.$i18n.t('forms.action')"
+        align="center"
+        width="90">
+        <template slot-scope="scope">
+          <div v-if="editIndex === scope.$index">
+            <el-tooltip :content="$t('forms.buttons.save')" placement="top-start">
+              <el-button type="text" @click="handleSave(scope.$index)">
+                <i style="font-size: 15px;color: green;" class="el-icon-check"></i>
+              </el-button>
+            </el-tooltip>
+            <el-tooltip :content="$t('forms.buttons.cancel')" placement="top-start">
+              <el-button type="text" @click="editIndex = -1">
+                <i style="font-size: 15px;color: red;" class="el-icon-close"></i>
+              </el-button>
+            </el-tooltip>
+          </div>
+          <div v-else>
+            <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
+              <el-button type="text" @click="handleEdit(scope.row,scope.$index)">
+                <i style="font-size: 15px" class="el-icon-edit"></i>
+              </el-button>
+            </el-tooltip>
+            <el-tooltip :content="$t('forms.buttons.delete')" placement="top-start" v-if="scope.row.covert">
+              <el-button type="text" @click="handleDeleteRow(scope.row)">
+                <i style="font-size: 15px" class="el-icon-delete"></i>
+              </el-button>
+            </el-tooltip>
+          </div>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination style="margin-top: 10px;text-align: right"
+                   @size-change="handlePageSizeSearch"
+                   @current-change="handlePageSearch"
+                   :current-page="searchForm.currPage"
+                   :page-sizes="searchForm.pageSizeArray"
+                   :page-size="searchForm.pageSize"
+                   layout="total, sizes, prev, pager, next, jumper"
+                   :total="searchForm.totalRows">
+    </el-pagination>
+    <el-dialog :visible.sync="addModal" :title="$t('forms.buttons.add')" :close-on-click-modal="false">
+      <el-form ref="addForm" :model="addForm" :rules="ruleAddForm" label-width="60px" size="mini"
+               v-loading="modal_loading" onsubmit="return false;" style="padding-right: 25px;">
+        <el-form-item :label="$t('forms.name')" prop="name">
+          <el-input v-model="addForm.name" :disabled="modal_loading" ref="name"
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
+                    @keyup.enter.native="doAdd('addForm')"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('forms.value')" prop="value">
+          <el-input v-model="addForm.value" :disabled="modal_loading"
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
+                    @keyup.enter.native="doAdd('addForm')"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('forms.describe')" prop="describe">
+          <el-input v-model="addForm.describe" :disabled="modal_loading"
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.describe')"
+                    @keyup.enter.native="doAdd('addForm')"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('forms.enabled')" prop="enabled">
+          <el-switch v-model="addForm.enabled" :disabled="modal_loading"></el-switch>
+        </el-form-item>
+      </el-form>
       <div slot="footer">
-        <Button type="default" :loading="modal_loading" @click="doCancel()">
+        <el-button type="info" :loading="modal_loading" @click="doCancel()">
           {{$t('forms.buttons.cancel')}}
-        </Button>
-        <Button type="primary" :loading="modal_loading" @click="doAdd('addForm')">
+        </el-button>
+        <el-button type="primary" :loading="modal_loading" @click="doAdd('addForm')">
           {{$t('forms.buttons.submit')}}
-        </Button>
+        </el-button>
       </div>
-    </Modal>
-  </Card>
+    </el-dialog>
+  </el-card>
 </template>
 <script>
     export default {
@@ -148,8 +169,8 @@
                     value: '',
                     enabled: '',
                     orderParam: {
-                        key: 'name',
-                        order: 'asc'
+                        prop: 'name',
+                        order: 'ascending'
                     },
                     currPage: 1,
                     totalRows: 0,
@@ -189,49 +210,6 @@
                     { value: 'false', label: this.$i18n.t('forms.disabled') }
                 ]
             },
-            columns () {
-                const columns = [
-                    {
-                        type: 'selection',
-                        width: 50,
-                        align: 'center'
-                    },
-                    {
-                        key: 'name',
-                        title: this.$i18n.t('forms.name'),
-                        slot: 'name'
-                    },
-                    {
-                        key: 'value',
-                        title: this.$i18n.t('forms.value'),
-                        slot: 'value'
-                    },
-                    {
-                        key: 'configDes',
-                        title: this.$i18n.t('forms.describe'),
-                        slot: 'configDes'
-                    },
-                    {
-                        key: 'enabled',
-                        title: this.$i18n.t('forms.enabled'),
-                        slot: 'enabled',
-                        sortable: 'custom'
-                    },
-                    {
-                        title: this.$i18n.t('forms.action'),
-                        width: 90,
-                        align: 'center',
-                        slot: 'action'
-                    }
-                ]
-                columns.forEach((item) => {
-                    if (item.key === this.searchForm.orderParam.key) {
-                        item.sortType = this.searchForm.orderParam.order
-                        item.sortable = 'custom'
-                    }
-                })
-                return columns
-            },
             ruleAddForm () {
                 return {
                     name: [
@@ -249,13 +227,10 @@
                 return enabled ? this.$i18n.t('forms.enabled') : this.$i18n.t('forms.disabled')
             },
             handleAdd () {
-                this.$refs['addForm'].resetFields()
                 this.addModal = true
-            },
-            handleAddKeyUp (event, name) {
-                if (event.which === 13) {
-                    this.doAdd(name)
-                }
+                this.$nextTick(() => {
+                    this.$refs['addForm'].resetFields()
+                })
             },
             doCancel () {
                 this.addModal = false
@@ -272,7 +247,7 @@
                         }).then((res) => {
                             this.modal_loading = false
                             if (res) {
-                                this.$Message.success(this.$i18n.t('messages.saveSuccess'))
+                                this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                                 this.addModal = false
                                 this.handleSearch()
                             }
@@ -287,7 +262,7 @@
                 this.$api.request.runtime.delete(rowIds).then((res) => {
                     this.modal_loading = false
                     if (res) {
-                        this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
+                        this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
                         this.handleSearch()
                     }
                 }).catch(() => {
@@ -309,7 +284,7 @@
                         this.searchData[index].configDes = this.editDes
                         this.searchData[index].enabled = this.editEnabled
                         this.editIndex = -1
-                        this.$Message.success(this.$i18n.t('messages.updateSuccess'))
+                        this.$message.success(this.$i18n.t('messages.updateSuccess') + '')
                     }
                 }).catch(() => {
                     this.modal_loading = false
@@ -338,7 +313,7 @@
                     searchParam.enabled = false
                 }
                 if (this.searchForm.orderParam.order !== 'normal') {
-                    searchParam.queryParam.orderName = this.searchForm.orderParam.key
+                    searchParam.queryParam.orderName = this.searchForm.orderParam.prop
                     searchParam.queryParam.orderCommond = this.searchForm.orderParam.order
                 }
                 this.modal_loading = true
@@ -354,6 +329,9 @@
                             }
                             return item
                         })
+                        this.$nextTick(() => {
+                            this.$refs['table'].doLayout()
+                        })
                     }
                 }).catch(() => {
                     this.searchData = []
@@ -361,13 +339,11 @@
                     this.modal_loading = false
                 })
             },
-            handleSearchKeyUp (event) {
-                if (event.which === 13) {
-                    this.handleSearch()
-                }
+            handleRowClick (row) {
+                this.$refs['table'].toggleRowSelection(row)
             },
             handleSortChange (param) {
-                this.searchForm.orderParam.key = param.key
+                this.searchForm.orderParam.prop = param.prop
                 this.searchForm.orderParam.order = param.order
                 this.handleSearch()
             },
@@ -379,33 +355,29 @@
             },
             handleDeleteRow (row) {
                 if (!row.covert) {
-                    this.$Modal.error({
-                        title: this.$i18n.t('dialog.error') + '',
-                        content: this.$i18n.t('messages.tableDataCannotDel') + ''
+                    this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
+                        type: 'error'
                     })
                 } else {
-                    this.$Modal.confirm({
-                        title: this.$i18n.t('dialog.confirm') + '',
-                        content: this.$i18n.t('messages.deleteDataConfirm') + '',
-                        onOk: () => {
-                            this.handleDelete([row.id])
-                        }
+                    this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+                        type: 'warning'
+                    }).then(() => {
+                        this.handleDelete([row.id])
+                    }).catch(() => {
                     })
                 }
             },
             handleDeleteMore () {
                 if (this.selectedData.length > 0) {
-                    this.$Modal.confirm({
-                        title: this.$i18n.t('dialog.confirm') + '',
-                        content: this.$i18n.t('messages.deleteDataConfirm') + '',
-                        onOk: () => {
-                            this.handleDelete(this.selectedData.map(item => item.id))
-                        }
+                    this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+                        type: 'warning'
+                    }).then(() => {
+                        this.handleDelete(this.selectedData.map(item => item.id))
+                    }).catch(() => {
                     })
                 } else {
-                    this.$Modal.info({
-                        title: this.$i18n.t('dialog.info') + '',
-                        content: this.$i18n.t('messages.selectDataForDelete') + ''
+                    this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
+                        type: 'error'
                     })
                 }
             },
@@ -434,6 +406,11 @@
         },
         mounted () {
             this.handleSearch()
+        },
+        activated () {
+            this.$nextTick(() => {
+                this.$refs['table'].doLayout()
+            })
         }
     }
 </script>

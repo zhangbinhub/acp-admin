@@ -1,8 +1,22 @@
+//全局变量
+@import "../../assets/styles/variable";
+
 .home {
+
+  table {
+    overflow: hidden !important;
+
+    .table-fixed {
+      .el-table__fixed-right {
+        height: 100% !important;
+      }
+    }
+  }
+
   .logo-con {
-    height: 64px;
+    height: 40px;
     padding: 10px;
-    width: 100%;
+    width: auto;
     position: absolute;
 
     img {
@@ -13,98 +27,59 @@
     }
   }
 
-  .header-con {
-    background: #fff;
-    padding: 0;
-    width: 100%;
+  .main-scrollbar {
+    background-color: @mainBgColor;
 
-    .header-bar {
-      .sider-trigger-a {
-        margin-left: 20px;
-      }
+    .el-scrollbar__wrap {
+      overflow-x: hidden;
     }
   }
 
-  .home-layout-con {
-    height: 100%;
+  .el-header {
+    background-color: @headerBgColor;
+
+    .header-tabs {
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+      -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+      -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+    }
+  }
+
+  .main-content {
     overflow: hidden;
+    background-color: @mainBgColor;
   }
 
-  .home-content-con {
-    height: ~"calc(100% - 60px)";
-    overflow: hidden;
+  .foot-content {
+    font-size: 10px;
+    color: @footerFontColor;
+    padding-top: 8px;
+    background-color: @footerBgColor;
+    text-align: center;
   }
 
-  .tag-nav-wrapper {
-    padding: 0;
-    height: 40px;
-    background: #F0F0F0;
-  }
-
-  .content-wrapper {
-    height: ~"calc(100% - 80px)";
-    overflow: auto;
-
-    .content-sticker {
-      padding: 18px;
-      height: auto;
-      min-height: ~"calc(100% - 40px)";
+  .el-table {
+    .cell {
+      white-space: pre-line;
     }
 
-    .content-footer {
-      height: 40px;
-      width: 100%;
-      text-align: center;
-      line-height: 40px;
-      color: #ABA498;
-      font-size: 12px;
-      background: #fafafa;
-      border-top: 1px solid #E7E7E7;
-      position: relative;
-      padding: 0;
+    .query-table-header {
+      background-color: @tableQueryHeaderBgColor;
     }
-
   }
 
-}
-
-.ivu-menu-item > i {
-  margin-right: 12px !important;
-  margin-bottom: 2px !important;
-}
-
-.ivu-menu-submenu-title > i {
-  margin-right: 12px !important;
-  margin-bottom: 2px !important;
-}
-
-.collased-menu-dropdown {
-  display: block;
-  margin: 0;
-  line-height: normal;
-  padding: 7px 0 7px 16px;
-  clear: both;
-  color: #657180;
-  font-size: 12px !important;
-  white-space: nowrap;
-  list-style: none;
-  cursor: pointer;
-  -webkit-transition: background 0.2s ease-in-out;
-  transition: background 0.2s ease-in-out;
-
-  &:hover {
-    background: rgba(100, 100, 100, 0.1);
+  .config-tree-node {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    padding-right: 8px;
   }
 
-  & * {
-    color: #515a6e;
+  .el-tree-node :nth-child(2) {
+    padding: 1px;
+    overflow: visible;
   }
-}
 
-.ivu-select-dropdown.ivu-dropdown-transfer {
-  max-height: 400px;
-
-  i {
-    margin-bottom: 2px !important;
-  }
 }

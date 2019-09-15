@@ -1,21 +1,20 @@
 # acp-admin
-###### v3.0.5 [版本更新日志](doc/version_history.md)
+###### v4.0.0 [版本更新日志](doc/version_history.md)
 兼容的浏览器及版本
-- IE 9+
-- Edge
-- Chrome latest
-- Firefox latest
+- Chrome latest（推荐，完美）
+- Firefox latest（完全支持）
+- Edge（完全支持）
+- IE 10+（不推荐，支持但体验不佳）
 
-使用vue全家桶(Vue+Vue-router+Vuex+axios)、iview样式库构建的前端项目。该项目是前后端分离架构中的“前端部分”
-。后端工程[请移步](https://github.com/zhangbin1010/acp-admin-cloud)
+使用vue全家桶(Vue+Vue-router+Vuex+axios)、ElementUI样式库构建的前端项目。该项目是前后端分离架构中的“前端部分”
+。后端工程[V4.0.0](https://github.com/zhangbin1010/acp-admin-cloud)
 
 系统仍持续完善和优化中，数据初始化及后端数据结构请参看[后端工程](https://github.com/zhangbin1010/acp-admin-cloud)
 
 ## 相关组件官方文档
 - [Vue](http://www.runoob.com/vue2/vue-tutorial.html)
 - [Vue CLI 3](https://cli.vuejs.org/zh/)
-- [iView](https://www.iviewui.com/)
-- [iView Admin](https://github.com/iview/iview-admin)
+- [ElementUI](https://element.eleme.cn/#/zh-CN)
 - [echarts](https://www.echartsjs.com/index.html)
 - [cropperjs](https://github.com/fengyuanchen/cropperjs)
 
@@ -27,12 +26,13 @@
 - vuex
 - vue-router
 - axios
-- iview3
 - echarts
 - cropperjs
 - mockjs
 - js-sha256
 - vue-json-editor
+- Element-UI
+- vue-count-to
 
 ## 总体架构
 ![Architecture diagram](doc/images/总体架构.jpg)
@@ -150,9 +150,6 @@ npm install
 ![images](doc/images/pages/login.png)
 - 首页
 ![images](doc/images/pages/index.png)
-- 目前支持主题：dark 和 light
-    - light 主题
-![images](doc/images/pages/light.png)
 - 个人信息
 ![images](doc/images/pages/userinfo.png)
 - 头像裁剪
@@ -160,6 +157,7 @@ npm install
 - 应用配置
 ![images](doc/images/pages/appconfig.png)
 ![images](doc/images/pages/appedit.png)
+![images](doc/images/pages/appupdate.png)
 - 菜单配置
 ![images](doc/images/pages/menu.png)
 - 模块功能配置
@@ -191,41 +189,13 @@ npm install
 ![images](doc/images/pages/routeRefresh.png)
 - 路由日志
 ![images](doc/images/pages/routeLog.png)
-![images](doc/images/pages/routeLogView.png)
+- 操作日志
+![images](doc/images/pages/operateLog.png)
+- 登录日志
+![images](doc/images/pages/loginLog.png)
 - demo
     - 文件上传
 ![images](doc/images/pages/upload.png)
-
-## 六、nodejs 常用命令
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

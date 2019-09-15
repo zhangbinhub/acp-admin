@@ -1,8 +1,10 @@
 <template>
-  <div v-if="showFullScreenBtn" class="full-screen-btn-con">
-    <Tooltip :content="value ? $t('home.exitFullScreen') : $t('home.fullScreen')" placement="bottom">
-      <Icon @click.native="handleChange" :type="value ? 'md-contract' : 'md-expand'" :size="23"></Icon>
-    </Tooltip>
+  <div v-if="showFullScreenBtn" class="header-bar-button">
+    <el-tooltip :content="value ? $t('home.exitFullScreen') : $t('home.fullScreen')" placement="bottom">
+      <el-button type="text" @click="handleChange">
+        <i style="font-size: 23px" class="el-icon-full-screen"></i>
+      </el-button>
+    </el-tooltip>
   </div>
 </template>
 
@@ -76,14 +78,3 @@
         }
     }
 </script>
-
-<style lang="less">
-  .full-screen-btn-con .ivu-tooltip-rel {
-    height: 64px;
-    line-height: 56px;
-
-    i {
-      cursor: pointer;
-    }
-  }
-</style>

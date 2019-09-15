@@ -1,15 +1,14 @@
 <template>
-  <div class="user-avator-dropdown">
-    <Dropdown @on-click="handleClick">
-      <Avatar :src="avatar"/>
-      <Icon :size="18" type="md-arrow-dropdown"></Icon>
-      <DropdownMenu slot="list">
-        <DropdownItem v-if="customerName && customerName !== ''" name="personalInformation">{{customerName}}
-        </DropdownItem>
-        <DropdownItem v-else name="personalInformation">{{$t('home.personalInformation')}}</DropdownItem>
-        <DropdownItem name="logout" :divided="true">{{$t('home.logout')}}</DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
+  <div class="user-avatar-dropdown">
+    <el-dropdown trigger="click" @command="handleClick">
+      <el-avatar :src="avatar" style="margin-top: 10px"></el-avatar>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item v-if="customerName && customerName !== ''" command="personalInformation">{{customerName}}
+        </el-dropdown-item>
+        <el-dropdown-item v-else command="personalInformation">{{$t('home.personalInformation')}}</el-dropdown-item>
+        <el-dropdown-item command="logout" :divided="true">{{$t('home.logout')}}</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
   </div>
 </template>
 
@@ -24,15 +23,15 @@
                 type: String,
                 default: ''
             },
-            userAvator: {
+            userAvatar: {
                 type: String,
                 default: avatarImg
             }
         },
         computed: {
             avatar () {
-                if (this.userAvator !== '') {
-                    return this.userAvator
+                if (this.userAvatar !== '') {
+                    return this.userAvatar
                 } else {
                     return avatarImg
                 }
@@ -41,14 +40,13 @@
         methods: {
             logout () {
                 this.$api.redirectLogin((callBackFunc) => {
-                    this.$Modal.confirm({
-                        title: this.$i18n.t('dialog.confirm') + '',
-                        content: '<p>' + this.$i18n.t('messages.logoutConfirm') + '</p>',
-                        onOk: () => {
-                            this.$api.request.auth.doLogOut().then(() => {
-                                callBackFunc()
-                            })
-                        }
+                    this.$confirm(this.$i18n.t('messages.logoutConfirm'), this.$i18n.t('dialog.confirm'), {
+                        type: 'warning'
+                    }).then(() => {
+                        this.$api.request.auth.doLogOut().then(() => {
+                            callBackFunc()
+                        })
+                    }).catch(() => {
                     })
                 })
             },

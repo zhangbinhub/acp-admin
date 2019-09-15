@@ -1,8 +1,8 @@
 <template>
   <div class="header-bar">
-    <sider-trigger :collapsed="collapsed" v-show="!mini" icon="md-menu"
-                   @on-change="handleCollpasedChange"></sider-trigger>
-    <custom-bread-crumb style="margin-left: 30px;" v-show="!mini" :full-path="fullPath"
+    <sider-trigger :collapsed="collapsed" v-show="!mini" @on-change="handleCollpasedChange"></sider-trigger>
+    <custom-bread-crumb style="margin-left: 10px;" v-show="!mini"
+                        :full-path="fullPath"
                         :menu-list="menuList"></custom-bread-crumb>
     <div class="custom-content-con">
       <slot></slot>

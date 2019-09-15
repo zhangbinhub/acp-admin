@@ -53,6 +53,6 @@ export default {
     return ApiComm.$http.get('/oauth/onlineinfo')
   },
   getLoginInfo: () => {
-    return ApiComm.$http.get('/oauth/logininfo')
+    return ApiComm.$http.get('/log/logininfo')
   }
 }

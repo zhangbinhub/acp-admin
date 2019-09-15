@@ -1,4 +1,4 @@
-import enLocale from 'iview/src/locale/lang/en-US'
+import enLocale from 'element-ui/lib/locale/lang/en'
 
 const messages = Object.assign(enLocale, {
   lang: 'Lang',
@@ -38,6 +38,8 @@ const messages = Object.assign(enLocale, {
     routeLog: 'Route Log',
     configCenter: 'Config Center',
     logFile: 'Log File',
+    operateLog: 'Operate Log',
+    loginLog: 'Login Log',
     appConfig: 'Application Configure',
     authConfig: 'Authority Configure',
     orgConfig: 'Organization Configure',
@@ -111,6 +113,7 @@ const messages = Object.assign(enLocale, {
     new: 'New ',
     confirmPassword: 'Confirm password',
     passwordNotEqual: 'Confirm password is not equal new password',
+    scope: 'scope',
     accessTokenValiditySeconds: 'token validity',
     refreshTokenValiditySeconds: 'refresh Token validity',
     seconds: 'seconds',
@@ -118,6 +121,8 @@ const messages = Object.assign(enLocale, {
     organization: 'Organization',
     role: 'Role',
     menu: 'Menu',
+    clientName: 'Client Name',
+    user: 'User',
     moduleFunc: 'ModuleFunction',
     basicInfo: 'Basic Info',
     menuList: 'menu list',
@@ -145,6 +150,16 @@ const messages = Object.assign(enLocale, {
     processTime: 'process time',
     responseTime: 'response time',
     responseStatus: 'response status',
+    historyInfo: 'history',
+    todayInfo: 'today',
+    infoType: 'info type',
+    targetIp: 'target ip',
+    targetPath: 'target path',
+    method: 'method',
+    token: 'token',
+    clientId: 'client id',
+    identify: 'identify',
+    userName: 'user name',
     configRefreshServer: 'server name',
     configRefreshMatcher: 'matcher',
     configRefreshMatcherDescribe: 'Please enter the matching expression of the service ID below (the fuzzy matching can be used "**"). The service ID format is as follows:',

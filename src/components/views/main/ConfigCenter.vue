@@ -1,206 +1,220 @@
 <template>
-  <Card>
-    <Form ref="searchForm" :model="searchForm" :label-width="60" :inline="true" class="search-form">
-      <Row>
-        <Form-item :label="$t('forms.name')" prop="configApplication">
-          <label>
-            <Input v-model="searchForm.configApplication" :disabled="modal_loading" size="small"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                   @on-enter="handleSearch"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.profile')" prop="configProfile">
-          <label>
-            <Input v-model="searchForm.configProfile" :disabled="modal_loading" size="small"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.profile')"
-                   @on-enter="handleSearch"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.label')" prop="configLabel">
-          <label>
-            <Input v-model="searchForm.configLabel" :disabled="modal_loading" size="small"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.label')"
-                   @on-enter="handleSearch"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.status')" prop="enabled">
-          <i-select v-model="searchForm.enabled" :clearable="true" size="small" :disabled="modal_loading"
-                    @keyup.enter.native="handleSearchKeyUp($event)" style="width:100px">
-            <Option v-for="item in enabledList" :value="item.value" :key="'search_select_'+item.value">
-              {{ item.label }}
-            </Option>
-          </i-select>
-        </Form-item>
-      </Row>
-      <Row>
-        <Form-item :label="$t('forms.key')" prop="configKey" style="width: 80%;max-width: 700px">
-          <label>
-            <Input v-model="searchForm.configKey" :disabled="modal_loading" size="small"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.key')"
-                   @on-enter="handleSearch"></Input>
-          </label>
-        </Form-item>
-        <Form-item style="float: right">
-          <ButtonGroup style="margin-right: 20px">
-            <Button :loading="modal_loading" @click="handleSearch()" type="info" size="small">
-              {{$t('forms.buttons.search')}}
-            </Button>
-            <Button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="info" size="small">
-              {{$t('forms.buttons.reset')}}
-            </Button>
-            <Button :loading="modal_loading" @click="handleAdd()" type="info" size="small">
-              {{$t('forms.buttons.add')}}
-            </Button>
-            <Button :loading="modal_loading" @click="handleDeleteMore()" type="info" size="small">
-              {{$t('forms.buttons.delete')}}
-            </Button>
-          </ButtonGroup>
-          <Button :loading="modal_loading" @click="handleRefresh()" type="success" size="small">
-            {{$t('forms.buttons.refreshService')}}
-          </Button>
-        </Form-item>
-      </Row>
-    </Form>
-    <Table border="" height="388" size="small" :columns="columns" :data="searchData" class="search-table"
-           :loading="modal_loading" :no-data-text="$t('messages.tableNoData')" @on-row-dblclick="handleEdit"
-           @on-selection-change="handleSelect" @on-sort-change="handleSortChange">
-      <template slot-scope="{ row }" slot="configApplication">
-        <span>{{ row.configApplication }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="configProfile">
-        <span>{{ row.configProfile }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="configLabel">
-        <span>{{ row.configLabel }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="configKey">
-        <span>{{ row.configKey }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="configValue">
-        <span>{{ row.configValue }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="configDes">
-        <span>{{ row.configDes }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="enabled">
-        <span :style="row.enabled ? 'color:green':'color:red'">{{enabledText(row.enabled)}}</span>
-      </template>
-      <template slot-scope="{ row }" slot="action">
-        <Tooltip :content="$t('forms.buttons.edit')" placement="top-start">
-          <Icon @click="handleEdit(row)" type="md-create" size="18" style="cursor: pointer;"></Icon>
-        </Tooltip>
-        <Tooltip :content="$t('forms.buttons.delete')" placement="top-start" v-show="!row.enabled">
-          <Icon @click="handleDeleteRow(row)" type="md-trash" size="18"
-                style="cursor: pointer;margin-left: 10px;"></Icon>
-        </Tooltip>
-      </template>
-    </Table>
-    <div style="margin-top: 10px;overflow: hidden">
-      <div style="float: right;">
-        <Page :current="searchForm.currPage" :total="searchForm.totalRows" :page-size="searchForm.pageSize"
-              :page-size-opts="searchForm.pageSizeArray" :show-total="true" :show-elevator="true" :show-sizer="true"
-              size="small" @on-change="handlePageSearch" @on-page-size-change="handlePageSizeSearch"/>
-      </div>
-    </div>
-    <Modal v-model="editModal" :title="$t('forms.info')" :loading="modal_loading" :mask-closable="false">
-      <Form ref="editForm" :model="editForm" :rules="ruleAddForm" :label-width="60" style="padding-right: 25px;">
-        <Form-item :label="$t('forms.name')" prop="configApplication">
-          <label>
-            <Input v-model="editForm.configApplication" :disabled="modal_loading" ref="configApplication"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                   @on-enter="doSave('editForm')"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.profile')" prop="configProfile">
-          <label>
-            <Input v-model="editForm.configProfile" :disabled="modal_loading"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.profile')"
-                   @on-enter="doSave('editForm')"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.label')" prop="configLabel">
-          <label>
-            <Input v-model="editForm.configLabel" :disabled="modal_loading"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.label')"
-                   @on-enter="doSave('editForm')"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.key')" prop="configKey">
-          <label>
-            <Input v-model="editForm.configKey" :disabled="modal_loading"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.key')"
-                   @on-enter="doSave('editForm')"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.value')" prop="configValue">
-          <label>
-            <Input v-model="editForm.configValue" :disabled="modal_loading"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
-                   @on-enter="doSave('editForm')"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.describe')" prop="configDes">
-          <label>
-            <Input v-model="editForm.configDes" :disabled="modal_loading"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.describe')"
-                   @on-enter="doSave('editForm')"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.enabled')" prop="enabled">
-          <i-switch v-model="editForm.enabled" :disabled="modal_loading"
-                    @keyup.native="handleAddKeyUp($event, 'editForm')">
-            <Icon type="md-checkmark" slot="open"></Icon>
-            <Icon type="md-close" slot="close"></Icon>
-          </i-switch>
-        </Form-item>
-      </Form>
+  <el-card>
+    <el-form ref="searchForm" :model="searchForm" label-width="60px" :inline="true" size="mini"
+             onsubmit="return false;">
+      <el-form-item :label="$t('forms.name')" prop="configApplication">
+        <el-input v-model="searchForm.configApplication" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.profile')" prop="configProfile">
+        <el-input v-model="searchForm.configProfile" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.profile')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.label')" prop="configLabel">
+        <el-input v-model="searchForm.configLabel" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.label')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.status')" prop="enabled">
+        <el-select v-model="searchForm.enabled" value="" :clearable="true" :disabled="modal_loading"
+                   style="width:100px">
+          <el-option v-for="item in enabledList" :value="item.value" :label="item.label"
+                     :key="'search_select_'+item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item :label="$t('forms.key')" prop="configKey" style="width: 80%;max-width: 700px">
+        <el-input v-model="searchForm.configKey" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.key')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item style="float: right">
+        <el-button-group style="margin-right: 20px">
+          <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
+            {{$t('forms.buttons.search')}}
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
+            {{$t('forms.buttons.reset')}}
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleAdd()" type="primary">
+            {{$t('forms.buttons.add')}}
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleDeleteMore()" type="primary">
+            {{$t('forms.buttons.delete')}}
+          </el-button>
+        </el-button-group>
+        <el-button :loading="modal_loading" @click="handleRefresh()" type="success">
+          {{$t('forms.buttons.refreshService')}}
+        </el-button>
+      </el-form-item>
+    </el-form>
+    <el-table ref="table" border height="388" :data="searchData" size="mini" :default-sort="searchForm.orderParam"
+              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
+              @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
+              header-cell-class-name="query-table-header">
+      <el-table-column
+        type="selection"
+        fixed="left"
+        align="center"
+        width="40">
+      </el-table-column>
+      <el-table-column
+        prop="configApplication"
+        sortable="custom"
+        :label="this.$i18n.t('forms.name')"
+        width="100">
+      </el-table-column>
+      <el-table-column
+        prop="configProfile"
+        sortable="custom"
+        :label="this.$i18n.t('forms.profile')"
+        width="95">
+      </el-table-column>
+      <el-table-column
+        prop="configLabel"
+        sortable="custom"
+        :label="this.$i18n.t('forms.label')"
+        width="95">
+      </el-table-column>
+      <el-table-column
+        prop="configKey"
+        sortable="custom"
+        :label="this.$i18n.t('forms.key')">
+      </el-table-column>
+      <el-table-column
+        prop="configValue"
+        :label="this.$i18n.t('forms.value')"
+        width="100">
+      </el-table-column>
+      <el-table-column
+        prop="configDes"
+        :label="this.$i18n.t('forms.describe')">
+      </el-table-column>
+      <el-table-column
+        prop="enabled"
+        :label="this.$i18n.t('forms.enabled')"
+        align="center"
+        sortable="custom"
+        width="100">
+        <template slot-scope="scope">
+          <span :style="scope.row.enabled ? 'color:green':'color:red'">{{enabledText(scope.row.enabled)}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="action"
+        :label="this.$i18n.t('forms.action')"
+        align="center"
+        width="90">
+        <template slot-scope="scope">
+          <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
+            <el-button type="text" @click="handleEdit(scope.row)">
+              <i style="font-size: 15px" class="el-icon-edit"></i>
+            </el-button>
+          </el-tooltip>
+          <el-tooltip :content="$t('forms.buttons.delete')" placement="top-start">
+            <el-button type="text" @click="handleDeleteRow(scope.row)">
+              <i style="font-size: 15px" class="el-icon-delete"></i>
+            </el-button>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination style="margin-top: 10px;text-align: right"
+                   @size-change="handlePageSizeSearch"
+                   @current-change="handlePageSearch"
+                   :current-page="searchForm.currPage"
+                   :page-sizes="searchForm.pageSizeArray"
+                   :page-size="searchForm.pageSize"
+                   layout="total, sizes, prev, pager, next, jumper"
+                   :total="searchForm.totalRows">
+    </el-pagination>
+    <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false">
+      <el-form ref="editForm" :model="editForm" :rules="ruleAddForm" label-width="80px" style="padding-right: 25px;"
+               size="mini" onsubmit="return false;" v-loading="modal_loading">
+        <el-form-item :label="$t('forms.name')" prop="configApplication">
+          <el-input v-model="editForm.configApplication" :disabled="modal_loading" ref="configApplication"
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
+                    @keyup.enter.native="doSave('editForm')"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('forms.profile')" prop="configProfile">
+          <el-input v-model="editForm.configProfile" :disabled="modal_loading"
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.profile')"
+                    @keyup.enter.native="doSave('editForm')"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('forms.label')" prop="configLabel">
+          <el-input v-model="editForm.configLabel" :disabled="modal_loading"
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.label')"
+                    @keyup.enter.native="doSave('editForm')"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('forms.key')" prop="configKey">
+          <el-input v-model="editForm.configKey" :disabled="modal_loading"
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.key')"
+                    @keyup.enter.native="doSave('editForm')"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('forms.value')" prop="configValue">
+          <el-input v-model="editForm.configValue" :disabled="modal_loading"
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
+                    @keyup.enter.native="doSave('editForm')"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('forms.describe')" prop="configDes">
+          <el-input v-model="editForm.configDes" :disabled="modal_loading"
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.describe')"
+                    @keyup.enter.native="doSave('editForm')"></el-input>
+        </el-form-item>
+        <el-form-item :label="$t('forms.enabled')" prop="enabled">
+          <el-switch v-model="editForm.enabled" :disabled="modal_loading">
+          </el-switch>
+        </el-form-item>
+      </el-form>
       <div slot="footer">
-        <Button type="default" :loading="modal_loading" @click="doCancel()">
+        <el-button type="info" :loading="modal_loading" @click="doCancel()">
           {{$t('forms.buttons.cancel')}}
-        </Button>
-        <Button type="primary" :loading="modal_loading" @click="doSave('editForm')">
+        </el-button>
+        <el-button type="primary" :loading="modal_loading" @click="doSave('editForm')">
           {{$t('forms.buttons.submit')}}
-        </Button>
+        </el-button>
       </div>
-    </Modal>
-    <Modal v-model="refreshModal" :title="$t('forms.buttons.refreshService')" :loading="modal_loading"
-           :mask-closable="false">
-      <Form ref="refreshForm" :model="refreshForm" style="padding: 0 25px;">
-        <Form-item>
-          <RadioGroup v-model="refreshForm.refreshType">
-            <Radio label="1">{{$t('forms.configRefreshServer')}}</Radio>
-            <Radio label="2">{{$t('forms.configRefreshMatcher')}}</Radio>
-            <Radio label="3">{{$t('forms.configRefreshAll')}}</Radio>
-          </RadioGroup>
-        </Form-item>
-        <Form-item v-if="refreshForm.refreshType === '1'">
-          <i-select v-model="refreshForm.applicationName">
-            <Option v-for="item in refreshForm.applicationList" :value="item" :key="item">{{ item }}</Option>
-          </i-select>
-        </Form-item>
-        <Form-item v-if="refreshForm.refreshType === '2'">
-          <Alert style="padding: 8px 16px;">
+    </el-dialog>
+    <el-dialog :visible.sync="refreshModal" :title="$t('forms.buttons.refreshService')" :close-on-click-modal="false">
+      <el-form ref="refreshForm" :model="refreshForm" style="padding: 0 25px;" onsubmit="return false;"
+               v-loading="modal_loading">
+        <el-form-item>
+          <el-radio-group v-model="refreshForm.refreshType">
+            <el-radio label="1">{{$t('forms.configRefreshServer')}}</el-radio>
+            <el-radio label="2">{{$t('forms.configRefreshMatcher')}}</el-radio>
+            <el-radio label="3">{{$t('forms.configRefreshAll')}}</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item v-if="refreshForm.refreshType === '1'">
+          <el-select v-model="refreshForm.applicationName" value="" :disabled="modal_loading">
+            <el-option v-for="item in refreshForm.applicationList" :value="item" :key="item">{{ item }}</el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item v-if="refreshForm.refreshType === '2'">
+          <el-alert style="padding: 8px 16px;" :closable="false">
             <p>{{$t('forms.configRefreshMatcherDescribe')}}</p>
             <p>name:ip:port:version:profiles</p>
             <p style="color: red">eg: log-server:**</p>
-          </Alert>
-          <label>
-            <Input v-model="refreshForm.matcher" :disabled="modal_loading"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.configRefreshMatcher')"
-                   @on-enter="doRefresh()"></Input>
-          </label>
-        </Form-item>
-      </Form>
+          </el-alert>
+        </el-form-item>
+        <el-form-item v-if="refreshForm.refreshType === '2'">
+          <el-input v-model="refreshForm.matcher" :disabled="modal_loading"
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.configRefreshMatcher')"
+                    @keyup.enter.native="doRefresh()"></el-input>
+        </el-form-item>
+      </el-form>
       <div slot="footer">
-        <Button type="default" :loading="modal_loading" @click="doCancelRefresh()">
+        <el-button type="info" :loading="modal_loading" @click="doCancelRefresh()">
           {{$t('forms.buttons.cancel')}}
-        </Button>
-        <Button type="primary" :loading="modal_loading" @click="doRefresh()">
+        </el-button>
+        <el-button type="primary" :loading="modal_loading" @click="doRefresh()">
           {{$t('forms.buttons.submit')}}
-        </Button>
+        </el-button>
       </div>
-    </Modal>
-  </Card>
+    </el-dialog>
+  </el-card>
 </template>
 <script>
     export default {
@@ -214,8 +228,8 @@
                     configKey: '',
                     enabled: '',
                     orderParam: {
-                        key: 'configKey',
-                        order: 'asc'
+                        prop: 'configKey',
+                        order: 'ascending'
                     },
                     currPage: 1,
                     totalRows: 0,
@@ -262,75 +276,6 @@
                     { value: 'false', label: this.$i18n.t('forms.disabled') }
                 ]
             },
-            columns () {
-                const columns = [
-                    {
-                        type: 'selection',
-                        width: 50,
-                        align: 'center'
-                    },
-                    {
-                        key: 'configApplication',
-                        title: this.$i18n.t('forms.name'),
-                        width: 100,
-                        slot: 'configApplication',
-                        sortable: 'custom'
-                    },
-                    {
-                        key: 'configProfile',
-                        title: this.$i18n.t('forms.profile'),
-                        width: 95,
-                        slot: 'configProfile',
-                        sortable: 'custom'
-                    },
-                    {
-                        key: 'configLabel',
-                        title: this.$i18n.t('forms.label'),
-                        width: 95,
-                        slot: 'configLabel',
-                        sortable: 'custom'
-                    },
-                    {
-                        key: 'configKey',
-                        title: this.$i18n.t('forms.key'),
-                        slot: 'configKey',
-                        sortable: 'custom'
-                    },
-                    {
-                        key: 'configValue',
-                        title: this.$i18n.t('forms.value'),
-                        width: 100,
-                        slot: 'configValue'
-                    },
-                    {
-                        key: 'configDes',
-                        title: this.$i18n.t('forms.describe'),
-                        width: 200,
-                        slot: 'configDes'
-                    },
-                    {
-                        key: 'enabled',
-                        title: this.$i18n.t('forms.enabled'),
-                        width: 100,
-                        align: 'center',
-                        slot: 'enabled',
-                        sortable: 'custom'
-                    },
-                    {
-                        title: this.$i18n.t('forms.action'),
-                        width: 90,
-                        align: 'center',
-                        slot: 'action'
-                    }
-                ]
-                columns.forEach((item) => {
-                    if (item.key === this.searchForm.orderParam.key) {
-                        item.sortType = this.searchForm.orderParam.order
-                        item.sortable = 'custom'
-                    }
-                })
-                return columns
-            },
             ruleAddForm () {
                 return {
                     configApplication: [
@@ -376,14 +321,11 @@
                 return enabled ? this.$i18n.t('forms.enabled') : this.$i18n.t('forms.disabled')
             },
             handleAdd () {
-                this.$refs['editForm'].resetFields()
                 this.editModal = true
-                this.action = 0
-            },
-            handleAddKeyUp (event, name) {
-                if (event.which === 13) {
-                    this.doSave(name)
-                }
+                this.$nextTick(() => {
+                    this.$refs['editForm'].resetFields()
+                    this.action = 0
+                })
             },
             doCancel () {
                 this.editModal = false
@@ -405,7 +347,7 @@
                                 }).then((res) => {
                                     this.modal_loading = false
                                     if (res) {
-                                        this.$Message.success(this.$i18n.t('messages.saveSuccess'))
+                                        this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                                         this.editModal = false
                                         this.handleSearch()
                                     }
@@ -431,7 +373,7 @@
                                 }).then((res) => {
                                     this.modal_loading = false
                                     if (res) {
-                                        this.$Message.success(this.$i18n.t('messages.updateSuccess'))
+                                        this.$message.success(this.$i18n.t('messages.updateSuccess') + '')
                                         this.editModal = false
                                         this.handleSearch()
                                     }
@@ -448,7 +390,7 @@
                 this.$api.request.config.delete(rowIds).then((res) => {
                     this.modal_loading = false
                     if (res) {
-                        this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
+                        this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
                         this.handleSearch()
                     }
                 }).catch(() => {
@@ -480,7 +422,7 @@
                     searchParam.enabled = false
                 }
                 if (this.searchForm.orderParam.order !== 'normal') {
-                    searchParam.queryParam.orderName = this.searchForm.orderParam.key
+                    searchParam.queryParam.orderName = this.searchForm.orderParam.prop
                     searchParam.queryParam.orderCommond = this.searchForm.orderParam.order
                 }
                 this.modal_loading = true
@@ -496,6 +438,9 @@
                             }
                             return item
                         })
+                        this.$nextTick(() => {
+                            this.$refs['table'].doLayout()
+                        })
                     }
                 }).catch(() => {
                     this.searchData = []
@@ -503,13 +448,11 @@
                     this.modal_loading = false
                 })
             },
-            handleSearchKeyUp (event) {
-                if (event.which === 13) {
-                    this.handleSearch()
-                }
+            handleRowClick (row) {
+                this.$refs['table'].toggleRowSelection(row)
             },
             handleSortChange (param) {
-                this.searchForm.orderParam.key = param.key
+                this.searchForm.orderParam.prop = param.prop
                 this.searchForm.orderParam.order = param.order
                 this.handleSearch()
             },
@@ -521,48 +464,46 @@
             },
             handleDeleteRow (row) {
                 if (row.enabled) {
-                    this.$Modal.error({
-                        title: this.$i18n.t('dialog.error') + '',
-                        content: this.$i18n.t('messages.tableDataCannotDel') + ''
+                    this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
+                        type: 'error'
                     })
                 } else {
-                    this.$Modal.confirm({
-                        title: this.$i18n.t('dialog.confirm') + '',
-                        content: this.$i18n.t('messages.deleteDataConfirm') + '',
-                        onOk: () => {
-                            this.handleDelete([row.id])
-                        }
+                    this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+                        type: 'warning'
+                    }).then(() => {
+                        this.handleDelete([row.id])
+                    }).catch(() => {
                     })
                 }
             },
             handleDeleteMore () {
                 if (this.selectedData.length > 0) {
-                    this.$Modal.confirm({
-                        title: this.$i18n.t('dialog.confirm') + '',
-                        content: this.$i18n.t('messages.deleteDataConfirm') + '',
-                        onOk: () => {
-                            this.handleDelete(this.selectedData.map(item => item.id))
-                        }
+                    this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+                        type: 'warning'
+                    }).then(() => {
+                        this.handleDelete(this.selectedData.map(item => item.id))
+                    }).catch(() => {
                     })
                 } else {
-                    this.$Modal.info({
-                        title: this.$i18n.t('dialog.info') + '',
-                        content: this.$i18n.t('messages.selectDataForDelete') + ''
+                    this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
+                        type: 'error'
                     })
                 }
             },
             handleEdit (row) {
-                this.$refs['editForm'].resetFields()
-                this.editForm.id = row.id
-                this.editForm.configApplication = row.configApplication
-                this.editForm.configProfile = row.configProfile
-                this.editForm.configLabel = row.configLabel
-                this.editForm.configKey = row.configKey
-                this.editForm.configValue = row.configValue
-                this.editForm.configDes = row.configDes
-                this.editForm.enabled = !!row.enabled
                 this.editModal = true
-                this.action = 1
+                this.$nextTick(() => {
+                    this.$refs['editForm'].resetFields()
+                    this.editForm.id = row.id
+                    this.editForm.configApplication = row.configApplication
+                    this.editForm.configProfile = row.configProfile
+                    this.editForm.configLabel = row.configLabel
+                    this.editForm.configKey = row.configKey
+                    this.editForm.configValue = row.configValue
+                    this.editForm.configDes = row.configDes
+                    this.editForm.enabled = !!row.enabled
+                    this.action = 1
+                })
             },
             handleRefresh () {
                 this.modal_loading = true
@@ -585,14 +526,14 @@
                         if (this.refreshForm.applicationName !== '') {
                             this.handleRefreshApp(this.refreshForm.applicationName)
                         } else {
-                            this.$Message.error(this.$i18n.t('forms.configRefreshServer') + this.$i18n.t('forms.notEmpty'))
+                            this.$message.error(this.$i18n.t('forms.configRefreshServer') + this.$i18n.t('forms.notEmpty'))
                         }
                         break
                     case '2':
                         if (this.refreshForm.matcher !== '') {
                             this.handleRefreshMatcher(this.refreshForm.matcher)
                         } else {
-                            this.$Message.error(this.$i18n.t('forms.configRefreshMatcher') + this.$i18n.t('forms.notEmpty'))
+                            this.$message.error(this.$i18n.t('forms.configRefreshMatcher') + this.$i18n.t('forms.notEmpty'))
                         }
                         break
                     case '3':
@@ -601,65 +542,66 @@
                 }
             },
             handleRefreshAll () {
-                this.$Modal.confirm({
-                    title: this.$i18n.t('dialog.confirm') + '',
-                    content: this.$i18n.t('messages.refreshServiceConfirm') + '',
-                    onOk: () => {
-                        this.modal_loading = true
-                        this.$api.request.config.refreshAll().then((res) => {
-                            this.modal_loading = false
-                            if (res) {
-                                this.$Message.success(res.data.message)
-                                this.refreshModal = false
-                                this.handleSearch()
-                            }
-                        }).catch(() => {
-                            this.modal_loading = false
-                        })
-                    }
+                this.$confirm(this.$i18n.t('messages.refreshServiceConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+                    type: 'warning'
+                }).then(() => {
+                    this.modal_loading = true
+                    this.$api.request.config.refreshAll().then((res) => {
+                        this.modal_loading = false
+                        if (res) {
+                            this.$message.success(res.data.message)
+                            this.refreshModal = false
+                            this.handleSearch()
+                        }
+                    }).catch(() => {
+                        this.modal_loading = false
+                    })
+                }).catch(() => {
                 })
             },
             handleRefreshApp (applicationName) {
-                this.$Modal.confirm({
-                    title: this.$i18n.t('dialog.confirm') + '',
-                    content: this.$i18n.t('messages.refreshServiceConfirm') + '[' + applicationName + ']',
-                    onOk: () => {
-                        this.modal_loading = true
-                        this.$api.request.config.refreshApp(applicationName).then((res) => {
-                            this.modal_loading = false
-                            if (res) {
-                                this.$Message.success(res.data.message)
-                                this.refreshModal = false
-                                this.handleSearch()
-                            }
-                        }).catch(() => {
-                            this.modal_loading = false
-                        })
-                    }
+                this.$confirm(this.$i18n.t('messages.refreshServiceConfirm') + '[' + applicationName + ']', this.$i18n.t('dialog.confirm') + '', {
+                    type: 'warning'
+                }).then(() => {
+                    this.modal_loading = true
+                    this.$api.request.config.refreshApp(applicationName).then((res) => {
+                        this.modal_loading = false
+                        if (res) {
+                            this.$message.success(res.data.message)
+                            this.refreshModal = false
+                            this.handleSearch()
+                        }
+                    }).catch(() => {
+                        this.modal_loading = false
+                    })
+                }).catch(() => {
                 })
             },
             handleRefreshMatcher (matcher) {
-                this.$Modal.confirm({
-                    title: this.$i18n.t('dialog.confirm') + '',
-                    content: this.$i18n.t('messages.refreshServiceConfirm') + '[' + matcher + ']',
-                    onOk: () => {
-                        this.modal_loading = true
-                        this.$api.request.config.refreshMatcher(matcher).then((res) => {
-                            this.modal_loading = false
-                            if (res) {
-                                this.$Message.success(res.data.message)
-                                this.refreshModal = false
-                                this.handleSearch()
-                            }
-                        }).catch(() => {
-                            this.modal_loading = false
-                        })
-                    }
+                this.$confirm(this.$i18n.t('messages.refreshServiceConfirm') + '[' + matcher + ']', this.$i18n.t('dialog.confirm') + '', {
+                    type: 'warning'
+                }).then(() => {
+                    this.modal_loading = true
+                    this.$api.request.config.refreshMatcher(matcher).then((res) => {
+                        this.modal_loading = false
+                        if (res) {
+                            this.$message.success(res.data.message)
+                            this.refreshModal = false
+                            this.handleSearch()
+                        }
+                    }).catch(() => {
+                        this.modal_loading = false
+                    })
                 })
             }
         },
         mounted () {
             this.handleSearch()
+        },
+        activated () {
+            this.$nextTick(() => {
+                this.$refs['table'].doLayout()
+            })
         }
     }
 </script>

@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <Dropdown trigger="click" @on-click="selectLang">
-      <a href="javascript:void(0)">
+  <div class="header-bar-button">
+    <el-dropdown trigger="click" @command="selectLang">
+      <el-link href="javascript:void(0)" :underline="false" style="font-size: 12px">
         {{ $t('lang') }}
-        <Icon :size="18" type="md-arrow-dropdown"/>
-      </a>
-      <DropdownMenu slot="list">
-        <DropdownItem v-for="item in langList" :name="item.value" :key="`lang-${item.value}`">{{ item.label }}
-        </DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
+        <i class="el-icon-arrow-down el-icon--right"></i>
+      </el-link>
+      <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item v-for="item in langList" :command="item.value" :key="`lang-${item.value}`">{{ item.label }}
+        </el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
   </div>
 </template>
 <script>

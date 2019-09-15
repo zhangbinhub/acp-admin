@@ -1,203 +1,225 @@
 <template>
-  <Card>
-    <Form ref="searchForm" :model="searchForm" :label-width="80" :inline="true" class="search-form">
-      <Row>
-        <Form-item :label="$t('forms.name')" prop="name">
-          <label>
-            <Input v-model="searchForm.name" :disabled="modal_loading" size="small"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                   @on-enter="handleSearch"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.loginNo')" prop="loginNo">
-          <label>
-            <Input v-model="searchForm.loginNo" :disabled="modal_loading" size="small"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.loginNo')"
-                   @on-enter="handleSearch"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.organization')" prop="organization_name">
-          <label>
-            <Input v-model="searchForm.organization_name" :disabled="modal_loading" size="small"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.organization')"
-                   @on-enter="handleSearch"></Input>
-          </label>
-        </Form-item>
-        <Form-item :label="$t('forms.role')" prop="role_name">
-          <label>
-            <Input v-model="searchForm.role_name" :disabled="modal_loading" size="small"
-                   :placeholder="$t('forms.pleaseEnter') + $t('forms.role')"
-                   @on-enter="handleSearch"></Input>
-          </label>
-        </Form-item>
-      </Row>
-      <Row>
-        <Form-item :label="$t('forms.status')" prop="enabled">
-          <i-select v-model="searchForm.enabled" :disabled="modal_loading" :clearable="true" size="small"
-                    @keyup.enter.native="handleSearchKeyUp($event)" style="width: 162px">
-            <Option v-for="item in enabledList" :value="item.value" :key="'search_select_'+item.value">
-              {{ item.label }}
-            </Option>
-          </i-select>
-        </Form-item>
-        <Form-item style="float: right">
-          <ButtonGroup>
-            <Button :loading="modal_loading" @click="handleSearch()" type="info" size="small">
-              {{$t('forms.buttons.search')}}
-            </Button>
-            <Button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="info" size="small">
-              {{$t('forms.buttons.reset')}}
-            </Button>
-            <Button :loading="modal_loading" @click="handleAdd()" type="info" size="small">
-              {{$t('forms.buttons.add')}}
-            </Button>
-            <Button :loading="modal_loading" @click="handleDeleteMore()" type="info" size="small">
-              {{$t('forms.buttons.delete')}}
-            </Button>
-          </ButtonGroup>
-        </Form-item>
-      </Row>
-    </Form>
-    <Table border="" height="388" size="small" :columns="columns" :data="searchData" class="search-table"
-           :loading="modal_loading" :no-data-text="$t('messages.tableNoData')" @on-selection-change="handleSelect"
-           @on-sort-change="handleSortChange">
-      <template slot-scope="{ row }" slot="sort">
-        <span>{{ row.sort }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="name">
-        <span>{{ row.name }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="loginNo">
-        <span>{{ row.loginNo }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="mobile">
-        <span>{{ row.mobile }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="levels">
-        <span>{{ row.levels }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="organizationSet">
-        <span style="white-space: pre-wrap;">{{ orgNames(row.organizationSet) }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="roleSet">
-        <span style="white-space: pre-wrap;">{{ row.roleSet.map(role => role.name).join(',') }}</span>
-      </template>
-      <template slot-scope="{ row }" slot="enabled">
-        <span :style="row.enabled ? 'color:green':'color:red'">{{enabledText(row.enabled)}}</span>
-      </template>
-      <template slot-scope="{ row }" slot="action">
-        <div>
-          <Tooltip :content="$t('forms.buttons.edit')" placement="top-start">
-            <Icon @click="handleEdit(row)" type="md-create" size="18" style="cursor: pointer;"></Icon>
-          </Tooltip>
-          <Tooltip
-            v-if="row.id !== $store.state.app.user.userInfo.id && row.levels > $store.state.app.user.userInfo.levels"
+  <el-card>
+    <el-form ref="searchForm" :model="searchForm" label-width="80px" :inline="true" size="mini"
+             onsubmit="return false;">
+      <el-form-item :label="$t('forms.name')" prop="name">
+        <el-input v-model="searchForm.name" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.loginNo')" prop="loginNo">
+        <el-input v-model="searchForm.loginNo" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.loginNo')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.organization')" prop=".organizationName">
+        <el-input v-model="searchForm.organizationName" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.organization')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.role')" prop="roleName">
+        <el-input v-model="searchForm.roleName" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.role')"
+                  @keyup.enter.native="handleSearch"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.status')" prop="enabled">
+        <el-select v-model="searchForm.enabled" :disabled="modal_loading" :clearable="true" value=""
+                   style="width: 162px">
+          <el-option v-for="item in enabledList" :value="item.value" :label="item.label"
+                     :key="'search_select_'+item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item style="float: right">
+        <el-button-group>
+          <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
+            {{$t('forms.buttons.search')}}
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
+            {{$t('forms.buttons.reset')}}
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleAdd()" type="primary">
+            {{$t('forms.buttons.add')}}
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleDeleteMore()" type="primary">
+            {{$t('forms.buttons.delete')}}
+          </el-button>
+        </el-button-group>
+      </el-form-item>
+    </el-form>
+    <el-table ref="table" border height="388" size="mini" :default-sort="searchForm.orderParam" :data="searchData"
+              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')" @selection-change="handleSelect"
+              @row-click="handleRowClick" @sort-change="handleSortChange" header-cell-class-name="query-table-header">
+      <el-table-column
+        type="selection"
+        fixed="left"
+        align="center"
+        width="40">
+      </el-table-column>
+      <el-table-column
+        prop="sort"
+        align="center"
+        sortable="custom"
+        width="70"
+        :label="this.$i18n.t('forms.sort')">
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        :label="this.$i18n.t('forms.name')">
+      </el-table-column>
+      <el-table-column
+        prop="loginNo"
+        :label="this.$i18n.t('forms.loginNo')">
+      </el-table-column>
+      <el-table-column
+        prop="mobile"
+        width="150"
+        :label="this.$i18n.t('forms.mobile')">
+      </el-table-column>
+      <el-table-column
+        prop="levels"
+        align="center"
+        sortable="custom"
+        width="70"
+        :label="this.$i18n.t('forms.level')">
+      </el-table-column>
+      <el-table-column
+        prop="organizationSet"
+        :label="this.$i18n.t('forms.organization')">
+        <template slot-scope="scope">{{orgNames(scope.row.organizationSet).join('\n')}}</template>
+      </el-table-column>
+      <el-table-column
+        prop="roleSet"
+        :label="this.$i18n.t('forms.role')">
+        <template slot-scope="scope">{{roleNames(scope.row.roleSet)}}</template>
+      </el-table-column>
+      <el-table-column
+        prop="enabled"
+        align="center"
+        sortable="custom"
+        width="100"
+        :label="this.$i18n.t('forms.enabled')">
+        <template slot-scope="scope">
+          <span :style="scope.row.enabled ? 'color:green':'color:red'">{{enabledText(scope.row.enabled)}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="action"
+        :label="this.$i18n.t('forms.action')"
+        align="center"
+        width="120">
+        <template slot-scope="scope">
+          <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
+            <el-button type="text" @click="handleEdit(scope.row)">
+              <i style="font-size: 15px" class="el-icon-edit"></i>
+            </el-button>
+          </el-tooltip>
+          <el-tooltip
+            v-if="scope.row.id !== $store.state.app.user.userInfo.id && scope.row.levels > $store.state.app.user.userInfo.levels"
             :content="$t('forms.buttons.delete')" placement="top-start">
-            <Icon @click="handleDeleteRow(row)" type="md-trash" size="18"
-                  style="cursor: pointer;margin-left: 10px;"></Icon>
-          </Tooltip>
-          <Tooltip v-if="row.levels > $store.state.app.user.userInfo.levels"
-                   :content="$t('forms.buttons.resetPwd')" placement="top-start">
-            <Icon @click="doResetPwd(row.id)" type="md-unlock" size="18"
-                  style="cursor: pointer;margin-left: 10px;"></Icon>
-          </Tooltip>
-        </div>
-      </template>
-    </Table>
-    <div style="margin-top: 10px;overflow: hidden">
-      <div style="float: right;">
-        <Page :current="searchForm.currPage" :total="searchForm.totalRows" :page-size="searchForm.pageSize"
-              :page-size-opts="searchForm.pageSizeArray" :show-total="true" :show-elevator="true" :show-sizer="true"
-              size="small" @on-change="handlePageSearch" @on-page-size-change="handlePageSizeSearch"/>
-      </div>
-    </div>
-    <Modal v-model="editModal" :title="$t('forms.info')" :loading="modal_loading" :mask-closable="false"
-           :fullscreen="true">
-      <Row :gutter="10">
-        <i-col :md="6" class="card-col">
-          <Card>
-            <p slot="title">{{$t('forms.basicInfo')}}</p>
-            <Form ref="editForm" :model="editForm" :rules="ruleEditForm" :label-width="100">
-              <Form-item :label="$t('forms.name')" prop="name">
-                <label>
-                  <Input ref="name" v-model="editForm.name" @on-enter="doSave" :disabled="modal_loading"
-                         style="width: 100%;max-width: 160px;"
-                         :placeholder=" $t('forms.pleaseEnter') + $t('forms.name')"></Input>
-                </label>
-              </Form-item>
-              <Form-item :label="$t('forms.loginNo')" prop="loginNo">
-                <label>
-                  <Input v-model="editForm.loginNo" @on-enter="doSave" :disabled="modal_loading"
-                         style="width: 100%;max-width: 160px;"
-                         :placeholder=" $t('forms.pleaseEnter') + $t('forms.loginNo')"></Input>
-                </label>
-              </Form-item>
-              <Form-item :label="$t('forms.mobile')" prop="mobile">
-                <label>
-                  <Input v-model="editForm.mobile" @on-enter="doSave" :disabled="modal_loading"
-                         style="width: 100%;max-width: 160px;"
-                         :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></Input>
-                </label>
-              </Form-item>
-              <Form-item :label="$t('forms.level')" prop="levels">
-                <InputNumber v-model="editForm.levels" :disabled="modal_loading" style="width: 100%;max-width: 160px;"
-                             :placeholder="$t('forms.pleaseEnter') + $t('forms.level')" :min="1"
-                             @keyup.enter.native="doSave">
-                </InputNumber>
-              </Form-item>
-              <Form-item :label="$t('forms.sort')" prop="sort">
-                <InputNumber v-model="editForm.sort" :disabled="modal_loading" style="width: 100%;max-width: 160px;"
-                             :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" :min="1"
-                             @keyup.enter.native="doSave">
-                </InputNumber>
-              </Form-item>
-              <Form-item :label="$t('forms.enabled')" prop="enabled" :required="true">
-                <i-switch v-model="editForm.enabled" @keyup.enter.native="doSave">
-                  <Icon type="md-checkmark" slot="open"></Icon>
-                  <Icon type="md-close" slot="close"></Icon>
-                </i-switch>
-              </Form-item>
-            </Form>
-          </Card>
-        </i-col>
-        <i-col :md="6" class="card-col">
-          <Card>
-            <p slot="title">{{$t('forms.orgList')}}</p>
-            <Tree ref="orgTree" :data="orgTreeDataS1" :show-checkbox="true" :check-strictly="true"
-                  :check-directly="true"></Tree>
-            <Spin size="large" :fix="true" v-if="modal_loading"></Spin>
-          </Card>
-        </i-col>
-        <i-col :md="6" class="card-col">
-          <Card>
-            <p slot="title">{{$t('forms.orgMngList')}}</p>
-            <Tree ref="orgMngTree" :data="orgTreeDataS2" :show-checkbox="true" :check-strictly="true"
-                  :check-directly="true"></Tree>
-            <Spin size="large" :fix="true" v-if="modal_loading"></Spin>
-          </Card>
-        </i-col>
-        <i-col :md="6" class="card-col">
-          <Card>
-            <p slot="title">{{$t('forms.roleList')}}</p>
-            <Tree ref="roleTree" :data="roleTreeData" :show-checkbox="true" :check-strictly="true"
-                  :check-directly="true"></Tree>
-            <Spin size="large" :fix="true" v-if="modal_loading"></Spin>
-          </Card>
-        </i-col>
-      </Row>
+            <el-button type="text" @click="handleDeleteRow(scope.row)">
+              <i style="font-size: 15px" class="el-icon-delete"></i>
+            </el-button>
+          </el-tooltip>
+          <el-tooltip v-if="scope.row.levels > $store.state.app.user.userInfo.levels"
+                      :content="$t('forms.buttons.resetPwd')" placement="top-start">
+            <el-button type="text" @click="doResetPwd(scope.row.id)">
+              <i style="font-size: 15px" class="el-icon-refresh"></i>
+            </el-button>
+          </el-tooltip>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination style="margin-top: 10px;text-align: right"
+                   @size-change="handlePageSizeSearch"
+                   @current-change="handlePageSearch"
+                   :current-page="searchForm.currPage"
+                   :page-sizes="searchForm.pageSizeArray"
+                   :page-size="searchForm.pageSize"
+                   layout="total, sizes, prev, pager, next, jumper"
+                   :total="searchForm.totalRows">
+    </el-pagination>
+    <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false"
+               :fullscreen="true">
+      <el-row :gutter="10">
+        <el-col :lg="6" class="card-col">
+          <el-card>
+            <div slot="header">{{$t('forms.basicInfo')}}</div>
+            <el-form ref="editForm" :model="editForm" :rules="ruleEditForm" label-width="80px"
+                     size="mini" v-loading="modal_loading" onsubmit="return false;">
+              <el-form-item :label="$t('forms.name')" prop="name">
+                <el-input ref="name" v-model="editForm.name" @keyup.enter.native="doSave" :disabled="modal_loading"
+                          :placeholder=" $t('forms.pleaseEnter') + $t('forms.name')"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('forms.loginNo')" prop="loginNo">
+                <el-input v-model="editForm.loginNo" @keyup.enter.native="doSave" :disabled="modal_loading"
+                          :placeholder=" $t('forms.pleaseEnter') + $t('forms.loginNo')"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('forms.mobile')" prop="mobile">
+                <el-input v-model="editForm.mobile" @keyup.enter.native="doSave" :disabled="modal_loading"
+                          :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('forms.level')" prop="levels">
+                <el-input-number v-model="editForm.levels" :disabled="modal_loading"
+                                 :placeholder="$t('forms.pleaseEnter') + $t('forms.level')" :min="0"
+                                 @keyup.enter.native="doSave">
+                </el-input-number>
+              </el-form-item>
+              <el-form-item :label="$t('forms.sort')" prop="sort">
+                <el-input-number v-model="editForm.sort" :disabled="modal_loading"
+                                 :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" :min="1"
+                                 @keyup.enter.native="doSave">
+                </el-input-number>
+              </el-form-item>
+              <el-form-item :label="$t('forms.enabled')" prop="enabled" :required="true">
+                <el-switch v-model="editForm.enabled" :disabled="modal_loading"></el-switch>
+              </el-form-item>
+            </el-form>
+          </el-card>
+        </el-col>
+        <el-col :lg="6" class="card-col">
+          <el-card>
+            <div slot="header">{{$t('forms.orgList')}}</div>
+            <div style="overflow-x: auto;overflow-y: hidden">
+              <el-tree ref="orgTree" :data="orgTreeDataS1" node-key="id" v-loading="modal_loading"
+                       :show-checkbox="true" :check-strictly="true"
+                       :default-expanded-keys="currObj.orgIds"></el-tree>
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :lg="6" class="card-col">
+          <el-card>
+            <div slot="header">{{$t('forms.orgMngList')}}</div>
+            <div style="overflow-x: auto;overflow-y: hidden">
+              <el-tree ref="orgMngTree" :data="orgTreeDataS2" node-key="id" v-loading="modal_loading"
+                       :show-checkbox="true" :check-strictly="true"
+                       :default-expanded-keys="currObj.orgMngIds"></el-tree>
+            </div>
+          </el-card>
+        </el-col>
+        <el-col :lg="6" class="card-col">
+          <el-card>
+            <div slot="header">{{$t('forms.roleList')}}</div>
+            <div style="overflow-x: auto;overflow-y: hidden">
+              <el-tree ref="roleTree" :data="roleTreeData" node-key="id" v-loading="modal_loading"
+                       :default-expand-all="true" :show-checkbox="true" :check-strictly="true"></el-tree>
+            </div>
+          </el-card>
+        </el-col>
+      </el-row>
       <div slot="footer" style="text-align: center">
-        <Button type="default" :loading="modal_loading" @click="doCancel()">
+        <el-button type="info" :loading="modal_loading" @click="doCancel()">
           {{$t('forms.buttons.cancel')}}
-        </Button>
-        <Button type="default" :loading="modal_loading" @click="doReset()">
+        </el-button>
+        <el-button type="warning" :loading="modal_loading" @click="doReset()">
           {{$t('forms.buttons.reset')}}
-        </Button>
-        <Button type="primary" :loading="modal_loading" @click="doSave()">
+        </el-button>
+        <el-button type="primary" :loading="modal_loading" @click="doSave()">
           {{$t('forms.buttons.submit')}}
-        </Button>
+        </el-button>
       </div>
-    </Modal>
-  </Card>
+    </el-dialog>
+  </el-card>
 </template>
 <style type="less">
   .card-col {
@@ -205,12 +227,7 @@
   }
 </style>
 <script>
-    import {
-        copy,
-        processTreeNode,
-        sortTreeNodes,
-        getTreeFullPathTitle
-    } from '@/libs/tools'
+    import { copy, processTreeNode, getTreeFullPathTitle, sortTreeNodes } from '@/libs/tools'
 
     export default {
         name: 'userConfig',
@@ -218,7 +235,6 @@
             return {
                 roleTreeData: [],
                 orgTreeData: [],
-                orgTreeDataTemp: [],
                 orgTreeDataS1: [],
                 orgTreeDataS2: [],
                 editModal: false,
@@ -227,11 +243,11 @@
                     name: '',
                     loginNo: '',
                     status: '',
-                    organization_name: '',
-                    role_name: '',
+                    organizationName: '',
+                    roleName: '',
                     orderParam: {
-                        key: 'sort',
-                        order: 'asc'
+                        prop: 'sort',
+                        order: 'ascending'
                     },
                     currPage: 1,
                     totalRows: 0,
@@ -273,123 +289,41 @@
                     { value: 'false', label: this.$i18n.t('forms.disabled') }
                 ]
             },
-            columns () {
-                const columns = [{
-                    type: 'selection',
-                    width: 50,
-                    align: 'center'
-                }, {
-                    key: 'sort',
-                    title: this.$i18n.t('forms.sort'),
-                    slot: 'sort',
-                    width: 80,
-                    align: 'center',
-                    sortable: 'custom'
-                }, {
-                    key: 'name',
-                    title: this.$i18n.t('forms.name'),
-                    slot: 'name'
-                }, {
-                    key: 'loginNo',
-                    title: this.$i18n.t('forms.loginNo'),
-                    slot: 'loginNo'
-                }, {
-                    key: 'mobile',
-                    title: this.$i18n.t('forms.mobile'),
-                    width: 150,
-                    slot: 'mobile'
-                }, {
-                    key: 'levels',
-                    title: this.$i18n.t('forms.level'),
-                    width: 95,
-                    align: 'center',
-                    slot: 'levels',
-                    sortable: 'custom'
-                }, {
-                    key: 'organizationSet',
-                    title: this.$i18n.t('forms.organization'),
-                    slot: 'organizationSet'
-                }, {
-                    key: 'roleSet',
-                    title: this.$i18n.t('forms.role'),
-                    slot: 'roleSet'
-                }, {
-                    key: 'enabled',
-                    title: this.$i18n.t('forms.enabled'),
-                    slot: 'enabled',
-                    width: 100,
-                    align: 'center',
-                    sortable: 'custom'
-                }, {
-                    title: this.$i18n.t('forms.action'),
-                    width: 120,
-                    align: 'center',
-                    slot: 'action'
-                }]
-                columns.forEach((item) => {
-                    if (item.key === this.searchForm.orderParam.key) {
-                        item.sortType = this.searchForm.orderParam.order
-                        item.sortable = 'custom'
-                    }
-                })
-                return columns
-            },
             ruleEditForm () {
                 return {
-                    name: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ],
-                    loginNo: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.loginNo') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ],
-                    mobile: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.mobile') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        },
-                        {
-                            type: 'string',
-                            pattern: /^1[0-9]{10}$/,
-                            message: this.$i18n.t('forms.mobile') + this.$i18n.t('forms.invalid'),
-                            trigger: 'blur'
-                        }
-                    ],
-                    levels: [
-                        {
-                            type: 'number',
-                            required: true,
-                            message: this.$i18n.t('forms.level') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ],
-                    sort: [
-                        {
-                            type: 'number',
-                            required: true,
-                            message: this.$i18n.t('forms.sort') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ]
+                    name: [{
+                        required: true,
+                        message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
+                        trigger: 'blur'
+                    }],
+                    loginNo: [{
+                        required: true,
+                        message: this.$i18n.t('forms.loginNo') + this.$i18n.t('forms.notEmpty'),
+                        trigger: 'blur'
+                    }],
+                    mobile: [{
+                        required: true,
+                        message: this.$i18n.t('forms.mobile') + this.$i18n.t('forms.notEmpty'),
+                        trigger: 'blur'
+                    }, {
+                        type: 'string',
+                        pattern: /^1[0-9]{10}$/,
+                        message: this.$i18n.t('forms.mobile') + this.$i18n.t('forms.invalid'),
+                        trigger: 'blur'
+                    }],
+                    levels: [{
+                        type: 'number',
+                        required: true,
+                        message: this.$i18n.t('forms.level') + this.$i18n.t('forms.notEmpty'),
+                        trigger: 'blur'
+                    }],
+                    sort: [{
+                        type: 'number',
+                        required: true,
+                        message: this.$i18n.t('forms.sort') + this.$i18n.t('forms.notEmpty'),
+                        trigger: 'blur'
+                    }]
                 }
-            }
-        },
-        watch: {
-            orgTreeDataTemp (newData) {
-                const data1 = copy(newData)
-                const data2 = copy(newData)
-                processTreeNode(data1, 2, this.currObj.orgIds)
-                processTreeNode(data2, 2, this.currObj.orgMngIds)
-                this.orgTreeDataS1 = data1
-                this.orgTreeDataS2 = data2
             }
         },
         methods: {
@@ -398,11 +332,13 @@
                 this.$api.request.org.getOrgList().then((res) => {
                     this.modal_loading = false
                     if (res) {
-                        for (let item of res.data) {
-                            item.expand = true
-                        }
-                        this.orgTreeDataTemp = copy(res.data)
-                        processTreeNode(res.data, 2)
+                        const data1 = copy(res.data)
+                        const data2 = copy(res.data)
+                        processTreeNode(data1)
+                        processTreeNode(data2)
+                        this.orgTreeDataS1 = data1
+                        this.orgTreeDataS2 = data2
+                        processTreeNode(res.data)
                         this.orgTreeData = res.data
                         if (typeof callBack === 'function') {
                             callBack()
@@ -414,25 +350,24 @@
             },
             refreshRoleTree (callBack) {
                 this.modal_loading = true
-                this.$api.request.app.getList().then((appres) => {
-                    if (appres) {
-                        const appData = appres.data
-                        for (let i = 0; i < appData.length; i++) {
-                            const item = appData[i]
+                this.$api.request.app.getList().then((appRes) => {
+                    if (appRes) {
+                        const appData = appRes.data
+                        appData.map(item => {
                             item.appId = item.id
-                            item.name = item.appName
-                            item.expand = true
-                            item.title = item.appName
-                            item.disableCheckbox = true
-                            item.sort = i
+                            item.label = item.appName
+                            item.disabled = true
                             item.children = []
-                        }
+                            return item
+                        })
                         this.roleTreeData = appData
+                        this.modal_loading = true
                         this.$api.request.role.getList().then((res) => {
                             this.modal_loading = false
                             if (res) {
-                                processTreeNode(res.data, 2, this.currObj.roleIds)
-                                for (const item of res.data) {
+                                processTreeNode(res.data)
+                                const treeNode = res.data
+                                for (const item of treeNode) {
                                     item.parentId = item.appId
                                     for (const root of this.roleTreeData) {
                                         if (root.id === item.appId) {
@@ -458,17 +393,27 @@
             orgNames (organizationSet) {
                 const data = copy(organizationSet)
                 sortTreeNodes(data)
-                return data.map(org => getTreeFullPathTitle(this.orgTreeData, org.id)).join('\n')
+                return data.map(org => getTreeFullPathTitle(this.orgTreeData, org.id))
             },
-            handleSearchKeyUp (event) {
-                if (event.which === 13) {
-                    this.handleSearch()
-                }
+            roleNames (roleSet) {
+                const data = copy(roleSet)
+                return data.sort((obj1, obj2) => {
+                    if (obj1.sort > obj2.sort) {
+                        return 1
+                    } else if (obj1.sort === obj2.sort) {
+                        return 0
+                    } else {
+                        return -1
+                    }
+                }).map(role => role.name).join(',')
             },
             handleSortChange (param) {
-                this.searchForm.orderParam.key = param.key
+                this.searchForm.orderParam.prop = param.prop
                 this.searchForm.orderParam.order = param.order
                 this.handleSearch()
+            },
+            handleRowClick (row) {
+                this.$refs['table'].toggleRowSelection(row)
             },
             handleSearchReset (name) {
                 this.$refs[name].resetFields()
@@ -485,8 +430,8 @@
                 let searchParam = {
                     name: this.searchForm.name,
                     loginNo: this.searchForm.loginNo,
-                    org_name: this.searchForm.organization_name,
-                    role_name: this.searchForm.role_name,
+                    orgName: this.searchForm.organizationName,
+                    roleName: this.searchForm.roleName,
                     queryParam: {
                         currPage: this.searchForm.currPage,
                         pageSize: this.searchForm.pageSize
@@ -498,7 +443,7 @@
                     searchParam.enabled = false
                 }
                 if (this.searchForm.orderParam.order !== 'normal') {
-                    searchParam.queryParam.orderName = this.searchForm.orderParam.key
+                    searchParam.queryParam.orderName = this.searchForm.orderParam.prop
                     searchParam.queryParam.orderCommond = this.searchForm.orderParam.order
                 }
                 this.modal_loading = true
@@ -513,6 +458,9 @@
                                 item._disabled = true
                             }
                             return item
+                        })
+                        this.$nextTick(() => {
+                            this.$refs['table'].doLayout()
                         })
                     }
                 }).catch(() => {
@@ -529,7 +477,7 @@
                 this.$api.request.user.delete(rowIds).then((res) => {
                     this.modal_loading = false
                     if (res) {
-                        this.$Message.success(this.$i18n.t('messages.deleteSuccess'))
+                        this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
                         this.handleSearch()
                     }
                 }).catch(() => {
@@ -538,33 +486,29 @@
             },
             handleDeleteRow (row) {
                 if (row.id === this.$store.state.app.user.userInfo.id || row.levels <= this.$store.state.app.user.userInfo.levels) {
-                    this.$Modal.error({
-                        title: this.$i18n.t('dialog.error') + '',
-                        content: this.$i18n.t('messages.tableDataCannotDel') + ''
+                    this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
+                        type: 'error'
                     })
                 } else {
-                    this.$Modal.confirm({
-                        title: this.$i18n.t('dialog.confirm') + '',
-                        content: this.$i18n.t('messages.deleteDataConfirm') + '',
-                        onOk: () => {
-                            this.handleDelete([row.id])
-                        }
+                    this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+                        type: 'warning'
+                    }).then(() => {
+                        this.handleDelete([row.id])
+                    }).catch(() => {
                     })
                 }
             },
             handleDeleteMore () {
                 if (this.selectedData.length > 0) {
-                    this.$Modal.confirm({
-                        title: this.$i18n.t('dialog.confirm') + '',
-                        content: this.$i18n.t('messages.deleteDataConfirm') + '',
-                        onOk: () => {
-                            this.handleDelete(this.selectedData.map(item => item.id))
-                        }
+                    this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+                        type: 'warning'
+                    }).then(() => {
+                        this.handleDelete(this.selectedData.map(item => item.id))
+                    }).catch(() => {
                     })
                 } else {
-                    this.$Modal.info({
-                        title: this.$i18n.t('dialog.info') + '',
-                        content: this.$i18n.t('messages.selectDataForDelete') + ''
+                    this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
+                        type: 'error'
                     })
                 }
             },
@@ -586,20 +530,27 @@
                 }
             },
             handleEdit (row) {
-                this.currObj = copy(row)
-                this.doReset()
                 this.editModal = true
+                this.$nextTick(() => {
+                    this.currObj = copy(row)
+                    this.doReset()
+                })
             },
             handleAdd () {
-                this.clearCurrObj()
-                this.doReset()
                 this.editModal = true
+                this.$nextTick(() => {
+                    this.clearCurrObj()
+                    this.doReset()
+                })
             },
             doCancel () {
                 this.editModal = false
             },
             doReset () {
                 this.$refs['editForm'].resetFields()
+                this.currObj.orgIds = this.currObj.organizationSet.map(item => item.id)
+                this.currObj.orgMngIds = this.currObj.organizationMngSet.map(item => item.id)
+                this.currObj.roleIds = this.currObj.roleSet.map(item => item.id)
                 this.editForm.id = this.currObj.id
                 this.editForm.name = this.currObj.name
                 this.editForm.loginNo = this.currObj.loginNo
@@ -607,57 +558,59 @@
                 this.editForm.levels = this.currObj.levels
                 this.editForm.enabled = this.currObj.enabled
                 this.editForm.sort = this.currObj.sort
-                if (this.currObj.organizationSet.length > 0) {
-                    this.currObj.orgIds = this.currObj.organizationSet.map(item => item.id)
-                }
-                if (this.currObj.organizationMngSet.length > 0) {
-                    this.currObj.orgMngIds = this.currObj.organizationMngSet.map(item => item.id)
-                }
-                if (this.currObj.roleSet.length > 0) {
-                    this.currObj.roleIds = this.currObj.roleSet.map(item => item.id)
-                }
-                this.refreshOrgTree()
-                this.refreshRoleTree()
+                this.refreshOrgTree(() => {
+                    this.$nextTick(() => {
+                        this.$refs['orgTree'].setCheckedKeys(this.currObj.orgIds)
+                        this.$refs['orgMngTree'].setCheckedKeys(this.currObj.orgMngIds)
+                    })
+                })
+                this.refreshRoleTree(() => {
+                    this.$nextTick(() => {
+                        this.$refs['roleTree'].setCheckedKeys(this.currObj.roleIds)
+                    })
+                })
             },
             doSave () {
                 this.$refs['editForm'].validate((valid) => {
                     if (valid) {
                         if (this.editForm.id && this.editForm.id !== '') {
                             if (this.editForm.loginNo !== this.currObj.loginNo) {
-                                this.$Modal.confirm({
-                                    title: this.$i18n.t('dialog.confirm') + '',
-                                    content: this.$i18n.t('messages.modifyLoginNo') + '',
-                                    onOk: () => {
-                                        this.doUpdate()
-                                    }
+                                this.$confirm(this.$i18n.t('messages.modifyLoginNo') + '', this.$i18n.t('dialog.confirm') + '', {
+                                    type: 'warning'
+                                }).then(() => {
+                                    this.doUpdate()
+                                }).catch(() => {
                                 })
                             } else {
                                 this.doUpdate()
                             }
                         } else {
-                            this.modal_loading = true
-                            this.$api.request.user.create({
-                                name: this.editForm.name,
-                                loginNo: this.editForm.loginNo,
-                                mobile: this.editForm.mobile,
-                                levels: this.editForm.levels,
-                                enabled: this.editForm.enabled,
-                                sort: this.editForm.sort,
-                                orgIds: this.$refs['orgTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
-                                orgMngIds: this.$refs['orgMngTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
-                                roleIds: this.$refs['roleTree'].getCheckedNodes().map(item => item.id)
-                            }).then((res) => {
-                                this.modal_loading = false
-                                if (res) {
-                                    this.$Message.success(this.$i18n.t('messages.createSuccess'))
-                                    this.editModal = false
-                                    this.handleSearch()
-                                }
-                            }).catch(() => {
-                                this.modal_loading = false
-                            })
+                            this.doCreate()
                         }
                     }
+                })
+            },
+            doCreate () {
+                this.modal_loading = true
+                this.$api.request.user.create({
+                    name: this.editForm.name,
+                    loginNo: this.editForm.loginNo,
+                    mobile: this.editForm.mobile,
+                    levels: this.editForm.levels,
+                    enabled: this.editForm.enabled,
+                    sort: this.editForm.sort,
+                    orgIds: this.$refs['orgTree'].getCheckedNodes().map(item => item.id),
+                    orgMngIds: this.$refs['orgMngTree'].getCheckedNodes().map(item => item.id),
+                    roleIds: this.$refs['roleTree'].getCheckedNodes().map(item => item.id)
+                }).then((res) => {
+                    this.modal_loading = false
+                    if (res) {
+                        this.$message.success(this.$i18n.t('messages.createSuccess') + '')
+                        this.editModal = false
+                        this.handleSearch()
+                    }
+                }).catch(() => {
+                    this.modal_loading = false
                 })
             },
             doUpdate () {
@@ -670,13 +623,13 @@
                     levels: this.editForm.levels,
                     enabled: this.editForm.enabled,
                     sort: this.editForm.sort,
-                    orgIds: this.$refs['orgTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
-                    orgMngIds: this.$refs['orgMngTree'].getCheckedAndIndeterminateNodes().map(item => item.id),
+                    orgIds: this.$refs['orgTree'].getCheckedNodes().map(item => item.id),
+                    orgMngIds: this.$refs['orgMngTree'].getCheckedNodes().map(item => item.id),
                     roleIds: this.$refs['roleTree'].getCheckedNodes().map(item => item.id)
                 }).then((res) => {
                     this.modal_loading = false
                     if (res) {
-                        this.$Message.success(this.$i18n.t('messages.saveSuccess'))
+                        this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                         this.editModal = false
                         this.handleSearch()
                     }
@@ -685,20 +638,19 @@
                 })
             },
             doResetPwd (userId) {
-                this.$Modal.confirm({
-                    title: this.$i18n.t('dialog.confirm') + '',
-                    content: this.$i18n.t('messages.resetPassword') + '',
-                    onOk: () => {
-                        this.modal_loading = true
-                        this.$api.request.user.resetPwd(userId).then((res) => {
-                            this.modal_loading = false
-                            if (res) {
-                                this.$Message.success(this.$i18n.t('messages.updateSuccess'))
-                            }
-                        }).catch(() => {
-                            this.modal_loading = false
-                        })
-                    }
+                this.$confirm(this.$i18n.t('messages.resetPassword') + '', this.$i18n.t('dialog.confirm') + '', {
+                    type: 'warning'
+                }).then(() => {
+                    this.modal_loading = true
+                    this.$api.request.user.resetPwd(userId).then((res) => {
+                        this.modal_loading = false
+                        if (res) {
+                            this.$message.success(this.$i18n.t('messages.updateSuccess') + '')
+                        }
+                    }).catch(() => {
+                        this.modal_loading = false
+                    })
+                }).catch(() => {
                 })
             }
         },
@@ -713,6 +665,9 @@
                 }
             }).catch(() => {
                 this.modal_loading = false
+            })
+            this.$nextTick(() => {
+                this.$refs['table'].doLayout()
             })
         }
     }

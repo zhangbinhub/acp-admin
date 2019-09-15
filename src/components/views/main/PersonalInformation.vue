@@ -1,65 +1,58 @@
 <template>
-  <Card>
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="120">
-      <Form-item prop="avatar">
-        <Tooltip :content="$t('forms.avatar')" placement="right">
-          <Avatar style="width: 100px; height: 100px; cursor: pointer" :src="formValidate.avatar"
-                  @click.native="openAvatarUpload"/>
-        </Tooltip>
-      </Form-item>
-      <Form-item :label="$t('forms.name')" prop="name">
-        <label>
-          <Input ref="name" v-model="formValidate.name" @on-enter="handleSubmit('formValidate')"
-                 :disabled="modal_loading" :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"></Input>
-        </label>
-      </Form-item>
-      <Form-item :label="$t('forms.mobile')" prop="mobile">
-        <label>
-          <Input v-model="formValidate.mobile" @on-enter="handleSubmit('formValidate')"
-                 :disabled="modal_loading" :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></Input>
-        </label>
-      </Form-item>
-      <Form-item :label="$t('forms.changePassword')">
-        <i-switch v-model="updatePassword" :disabled="modal_loading" @keyup.enter.native="handleSubmit('formValidate')">
-          <Icon type="md-checkmark" slot="open"></Icon>
-          <Icon type="md-close" slot="close"></Icon>
-        </i-switch>
-      </Form-item>
-      <Form-item v-show="updatePassword" :label="$t('forms.old')+$t('forms.password')" prop="oldPassword">
-        <label>
-          <Input v-model="formValidate.oldPassword" type="password" @on-enter="handleSubmit('formValidate')"
-                 :disabled="modal_loading"
-                 :placeholder="$t('forms.pleaseEnter') + $t('forms.old')+$t('forms.password')"></Input>
-        </label>
-      </Form-item>
-      <Form-item v-show="updatePassword" :label="$t('forms.new')+$t('forms.password')" prop="password">
-        <label>
-          <Input v-model="formValidate.password" :type="passwordType" :icon="passwordIcon"
-                 :disabled="modal_loading" @on-enter="handleSubmit('formValidate')" @on-click="showPassword"
-                 :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></Input>
-        </label>
-      </Form-item>
-      <Form-item v-show="updatePassword" :label="$t('forms.confirmPassword')" prop="repeatPassword">
-        <label>
-          <Input v-model="formValidate.repeatPassword" :type="passwordType" :icon="passwordIcon"
-                 :disabled="modal_loading" @on-click="showPassword" @on-enter="handleSubmit('formValidate')"
-                 :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></Input>
-        </label>
-      </Form-item>
-      <Form-item>
-        <Button type="default" @click="handleReset('formValidate')" :loading="modal_loading">
+  <el-card>
+    <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="120px"
+             onsubmit="return false;">
+      <el-form-item prop="avatar">
+        <el-tooltip :content="$t('forms.avatar')" placement="right">
+          <el-avatar style="width: 100px; height: 100px; cursor: pointer" :src="formValidate.avatar"
+                     @click.native="openAvatarUpload"/>
+        </el-tooltip>
+      </el-form-item>
+      <el-form-item :label="$t('forms.name')" prop="name">
+        <el-input ref="name" type="text" v-model="formValidate.name" @keyup.enter.native="handleSubmit('formValidate')"
+                  :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.mobile')" prop="mobile">
+        <el-input ref="mobile" type="text" v-model="formValidate.mobile"
+                  @keyup.enter.native="handleSubmit('formValidate')"
+                  :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"></el-input>
+      </el-form-item>
+      <el-form-item :label="$t('forms.changePassword')">
+        <el-switch v-model="updatePassword" :disabled="modal_loading"></el-switch>
+      </el-form-item>
+      <el-form-item v-show="updatePassword" :label="$t('forms.old')+$t('forms.password')" prop="oldPassword">
+        <el-input v-model="formValidate.oldPassword" @keyup.enter.native="handleSubmit('formValidate')"
+                  autocomplete="off" type="text" @focus.native="this.type='password'" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.old')+$t('forms.password')"></el-input>
+      </el-form-item>
+      <el-form-item v-show="updatePassword" :label="$t('forms.new')+$t('forms.password')" prop="password">
+        <el-input v-model="formValidate.password" :show-password="true"
+                  autocomplete="off" type="text" @focus.native="this.type='password'" :disabled="modal_loading"
+                  @keyup.enter.native="handleSubmit('formValidate')"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></el-input>
+      </el-form-item>
+      <el-form-item v-show="updatePassword" :label="$t('forms.confirmPassword')" prop="repeatPassword">
+        <el-input v-model="formValidate.repeatPassword" :show-password="true"
+                  autocomplete="off" type="text" @focus.native="this.type='password'"
+                  :disabled="modal_loading" @keyup.enter.native="handleSubmit('formValidate')"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="default" @click="handleReset('formValidate')" :loading="modal_loading">
           {{$t('forms.buttons.reset')}}
-        </Button>
-        <Button type="primary" @click="handleSubmit('formValidate')" :loading="modal_loading" style="margin-left: 10px">
+        </el-button>
+        <el-button type="primary" @click="handleSubmit('formValidate')" :loading="modal_loading"
+                   style="margin-left: 10px">
           {{$t('forms.buttons.submit')}}
-        </Button>
-      </Form-item>
-    </Form>
-    <Modal v-model="avatarUpload" :title="$t('forms.avatarUpload')" :footer-hide="true" :fullscreen="true">
-      <cropper :crop-button-text="$t('i.modal.okText')" @on-crop="handleCroped"></cropper>
-    </Modal>
-    <Spin size="large" :fix="true" v-if="modal_loading"></Spin>
-  </Card>
+        </el-button>
+      </el-form-item>
+    </el-form>
+    <el-dialog :visible.sync="avatarUpload" :title="$t('forms.avatarUpload')" :fullscreen="true">
+      <cropper :crop-button-text="$t('el.messagebox.confirm')" @on-crop="handleCroped"></cropper>
+    </el-dialog>
+  </el-card>
 </template>
 <script>
     import avatarImg from '@/assets/images/avatar/avatar.jpg'
@@ -83,9 +76,7 @@
                 },
                 updatePassword: false,
                 avatarUpload: false,
-                modal_loading: false,
-                passwordType: 'password',
-                passwordIcon: 'ios-eye-outline'
+                modal_loading: false
             }
         },
         created () {
@@ -190,14 +181,16 @@
                         }
                         this.$api.request.auth.updateUserInfo(userParam).then((res) => {
                             this.$store.commit('SET_USER_INFO', res.data)
-                            this.$Message.success(this.$i18n.t('messages.saveSuccess'))
+                            this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                             if (this.updatePassword) {
-                                this.$Modal.info({
-                                    title: this.$i18n.t('dialog.info') + '',
-                                    content: this.$i18n.t('messages.changedPassword') + '',
-                                    onOk: () => {
+                                this.$alert(this.$i18n.t('messages.changedPassword') + '', this.$i18n.t('dialog.info'), {
+                                    callback: action => {
                                         this.modal_loading = false
-                                        this.$api.redirectLogin()
+                                        this.$api.redirectLogin((callBackFunc) => {
+                                            this.$api.request.auth.doLogOut().then(() => {
+                                                callBackFunc()
+                                            })
+                                        })
                                     }
                                 })
                             } else {
@@ -221,15 +214,6 @@
                 }
                 this.formValidate.name = userInfo.name
                 this.formValidate.mobile = userInfo.mobile
-            },
-            showPassword () {
-                if (this.passwordType === 'password') {
-                    this.passwordType = 'text'
-                    this.passwordIcon = 'ios-eye'
-                } else {
-                    this.passwordType = 'password'
-                    this.passwordIcon = 'ios-eye-outline'
-                }
             }
         },
         activated () {

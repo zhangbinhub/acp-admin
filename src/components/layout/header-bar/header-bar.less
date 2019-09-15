@@ -1,3 +1,6 @@
+//全局变量
+@import "../../../assets/styles/variable";
+
 .header-bar {
   width: 100%;
   height: 100%;
@@ -5,12 +8,24 @@
 
   .custom-content-con {
     float: right;
-    height: auto;
+    height: @headerBerHeight;
     padding-right: 20px;
-    line-height: 64px;
+    line-height: @headerBerHeight;
 
     & > * {
       float: right;
+    }
+
+    & > div {
+      height: @headerBerHeight;
+    }
+
+    .header-bar-button {
+      margin-right: 12px;
+
+      & > button {
+        height: @headerBerHeight;
+      }
     }
   }
 }

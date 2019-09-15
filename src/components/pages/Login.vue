@@ -1,55 +1,66 @@
 <template>
   <div class="login">
     <div class="bg">
-      <Modal class="login-modal" v-model="loginModal" width="300" :closable="false" :mask-closable="false">
-        <div slot="header" style="text-align: center;">
+      <el-dialog custom-class="login-dialog" :visible.syn="loginModal" width="300px" :close-on-click-modal="false"
+                 :close-on-press-escape="false" :show-close="false">
+        <div slot="title" style="text-align: center;">
           <h1 style="margin:10px;">
-            <Row type="flex" justify="center" align="middle" style="text-align: center;">
-              <i-col span="24">
+            <el-row type="flex" justify="center" align="middle" style="text-align: center;">
+              <el-col :span="24">
                 <span style="color: #657180;">{{title}}</span>
                 <span style="text-align: center;font-size: x-small;color: #c5c8ce;">&nbsp;V{{version}}</span>
-              </i-col>
-            </Row>
+              </el-col>
+            </el-row>
           </h1>
         </div>
+        <el-divider></el-divider>
         <div>
-          <Form ref="formValidate" :model="formValidate" :rules="ruleValidate">
-            <label>
-              <Input ref="loginNo" v-model="formValidate.loginNo" type="text" :disabled="modal_loading"
-                     :placeholder="text.usernamePlaceholder"
-                     @keyup.native.enter="handleSubmit('formValidate')">
-                <span slot="prepend"><Icon type="md-person"/></span>
-              </Input>
-            </label>
-            <FormItem prop="password">
-              <label>
-                <Input :disabled="modal_loading" :placeholder="text.passwordPlaceholder"
-                       @keyup.native.enter="handleSubmit('formValidate')"
-                       autocomplete="off" type="password"
-                       v-model="formValidate.password">
-                  <span slot="prepend"><Icon type="md-lock"/></span>
-                </Input>
-              </label>
-            </FormItem>
-            <FormItem style="margin-bottom: 0;">
-              <Checkbox v-model="formValidate.remember" :disabled="modal_loading">
+          <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" onsubmit="return false;">
+            <el-form-item>
+              <el-input type="password" style="display: none;"></el-input>
+            </el-form-item>
+            <el-form-item prop="loginNo">
+              <el-input ref="loginNo" v-model="formValidate.loginNo" type="text" :disabled="modal_loading"
+                        :placeholder="text.usernamePlaceholder" prefix-icon="el-icon-user"
+                        @keyup.native.enter="handleSubmit('formValidate')">
+              </el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input :disabled="modal_loading" :placeholder="text.passwordPlaceholder"
+                        @keyup.native.enter="handleSubmit('formValidate')" prefix-icon="el-icon-lock"
+                        autocomplete="off" type="text" @focus="passwordFocus"
+                        v-model="formValidate.password">
+              </el-input>
+            </el-form-item>
+            <el-form-item style="margin-bottom: 0;">
+              <el-checkbox v-model="formValidate.remember" :disabled="modal_loading"
+                           @keyup.native.enter="handleSubmit('formValidate')">
                 {{text.rememberMe}}
-              </Checkbox>
-            </FormItem>
-          </Form>
+              </el-checkbox>
+            </el-form-item>
+          </el-form>
         </div>
+        <el-divider></el-divider>
         <div slot="footer">
-          <Button type="primary" size="large" :long="true" :loading="modal_loading"
-                  @click="handleSubmit('formValidate')">
+          <el-button type="primary" :loading="modal_loading" style="width: 100%"
+                     @click="handleSubmit('formValidate')">
             {{$t('forms.buttons.login')}}
-          </Button>
+          </el-button>
           <small style="text-align: center;display: block;margin-top: 10px;">{{copyright}}</small>
         </div>
-      </Modal>
+      </el-dialog>
     </div>
   </div>
 </template>
+<style lang="less">
+  .el-dialog__body {
+    padding: 0 20px;
+  }
 
+  .el-divider {
+    margin: 0;
+  }
+</style>
 <script>
     export default {
         name: 'login',
@@ -90,6 +101,9 @@
             }
         },
         methods: {
+            passwordFocus (event) {
+                event.target.type = 'password'
+            },
             handleSubmit (name) {
                 const currObj = this
                 currObj.$refs[name].validate((valid) => {
@@ -98,7 +112,7 @@
                         currObj.$api.request.auth.doLogin(currObj.formValidate.loginNo, currObj.formValidate.password).then(res => {
                             if (res) {
                                 if (res.data.access_token) {
-                                    currObj.$Message.success(currObj.$i18n.t('messages.loginSuccess'))
+                                    currObj.$message.success(currObj.$i18n.t('messages.loginSuccess') + '')
                                     currObj.$store.commit('SET_TOKEN', res.data.access_token)
                                     currObj.$store.commit('SET_TOKEN_TYPE', res.data.token_type)
                                     currObj.$store.commit('SET_SCOPE', res.data.scope)

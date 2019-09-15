@@ -7,11 +7,6 @@
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.remoteIp')"
                   @keyup.enter.native="handleSearch"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('forms.gatewayIp')" prop="gatewayIp">
-        <el-input v-model="searchForm.gatewayIp" :disabled="modal_loading"
-                  :placeholder="$t('forms.pleaseEnter') + $t('forms.gatewayIp')"
-                  @keyup.enter.native="handleSearch"></el-input>
-      </el-form-item>
       <el-form-item :label="$t('forms.path')" prop="path">
         <el-input v-model="searchForm.path" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.path')"
@@ -44,11 +39,6 @@
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
                         style="width: 185px"></el-date-picker>
       </el-form-item>
-      <el-form-item :label="$t('forms.responseStatus')" prop="responseStatus">
-        <el-input v-model="searchForm.responseStatus" :disabled="modal_loading" type="number"
-                  :placeholder="$t('forms.pleaseEnter') + $t('forms.responseStatus')"
-                  @keyup.enter.native="handleSearch"></el-input>
-      </el-form-item>
       <el-form-item :label="$t('forms.infoType')" prop="history">
         <el-select v-model="searchForm.history" :disabled="modal_loading" value=""
                    style="width:100px">
@@ -78,9 +68,10 @@
         width="130">
       </el-table-column>
       <el-table-column
-        prop="gatewayIp"
-        :label="this.$i18n.t('forms.gatewayIp')"
-        width="130">
+        prop="userName"
+        sortable="custom"
+        width="100"
+        :label="this.$i18n.t('forms.userName')">
       </el-table-column>
       <el-table-column
         prop="path"
@@ -115,17 +106,8 @@
       <el-table-column
         prop="processTime"
         sortable="custom"
-        width="80"
+        width="130"
         :label="this.$i18n.t('forms.processTime')+'('+this.$i18n.t('forms.millisecond')+')'">
-      </el-table-column>
-      <el-table-column
-        prop="responseStatus"
-        sortable="custom"
-        width="80"
-        :label="this.$i18n.t('forms.responseStatus')">
-        <template slot-scope="scope">
-          <span :style="{color:scope.row.responseStatus>=200&&scope.row.responseStatus<300 ? 'green':'red'}">{{scope.row.responseStatus}}</span>
-        </template>
       </el-table-column>
       <el-table-column
         prop="action"
@@ -211,7 +193,7 @@
     import moment from 'moment'
 
     export default {
-        name: 'routeLog',
+        name: 'operateLog',
         data () {
             return {
                 datePickerOptions: {
@@ -223,7 +205,6 @@
                 },
                 searchForm: {
                     remoteIp: '',
-                    gatewayIp: '',
                     path: '',
                     serverId: '',
                     clientName: '',
@@ -231,7 +212,6 @@
                     history: 'false',
                     startTime: '',
                     endTime: '',
-                    responseStatus: '',
                     orderParam: {
                         prop: 'requestTime',
                         order: 'descending'
@@ -278,7 +258,6 @@
             handleSearch () {
                 let searchParam = {
                     remoteIp: this.searchForm.remoteIp,
-                    gatewayIp: this.searchForm.gatewayIp,
                     path: this.searchForm.path,
                     serverId: this.searchForm.serverId,
                     clientName: this.searchForm.clientName,
@@ -286,7 +265,6 @@
                     history: this.searchForm.history === 'true',
                     startTime: this.searchForm.startTime !== '' ? this.searchForm.startTime.getTime() : null,
                     endTime: this.searchForm.endTime !== '' ? this.searchForm.endTime.getTime() : null,
-                    responseStatus: this.searchForm.responseStatus !== '' ? parseInt(this.searchForm.responseStatus) : null,
                     queryParam: {
                         currPage: this.searchForm.currPage,
                         pageSize: this.searchForm.pageSize
@@ -297,7 +275,7 @@
                     searchParam.queryParam.orderCommond = this.searchForm.orderParam.order
                 }
                 this.modal_loading = true
-                this.$api.request.log.queryRouteLog(searchParam).then((res) => {
+                this.$api.request.log.queryOperateLog(searchParam).then((res) => {
                     this.modal_loading = false
                     if (res) {
                         this.selectedData = []

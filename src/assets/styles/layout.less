@@ -1,0 +1,36 @@
+//全局变量
+@import "variable";
+
+html {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif !important;
+}
+
+body {
+  background-color: @bgColor !important;
+  color: @fontColor;
+
+  .el-table th.gutter {
+    display: table-cell !important;
+  }
+
+  .el-table colgroup.gutter {
+    display: table-cell !important;
+  }
+}
+
+.login {
+  height: 100%;
+  background-image: url('../images/background/login.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  .bg {
+    margin: 0 auto;
+    height: 100%;
+  }
+
+  .login-dialog {
+    border-radius: 10px
+  }
+}

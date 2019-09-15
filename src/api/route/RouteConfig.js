@@ -15,9 +15,6 @@ export default {
   query: (query) => {
     return ApiComm.$http.post('/route/gatewayroute', query)
   },
-  queryLog: (query) => {
-    return ApiComm.$http.post('/route/gatewayroutelog', query)
-  },
   refreshRoute: () => {
     return ApiComm.$http.post('/route/gatewayroute/refresh', {}, {
       timeout: 600000

@@ -1,4 +1,4 @@
-import zhLocale from 'iview/src/locale/lang/zh-CN'
+import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
 
 const messages = Object.assign(zhLocale, {
   lang: '语言',
@@ -38,6 +38,8 @@ const messages = Object.assign(zhLocale, {
     routeLog: '路由日志',
     configCenter: '配置中心',
     logFile: '日志文件',
+    operateLog: '操作日志',
+    loginLog: '登录日志',
     appConfig: '应用配置',
     authConfig: '权限配置',
     orgConfig: '机构配置',
@@ -111,6 +113,7 @@ const messages = Object.assign(zhLocale, {
     new: '新',
     confirmPassword: '确认密码',
     passwordNotEqual: '两次输入的密码不相等',
+    scope: '权限范围',
     accessTokenValiditySeconds: 'token有效期',
     refreshTokenValiditySeconds: 'refreshToken有效期',
     seconds: '秒',
@@ -118,6 +121,8 @@ const messages = Object.assign(zhLocale, {
     organization: '机构',
     role: '角色',
     menu: '菜单',
+    clientName: '客户端名称',
+    user: '用户',
     moduleFunc: '模块功能',
     basicInfo: '基本信息',
     menuList: '菜单列表',
@@ -145,6 +150,16 @@ const messages = Object.assign(zhLocale, {
     processTime: '处理时长',
     responseTime: '响应时间',
     responseStatus: '响应状态码',
+    historyInfo: '历史信息',
+    todayInfo: '当日信息',
+    infoType: '信息类型',
+    targetIp: '目标服务IP',
+    targetPath: '目标服务路径',
+    method: '请求方法',
+    token: '请求token',
+    clientId: '客户端ID',
+    identify: '标识',
+    userName: '用户名称',
     configRefreshServer: '服务名',
     configRefreshMatcher: '匹配表达式',
     configRefreshMatcherDescribe: '请在下方输入服务ID的匹配表达式（模糊匹配可用"**"），服务ID格式如下：',
