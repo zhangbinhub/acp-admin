@@ -256,8 +256,8 @@ export const onlineInfo = () => {
   return [{
     'appId': 'dbd1458a-19fb-11e9-894e-d8c49792dd7b',
     'appName': 'Acp-Admin',
-    'count': 1
-  }, { 'appId': 'aa4da240-1bf2-11e9-a49e-d8c49792dd7b', 'appName': 'test', 'count': 0 }]
+    'count': 10
+  }, { 'appId': 'aa4da240-1bf2-11e9-a49e-d8c49792dd7b', 'appName': 'test', 'count': 50 }]
 }
 
 export const loginInfo = () => {
