@@ -8,7 +8,6 @@ export default {
   homePath: '/index',
   cookieExpires: 1, // day
   baseURL: baseURL, // back server url
-  uploadURL: baseURL + '/file/upload', // upload url
   timeOut: 60000,
 
   appId: '8a80cb816d2eb97f016d2eba04710000',

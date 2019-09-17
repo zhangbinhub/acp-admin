@@ -97,50 +97,50 @@
     <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false">
       <el-form ref="editForm" :model="editForm" :rules="ruleEditForm" label-width="150px" style="padding-right: 25px;"
                size="mini" v-loading="modal_loading" onsubmit="return false;">
-        <el-form-item :label="'appId'" prop="id" v-if="action===2">
-          <el-alert type="success" :closable="false">{{editForm.id}}</el-alert>
+        <el-form-item :label="'appId:'" prop="id" v-if="action===2">
+          <span style="color: green">{{editForm.id}}</span>
         </el-form-item>
-        <el-form-item :label="'secret'" prop="secret" v-if="action===2">
-          <el-alert type="error" :closable="false">{{editForm.secret}}</el-alert>
+        <el-form-item :label="'secret:'" prop="secret" v-if="action===2">
+          <span style="color: red">{{editForm.secret}}</span>
         </el-form-item>
-        <el-form-item :label="$t('forms.name')" prop="appName">
+        <el-form-item :label="$t('forms.name')+':'" prop="appName">
           <el-input ref="appName" v-model="editForm.appName" :disabled="modal_loading" v-if="action!==2"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                     @keyup.enter.native="doSave('editForm')"></el-input>
-          <el-alert v-else type="info" :closable="false">{{editForm.appName}}</el-alert>
+          <span v-else>{{editForm.appName}}</span>
         </el-form-item>
-        <el-form-item :label="$t('forms.identify')" prop="identify"
+        <el-form-item :label="$t('forms.identify')+':'" prop="identify"
                       v-if="editForm.secret!==$store.state.app.appInfo.appSecret">
           <el-input v-model="editForm.identify" :disabled="modal_loading" v-if="action!==2"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.identify')"></el-input>
-          <el-alert v-else type="info" :closable="false">{{editForm.identify}}</el-alert>
+          <span v-else>{{editForm.identify}}</span>
         </el-form-item>
-        <el-form-item :label="$t('forms.scope')" prop="scope"
+        <el-form-item :label="$t('forms.scope')+':'" prop="scope"
                       v-if="editForm.secret!==$store.state.app.appInfo.appSecret">
           <el-input v-model="editForm.scope" :disabled="modal_loading" v-if="action!==2"
                     type="textarea" :rows="2"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.scope')"></el-input>
-          <el-alert v-else type="info" :closable="false">{{editForm.scope}}</el-alert>
+          <span v-else>{{editForm.scope}}</span>
         </el-form-item>
-        <el-form-item :label="$t('forms.accessTokenValiditySeconds')" prop="accessTokenValiditySeconds">
+        <el-form-item :label="$t('forms.accessTokenValiditySeconds')+':'" prop="accessTokenValiditySeconds">
           <el-input v-model="editForm.accessTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.accessTokenValiditySeconds')"
                     @keyup.enter.native="doSave('editForm')">
             <span slot="append">{{$t('forms.seconds')}}</span>
           </el-input>
-          <el-alert v-else type="info" :closable="false">{{editForm.accessTokenValiditySeconds}}
+          <span v-else>{{editForm.accessTokenValiditySeconds}}
             {{$t('forms.seconds')}}
-          </el-alert>
+          </span>
         </el-form-item>
-        <el-form-item :label="$t('forms.refreshTokenValiditySeconds')" prop="refreshTokenValiditySeconds">
+        <el-form-item :label="$t('forms.refreshTokenValiditySeconds')+':'" prop="refreshTokenValiditySeconds">
           <el-input v-model="editForm.refreshTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.refreshTokenValiditySeconds')"
                     @keyup.enter.native="doSave('editForm')">
             <span slot="append">{{$t('forms.seconds')}}</span>
           </el-input>
-          <el-alert v-else type="info" :closable="false">{{editForm.refreshTokenValiditySeconds}}
+          <span v-else>{{editForm.refreshTokenValiditySeconds}}
             {{$t('forms.seconds')}}
-          </el-alert>
+          </span>
         </el-form-item>
       </el-form>
       <div slot="footer">
