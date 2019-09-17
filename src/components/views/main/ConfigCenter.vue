@@ -50,7 +50,8 @@
         </el-button>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border height="388" :data="searchData" size="mini" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" :data="searchData" size="mini"
+              :default-sort="searchForm.orderParam"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
               header-cell-class-name="query-table-header">
@@ -270,6 +271,15 @@
             }
         },
         computed: {
+            tableHeight () {
+                const minHeight = 300
+                const height = this.$store.state.app.mainHeight - 80 - 92 - 42 - 4
+                if (height < minHeight) {
+                    return minHeight - 2
+                } else {
+                    return height
+                }
+            },
             enabledList () {
                 return [
                     { value: 'true', label: this.$i18n.t('forms.enabled') },

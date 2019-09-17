@@ -48,7 +48,8 @@
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border height="388" size="mini" :default-sort="searchForm.orderParam" :data="searchData"
+    <el-table ref="table" border :height="tableHeight" size="mini" :default-sort="searchForm.orderParam"
+              :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               @selection-change="handleSelect" @sort-change="handleSortChange"
               header-cell-class-name="query-table-header">
@@ -219,6 +220,15 @@
             }
         },
         computed: {
+            tableHeight () {
+                const minHeight = 300
+                const height = this.$store.state.app.mainHeight - 80 - 92 - 42 - 4
+                if (height < minHeight) {
+                    return minHeight - 2
+                } else {
+                    return height
+                }
+            },
             infoTypeList () {
                 return [
                     { value: 'true', label: this.$i18n.t('forms.historyInfo') },
