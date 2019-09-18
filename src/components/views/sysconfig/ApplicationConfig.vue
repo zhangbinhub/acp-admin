@@ -110,10 +110,10 @@
                     @keyup.enter.native="doSave('editForm')"></el-input>
           <span v-else>{{editForm.appName}}</span>
         </el-form-item>
-        <el-form-item :label="$t('forms.identify')+':'" prop="identify"
-                      v-if="editForm.secret!==$store.state.app.appInfo.appSecret">
+        <el-form-item :label="$t('forms.identify')+':'" prop="identify">
           <el-input v-model="editForm.identify" :disabled="modal_loading" v-if="action!==2"
-                    :placeholder="$t('forms.pleaseEnter') + $t('forms.identify')"></el-input>
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.identify')"
+                    @keyup.enter.native="doSave('editForm')"></el-input>
           <span v-else>{{editForm.identify}}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.scope')+':'" prop="scope"
