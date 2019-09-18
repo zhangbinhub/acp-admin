@@ -117,16 +117,20 @@ const ApiComm = {
     this.turnToPage({
       name: 'login'
     }, (callBackFunc) => {
+      const doLogOut = () => {
+        this.$store.commit('LOGIN_OUT')
+        if (!isHoldTagNavList) {
+          setTagNavListInLocalstorage([])
+          this.$store.commit('SET_TAG_NAV_LIST', [])
+        }
+      }
       if (asyncFunc && typeof asyncFunc === 'function') {
         asyncFunc(() => {
-          this.$store.commit('LOGIN_OUT')
-          if (!isHoldTagNavList) {
-            setTagNavListInLocalstorage([])
-            this.$store.commit('SET_TAG_NAV_LIST', [])
-          }
+          doLogOut()
           callBackFunc(true)
         })
       } else {
+        doLogOut()
         callBackFunc(true)
       }
     }, undefined, false, true)
@@ -214,50 +218,40 @@ const ApiComm = {
     } else {
       dataLose = true
     }
-    if ((!targetMenu || targetMenu.openType !== 1) && dataLose) {
-      const tagList = this.$store.state.app.tagNavList.filter(item => item.path !== this.$router.currentRoute.fullPath)
-      const dataLoseProcess = () => {
-        if (asyncFunc && typeof asyncFunc === 'function') {
-          setTimeout(() => {
-            asyncFunc((result) => {
-              if (result) {
-                if (!closeMore) {
-                  setTagNavListInLocalstorage(tagList)
-                  ApiComm.$store.commit('SET_TAG_NAV_LIST', tagList)
-                }
-                ApiComm.routeSwitch(obj, targetMenu, replace)
-              }
-            })
-          }, 350)
-        } else {
-          if (!closeMore) {
-            setTagNavListInLocalstorage(tagList)
-            ApiComm.$store.commit('SET_TAG_NAV_LIST', tagList)
-          }
-          ApiComm.routeSwitch(obj, targetMenu, replace)
+    const dataLoseProcess = (lazyTime) => {
+      if (asyncFunc && typeof asyncFunc === 'function') {
+        const doAsyncFunc = () => {
+          asyncFunc((result) => {
+            if (result) {
+              ApiComm.routeSwitch(obj, targetMenu, replace)
+            }
+          })
         }
+        if (lazyTime > 0) {
+          setTimeout(() => {
+            doAsyncFunc()
+          }, lazyTime)
+        } else {
+          doAsyncFunc()
+        }
+      } else {
+        ApiComm.routeSwitch(obj, targetMenu, replace)
       }
+    }
+    if ((!targetMenu || targetMenu.openType !== 1) && dataLose) {
       if (obj.path === '/404' || obj.path === '/500' || obj.name === 'E404' || obj.name === 'E500') {
-        dataLoseProcess()
+        dataLoseProcess(0)
       } else {
         this.$confirm(this.getPageTitle(pageName, currMenu) + ' ' +
           this.$i18n.t('messages.leavePage'), this.$i18n.t('dialog.confirm'), {
           type: 'warning'
         }).then(() => {
-          dataLoseProcess()
+          dataLoseProcess(350)
         }).catch(() => {
         })
       }
     } else {
-      if (asyncFunc && typeof asyncFunc === 'function') {
-        asyncFunc((result) => {
-          if (result) {
-            this.routeSwitch(obj, targetMenu, replace)
-          }
-        })
-      } else {
-        this.routeSwitch(obj, targetMenu, replace)
-      }
+      dataLoseProcess(0)
     }
   },
   /**
