@@ -38,8 +38,7 @@ router.beforeEach((to, from, next) => {
           setTagNavListInLocalstorage([])
           store.commit('SET_TAG_NAV_LIST', [])
           router.replace({
-            name: 'login',
-            params: { redirect: to.fullPath }
+            name: 'login'
           })
         }
       }
