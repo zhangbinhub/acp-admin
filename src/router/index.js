@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './routers'
 import store from '../store'
+import {
+  setTagNavListInLocalstorage
+} from '@/libs/tools'
 
 Vue.use(Router)
 const router = new Router({
@@ -32,6 +35,8 @@ router.beforeEach((to, from, next) => {
       if (to.meta.requireAuth) {
         if (!store.state.app.user.token) {
           store.commit('LOGIN_OUT')
+          setTagNavListInLocalstorage([])
+          store.commit('SET_TAG_NAV_LIST', [])
           router.replace({
             name: 'login',
             params: { redirect: to.fullPath }
