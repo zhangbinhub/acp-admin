@@ -1,5 +1,4 @@
 import {
-  setTagNavListInLocalstorage,
   findMenuByPath
 } from '@/libs/tools'
 
@@ -120,7 +119,6 @@ const ApiComm = {
       const doLogOut = () => {
         this.$store.commit('LOGIN_OUT')
         if (!isHoldTagNavList) {
-          setTagNavListInLocalstorage([])
           this.$store.commit('SET_TAG_NAV_LIST', [])
         }
       }
@@ -324,7 +322,6 @@ const ApiComm = {
     } else {
       nextPath = this.$store.state.app.tagNavList[currIndex + 1].path
     }
-    setTagNavListInLocalstorage(tagList)
     this.$store.commit('SET_TAG_NAV_LIST', tagList)
     this.routeSwitch(nextPath)
   },

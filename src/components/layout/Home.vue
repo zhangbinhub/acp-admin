@@ -58,8 +58,6 @@
     import './Home.less'
     import {
         getOpenedNamesByActiveName,
-        getTagNavListFromLocalstorage,
-        setTagNavListInLocalstorage,
         updateTagNavList
     } from '@/libs/tools'
 
@@ -184,7 +182,7 @@
                 this.$store.commit('SET_CACHE_LIST', routeList)
 
                 // 初始化标签导航列表
-                let tagNavList = getTagNavListFromLocalstorage()
+                let tagNavList = this.$store.state.app.tagNavList
                 if (tagNavList.length === 0) {
                     tagNavList.push({
                         isHome: true,
@@ -197,7 +195,6 @@
                 if (route.name !== 'E404' && route.name !== 'E500') {
                     const newTagNavList = updateTagNavList(tagNavList, menuList, route)
                     if (newTagNavList && newTagNavList.length > 0) {
-                        setTagNavListInLocalstorage(newTagNavList)
                         this.$store.commit('SET_TAG_NAV_LIST', newTagNavList)
                     }
                 }
@@ -212,24 +209,20 @@
             handleCloseTag (tagList, type, nextPath, pageName) {
                 if (type === 'all') {
                     this.$api.turnToPage(this.homePath, (callBackFunc) => {
-                        setTagNavListInLocalstorage(tagList)
                         this.$store.commit('SET_TAG_NAV_LIST', tagList)
                         callBackFunc(true)
                     }, this.$i18n.t('messages.allPages'), true)
                 } else if (type === 'others') {
                     this.$api.turnToPage(this.fullPath, (callBackFunc) => {
-                        setTagNavListInLocalstorage(tagList)
                         this.$store.commit('SET_TAG_NAV_LIST', tagList)
                         callBackFunc(true)
                     }, this.$i18n.t('messages.otherPages'), true)
                 } else if (type !== 'others' && this.fullPath !== nextPath) {
                     this.$api.turnToPage(nextPath, (callBackFunc) => {
-                        setTagNavListInLocalstorage(tagList)
                         this.$store.commit('SET_TAG_NAV_LIST', tagList)
                         callBackFunc(true)
                     }, pageName)
                 } else {
-                    setTagNavListInLocalstorage(tagList)
                     this.$store.commit('SET_TAG_NAV_LIST', tagList)
                 }
             },
