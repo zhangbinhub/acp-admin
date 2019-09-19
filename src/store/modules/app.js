@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
+import router from '@/router'
 import Cookies from 'js-cookie'
 import langInfo from '@/lang'
 import appInfo from '../config/appInfo'
@@ -22,6 +23,7 @@ if (Cookies.get('remember') === 'true') {
   remember = true
 }
 let cookieProperties = {
+  path: router.options.base,
   expires: appInfo.cookieExpires
 }
 Cookies.set('lang', lang, cookieProperties)
