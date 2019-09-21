@@ -36,7 +36,6 @@ const messages = Object.assign(enLocale, {
     personalInformation: 'Personal Information Configure',
     routeConfig: 'Route Configure',
     routeLog: 'Route Log',
-    configCenter: 'Config Center',
     logFile: 'Log File',
     operateLog: 'Operate Log',
     loginLog: 'Login Log',

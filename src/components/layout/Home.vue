@@ -16,7 +16,6 @@
           <user :user-avatar="userAvatar" :customer-name="userName"/>
           <language :lang="localLang"/>
           <logFileButton v-if="showLogFile"></logFileButton>
-          <configCenterButton v-if="showConfigCenter"></configCenterButton>
           <routeLogButton v-if="showRouteLog"></routeLogButton>
           <routeConfigButton v-if="showRouteConfig"></routeConfigButton>
           <fullscreen v-model="isFullscreen"/>
@@ -52,7 +51,6 @@
     import Fullscreen from './fullscreen'
     import Language from './language'
     import logFileButton from './log-file-button'
-    import configCenterButton from './config-center-button'
     import routeConfigButton from './route-config-button'
     import routeLogButton from './route-log-button'
     import './Home.less'
@@ -71,7 +69,6 @@
             Fullscreen,
             User,
             routeConfigButton,
-            configCenterButton,
             logFileButton,
             routeLogButton
         },

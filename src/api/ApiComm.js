@@ -160,11 +160,6 @@ const ApiComm = {
       name: 'logFile'
     })
   },
-  gotoConfigCenter () {
-    this.turnToPage({
-      name: 'configCenter'
-    })
-  },
   gotoRouteConfig () {
     this.turnToPage({
       name: 'routeConfig'
@@ -221,6 +216,9 @@ const ApiComm = {
         const doAsyncFunc = () => {
           asyncFunc((result) => {
             if (result) {
+              if (dataLose) {
+                this.removeThisTag()
+              }
               ApiComm.routeSwitch(obj, targetMenu, replace)
             }
           })
@@ -233,6 +231,9 @@ const ApiComm = {
           doAsyncFunc()
         }
       } else {
+        if (dataLose) {
+          this.removeThisTag()
+        }
         ApiComm.routeSwitch(obj, targetMenu, replace)
       }
     }
@@ -313,8 +314,11 @@ const ApiComm = {
     }
     return pageTitle
   },
+  removeThisTag () {
+    const res = this.$store.state.app.tagNavList.filter(item => item.path !== this.$router.currentRoute.fullPath)
+    this.$store.commit('SET_TAG_NAV_LIST', res)
+  },
   closeThisTagImmediately () {
-    const tagList = this.$store.state.app.tagNavList.filter(item => item.path !== this.$router.currentRoute.fullPath)
     const currIndex = this.$store.state.app.tagNavList.findIndex(item => item.path === this.$router.currentRoute.fullPath)
     let nextPath = this.$store.state.app.appInfo.homePath
     if (currIndex === this.$store.state.app.tagNavList.length - 1) {
@@ -322,7 +326,7 @@ const ApiComm = {
     } else {
       nextPath = this.$store.state.app.tagNavList[currIndex + 1].path
     }
-    this.$store.commit('SET_TAG_NAV_LIST', tagList)
+    this.removeThisTag()
     this.routeSwitch(nextPath)
   },
   request: {}

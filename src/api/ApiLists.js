@@ -6,7 +6,6 @@ import org from './sysconfig/orgConfig'
 import user from './sysconfig/userConfig'
 import role from './sysconfig/roleConfig'
 import log from './log/Log'
-import config from './config/ConfigCenter'
 import route from './route/RouteConfig'
 
 export default {
@@ -17,6 +16,5 @@ export default {
   user: user,
   role: role,
   log: log,
-  config: config,
   route: route
 }
