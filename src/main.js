@@ -13,6 +13,8 @@ import './assets/styles/transition.less'
 import eCharts from 'echarts'
 import './mock'
 
+NProgress.configure({ showSpinner: false })
+
 // 响应式布局
 const autoWidth = () => {
   const winWidth = document.documentElement.clientWidth
