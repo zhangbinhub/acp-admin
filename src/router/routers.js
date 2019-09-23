@@ -74,15 +74,6 @@ export default [{
       requireAuth: true
     }
   }, {
-    path: '/configCenter',
-    name: 'configCenter',
-    component: () => import('@/components/views/main/ConfigCenter.vue'),
-    meta: {
-      title: 'pageTitle.configCenter',
-      icon: 'el-icon-s-operation',
-      requireAuth: true
-    }
-  }, {
     path: '/logfile',
     name: 'logFile',
     component: () => import('@/components/views/main/LogFile.vue'),

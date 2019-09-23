@@ -64,7 +64,7 @@
         },
         methods: {
             loadLoginChart () {
-                this.$api.request.auth.getLoginInfo().then(res => {
+                this.$api.request.log.getLoginInfo().then(res => {
                     if (res.data) {
                         this.loginInfo = res.data
                         this.initLoginChart()

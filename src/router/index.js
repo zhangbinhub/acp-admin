@@ -2,9 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './routers'
 import store from '../store'
-import {
-  setTagNavListInLocalstorage
-} from '@/libs/tools'
+import NProgress from 'nprogress'
 
 Vue.use(Router)
 const router = new Router({
@@ -20,6 +18,7 @@ const router = new Router({
   }
 })
 router.beforeEach((to, from, next) => {
+  NProgress.start()
   if (to.matched.length === 0) {
     router.replace({
       name: 'E404',
@@ -35,7 +34,6 @@ router.beforeEach((to, from, next) => {
       if (to.meta.requireAuth) {
         if (!store.state.app.user.token) {
           store.commit('LOGIN_OUT')
-          setTagNavListInLocalstorage([])
           store.commit('SET_TAG_NAV_LIST', [])
           router.replace({
             name: 'login'
@@ -47,6 +45,7 @@ router.beforeEach((to, from, next) => {
   }
 })
 router.afterEach(to => {
+  NProgress.done()
   let pageTitle = ''
   if (to.params.pageName) {
     pageTitle = ' - ' + to.params.pageName

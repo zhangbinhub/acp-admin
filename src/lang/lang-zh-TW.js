@@ -36,7 +36,6 @@ const messages = Object.assign(twLocale, {
     personalInformation: '個人信息維護',
     routeConfig: '路由配置',
     routeLog: '路由日誌',
-    configCenter: '配置中心',
     logFile: '日誌文件',
     operateLog: '操作日誌',
     loginLog: '登錄日誌',

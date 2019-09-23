@@ -1,5 +1,4 @@
 import {
-  setTagNavListInLocalstorage,
   findMenuByPath
 } from '@/libs/tools'
 
@@ -11,7 +10,6 @@ const ApiComm = {
   $store: undefined,
   $router: undefined,
   $loading: undefined,
-  loadingObj: undefined,
   install: function (Vue, options) {
     Vue.prototype.$api = this
     this.$confirm = options.confirm
@@ -24,28 +22,23 @@ const ApiComm = {
 
     // 请求拦截器
     this.$http.interceptors.request.use(config => {
-      // this.loadingObj = this.$loading({
-      //   lock: true,
-      //   spinner: 'el-icon-loading',
-      //   background: 'rgba(0, 0, 0, 0.7)',
-      //   fullscreen: true
-      // })
+      this.$loading.start()
       if (this.$store.state.app.user.token) {
         config.headers.Authorization = `${this.$store.state.app.user.tokenType} ${this.$store.state.app.user.token}`
       }
       return config
     }, error => {
-      // this.loadingObj.close()
+      this.$loading.done()
       this.errorProcess(error)
       return Promise.reject(error)
     })
 
     // 响应拦截器
     this.$http.interceptors.response.use(data => {
-      // this.loadingObj.close()
+      this.$loading.done()
       return data
     }, error => {
-      // this.loadingObj.close()
+      this.$loading.done()
       if (error.response) {
         switch (error.response.status) {
           case 400: // 业务错误
@@ -120,7 +113,6 @@ const ApiComm = {
       const doLogOut = () => {
         this.$store.commit('LOGIN_OUT')
         if (!isHoldTagNavList) {
-          setTagNavListInLocalstorage([])
           this.$store.commit('SET_TAG_NAV_LIST', [])
         }
       }
@@ -160,11 +152,6 @@ const ApiComm = {
   gotoLogFile () {
     this.turnToPage({
       name: 'logFile'
-    })
-  },
-  gotoConfigCenter () {
-    this.turnToPage({
-      name: 'configCenter'
     })
   },
   gotoRouteConfig () {
@@ -223,6 +210,9 @@ const ApiComm = {
         const doAsyncFunc = () => {
           asyncFunc((result) => {
             if (result) {
+              if (dataLose) {
+                this.removeThisTag()
+              }
               ApiComm.routeSwitch(obj, targetMenu, replace)
             }
           })
@@ -235,6 +225,9 @@ const ApiComm = {
           doAsyncFunc()
         }
       } else {
+        if (dataLose) {
+          this.removeThisTag()
+        }
         ApiComm.routeSwitch(obj, targetMenu, replace)
       }
     }
@@ -315,8 +308,11 @@ const ApiComm = {
     }
     return pageTitle
   },
+  removeThisTag () {
+    const res = this.$store.state.app.tagNavList.filter(item => item.path !== this.$router.currentRoute.fullPath)
+    this.$store.commit('SET_TAG_NAV_LIST', res)
+  },
   closeThisTagImmediately () {
-    const tagList = this.$store.state.app.tagNavList.filter(item => item.path !== this.$router.currentRoute.fullPath)
     const currIndex = this.$store.state.app.tagNavList.findIndex(item => item.path === this.$router.currentRoute.fullPath)
     let nextPath = this.$store.state.app.appInfo.homePath
     if (currIndex === this.$store.state.app.tagNavList.length - 1) {
@@ -324,8 +320,7 @@ const ApiComm = {
     } else {
       nextPath = this.$store.state.app.tagNavList[currIndex + 1].path
     }
-    setTagNavListInLocalstorage(tagList)
-    this.$store.commit('SET_TAG_NAV_LIST', tagList)
+    this.removeThisTag()
     this.routeSwitch(nextPath)
   },
   request: {}

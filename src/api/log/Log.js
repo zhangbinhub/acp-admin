@@ -2,6 +2,9 @@ import ApiComm from '../ApiComm'
 import Qs from 'qs'
 
 export default {
+  getLoginInfo: () => {
+    return ApiComm.$http.get('/log/logininfo')
+  },
   searchFile: (startDate, endDate) => {
     return ApiComm.$http.post('/log/files', {
       startDate: startDate,

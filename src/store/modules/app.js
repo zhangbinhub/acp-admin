@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
+import router from '@/router'
 import Cookies from 'js-cookie'
 import langInfo from '@/lang'
 import appInfo from '../config/appInfo'
@@ -17,11 +18,8 @@ let lang = Cookies.get('lang')
 if (!lang || !langInfo.langArrays.includes(lang)) {
   lang = langInfo.defaultLang
 }
-let remember = false
-if (Cookies.get('remember') === 'true') {
-  remember = true
-}
 let cookieProperties = {
+  path: router.options.base,
   expires: appInfo.cookieExpires
 }
 Cookies.set('lang', lang, cookieProperties)
@@ -30,7 +28,7 @@ export default {
     mainHeight: 0,
     appInfo: appInfo,
     cacheList: [],
-    tagNavList: [],
+    tagNavList: Cookies.get('tagNavList') ? JSON.parse(Cookies.get('tagNavList')) : [],
     isMini: false,
     i18n: new VueI18n({
       locale: lang,
@@ -47,7 +45,7 @@ export default {
     user: {
       userInfo: {},
       loginNo: Cookies.get('loginNo'),
-      remember: remember,
+      remember: Cookies.get('remember') === 'true',
       token: Cookies.get('token'),
       tokenType: Cookies.get('token_type'),
       scope: Cookies.get('scope'),
@@ -71,6 +69,7 @@ export default {
     },
     SET_TAG_NAV_LIST: (state, payload) => {
       state.tagNavList = payload
+      Cookies.set('tagNavList', JSON.stringify(payload), cookieProperties)
     },
     SET_MINI: (state, payload) => {
       state.isMini = payload
@@ -88,7 +87,7 @@ export default {
       Cookies.set('loginNo', payload, cookieProperties)
     },
     SET_REMEMBER: (state, payload) => {
-      state.user.remember = payload === 'true'
+      state.user.remember = payload
       Cookies.set('remember', payload, cookieProperties)
     },
     SET_TOKEN: (state, payload) => {
@@ -109,9 +108,9 @@ export default {
       state.user.scope = ''
       state.user.menuList = []
       state.user.userInfo = {}
-      Cookies.remove('token')
-      Cookies.remove('token_type')
-      Cookies.remove('scope')
+      Cookies.remove('token', cookieProperties)
+      Cookies.remove('token_type', cookieProperties)
+      Cookies.remove('scope', cookieProperties)
     },
     SET_MENU_LIST: (state, payload) => {
       state.user.menuList = payload

@@ -34,8 +34,7 @@
     </el-col>
     <el-col :lg="{ span: 15 }" v-show="currRole.id&&currRole.id!==''" style="margin-bottom: 16px;">
       <el-card>
-        <p style="margin: 0 16px;">{{currRoleFullPath}}</p>
-        <el-divider style="margin: 12px 0;"/>
+        <div slot="header">{{currRoleFullPath}}</div>
         <el-tabs v-model="activeName">
           <el-tab-pane name="basicInfo">
             <span slot="label"><i class="el-icon-info" style="margin-right: 5px"></i>{{$t('forms.basicInfo')}}</span>
@@ -88,7 +87,6 @@
                      v-loading="treeLoading" :default-expanded-keys="editForm.moduleFuncIds"></el-tree>
           </el-tab-pane>
         </el-tabs>
-        <el-divider style="margin: 12px 0;"/>
         <div style="text-align: center">
           <el-button type="info" :loading="treeLoading" style="margin-right: 20px;"
                      @click="doReset">
