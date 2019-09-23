@@ -15,7 +15,7 @@
 > - [Upgrade] 优化权限配置、机构配置、角色配置界面样式
 > - [Upgrade] 优化cookie设置，指定path参数
 > - [Upgrade] 去除localStore，统一存储进cookie
-> - [Upgrade] 取消配置中心界面
+> - [Upgrade] 取消配置中心界面，优化标签页
 > - [Fix] 修复关闭其他标签页时控制台报错的问题
 > - [Fix] 修复IE兼容性问题，兼容IE10及以上版本
 ##### v3.0.5

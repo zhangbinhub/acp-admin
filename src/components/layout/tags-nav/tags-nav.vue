@@ -11,7 +11,7 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <el-tabs type="card" ref="header-tabs" v-model="currPath" @tab-click="handleClick" @tab-remove="handleClose">
+    <el-tabs type="card" ref="header-tabs" v-model="currPath" :before-leave="handleClick" @tab-remove="handleClose">
       <el-tab-pane
         v-for="(item,index) in tagList"
         :key="item.path+'-'+index"
@@ -96,6 +96,7 @@
             },
             handleClick (path) {
                 this.$emit('input', path)
+                return this.$route.fullPath === path
             },
             showTitleInside (item) {
                 if (item.isHome) {

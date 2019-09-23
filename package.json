@@ -40,7 +40,7 @@
     "babel-plugin-import": "^1.12.1",
     "less": "^3.10.3",
     "less-loader": "^5.0.0",
-    "lint-staged": "^9.2.5",
+    "lint-staged": "^9.3.0",
     "vue-template-compiler": "^2.6.10",
     "webpack": "^4.40.2"
   },

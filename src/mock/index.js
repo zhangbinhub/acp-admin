@@ -17,7 +17,6 @@ import {
   getModuleFuncInfo
 } from './sysconfig/auth'
 import { logFileList, downLoadLogFile, queryRouteLog, queryOperateLog, queryLoginLog } from './log/log'
-import { deleteConfig, queryConfig, updateConfig, refreshConfig, configServerList } from './config/configCenter'
 import { deleteRoute, queryRoute, updateRoute, refreshRoute } from './route/routeConfig'
 
 // 配置Ajax请求延时，可用来测试网络延迟大时项目中一些效果
@@ -85,13 +84,6 @@ Mock.mock(/\/oauth\/user/, /post/i, getUserList)
 Mock.mock(/\/oauth\/user/, /delete/i, deleteUser)
 Mock.mock(/\/oauth\/user\/resetpwd\/.*/, /get/i, resetSuccess)
 Mock.mock(/\/oauth\/user/, /(put)|(patch)/i, updateUser)
-Mock.mock(/\/config\/properties/, /(put)|(patch)/i, updateConfig)
-Mock.mock(/\/config\/properties/, /delete/i, deleteConfig)
-Mock.mock(/\/config\/properties\/services/, /get/i, configServerList)
-Mock.mock(/\/config\/properties\/refresh/, /post/i, refreshConfig)
-Mock.mock(/\/config\/properties\/refresh\/application/, /post/i, refreshConfig)
-Mock.mock(/\/config\/properties\/refresh\/matcher/, /post/i, refreshConfig)
-Mock.mock(/\/config\/properties/, /post/i, queryConfig)
 Mock.mock(/\/route\/gatewayroute/, /(put)|(patch)/i, updateRoute)
 Mock.mock(/\/route\/gatewayroute/, /delete/i, deleteRoute)
 Mock.mock(/\/route\/gatewayroute\/refresh/, /post/i, refreshRoute)
@@ -99,6 +91,6 @@ Mock.mock(/\/route\/gatewayroute/, /post/i, queryRoute)
 Mock.mock(/\/log\/files/, /post/i, logFileList)
 Mock.mock(/\/log\/files\/.*/, /get/i, downLoadLogFile)
 Mock.mock(/\/log\/gatewayroutelog/, /post/i, queryRouteLog)
-Mock.mock(/\/log\/operatelog/, /post/i, queryOperateLog())
-Mock.mock(/\/log\/loginlog/, /post/i, queryLoginLog())
-Mock.mock(/\/log\/logininfo/, /get/i, loginInfo())
+Mock.mock(/\/log\/operatelog/, /post/i, queryOperateLog)
+Mock.mock(/\/log\/loginlog/, /post/i, queryLoginLog)
+Mock.mock(/\/log\/logininfo/, /get/i, loginInfo)
