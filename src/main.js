@@ -3,6 +3,8 @@ import App from './App.vue'
 import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 import router from './router'
 import './plugins/plugin-axios.js'
 import api from './api'
@@ -54,7 +56,7 @@ Vue.use(api, {
   http: Vue.prototype.$http,
   store: store,
   router: router,
-  loading: Vue.prototype.$loading
+  loading: NProgress
 })
 new Vue({
   router,

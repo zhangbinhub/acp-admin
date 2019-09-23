@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import routes from './routers'
 import store from '../store'
+import NProgress from 'nprogress'
 
 Vue.use(Router)
 const router = new Router({
@@ -17,6 +18,7 @@ const router = new Router({
   }
 })
 router.beforeEach((to, from, next) => {
+  NProgress.start()
   if (to.matched.length === 0) {
     router.replace({
       name: 'E404',
@@ -43,6 +45,7 @@ router.beforeEach((to, from, next) => {
   }
 })
 router.afterEach(to => {
+  NProgress.done()
   let pageTitle = ''
   if (to.params.pageName) {
     pageTitle = ' - ' + to.params.pageName
