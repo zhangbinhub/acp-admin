@@ -179,10 +179,6 @@ npm install
 ![images](doc/images/pages/500.png)
 - 后台日志文件查询、下载
 ![images](doc/images/pages/logfile.png)
-- 配置中心管理
-![images](doc/images/pages/configcenter.png)
-![images](doc/images/pages/configcenteredit.png)
-![images](doc/images/pages/configcenterrefreshdialog.png)
 - 路由配置
 ![images](doc/images/pages/route.png)
 ![images](doc/images/pages/routeEdit.png)
