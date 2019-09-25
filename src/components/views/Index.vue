@@ -30,7 +30,7 @@
     </el-row>
     <el-row v-show="showLoginChart" style="margin-top: 16px;">
       <el-card shadow="always">
-        <div id="loginChart" :style="{height: '300px'}"></div>
+        <div id="loginChart" :style="{height: '300px'}" @resize="initLoginChart"></div>
       </el-card>
     </el-row>
   </div>

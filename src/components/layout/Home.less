@@ -16,8 +16,10 @@
   .logo-con {
     height: 40px;
     padding: 10px;
-    width: auto;
+    width: 200px;
     position: absolute;
+    -webkit-transition: width 0.3s ease-in-out;
+    transition: width 0.3s ease-in-out;
 
     img {
       height: 44px;
@@ -25,6 +27,20 @@
       display: block;
       margin: 0 auto;
     }
+  }
+
+  .logo-con.collapsed {
+    width: 44px;
+  }
+
+  .menu-container {
+    width: 220px;
+    -webkit-transition: width 0.3s ease-in-out;
+    transition: width 0.3s ease-in-out;
+  }
+
+  .menu-container.collapsed {
+    width: 64px;
   }
 
   .main-scrollbar {

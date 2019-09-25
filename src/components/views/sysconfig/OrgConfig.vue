@@ -35,7 +35,7 @@
       <el-card>
         <div slot="header">{{currOrgFullPath}}</div>
         <el-form ref="editForm" size="mini" :model="editForm" :rules="ruleEditForm" label-width="80px"
-                 v-loading="treeLoading" onsubmit="return false;">
+                 v-loading="treeLoading" @submit.native.prevent>
           <el-col :sm="{ span: 12 }">
             <el-form-item :label="$t('forms.name')" prop="name">
               <el-input ref="name" v-model="editForm.name" :disabled="treeLoading"

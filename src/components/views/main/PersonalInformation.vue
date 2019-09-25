@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="120px"
-             onsubmit="return false;">
+             @submit.native.prevent>
       <el-form-item prop="avatar">
         <el-tooltip :content="$t('forms.avatar')" placement="right">
           <el-avatar style="width: 100px; height: 100px; cursor: pointer" :src="formValidate.avatar"

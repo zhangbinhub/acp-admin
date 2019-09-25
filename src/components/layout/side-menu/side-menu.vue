@@ -8,7 +8,6 @@
                active-text-color="#409eff"
                :default-active="activeName"
                :default-openeds="openedNames"
-               :collapse-transition="false"
                @select="handleSelect">
         <template v-for="item in menuList">
           <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"></side-menu-item>
