@@ -1,21 +1,18 @@
 <template>
   <div class="login">
     <div class="bg">
-      <el-dialog custom-class="login-dialog" :visible.syn="loginModal" width="300px" :close-on-click-modal="false"
-                 :close-on-press-escape="false" :show-close="false">
-        <div slot="title" style="text-align: center;">
-          <h1 style="margin:10px;">
-            <el-row type="flex" justify="center" align="middle" style="text-align: center;">
-              <el-col :span="24">
-                <span style="color: #657180;">{{title}}</span>
-                <span style="text-align: center;font-size: x-small;color: #c5c8ce;">&nbsp;V{{version}}</span>
-              </el-col>
-            </el-row>
+      <el-dialog custom-class="login-dialog" :visible.syn="loginModal" width="300px"
+                 :modal="false" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
+        <div slot="title" style="text-align: center">
+          <h1>
+            <span>{{title}}</span>
           </h1>
+          <div style="height: 20px">
+            <span style="text-align: center;font-size: x-small;">v{{version}}</span>
+          </div>
         </div>
-        <el-divider></el-divider>
         <div>
-          <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" onsubmit="return false;">
+          <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" @submit.native.prevent>
             <el-form-item>
               <el-input type="password" style="display: none;"></el-input>
             </el-form-item>
@@ -40,7 +37,6 @@
             </el-form-item>
           </el-form>
         </div>
-        <el-divider></el-divider>
         <div slot="footer">
           <el-button type="primary" :loading="modal_loading" style="width: 100%"
                      @click="handleSubmit('formValidate')">
@@ -52,16 +48,9 @@
     </div>
   </div>
 </template>
-<style lang="less">
-  .el-dialog__body {
-    padding: 0 20px;
-  }
-
-  .el-divider {
-    margin: 0;
-  }
-</style>
 <script>
+    import '@/assets/styles/login.less'
+
     export default {
         name: 'login',
         data () {

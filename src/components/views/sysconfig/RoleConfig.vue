@@ -39,7 +39,7 @@
           <el-tab-pane name="basicInfo">
             <span slot="label"><i class="el-icon-info" style="margin-right: 5px"></i>{{$t('forms.basicInfo')}}</span>
             <el-form ref="editForm" size="mini" :model="editForm" :rules="ruleEditForm" label-width="60px"
-                     v-loading="treeLoading" onsubmit="return false;">
+                     v-loading="treeLoading" @submit.native.prevent>
               <el-form-item :label="$t('forms.name')" prop="name">
                 <el-input ref="name" v-model="editForm.name" :disabled="treeLoading"
                           :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"

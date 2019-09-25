@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <el-form ref="searchForm" :model="searchForm" label-width="60px" :inline="true" size="mini"
-             onsubmit="return false;">
+             @submit.native.prevent>
       <el-form-item :label="$t('forms.routeId')" prop="routeId">
         <el-input v-model="searchForm.routeId" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.routeId')"
@@ -118,7 +118,7 @@
     <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false"
                :fullscreen="true">
       <el-form ref="editForm" :model="editForm" :rules="ruleAddForm" label-width="80px" size="mini"
-               style="padding-right: 25px;" v-loading="modal_loading" onsubmit="return false;">
+               style="padding-right: 25px;" v-loading="modal_loading" @submit.native.prevent>
         <el-row>
           <el-col :lg="8">
             <el-form-item :label="$t('forms.routeId')" prop="routeId" style="width: 100%">

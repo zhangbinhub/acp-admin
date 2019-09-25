@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="60px" :inline="true" onsubmit="return false;"
+    <el-form ref="searchForm" :model="searchForm" label-width="60px" :inline="true" @submit.native.prevent
              size="mini">
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input v-model="searchForm.name" :disabled="modal_loading"
@@ -129,7 +129,7 @@
     </el-pagination>
     <el-dialog :visible.sync="addModal" :title="$t('forms.buttons.add')" :close-on-click-modal="false">
       <el-form ref="addForm" :model="addForm" :rules="ruleAddForm" label-width="60px" size="mini"
-               v-loading="modal_loading" onsubmit="return false;" style="padding-right: 25px;">
+               v-loading="modal_loading" @submit.native.prevent style="padding-right: 25px;">
         <el-form-item :label="$t('forms.name')" prop="name">
           <el-input v-model="addForm.name" :disabled="modal_loading" ref="name"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"

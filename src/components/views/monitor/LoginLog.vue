@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <el-form ref="searchForm" :model="searchForm" label-width="100px" :inline="true" size="mini"
-             onsubmit="return false;">
+             @submit.native.prevent>
       <el-form-item :label="$t('forms.remoteIp')" prop="remoteIp">
         <el-input v-model="searchForm.remoteIp" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.remoteIp')"
@@ -126,7 +126,7 @@
     </el-pagination>
     <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false" width="600px">
       <el-form ref="editForm" size="mini" :model="editForm" label-width="100px" :inline="true"
-               v-loading="modal_loading" onsubmit="return false;">
+               v-loading="modal_loading" @submit.native.prevent>
         <el-form-item :label="$t('forms.remoteIp')+':'" prop="remoteIp">
           <span>{{editForm.remoteIp}}</span>
         </el-form-item>

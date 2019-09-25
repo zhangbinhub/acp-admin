@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <el-form ref="searchForm" :model="searchForm" label-width="80px" :inline="true" size="mini"
-             onsubmit="return false;">
+             @submit.native.prevent>
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input v-model="searchForm.name" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
@@ -147,7 +147,7 @@
           <el-card>
             <div slot="header">{{$t('forms.basicInfo')}}</div>
             <el-form ref="editForm" :model="editForm" :rules="ruleEditForm" label-width="80px"
-                     size="mini" v-loading="modal_loading" onsubmit="return false;">
+                     size="mini" v-loading="modal_loading" @submit.native.prevent>
               <el-form-item :label="$t('forms.name')" prop="name">
                 <el-input ref="name" v-model="editForm.name" @keyup.enter.native="doSave" :disabled="modal_loading"
                           :placeholder=" $t('forms.pleaseEnter') + $t('forms.name')"></el-input>
