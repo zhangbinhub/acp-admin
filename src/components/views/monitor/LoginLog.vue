@@ -17,14 +17,6 @@
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.userName')"
                   @keyup.enter.native="handleSearch"></el-input>
       </el-form-item>
-      <el-form-item :label="$t('forms.infoType')" prop="history">
-        <el-select v-model="searchForm.history" :disabled="modal_loading" value=""
-                   style="width:100px">
-          <el-option v-for="item in infoTypeList" :value="item.value" :label="item.label"
-                     :key="'search_select_'+item.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
       <el-form-item :label="$t('forms.startDate')" prop="startTime">
         <el-date-picker type="date" :disabled="modal_loading" :picker-options="datePickerOptions"
                         v-model="searchForm.startTime"
@@ -36,6 +28,14 @@
                         v-model="searchForm.endTime"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
                         style="width: 185px"></el-date-picker>
+      </el-form-item>
+      <el-form-item :label="$t('forms.infoType')" prop="history">
+        <el-select v-model="searchForm.history" :disabled="modal_loading" value=""
+                   style="width:100px">
+          <el-option v-for="item in infoTypeList" :value="item.value" :label="item.label"
+                     :key="'search_select_'+item.value">
+          </el-option>
+        </el-select>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group style="margin-right: 20px">
