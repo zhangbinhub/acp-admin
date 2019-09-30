@@ -11,8 +11,6 @@
 
 > 系统仍持续完善和优化中，数据初始化及后端数据结构请参看[后端工程](https://github.com/zhangbin1010/acp-admin-cloud)
 
-### [在线预览](https://zhangbin1010.github.io/acp-admin/admin/index.html)
-
 ## 相关组件官方文档
 - [Vue](http://www.runoob.com/vue2/vue-tutorial.html)
 - [Vue CLI 3](https://cli.vuejs.org/zh/)
