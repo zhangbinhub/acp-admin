@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang=zh><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge,chrome=1"><meta name=renderer content=webkit><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><link rel=icon href=favicon.ico><title>Acp-Admin</title><style>body {
+            background-color: #1D1F20 !important;
+            overflow: hidden;
+        }
+
+        .loader {
+            animation: rotate 1s infinite;
+            height: 50px;
+            width: 50px;
+            margin: 0 auto;
+        }
+
+        .loader:before,
+        .loader:after {
+            border-radius: 50%;
+            content: '';
+            display: block;
+            height: 20px;
+            width: 20px;
+        }
+
+        .loader:before {
+            animation: ball1 1s infinite;
+            background-color: #cb2025;
+            box-shadow: 30px 0 0 #f8b334;
+            margin-bottom: 10px;
+        }
+
+        .loader:after {
+            animation: ball2 1s infinite;
+            background-color: #00a096;
+            box-shadow: 30px 0 0 #97bf0d;
+        }
+
+        @keyframes rotate {
+            0% {
+                -webkit-transform: rotate(0deg) scale(0.8);
+                -moz-transform: rotate(0deg) scale(0.8);
+            }
+            50% {
+                -webkit-transform: rotate(360deg) scale(1.2);
+                -moz-transform: rotate(360deg) scale(1.2);
+            }
+            100% {
+                -webkit-transform: rotate(720deg) scale(0.8);
+                -moz-transform: rotate(720deg) scale(0.8);
+            }
+        }
+
+        @keyframes ball1 {
+            0% {
+                box-shadow: 30px 0 0 #f8b334;
+            }
+            50% {
+                box-shadow: 0 0 0 #f8b334;
+                margin-bottom: 0;
+                -webkit-transform: translate(15px, 15px);
+                -moz-transform: translate(15px, 15px);
+            }
+            100% {
+                box-shadow: 30px 0 0 #f8b334;
+                margin-bottom: 10px;
+            }
+        }
+
+        @keyframes ball2 {
+            0% {
+                box-shadow: 30px 0 0 #97bf0d;
+            }
+            50% {
+                box-shadow: 0 0 0 #97bf0d;
+                margin-top: -20px;
+                -webkit-transform: translate(15px, 15px);
+                -moz-transform: translate(15px, 15px);
+            }
+            100% {
+                box-shadow: 30px 0 0 #97bf0d;
+                margin-top: 0;
+            }
+        }</style><link href=/admin/public/css/chunk-34fd7da6.a42de3c5.css rel=prefetch><link href=/admin/public/css/chunk-5076a1ba.ee21ffe2.css rel=prefetch><link href=/admin/public/css/chunk-51cdc152.aa011add.css rel=prefetch><link href=/admin/public/css/chunk-622677a6.0f2b81ae.css rel=prefetch><link href=/admin/public/css/chunk-67cc5ce0.89be4e5a.css rel=prefetch><link href=/admin/public/css/chunk-7096b548.62d5114b.css rel=prefetch><link href=/admin/public/css/chunk-74b24d98.09cc9523.css rel=prefetch><link href=/admin/public/css/chunk-7a2047e2.4a3b0e86.css rel=prefetch><link href=/admin/public/js/chunk-0e14a2f5.ea186584.js rel=prefetch><link href=/admin/public/js/chunk-293174a0.1ccecbf8.js rel=prefetch><link href=/admin/public/js/chunk-2d0c1f24.be3d2f17.js rel=prefetch><link href=/admin/public/js/chunk-2d0d0785.0e6185bf.js rel=prefetch><link href=/admin/public/js/chunk-2d0d7885.2866e537.js rel=prefetch><link href=/admin/public/js/chunk-2d0e6c08.1475fc5a.js rel=prefetch><link href=/admin/public/js/chunk-2d212bb2.16479e2f.js rel=prefetch><link href=/admin/public/js/chunk-2d2163d7.072e4b5d.js rel=prefetch><link href=/admin/public/js/chunk-2d221fd7.7409fc38.js rel=prefetch><link href=/admin/public/js/chunk-2d2225b5.e088b2be.js rel=prefetch><link href=/admin/public/js/chunk-2d230bd9.59baf05f.js rel=prefetch><link href=/admin/public/js/chunk-34fd7da6.e40b81a2.js rel=prefetch><link href=/admin/public/js/chunk-488596ba.45406803.js rel=prefetch><link href=/admin/public/js/chunk-5076a1ba.2712c5c4.js rel=prefetch><link href=/admin/public/js/chunk-51cdc152.b70ffa0d.js rel=prefetch><link href=/admin/public/js/chunk-622677a6.9475cea6.js rel=prefetch><link href=/admin/public/js/chunk-67cc5ce0.cfb3ee27.js rel=prefetch><link href=/admin/public/js/chunk-7096b548.5a524aac.js rel=prefetch><link href=/admin/public/js/chunk-74b24d98.94a5928e.js rel=prefetch><link href=/admin/public/js/chunk-7a2047e2.fab32b46.js rel=prefetch><link href=/admin/public/css/chunk-vendors.9c1fae3b.css rel=preload as=style><link href=/admin/public/css/index.958512f3.css rel=preload as=style><link href=/admin/public/js/chunk-vendors.89fad826.js rel=preload as=script><link href=/admin/public/js/index.d4970877.js rel=preload as=script><link href=/admin/public/css/chunk-vendors.9c1fae3b.css rel=stylesheet><link href=/admin/public/css/index.958512f3.css rel=stylesheet></head><body><div id=loading style="margin-top: 200px"><div class=loader></div></div><div id=app></div><script>window.onload = function () {
+        document.getElementById('loading').style.display = 'none'
+    }</script><script src=/admin/public/js/chunk-vendors.89fad826.js></script><script src=/admin/public/js/index.d4970877.js></script></body></html>
