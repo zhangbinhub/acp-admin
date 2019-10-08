@@ -1,4 +1,7 @@
 ## 版本更新记录
+##### v4.0.1
+> - [Upgrade] 更新依赖插件至最新版本
+> - [Upgrade] 与后台同步更新至v4.0.1
 ##### v4.0.0
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 页面组件由 iView 替换为 Element-UI

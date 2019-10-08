@@ -1,7 +1,7 @@
 const baseURL = '/v1/api'
 export default {
   appName: 'Acp-Admin',
-  appVersion: '4.0.0',
+  appVersion: '4.0.1',
   copyright: 'Copyright © 2019 by ZhangBin',
   theme: 'dark',
   minWidth: 768,
