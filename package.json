@@ -1,7 +1,6 @@
 {
   "name": "acp-admin",
   "version": "4.0.1",
-  "private": true,
   "scripts": {
     "server": "vue-cli-service serve",
     "build": "vue-cli-service build"
