@@ -40,8 +40,6 @@
   </el-card>
 </template>
 <script>
-    import { doDownLoadFile } from '@/libs/tools'
-
     export default {
         name: 'logFile',
         data () {
@@ -124,23 +122,7 @@
                 this.$refs['formValidate'].resetFields()
             },
             downLoadFile (file) {
-                this.form_loading = true
-                this.$api.request.log.downLoadFile(file).then((res) => {
-                    this.form_loading = false
-                    if (res) {
-                        doDownLoadFile(res.data, file)
-                    }
-                }).catch((error) => {
-                    const currObj = this
-                    currObj.form_loading = false
-                    const blob = new Blob([error.response.data])
-                    const reader = new FileReader()
-                    reader.onload = function (event) {
-                        const errorObj = JSON.parse(event.target.result)
-                        currObj.$api.errorProcess(errorObj.errorDescription, currObj.$i18n.t('messages.requestFailed'))
-                    }
-                    reader.readAsText(blob, 'UTF-8')
-                })
+                this.$api.request.log.downLoadFile(file)
             }
         }
     }

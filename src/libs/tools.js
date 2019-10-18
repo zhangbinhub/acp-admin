@@ -280,22 +280,3 @@ export const filterTreeNode = (treeData, targetIds) => {
   }
   return filterData
 }
-
-/**
- * 下载文件
- * @param data 服务器文件二进制内容
- * @param fileName 文件名
- */
-export const doDownLoadFile = (data, fileName) => {
-  if (!data) {
-    return
-  }
-  let url = window.URL.createObjectURL(new Blob([data]))
-  let link = document.createElement('a')
-  link.style.display = 'none'
-  link.href = url
-  link.setAttribute('download', fileName)
-  document.body.appendChild(link)
-  link.click()
-  link.remove()
-}

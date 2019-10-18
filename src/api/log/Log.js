@@ -20,12 +20,14 @@ export default {
     })
   },
   downLoadFile: (fileName) => {
-    return ApiComm.$http.get('/log/files/' + encodeURIComponent(fileName), {
-      headers: {
-        'Process400': 'false'
-      },
-      responseType: 'blob'
-    })
+    let form = document.createElement('form')
+    form.style.display = 'none'
+    form.setAttribute('method', 'get')
+    form.setAttribute('action', ApiComm.$store.state.app.appInfo.baseURL + '/log/files/' + encodeURIComponent(fileName))
+    form.setAttribute('target', '')
+    document.body.appendChild(form)
+    form.submit()
+    form.remove()
   },
   queryRouteLog: (query) => {
     return ApiComm.$http.post('/log/gatewayroutelog', query)
