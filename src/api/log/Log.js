@@ -1,5 +1,6 @@
 import ApiComm from '../ApiComm'
 import Qs from 'qs'
+import encrypt from 'js-base64'
 
 export default {
   getLoginInfo: () => {
@@ -23,7 +24,7 @@ export default {
     let form = document.createElement('form')
     form.style.display = 'none'
     form.setAttribute('method', 'get')
-    form.setAttribute('action', ApiComm.$store.state.app.appInfo.baseURL + '/log/files/' + encodeURIComponent(fileName))
+    form.setAttribute('action', ApiComm.$store.state.app.appInfo.baseURL + '/log/files/' + encodeURIComponent(encrypt.Base64.encode(fileName)))
     form.setAttribute('target', '')
     document.body.appendChild(form)
     form.submit()
