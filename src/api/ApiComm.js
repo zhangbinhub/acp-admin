@@ -77,7 +77,7 @@ const ApiComm = {
             this.redirectE500(errorMsg)
             return
         }
-        return Promise.reject(error)
+        // return Promise.reject(error)
       }
       this.errorProcess(error)
     })
