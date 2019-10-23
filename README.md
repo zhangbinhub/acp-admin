@@ -80,15 +80,7 @@ npm install -g npm-check-updates
 ``` bash
 npm install -g @vue/cli
 ```
-## 二、全新创建工程（如使用本工程源码，可忽略此步骤）
-##### （一）命令创建
-``` bash
-vue create acp-admin
-```
-##### （二）WebStorm 创建
-![create images](doc/images/webstorm-create.png)
-
-## 三、依赖插件
+## 二、依赖插件
 ##### （一）安装
 ``` bash
 npm install
@@ -98,7 +90,7 @@ npm install
 ncu -u
 npm install
 ```
-## 四、开发
+## 三、开发
 ##### （一）国际化
 - 语言包路径：src/lang
 - 在语言包路径下新增或修改语言属性
@@ -146,7 +138,7 @@ npm install
 > - 测试页面：src/components/test
 > - src/components 下其他路径存放自定义组件
 
-## 五、界面展示
+## 四、界面展示
 - 登录
 ![images](doc/images/pages/login.png)
 - 首页
