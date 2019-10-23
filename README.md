@@ -22,7 +22,7 @@
 - webpack
 - nodejs
 - vue2
-- vue cli 3
+- vue cli 4
 - vuex
 - vue-router
 - axios
@@ -30,6 +30,7 @@
 - cropperjs
 - mockjs
 - js-sha256
+- js-base64
 - vue-json-editor
 - Element-UI
 - vue-count-to
