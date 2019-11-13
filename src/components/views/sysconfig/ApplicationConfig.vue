@@ -355,7 +355,7 @@
                 }
                 if (this.searchForm.orderParam.order !== 'normal') {
                     searchParam.queryParam.orderName = this.searchForm.orderParam.prop
-                    searchParam.queryParam.orderCommond = this.searchForm.orderParam.order
+                    searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
                 }
                 this.modal_loading = true
                 this.$api.request.app.query(searchParam).then((res) => {
