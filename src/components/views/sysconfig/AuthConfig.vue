@@ -169,10 +169,10 @@
                 </el-col>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.code')" prop="code">
-                    <el-select v-model="moduleFuncEditForm.code" :filterable="true" :disabled="treeLoading" value="">
-                      <el-option v-for="item in moduleFuncCodeList" :value="item.value" :label="item.value"
-                                 :key="'module_func_code_'+item.value"></el-option>
-                    </el-select>
+                    <el-autocomplete v-model="moduleFuncEditForm.code" :disabled="treeLoading"
+                                     :fetch-suggestions="querySearch"
+                                     :placeholder="$t('forms.pleaseEnter') + $t('forms.code')"
+                                     @keyup.enter.native="doSaveModuleFunc"></el-autocomplete>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -252,9 +252,6 @@
                     value: 1,
                     label: this.$i18n.t('forms.newTabs')
                 }]
-            },
-            moduleFuncCodeList () {
-                return this.moduleFuncCode
             },
             menuCascaderData () {
                 const menuTree = copy(this.menuTreeData)
@@ -357,6 +354,13 @@
             }
         },
         methods: {
+            querySearch (queryString, cb) {
+                let restaurants = this.moduleFuncCode
+                let results = queryString ? restaurants.filter(item => {
+                    return item.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
+                }) : restaurants
+                cb(results)
+            },
             refreshModuleFuncCodeList () {
                 this.tree_loading = true
                 this.$api.request.auth.getModuleFuncCodeList().then((res) => {
