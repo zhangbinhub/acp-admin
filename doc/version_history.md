@@ -2,6 +2,7 @@
 ##### v4.0.4
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 模块编码改用el-autocomplete组件，允许自定义
+> - [Upgrade] 调整对话框组件body样式
 > - [Upgrade] 与后台同步更新至v4.0.4
 ##### v4.0.3
 > - [Upgrade] 更新依赖插件至最新版本
