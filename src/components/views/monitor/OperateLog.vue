@@ -226,8 +226,7 @@
                 editModal: false,
                 modal_loading: false,
                 searchData: [],
-                selectedData: [],
-                action: 0
+                selectedData: []
             }
         },
         computed: {
