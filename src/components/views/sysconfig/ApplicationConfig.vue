@@ -55,6 +55,7 @@
       </el-table-column>
       <el-table-column
         prop="identify"
+        sortable="custom"
         :label="this.$i18n.t('forms.identify')">
       </el-table-column>
       <el-table-column
@@ -168,7 +169,7 @@
                 searchForm: {
                     appName: '',
                     orderParam: {
-                        prop: 'appName',
+                        prop: 'identify',
                         order: 'ascending'
                     },
                     currPage: 1,
