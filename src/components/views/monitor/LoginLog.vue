@@ -279,12 +279,7 @@
                         this.selectedData = []
                         this.searchForm.currPage = res.data.pageable.pageNumber + 1
                         this.searchForm.totalRows = res.data.totalElements
-                        this.searchData = res.data.content.map(item => {
-                            if (item.enabled) {
-                                item._disabled = true
-                            }
-                            return item
-                        })
+                        this.searchData = res.data.content
                         this.$nextTick(() => {
                             this.$refs['table'].doLayout()
                         })
