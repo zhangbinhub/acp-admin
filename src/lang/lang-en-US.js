@@ -150,7 +150,7 @@ const messages = Object.assign(enLocale, {
     responseTime: 'response time',
     responseStatus: 'response status',
     historyInfo: 'history',
-    todayInfo: 'today',
+    currentInfo: 'current',
     infoType: 'info type',
     targetIp: 'target ip',
     targetPath: 'target path',

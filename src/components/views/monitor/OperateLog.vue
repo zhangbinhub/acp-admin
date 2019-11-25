@@ -241,7 +241,7 @@
             },
             infoTypeList () {
                 return [
-                    { value: 'false', label: this.$i18n.t('forms.todayInfo') },
+                    { value: 'false', label: this.$i18n.t('forms.currentInfo') },
                     { value: 'true', label: this.$i18n.t('forms.historyInfo') }
                 ]
             }

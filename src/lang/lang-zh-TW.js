@@ -150,7 +150,7 @@ const messages = Object.assign(twLocale, {
     responseTime: '響應時間',
     responseStatus: '響應狀態碼',
     historyInfo: '歷史信息',
-    todayInfo: '當日信息',
+    currentInfo: '當前信息',
     infoType: '信息類型',
     targetIp: '目標服務IP',
     targetPath: '目標服務路徑',
