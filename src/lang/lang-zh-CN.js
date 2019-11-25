@@ -150,7 +150,7 @@ const messages = Object.assign(zhLocale, {
     responseTime: '响应时间',
     responseStatus: '响应状态码',
     historyInfo: '历史信息',
-    todayInfo: '当日信息',
+    currentInfo: '当前信息',
     infoType: '信息类型',
     targetIp: '目标服务IP',
     targetPath: '目标服务路径',
