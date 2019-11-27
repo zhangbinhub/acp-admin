@@ -68,49 +68,49 @@
         <div class="button-box">
           <el-button-group style="margin-right: 10px">
             <el-button type="primary" @click="reset" size="small">
-              <i class="el-icon-refresh"></i>
+              <i class="el-icon-refresh"/>
             </el-button>
             <el-button type="primary" @click="mode('move')" size="small">
-              <i class="el-icon-rank"></i>
+              <i class="el-icon-rank"/>
             </el-button>
             <el-button type="primary" @click="mode('crop')" size="small">
-              <i class="el-icon-crop"></i>
+              <i class="el-icon-crop"/>
             </el-button>
           </el-button-group>
           <el-button-group style="margin-right: 10px">
             <el-button type="primary" @click="shrink" size="small">
-              <i class="el-icon-zoom-out"></i>
+              <i class="el-icon-zoom-out"/>
             </el-button>
             <el-button type="primary" @click="magnify" size="small">
-              <i class="el-icon-zoom-in"></i>
+              <i class="el-icon-zoom-in"/>
             </el-button>
           </el-button-group>
           <el-button-group style="margin-right: 10px">
             <el-button type="primary" @click="rotate(-1)" size="small">
-              <i class="el-icon-refresh-left"></i>
+              <i class="el-icon-refresh-left"/>
             </el-button>
             <el-button type="primary" @click="rotate(1)" size="small">
-              <i class="el-icon-refresh-right"></i>
+              <i class="el-icon-refresh-right"/>
             </el-button>
             <el-button type="primary" @click="scale('X')" size="small">
-              <i class="el-icon-d-caret icon-leftAndRight"></i>
+              <i class="el-icon-d-caret icon-leftAndRight"/>
             </el-button>
             <el-button type="primary" @click="scale('Y')" size="small">
-              <i class="el-icon-d-caret"></i>
+              <i class="el-icon-d-caret"/>
             </el-button>
           </el-button-group>
           <el-button-group style="margin-right: 10px">
             <el-button type="primary" @click="move(0, -moveStep)" size="small">
-              <i class="el-icon-caret-top"></i>
+              <i class="el-icon-caret-top"/>
             </el-button>
             <el-button type="primary" @click="move(-moveStep, 0)" size="small">
-              <i class="el-icon-caret-left"></i>
+              <i class="el-icon-caret-left"/>
             </el-button>
             <el-button type="primary" @click="move(0, moveStep)" size="small">
-              <i class="el-icon-caret-bottom"></i>
+              <i class="el-icon-caret-bottom"/>
             </el-button>
             <el-button type="primary" @click="move(moveStep, 0)" size="small">
-              <i class="el-icon-caret-right"></i>
+              <i class="el-icon-caret-right"/>
             </el-button>
           </el-button-group>
           <el-button-group>
@@ -127,119 +127,119 @@
 </template>
 
 <script>
-    import Cropper from 'cropperjs'
-    import './index.less'
-    import 'cropperjs/dist/cropper.min.css'
+  import Cropper from 'cropperjs'
+  import './index.less'
+  import 'cropperjs/dist/cropper.min.css'
 
-    export default {
-        name: 'Cropper',
-        props: {
-            src: {
-                type: String,
-                default: ''
-            },
-            moveStep: {
-                type: Number,
-                default: 1
-            },
-            cropButtonText: String
-        },
-        data () {
-            return {
-                cropper: null,
-                insideSrc: '',
-                X: '',
-                Y: '',
-                width: '',
-                height: ''
-            }
-        },
-        computed: {
-            imgId () {
-                return `cropper${this._uid}`
-            }
-        },
-        watch: {
-            src (src) {
-                this.replace(src)
-            },
-            insideSrc (src) {
-                this.replace(src)
-            }
-        },
-        methods: {
-            beforeUpload (file) {
-                const reader = new FileReader()
-                reader.readAsDataURL(file)
-                reader.onload = (event) => {
-                    this.insideSrc = event.target.result
-                }
-                return false
-            },
-            replace (src) {
-                this.cropper.replace(src)
-                this.insideSrc = src
-            },
-            reset () {
-                this.cropper.reset()
-            },
-            mode (value) {
-                this.cropper.setDragMode(value)
-            },
-            rotate (value) {
-                if (value > 0) {
-                    this.cropper.rotate(90)
-                } else {
-                    this.cropper.rotate(-90)
-                }
-            },
-            shrink () {
-                this.cropper.zoom(-0.1)
-            },
-            magnify () {
-                this.cropper.zoom(0.1)
-            },
-            scale (d) {
-                this.cropper[`scale${d}`](-this.cropper.getData()[`scale${d}`])
-            },
-            move (...args) {
-                this.cropper.move(...args)
-            },
-            aspact (value) {
-                this.cropper.setAspectRatio(value)
-            },
-            reSize () {
-                const data = this.cropper.getData()
-                const x = Number(this.X && this.X !== '' ? this.X : data.x)
-                const y = Number(this.Y && this.Y !== '' ? this.Y : data.y)
-                const width = Number(this.width && this.width !== '' ? this.width : data.width)
-                const height = Number(this.height && this.height !== '' ? this.height : data.height)
-                this.cropper.setData({
-                    x: x,
-                    y: y,
-                    width: width,
-                    height: height
-                })
-            },
-            crop () {
-                this.$emit('on-crop', this.cropper.getCroppedCanvas().toDataURL())
-            }
-        },
-        mounted () {
-            const obj = this
-            this.$nextTick(() => {
-                let dom = document.getElementById(this.imgId)
-                this.cropper = new Cropper(dom, {
-                    preview: '.img-preview',
-                    checkCrossOrigin: true,
-                    crop: function (data) {
-                        obj.X = data.detail.x.toFixed(0)
-                        obj.Y = data.detail.y.toFixed(0)
-                        obj.width = data.detail.width.toFixed(0)
-                        obj.height = data.detail.height.toFixed(0)
-                    }
-                })
-            })
+  export default {
+    name: 'Cropper',
+    props: {
+      src: {
+        type: String,
+        default: ''
+      },
+      moveStep: {
+        type: Number,
+        default: 1
+      },
+      cropButtonText: String
+    },
+    data () {
+      return {
+        cropper: null,
+        insideSrc: '',
+        X: '',
+        Y: '',
+        width: '',
+        height: ''
+      }
+    },
+    computed: {
+      imgId () {
+        return `cropper${this._uid}`
+      }
+    },
+    watch: {
+      src (src) {
+        this.replace(src)
+      },
+      insideSrc (src) {
+        this.replace(src)
+      }
+    },
+    methods: {
+      beforeUpload (file) {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = (event) => {
+          this.insideSrc = event.target.result
         }
+        return false
+      },
+      replace (src) {
+        this.cropper.replace(src)
+        this.insideSrc = src
+      },
+      reset () {
+        this.cropper.reset()
+      },
+      mode (value) {
+        this.cropper.setDragMode(value)
+      },
+      rotate (value) {
+        if (value > 0) {
+          this.cropper.rotate(90)
+        } else {
+          this.cropper.rotate(-90)
+        }
+      },
+      shrink () {
+        this.cropper.zoom(-0.1)
+      },
+      magnify () {
+        this.cropper.zoom(0.1)
+      },
+      scale (d) {
+        this.cropper[`scale${d}`](-this.cropper.getData()[`scale${d}`])
+      },
+      move (...args) {
+        this.cropper.move(...args)
+      },
+      aspact (value) {
+        this.cropper.setAspectRatio(value)
+      },
+      reSize () {
+        const data = this.cropper.getData()
+        const x = Number(this.X && this.X !== '' ? this.X : data.x)
+        const y = Number(this.Y && this.Y !== '' ? this.Y : data.y)
+        const width = Number(this.width && this.width !== '' ? this.width : data.width)
+        const height = Number(this.height && this.height !== '' ? this.height : data.height)
+        this.cropper.setData({
+          x: x,
+          y: y,
+          width: width,
+          height: height
+        })
+      },
+      crop () {
+        this.$emit('on-crop', this.cropper.getCroppedCanvas().toDataURL())
+      }
+    },
+    mounted () {
+      const obj = this
+      this.$nextTick(() => {
+        let dom = document.getElementById(this.imgId)
+        this.cropper = new Cropper(dom, {
+          preview: '.img-preview',
+          checkCrossOrigin: true,
+          crop: function (data) {
+            obj.X = data.detail.x.toFixed(0)
+            obj.Y = data.detail.y.toFixed(0)
+            obj.width = data.detail.width.toFixed(0)
+            obj.height = data.detail.height.toFixed(0)
+          }
+        })
+      })
     }
+  }
 </script>

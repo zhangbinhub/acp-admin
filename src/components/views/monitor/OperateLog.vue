@@ -5,39 +5,39 @@
       <el-form-item :label="$t('forms.remoteIp')" prop="remoteIp">
         <el-input v-model="searchForm.remoteIp" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.remoteIp')"
-                  @keyup.enter.native="handleSearch"></el-input>
+                  @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.path')" prop="path">
         <el-input v-model="searchForm.path" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.path')"
-                  @keyup.enter.native="handleSearch"></el-input>
+                  @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.serverId')" prop="serverId">
         <el-input v-model="searchForm.serverId" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.serverId')"
-                  @keyup.enter.native="handleSearch"></el-input>
+                  @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.clientName')" prop="clientName">
         <el-input v-model="searchForm.clientName" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.clientName')"
-                  @keyup.enter.native="handleSearch"></el-input>
+                  @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.userName')" prop="userName">
         <el-input v-model="searchForm.userName" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.userName')"
-                  @keyup.enter.native="handleSearch"></el-input>
+                  @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.startDate')" prop="startTime">
         <el-date-picker type="date" :disabled="modal_loading" :picker-options="datePickerOptions"
                         v-model="searchForm.startTime"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.startDate')"
-                        style="width: 185px"></el-date-picker>
+                        style="width: 185px"/>
       </el-form-item>
       <el-form-item :label="$t('forms.endDate')" prop="endTime">
         <el-date-picker type="date" :disabled="modal_loading" :picker-options="datePickerOptions"
                         v-model="searchForm.endTime"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
-                        style="width: 185px"></el-date-picker>
+                        style="width: 185px"/>
       </el-form-item>
       <el-form-item :label="$t('forms.infoType')" prop="history">
         <el-select v-model="searchForm.history" :disabled="modal_loading" value=""
@@ -118,7 +118,7 @@
         <template slot-scope="scope">
           <el-tooltip :content="$t('forms.buttons.view')" placement="top-start">
             <el-button type="text" @click="handleView(scope.row)">
-              <i style="font-size: 15px" class="el-icon-search"></i>
+              <i style="font-size: 15px" class="el-icon-search"/>
             </el-button>
           </el-tooltip>
         </template>
@@ -191,139 +191,139 @@
   </el-card>
 </template>
 <script>
-    import moment from 'moment'
+  import moment from 'moment'
 
-    export default {
-        name: 'operateLog',
-        data () {
-            return {
-                datePickerOptions: {
-                    disabledDate: (date) => {
-                        const now = new Date()
-                        now.setHours(0, 0, 0, 0)
-                        return date.getTime() > now.getTime()
-                    }
-                },
-                searchForm: {
-                    remoteIp: '',
-                    path: '',
-                    serverId: '',
-                    clientName: '',
-                    userName: '',
-                    history: 'false',
-                    startTime: '',
-                    endTime: '',
-                    orderParam: {
-                        prop: 'requestTime',
-                        order: 'descending'
-                    },
-                    currPage: 1,
-                    totalRows: 0,
-                    pageSize: 10,
-                    pageSizeArray: [10, 20, 30, 40]
-                },
-                editForm: {},
-                editModal: false,
-                modal_loading: false,
-                searchData: [],
-                selectedData: []
-            }
+  export default {
+    name: 'operateLog',
+    data () {
+      return {
+        datePickerOptions: {
+          disabledDate: (date) => {
+            const now = new Date()
+            now.setHours(0, 0, 0, 0)
+            return date.getTime() > now.getTime()
+          }
         },
-        computed: {
-            tableHeight () {
-                const minHeight = 300
-                const height = this.$store.state.app.mainHeight - 80 - 138 - 42 - 4
-                if (height < minHeight) {
-                    return minHeight - 2
-                } else {
-                    return height
-                }
-            },
-            infoTypeList () {
-                return [
-                    { value: 'false', label: this.$i18n.t('forms.currentInfo') },
-                    { value: 'true', label: this.$i18n.t('forms.historyInfo') }
-                ]
-            }
+        searchForm: {
+          remoteIp: '',
+          path: '',
+          serverId: '',
+          clientName: '',
+          userName: '',
+          history: 'false',
+          startTime: '',
+          endTime: '',
+          orderParam: {
+            prop: 'requestTime',
+            order: 'descending'
+          },
+          currPage: 1,
+          totalRows: 0,
+          pageSize: 10,
+          pageSizeArray: [10, 20, 30, 40]
         },
-        methods: {
-            dateTimeFormat (time) {
-                return moment(time).format('YYYY-MM-DD HH:mm:ss')
-            },
-            dateTimeMisFormat (time) {
-                return moment(time).format('YYYY-MM-DD HH:mm:ss.SSS')
-            },
-            doCancel () {
-                this.editModal = false
-            },
-            handlePageSearch (page) {
-                this.searchForm.currPage = page
-                this.handleSearch()
-            },
-            handlePageSizeSearch (size) {
-                this.searchForm.pageSize = size
-                this.handleSearch()
-            },
-            handleSearch () {
-                let searchParam = {
-                    remoteIp: this.searchForm.remoteIp,
-                    path: this.searchForm.path,
-                    serverId: this.searchForm.serverId,
-                    clientName: this.searchForm.clientName,
-                    userName: this.searchForm.userName,
-                    history: this.searchForm.history === 'true',
-                    startTime: this.searchForm.startTime !== '' ? this.searchForm.startTime.getTime() : null,
-                    endTime: this.searchForm.endTime !== '' ? this.searchForm.endTime.getTime() : null,
-                    queryParam: {
-                        currPage: this.searchForm.currPage,
-                        pageSize: this.searchForm.pageSize
-                    }
-                }
-                if (this.searchForm.orderParam.order !== 'normal') {
-                    searchParam.queryParam.orderName = this.searchForm.orderParam.prop
-                    searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
-                }
-                this.modal_loading = true
-                this.$api.request.log.queryOperateLog(searchParam).then((res) => {
-                    this.modal_loading = false
-                    if (res) {
-                        this.selectedData = []
-                        this.searchForm.currPage = res.data.pageable.pageNumber + 1
-                        this.searchForm.totalRows = res.data.totalElements
-                        this.searchData = res.data.content
-                        this.$nextTick(() => {
-                            this.$refs['table'].doLayout()
-                        })
-                    }
-                }).catch(() => {
-                    this.searchData = []
-                    this.selectedData = []
-                    this.modal_loading = false
-                })
-            },
-            handleSortChange (param) {
-                this.searchForm.orderParam.prop = param.prop
-                this.searchForm.orderParam.order = param.order
-                this.handleSearch()
-            },
-            handleSearchReset (name) {
-                this.$refs[name].resetFields()
-            },
-            handleSelect (selection) {
-                this.selectedData = selection
-            },
-            handleView (row) {
-                this.editForm = row
-                this.editModal = true
-            }
-        },
-        mounted () {
-            this.handleSearch()
-        },
-        activated () {
-            this.$nextTick(() => {
-                this.$refs['table'].doLayout()
-            })
+        editForm: {},
+        editModal: false,
+        modal_loading: false,
+        searchData: [],
+        selectedData: []
+      }
+    },
+    computed: {
+      tableHeight () {
+        const minHeight = 300
+        const height = this.$store.state.app.mainHeight - 80 - 138 - 42 - 4
+        if (height < minHeight) {
+          return minHeight - 2
+        } else {
+          return height
         }
+      },
+      infoTypeList () {
+        return [
+          { value: 'false', label: this.$i18n.t('forms.currentInfo') },
+          { value: 'true', label: this.$i18n.t('forms.historyInfo') }
+        ]
+      }
+    },
+    methods: {
+      dateTimeFormat (time) {
+        return moment(time).format('YYYY-MM-DD HH:mm:ss')
+      },
+      dateTimeMisFormat (time) {
+        return moment(time).format('YYYY-MM-DD HH:mm:ss.SSS')
+      },
+      doCancel () {
+        this.editModal = false
+      },
+      handlePageSearch (page) {
+        this.searchForm.currPage = page
+        this.handleSearch()
+      },
+      handlePageSizeSearch (size) {
+        this.searchForm.pageSize = size
+        this.handleSearch()
+      },
+      handleSearch () {
+        let searchParam = {
+          remoteIp: this.searchForm.remoteIp,
+          path: this.searchForm.path,
+          serverId: this.searchForm.serverId,
+          clientName: this.searchForm.clientName,
+          userName: this.searchForm.userName,
+          history: this.searchForm.history === 'true',
+          startTime: this.searchForm.startTime !== '' ? this.searchForm.startTime.getTime() : null,
+          endTime: this.searchForm.endTime !== '' ? this.searchForm.endTime.getTime() : null,
+          queryParam: {
+            currPage: this.searchForm.currPage,
+            pageSize: this.searchForm.pageSize
+          }
+        }
+        if (this.searchForm.orderParam.order !== 'normal') {
+          searchParam.queryParam.orderName = this.searchForm.orderParam.prop
+          searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
+        }
+        this.modal_loading = true
+        this.$api.request.log.queryOperateLog(searchParam).then((res) => {
+          this.modal_loading = false
+          if (res) {
+            this.selectedData = []
+            this.searchForm.currPage = res.data.pageable.pageNumber + 1
+            this.searchForm.totalRows = res.data.totalElements
+            this.searchData = res.data.content
+            this.$nextTick(() => {
+              this.$refs['table'].doLayout()
+            })
+          }
+        }).catch(() => {
+          this.searchData = []
+          this.selectedData = []
+          this.modal_loading = false
+        })
+      },
+      handleSortChange (param) {
+        this.searchForm.orderParam.prop = param.prop
+        this.searchForm.orderParam.order = param.order
+        this.handleSearch()
+      },
+      handleSearchReset (name) {
+        this.$refs[name].resetFields()
+      },
+      handleSelect (selection) {
+        this.selectedData = selection
+      },
+      handleView (row) {
+        this.editForm = row
+        this.editModal = true
+      }
+    },
+    mounted () {
+      this.handleSearch()
+    },
+    activated () {
+      this.$nextTick(() => {
+        this.$refs['table'].doLayout()
+      })
     }
+  }
 </script>

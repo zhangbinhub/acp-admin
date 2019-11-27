@@ -4,7 +4,7 @@
   </el-card>
 </template>
 <script>
-    export default {
-        name: 'demo4'
-    }
+  export default {
+    name: 'demo4'
+  }
 </script>

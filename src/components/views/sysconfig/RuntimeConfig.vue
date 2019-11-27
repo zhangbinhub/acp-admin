@@ -5,12 +5,12 @@
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input v-model="searchForm.name" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                  @keyup.enter.native="handleSearch"></el-input>
+                  @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.value')" prop="value">
         <el-input v-model="searchForm.value" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
-                  @keyup.enter.native="handleSearch"></el-input>
+                  @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.status')" prop="enabled">
         <el-select v-model="searchForm.enabled" :clearable="true" :disabled="modal_loading" value=""
@@ -81,7 +81,7 @@
         :label="this.$i18n.t('forms.enabled')">
         <template slot-scope="scope">
           <el-switch v-if="editIndex === scope.$index" v-model="editEnabled" :disabled="modal_loading"
-                     @keyup.native="handleKeyUp($event, scope.$index)"></el-switch>
+                     @keyup.native="handleKeyUp($event, scope.$index)"/>
           <span v-else :style="scope.row.enabled ? 'color:green':'color:red'">{{enabledText(scope.row.enabled)}}</span>
         </template>
       </el-table-column>
@@ -94,24 +94,24 @@
           <div v-if="editIndex === scope.$index">
             <el-tooltip :content="$t('forms.buttons.save')" placement="top-start">
               <el-button type="text" @click="handleSave(scope.$index)">
-                <i style="font-size: 15px;color: green;" class="el-icon-check"></i>
+                <i style="font-size: 15px;color: green;" class="el-icon-check"/>
               </el-button>
             </el-tooltip>
             <el-tooltip :content="$t('forms.buttons.cancel')" placement="top-start">
               <el-button type="text" @click="editIndex = -1">
-                <i style="font-size: 15px;color: red;" class="el-icon-close"></i>
+                <i style="font-size: 15px;color: red;" class="el-icon-close"/>
               </el-button>
             </el-tooltip>
           </div>
           <div v-else>
             <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
               <el-button type="text" @click="handleEdit(scope.row,scope.$index)">
-                <i style="font-size: 15px" class="el-icon-edit"></i>
+                <i style="font-size: 15px" class="el-icon-edit"/>
               </el-button>
             </el-tooltip>
             <el-tooltip :content="$t('forms.buttons.delete')" placement="top-start" v-if="scope.row.covert">
               <el-button type="text" @click="handleDeleteRow(scope.row)">
-                <i style="font-size: 15px" class="el-icon-delete"></i>
+                <i style="font-size: 15px" class="el-icon-delete"/>
               </el-button>
             </el-tooltip>
           </div>
@@ -133,20 +133,20 @@
         <el-form-item :label="$t('forms.name')" prop="name">
           <el-input v-model="addForm.name" :disabled="modal_loading" ref="name"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                    @keyup.enter.native="doAdd('addForm')"></el-input>
+                    @keyup.enter.native="doAdd('addForm')"/>
         </el-form-item>
         <el-form-item :label="$t('forms.value')" prop="value">
           <el-input v-model="addForm.value" :disabled="modal_loading"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
-                    @keyup.enter.native="doAdd('addForm')"></el-input>
+                    @keyup.enter.native="doAdd('addForm')"/>
         </el-form-item>
         <el-form-item :label="$t('forms.describe')" prop="describe">
           <el-input v-model="addForm.describe" :disabled="modal_loading"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.describe')"
-                    @keyup.enter.native="doAdd('addForm')"></el-input>
+                    @keyup.enter.native="doAdd('addForm')"/>
         </el-form-item>
         <el-form-item :label="$t('forms.enabled')" prop="enabled">
-          <el-switch v-model="addForm.enabled" :disabled="modal_loading"></el-switch>
+          <el-switch v-model="addForm.enabled" :disabled="modal_loading"/>
         </el-form-item>
       </el-form>
       <div slot="footer">
@@ -161,266 +161,266 @@
   </el-card>
 </template>
 <script>
-    export default {
-        name: 'runtimeConfig',
-        data () {
-            return {
-                searchForm: {
-                    name: '',
-                    value: '',
-                    enabled: '',
-                    orderParam: {
-                        prop: 'name',
-                        order: 'ascending'
-                    },
-                    currPage: 1,
-                    totalRows: 0,
-                    pageSize: 10,
-                    pageSizeArray: [10, 20, 30, 40]
-                },
-                addForm: {
-                    name: '',
-                    value: '',
-                    describe: '',
-                    enabled: true
-                },
-                addModal: false,
-                modal_loading: false,
-                searchData: [],
-                editIndex: -1,
-                editName: '',
-                editValue: '',
-                editDes: '',
-                editEnabled: true,
-                selectedData: []
-            }
+  export default {
+    name: 'runtimeConfig',
+    data () {
+      return {
+        searchForm: {
+          name: '',
+          value: '',
+          enabled: '',
+          orderParam: {
+            prop: 'name',
+            order: 'ascending'
+          },
+          currPage: 1,
+          totalRows: 0,
+          pageSize: 10,
+          pageSizeArray: [10, 20, 30, 40]
         },
-        watch: {
-            addModal (value) {
-                if (value) {
-                    this.$nextTick(() => {
-                        this.$refs['name'].focus()
-                    })
-                }
-            }
+        addForm: {
+          name: '',
+          value: '',
+          describe: '',
+          enabled: true
         },
-        computed: {
-            tableHeight () {
-                const minHeight = 300
-                const height = this.$store.state.app.mainHeight - 80 - 46 - 42 - 4
-                if (height < minHeight) {
-                    return minHeight - 2
-                } else {
-                    return height
-                }
-            },
-            enabledList () {
-                return [
-                    { value: 'true', label: this.$i18n.t('forms.enabled') },
-                    { value: 'false', label: this.$i18n.t('forms.disabled') }
-                ]
-            },
-            ruleAddForm () {
-                return {
-                    name: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ]
-                }
-            }
-        },
-        methods: {
-            enabledText (enabled) {
-                return enabled ? this.$i18n.t('forms.enabled') : this.$i18n.t('forms.disabled')
-            },
-            handleAdd () {
-                this.addModal = true
-                this.$nextTick(() => {
-                    this.$refs['addForm'].resetFields()
-                })
-            },
-            doCancel () {
-                this.addModal = false
-            },
-            doAdd (name) {
-                this.$refs[name].validate((valid) => {
-                    if (valid) {
-                        this.modal_loading = true
-                        this.$api.request.runtime.create({
-                            name: this.addForm.name,
-                            value: this.addForm.value,
-                            configDes: this.addForm.describe,
-                            enabled: this.addForm.enabled
-                        }).then((res) => {
-                            this.modal_loading = false
-                            if (res) {
-                                this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
-                                this.addModal = false
-                                this.handleSearch()
-                            }
-                        }).catch(() => {
-                            this.modal_loading = false
-                        })
-                    }
-                })
-            },
-            handleDelete (rowIds) {
-                this.modal_loading = true
-                this.$api.request.runtime.delete(rowIds).then((res) => {
-                    this.modal_loading = false
-                    if (res) {
-                        this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
-                        this.handleSearch()
-                    }
-                }).catch(() => {
-                    this.modal_loading = false
-                })
-            },
-            handleSave (index) {
-                this.modal_loading = true
-                this.$api.request.runtime.update({
-                    id: this.searchData[index].id,
-                    name: this.editName,
-                    value: this.editValue,
-                    configDes: this.editDes,
-                    enabled: this.editEnabled
-                }).then((res) => {
-                    this.modal_loading = false
-                    if (res) {
-                        this.searchData[index].value = this.editValue
-                        this.searchData[index].configDes = this.editDes
-                        this.searchData[index].enabled = this.editEnabled
-                        this.editIndex = -1
-                        this.$message.success(this.$i18n.t('messages.updateSuccess') + '')
-                    }
-                }).catch(() => {
-                    this.modal_loading = false
-                })
-            },
-            handlePageSearch (page) {
-                this.searchForm.currPage = page
-                this.handleSearch()
-            },
-            handlePageSizeSearch (size) {
-                this.searchForm.pageSize = size
-                this.handleSearch()
-            },
-            handleSearch () {
-                let searchParam = {
-                    name: this.searchForm.name,
-                    value: this.searchForm.value,
-                    queryParam: {
-                        currPage: this.searchForm.currPage,
-                        pageSize: this.searchForm.pageSize
-                    }
-                }
-                if (this.searchForm.enabled === 'true') {
-                    searchParam.enabled = true
-                } else if (this.searchForm.enabled === 'false') {
-                    searchParam.enabled = false
-                }
-                if (this.searchForm.orderParam.order !== 'normal') {
-                    searchParam.queryParam.orderName = this.searchForm.orderParam.prop
-                    searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
-                }
-                this.modal_loading = true
-                this.$api.request.runtime.query(searchParam).then((res) => {
-                    this.modal_loading = false
-                    if (res) {
-                        this.selectedData = []
-                        this.searchForm.currPage = res.data.pageable.pageNumber + 1
-                        this.searchForm.totalRows = res.data.totalElements
-                        this.searchData = res.data.content.map(item => {
-                            if (!item.covert) {
-                                item._disabled = true
-                            }
-                            return item
-                        })
-                        this.$nextTick(() => {
-                            this.$refs['table'].doLayout()
-                        })
-                    }
-                }).catch(() => {
-                    this.searchData = []
-                    this.selectedData = []
-                    this.modal_loading = false
-                })
-            },
-            handleRowClick (row) {
-                this.$refs['table'].toggleRowSelection(row)
-            },
-            handleSortChange (param) {
-                this.searchForm.orderParam.prop = param.prop
-                this.searchForm.orderParam.order = param.order
-                this.handleSearch()
-            },
-            handleSearchReset (name) {
-                this.$refs[name].resetFields()
-            },
-            handleSelect (selection) {
-                this.selectedData = selection
-            },
-            handleDeleteRow (row) {
-                if (!row.covert) {
-                    this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
-                        type: 'error'
-                    })
-                } else {
-                    this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
-                        type: 'warning'
-                    }).then(() => {
-                        this.handleDelete([row.id])
-                    }).catch(() => {
-                    })
-                }
-            },
-            handleDeleteMore () {
-                if (this.selectedData.length > 0) {
-                    this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
-                        type: 'warning'
-                    }).then(() => {
-                        this.handleDelete(this.selectedData.map(item => item.id))
-                    }).catch(() => {
-                    })
-                } else {
-                    this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
-                        type: 'error'
-                    })
-                }
-            },
-            handleEdit (row, index) {
-                this.editName = row.name
-                this.editValue = row.value
-                this.editDes = row.configDes
-                this.editEnabled = !!row.enabled
-                this.editIndex = index
-            },
-            handleKeyUp (event, index) {
-                switch (event.which) {
-                    case 13:
-                        this.handleSave(index)
-                        break
-                    case 27:
-                        this.editIndex = -1
-                        break
-                }
-            },
-            handleCancel (event) {
-                if (event.which === 27) {
-                    this.editIndex = -1
-                }
-            }
-        },
-        mounted () {
-            this.handleSearch()
-        },
-        activated () {
-            this.$nextTick(() => {
-                this.$refs['table'].doLayout()
-            })
+        addModal: false,
+        modal_loading: false,
+        searchData: [],
+        editIndex: -1,
+        editName: '',
+        editValue: '',
+        editDes: '',
+        editEnabled: true,
+        selectedData: []
+      }
+    },
+    watch: {
+      addModal (value) {
+        if (value) {
+          this.$nextTick(() => {
+            this.$refs['name'].focus()
+          })
         }
+      }
+    },
+    computed: {
+      tableHeight () {
+        const minHeight = 300
+        const height = this.$store.state.app.mainHeight - 80 - 46 - 42 - 4
+        if (height < minHeight) {
+          return minHeight - 2
+        } else {
+          return height
+        }
+      },
+      enabledList () {
+        return [
+          { value: 'true', label: this.$i18n.t('forms.enabled') },
+          { value: 'false', label: this.$i18n.t('forms.disabled') }
+        ]
+      },
+      ruleAddForm () {
+        return {
+          name: [
+            {
+              required: true,
+              message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
+              trigger: 'blur'
+            }
+          ]
+        }
+      }
+    },
+    methods: {
+      enabledText (enabled) {
+        return enabled ? this.$i18n.t('forms.enabled') : this.$i18n.t('forms.disabled')
+      },
+      handleAdd () {
+        this.addModal = true
+        this.$nextTick(() => {
+          this.$refs['addForm'].resetFields()
+        })
+      },
+      doCancel () {
+        this.addModal = false
+      },
+      doAdd (name) {
+        this.$refs[name].validate((valid) => {
+          if (valid) {
+            this.modal_loading = true
+            this.$api.request.runtime.create({
+              name: this.addForm.name,
+              value: this.addForm.value,
+              configDes: this.addForm.describe,
+              enabled: this.addForm.enabled
+            }).then((res) => {
+              this.modal_loading = false
+              if (res) {
+                this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
+                this.addModal = false
+                this.handleSearch()
+              }
+            }).catch(() => {
+              this.modal_loading = false
+            })
+          }
+        })
+      },
+      handleDelete (rowIds) {
+        this.modal_loading = true
+        this.$api.request.runtime.delete(rowIds).then((res) => {
+          this.modal_loading = false
+          if (res) {
+            this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
+            this.handleSearch()
+          }
+        }).catch(() => {
+          this.modal_loading = false
+        })
+      },
+      handleSave (index) {
+        this.modal_loading = true
+        this.$api.request.runtime.update({
+          id: this.searchData[index].id,
+          name: this.editName,
+          value: this.editValue,
+          configDes: this.editDes,
+          enabled: this.editEnabled
+        }).then((res) => {
+          this.modal_loading = false
+          if (res) {
+            this.searchData[index].value = this.editValue
+            this.searchData[index].configDes = this.editDes
+            this.searchData[index].enabled = this.editEnabled
+            this.editIndex = -1
+            this.$message.success(this.$i18n.t('messages.updateSuccess') + '')
+          }
+        }).catch(() => {
+          this.modal_loading = false
+        })
+      },
+      handlePageSearch (page) {
+        this.searchForm.currPage = page
+        this.handleSearch()
+      },
+      handlePageSizeSearch (size) {
+        this.searchForm.pageSize = size
+        this.handleSearch()
+      },
+      handleSearch () {
+        let searchParam = {
+          name: this.searchForm.name,
+          value: this.searchForm.value,
+          queryParam: {
+            currPage: this.searchForm.currPage,
+            pageSize: this.searchForm.pageSize
+          }
+        }
+        if (this.searchForm.enabled === 'true') {
+          searchParam.enabled = true
+        } else if (this.searchForm.enabled === 'false') {
+          searchParam.enabled = false
+        }
+        if (this.searchForm.orderParam.order !== 'normal') {
+          searchParam.queryParam.orderName = this.searchForm.orderParam.prop
+          searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
+        }
+        this.modal_loading = true
+        this.$api.request.runtime.query(searchParam).then((res) => {
+          this.modal_loading = false
+          if (res) {
+            this.selectedData = []
+            this.searchForm.currPage = res.data.pageable.pageNumber + 1
+            this.searchForm.totalRows = res.data.totalElements
+            this.searchData = res.data.content.map(item => {
+              if (!item.covert) {
+                item._disabled = true
+              }
+              return item
+            })
+            this.$nextTick(() => {
+              this.$refs['table'].doLayout()
+            })
+          }
+        }).catch(() => {
+          this.searchData = []
+          this.selectedData = []
+          this.modal_loading = false
+        })
+      },
+      handleRowClick (row) {
+        this.$refs['table'].toggleRowSelection(row)
+      },
+      handleSortChange (param) {
+        this.searchForm.orderParam.prop = param.prop
+        this.searchForm.orderParam.order = param.order
+        this.handleSearch()
+      },
+      handleSearchReset (name) {
+        this.$refs[name].resetFields()
+      },
+      handleSelect (selection) {
+        this.selectedData = selection
+      },
+      handleDeleteRow (row) {
+        if (!row.covert) {
+          this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
+            type: 'error'
+          })
+        } else {
+          this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+            type: 'warning'
+          }).then(() => {
+            this.handleDelete([row.id])
+          }).catch(() => {
+          })
+        }
+      },
+      handleDeleteMore () {
+        if (this.selectedData.length > 0) {
+          this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+            type: 'warning'
+          }).then(() => {
+            this.handleDelete(this.selectedData.map(item => item.id))
+          }).catch(() => {
+          })
+        } else {
+          this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
+            type: 'error'
+          })
+        }
+      },
+      handleEdit (row, index) {
+        this.editName = row.name
+        this.editValue = row.value
+        this.editDes = row.configDes
+        this.editEnabled = !!row.enabled
+        this.editIndex = index
+      },
+      handleKeyUp (event, index) {
+        switch (event.which) {
+          case 13:
+            this.handleSave(index)
+            break
+          case 27:
+            this.editIndex = -1
+            break
+        }
+      },
+      handleCancel (event) {
+        if (event.which === 27) {
+          this.editIndex = -1
+        }
+      }
+    },
+    mounted () {
+      this.handleSearch()
+    },
+    activated () {
+      this.$nextTick(() => {
+        this.$refs['table'].doLayout()
+      })
     }
+  }
 </script>
