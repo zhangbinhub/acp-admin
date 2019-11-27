@@ -14,7 +14,7 @@
         <div>
           <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" @submit.native.prevent>
             <el-form-item>
-              <el-input type="password" style="display: none;"></el-input>
+              <el-input type="password" style="display: none;"/>
             </el-form-item>
             <el-form-item prop="loginNo">
               <el-input ref="loginNo" v-model="formValidate.loginNo" type="text" :disabled="modal_loading"
@@ -49,95 +49,95 @@
   </div>
 </template>
 <script>
-    import '@/assets/styles/login.less'
+  import '@/assets/styles/login.less'
 
-    export default {
-        name: 'login',
-        data () {
-            return {
-                title: this.$store.state.app.appInfo.appName,
-                version: this.$store.state.app.appInfo.appVersion,
-                copyright: this.$store.state.app.appInfo.copyright,
-                homePath: this.$store.state.app.appInfo.homePath,
-                text: {
-                    usernamePlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.loginNo'),
-                    passwordPlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.password'),
-                    rememberMe: this.$i18n.t('forms.rememberMe')
-                },
-                loginModal: true,
-                modal_loading: false,
-                formValidate: {
-                    loginNo: this.$store.state.app.user.loginNo,
-                    password: '',
-                    remember: this.$store.state.app.user.remember
-                },
-                ruleValidate: {
-                    loginNo: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.loginNo') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ],
-                    password: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ]
-                }
-            }
+  export default {
+    name: 'login',
+    data () {
+      return {
+        title: this.$store.state.app.appInfo.appName,
+        version: this.$store.state.app.appInfo.appVersion,
+        copyright: this.$store.state.app.appInfo.copyright,
+        homePath: this.$store.state.app.appInfo.homePath,
+        text: {
+          usernamePlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.loginNo'),
+          passwordPlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.password'),
+          rememberMe: this.$i18n.t('forms.rememberMe')
         },
-        methods: {
-            passwordFocus (event) {
-                event.target.type = 'password'
-            },
-            handleSubmit (name) {
-                const currObj = this
-                currObj.$refs[name].validate((valid) => {
-                    if (valid) {
-                        currObj.modal_loading = true
-                        currObj.$api.request.auth.doLogin(currObj.formValidate.loginNo, currObj.formValidate.password).then(res => {
-                            if (res) {
-                                if (res.data.access_token) {
-                                    currObj.$message.success(currObj.$i18n.t('messages.loginSuccess') + '')
-                                    currObj.$store.commit('SET_TOKEN', res.data.access_token)
-                                    currObj.$store.commit('SET_TOKEN_TYPE', res.data.token_type)
-                                    currObj.$store.commit('SET_SCOPE', res.data.scope)
-                                    if (currObj.formValidate.remember) {
-                                        currObj.$store.commit('SET_LOGIN_NO', currObj.formValidate.loginNo)
-                                    } else {
-                                        currObj.$store.commit('SET_LOGIN_NO', '')
-                                    }
-                                    currObj.$store.commit('SET_REMEMBER', currObj.formValidate.remember)
-                                    let redirectPath = this.homePath
-                                    if (currObj.$route.params.redirect) {
-                                        redirectPath = currObj.$route.params.redirect
-                                    }
-                                    currObj.$router.replace(redirectPath)
-                                } else {
-                                    currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
-                                }
-                            }
-                            currObj.modal_loading = false
-                        }).catch((error) => {
-                                currObj.modal_loading = false
-                                if (error.response && error.response.status && error.response.status === 400) {
-                                    currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
-                                } else {
-                                    currObj.$api.errorProcess(currObj.$i18n.t('messages.failed403'), currObj.$i18n.t('messages.loginFailed'))
-                                }
-                            }
-                        )
-                    }
-                })
-            }
+        loginModal: true,
+        modal_loading: false,
+        formValidate: {
+          loginNo: this.$store.state.app.user.loginNo,
+          password: '',
+          remember: this.$store.state.app.user.remember
         },
-        mounted () {
-            this.$nextTick(() => {
-                this.$refs['loginNo'].focus()
-            })
+        ruleValidate: {
+          loginNo: [
+            {
+              required: true,
+              message: this.$i18n.t('forms.loginNo') + this.$i18n.t('forms.notEmpty'),
+              trigger: 'blur'
+            }
+          ],
+          password: [
+            {
+              required: true,
+              message: this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty'),
+              trigger: 'blur'
+            }
+          ]
         }
+      }
+    },
+    methods: {
+      passwordFocus (event) {
+        event.target.type = 'password'
+      },
+      handleSubmit (name) {
+        const currObj = this
+        currObj.$refs[name].validate((valid) => {
+          if (valid) {
+            currObj.modal_loading = true
+            currObj.$api.request.auth.doLogin(currObj.formValidate.loginNo, currObj.formValidate.password).then(res => {
+              if (res) {
+                if (res.data.access_token) {
+                  currObj.$message.success(currObj.$i18n.t('messages.loginSuccess') + '')
+                  currObj.$store.commit('SET_TOKEN', res.data.access_token)
+                  currObj.$store.commit('SET_TOKEN_TYPE', res.data.token_type)
+                  currObj.$store.commit('SET_SCOPE', res.data.scope)
+                  if (currObj.formValidate.remember) {
+                    currObj.$store.commit('SET_LOGIN_NO', currObj.formValidate.loginNo)
+                  } else {
+                    currObj.$store.commit('SET_LOGIN_NO', '')
+                  }
+                  currObj.$store.commit('SET_REMEMBER', currObj.formValidate.remember)
+                  let redirectPath = this.homePath
+                  if (currObj.$route.params.redirect) {
+                    redirectPath = currObj.$route.params.redirect
+                  }
+                  currObj.$router.replace(redirectPath)
+                } else {
+                  currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
+                }
+              }
+              currObj.modal_loading = false
+            }).catch((error) => {
+                currObj.modal_loading = false
+                if (error.response && error.response.status && error.response.status === 400) {
+                  currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
+                } else {
+                  currObj.$api.errorProcess(currObj.$i18n.t('messages.failed403'), currObj.$i18n.t('messages.loginFailed'))
+                }
+              }
+            )
+          }
+        })
+      }
+    },
+    mounted () {
+      this.$nextTick(() => {
+        this.$refs['loginNo'].focus()
+      })
     }
+  }
 </script>

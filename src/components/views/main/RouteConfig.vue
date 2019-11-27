@@ -5,7 +5,7 @@
       <el-form-item :label="$t('forms.routeId')" prop="routeId">
         <el-input v-model="searchForm.routeId" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.routeId')"
-                  @keyup.enter.native="handleSearch"></el-input>
+                  @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.status')" prop="enabled">
         <el-select v-model="searchForm.enabled" :clearable="true" :disabled="modal_loading" value=""
@@ -95,12 +95,12 @@
         <template slot-scope="scope">
           <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
             <el-button type="text" @click="handleEdit(scope.row)">
-              <i style="font-size: 15px" class="el-icon-edit"></i>
+              <i style="font-size: 15px" class="el-icon-edit"/>
             </el-button>
           </el-tooltip>
           <el-tooltip :content="$t('forms.buttons.delete')" placement="top-start">
             <el-button type="text" @click="handleDeleteRow(scope.row)">
-              <i style="font-size: 15px" class="el-icon-delete"></i>
+              <i style="font-size: 15px" class="el-icon-delete"/>
             </el-button>
           </el-tooltip>
         </template>
@@ -124,14 +124,14 @@
             <el-form-item :label="$t('forms.routeId')" prop="routeId" style="width: 100%">
               <el-input v-model="editForm.routeId" :disabled="modal_loading" ref="routeId"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.routeId')"
-                        @keyup.enter.native="doSave('editForm')"></el-input>
+                        @keyup.enter.native="doSave('editForm')"/>
             </el-form-item>
           </el-col>
           <el-col :lg="8">
             <el-form-item :label="$t('forms.uri')" prop="uri" style="width: 100%">
               <el-input v-model="editForm.uri" :disabled="modal_loading"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.uri')"
-                        @keyup.enter.native="doSave('editForm')"></el-input>
+                        @keyup.enter.native="doSave('editForm')"/>
             </el-form-item>
           </el-col>
           <el-col :lg="8">
@@ -139,7 +139,7 @@
               <el-input-number v-model="editForm.orderNum" :disabled="modal_loading"
                                style="width: 100%;max-width: 160px;"
                                :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" :min="0"
-                               @keyup.enter.native="doSave('editForm')"></el-input-number>
+                               @keyup.enter.native="doSave('editForm')"/>
             </el-form-item>
           </el-col>
         </el-row>
@@ -154,7 +154,7 @@
             <el-form-item :label="$t('forms.remarks')" prop="remarks" style="width: 100%;">
               <el-input v-model="editForm.remarks" :disabled="modal_loading"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')"
-                        @keyup.enter.native="doSave('editForm')"></el-input>
+                        @keyup.enter.native="doSave('editForm')"/>
             </el-form-item>
           </el-col>
         </el-row>
@@ -163,14 +163,14 @@
             <el-form-item :label="$t('forms.predicates')" prop="predicates" style="width: 100%">
               <vueJsonEditor v-model="editForm.predicates" :lang="jsonEditorLang" :showBtns="false"
                              :modes="jsonEditModes"
-                             :mode="'tree'"></vueJsonEditor>
+                             :mode="'tree'"/>
             </el-form-item>
           </el-col>
           <el-col :lg="12">
             <el-form-item :label="$t('forms.filters')" prop="filters" style="width: 100%">
               <vueJsonEditor v-model="editForm.filters" :lang="jsonEditorLang" :showBtns="false"
                              :modes="jsonEditModes"
-                             :mode="'tree'"></vueJsonEditor>
+                             :mode="'tree'"/>
             </el-form-item>
           </el-col>
         </el-row>
@@ -187,327 +187,327 @@
   </el-card>
 </template>
 <script>
-    import vueJsonEditor from 'vue-json-editor'
+  import vueJsonEditor from 'vue-json-editor'
 
-    export default {
-        name: 'routeConfig',
-        components: {
-            vueJsonEditor
+  export default {
+    name: 'routeConfig',
+    components: {
+      vueJsonEditor
+    },
+    data () {
+      return {
+        jsonEditModes: ['tree', 'text'],
+        searchForm: {
+          routeId: '',
+          enabled: '',
+          orderParam: {
+            prop: 'routeId',
+            order: 'ascending'
+          },
+          currPage: 1,
+          totalRows: 0,
+          pageSize: 10,
+          pageSizeArray: [10, 20, 30, 40]
         },
-        data () {
-            return {
-                jsonEditModes: ['tree', 'text'],
-                searchForm: {
-                    routeId: '',
-                    enabled: '',
-                    orderParam: {
-                        prop: 'routeId',
-                        order: 'ascending'
-                    },
-                    currPage: 1,
-                    totalRows: 0,
-                    pageSize: 10,
-                    pageSizeArray: [10, 20, 30, 40]
-                },
-                editForm: {
-                    id: '',
-                    routeId: '',
-                    uri: '',
-                    predicates: [],
-                    filters: [],
-                    orderNum: 0,
-                    enabled: true,
-                    remarks: ''
-                },
-                editModal: false,
-                modal_loading: false,
-                searchData: [],
-                selectedData: [],
-                action: 0
-            }
+        editForm: {
+          id: '',
+          routeId: '',
+          uri: '',
+          predicates: [],
+          filters: [],
+          orderNum: 0,
+          enabled: true,
+          remarks: ''
         },
-        watch: {
-            editModal (value) {
-                if (value) {
-                    this.$nextTick(() => {
-                        this.$refs['routeId'].focus()
-                    })
-                }
-            }
-        },
-        computed: {
-            tableHeight () {
-                const minHeight = 300
-                const height = this.$store.state.app.mainHeight - 80 - 46 - 42 - 4
-                if (height < minHeight) {
-                    return minHeight - 2
-                } else {
-                    return height
-                }
-            },
-            jsonEditorLang () {
-                const lang = this.$store.state.app.lang.lang
-                if (lang === 'CN') {
-                    return 'zh'
-                } else {
-                    return 'en'
-                }
-            },
-            enabledList () {
-                return [
-                    { value: 'true', label: this.$i18n.t('forms.enabled') },
-                    { value: 'false', label: this.$i18n.t('forms.disabled') }
-                ]
-            },
-            ruleAddForm () {
-                return {
-                    routeId: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.routeId') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ],
-                    uri: [
-                        {
-                            required: true,
-                            message: this.$i18n.t('forms.uri') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ],
-                    orderNum: [
-                        {
-                            type: 'number',
-                            required: true,
-                            message: this.$i18n.t('forms.sort') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ],
-                    predicates: [
-                        {
-                            required: true,
-                            type: 'array',
-                            min: 1,
-                            message: this.$i18n.t('forms.predicates') + this.$i18n.t('forms.notEmpty'),
-                            trigger: 'blur'
-                        }
-                    ]
-                }
-            }
-        },
-        methods: {
-            enabledText (enabled) {
-                return enabled ? this.$i18n.t('forms.enabled') : this.$i18n.t('forms.disabled')
-            },
-            handleAdd () {
-                this.editModal = true
-                this.$nextTick(() => {
-                    this.$refs['editForm'].resetFields()
-                    this.action = 0
-                })
-            },
-            doCancel () {
-                this.editModal = false
-            },
-            doSave (name) {
-                switch (this.action) {
-                    case 0:
-                        this.$refs[name].validate((valid) => {
-                            if (valid) {
-                                this.modal_loading = true
-                                this.$api.request.route.create({
-                                    routeId: this.editForm.routeId,
-                                    uri: this.editForm.uri,
-                                    orderNum: this.editForm.orderNum,
-                                    predicates: JSON.stringify(this.editForm.predicates),
-                                    filters: JSON.stringify(this.editForm.filters),
-                                    enabled: this.editForm.enabled,
-                                    remarks: this.editForm.remarks
-                                }).then((res) => {
-                                    this.modal_loading = false
-                                    if (res) {
-                                        this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
-                                        this.editModal = false
-                                        this.handleSearch()
-                                    }
-                                }).catch(() => {
-                                    this.modal_loading = false
-                                })
-                            }
-                        })
-                        break
-                    case 1:
-                        this.$refs[name].validate((valid) => {
-                            if (valid) {
-                                this.modal_loading = true
-                                this.$api.request.route.update({
-                                    id: this.editForm.id,
-                                    routeId: this.editForm.routeId,
-                                    uri: this.editForm.uri,
-                                    orderNum: this.editForm.orderNum,
-                                    predicates: JSON.stringify(this.editForm.predicates),
-                                    filters: JSON.stringify(this.editForm.filters),
-                                    enabled: this.editForm.enabled,
-                                    remarks: this.editForm.remarks
-                                }).then((res) => {
-                                    this.modal_loading = false
-                                    if (res) {
-                                        this.$message.success(this.$i18n.t('messages.updateSuccess') + '')
-                                        this.editModal = false
-                                        this.handleSearch()
-                                    }
-                                }).catch(() => {
-                                    this.modal_loading = false
-                                })
-                            }
-                        })
-                        break
-                }
-            },
-            handleDelete (rowIds) {
-                this.modal_loading = true
-                this.$api.request.route.delete(rowIds).then((res) => {
-                    this.modal_loading = false
-                    if (res) {
-                        this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
-                        this.handleSearch()
-                    }
-                }).catch(() => {
-                    this.modal_loading = false
-                })
-            },
-            handlePageSearch (page) {
-                this.searchForm.currPage = page
-                this.handleSearch()
-            },
-            handlePageSizeSearch (size) {
-                this.searchForm.pageSize = size
-                this.handleSearch()
-            },
-            handleSearch () {
-                let searchParam = {
-                    routeId: this.searchForm.routeId,
-                    queryParam: {
-                        currPage: this.searchForm.currPage,
-                        pageSize: this.searchForm.pageSize
-                    }
-                }
-                if (this.searchForm.enabled === 'true') {
-                    searchParam.enabled = true
-                } else if (this.searchForm.enabled === 'false') {
-                    searchParam.enabled = false
-                }
-                if (this.searchForm.orderParam.order !== 'normal') {
-                    searchParam.queryParam.orderName = this.searchForm.orderParam.prop
-                    searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
-                }
-                this.modal_loading = true
-                this.$api.request.route.query(searchParam).then((res) => {
-                    this.modal_loading = false
-                    if (res) {
-                        this.selectedData = []
-                        this.searchForm.currPage = res.data.pageable.pageNumber + 1
-                        this.searchForm.totalRows = res.data.totalElements
-                        this.searchData = res.data.content.map(item => {
-                            if (item.enabled) {
-                                item._disabled = true
-                            }
-                            return item
-                        })
-                        this.$nextTick(() => {
-                            this.$refs['table'].doLayout()
-                        })
-                    }
-                }).catch(() => {
-                    this.searchData = []
-                    this.selectedData = []
-                    this.modal_loading = false
-                })
-            },
-            handleRowClick (row) {
-                this.$refs['table'].toggleRowSelection(row)
-            },
-            handleSortChange (param) {
-                this.searchForm.orderParam.prop = param.prop
-                this.searchForm.orderParam.order = param.order
-                this.handleSearch()
-            },
-            handleSearchReset (name) {
-                this.$refs[name].resetFields()
-            },
-            handleSelect (selection) {
-                this.selectedData = selection
-            },
-            handleDeleteRow (row) {
-                if (row.enabled) {
-                    this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
-                        type: 'error'
-                    })
-                } else {
-                    this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
-                        type: 'warning'
-                    }).then(() => {
-                        this.handleDelete([row.id])
-                    }).catch(() => {
-                    })
-                }
-            },
-            handleDeleteMore () {
-                if (this.selectedData.length > 0) {
-                    this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
-                        type: 'warning'
-                    }).then(() => {
-                        this.handleDelete(this.selectedData.map(item => item.id))
-                    }).catch(() => {
-                    })
-                } else {
-                    this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
-                        type: 'error'
-                    })
-                }
-            },
-            handleEdit (row) {
-                this.editModal = true
-                this.$nextTick(() => {
-                    this.$refs['editForm'].resetFields()
-                    this.editForm.id = row.id
-                    this.editForm.routeId = row.routeId
-                    this.editForm.uri = row.uri
-                    this.editForm.predicates = JSON.parse(row.predicates)
-                    this.editForm.filters = JSON.parse(row.filters)
-                    this.editForm.orderNum = row.orderNum
-                    this.editForm.enabled = !!row.enabled
-                    this.editForm.remarks = row.remarks
-                    this.action = 1
-                })
-            },
-            handleRefresh () {
-                this.$confirm(this.$i18n.t('messages.refreshRouteConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
-                    type: 'warning'
-                }).then(() => {
-                    this.modal_loading = true
-                    this.$api.request.route.refreshRoute().then((res) => {
-                        this.modal_loading = false
-                        if (res) {
-                            this.$message.success(res.data.message)
-                            this.handleSearch()
-                        }
-                    }).catch(() => {
-                        this.modal_loading = false
-                    })
-                }).catch(() => {
-                })
-            }
-        },
-        mounted () {
-            this.handleSearch()
-        },
-        activated () {
-            this.$nextTick(() => {
-                this.$refs['table'].doLayout()
-            })
+        editModal: false,
+        modal_loading: false,
+        searchData: [],
+        selectedData: [],
+        action: 0
+      }
+    },
+    watch: {
+      editModal (value) {
+        if (value) {
+          this.$nextTick(() => {
+            this.$refs['routeId'].focus()
+          })
         }
+      }
+    },
+    computed: {
+      tableHeight () {
+        const minHeight = 300
+        const height = this.$store.state.app.mainHeight - 80 - 46 - 42 - 4
+        if (height < minHeight) {
+          return minHeight - 2
+        } else {
+          return height
+        }
+      },
+      jsonEditorLang () {
+        const lang = this.$store.state.app.lang.lang
+        if (lang === 'CN') {
+          return 'zh'
+        } else {
+          return 'en'
+        }
+      },
+      enabledList () {
+        return [
+          { value: 'true', label: this.$i18n.t('forms.enabled') },
+          { value: 'false', label: this.$i18n.t('forms.disabled') }
+        ]
+      },
+      ruleAddForm () {
+        return {
+          routeId: [
+            {
+              required: true,
+              message: this.$i18n.t('forms.routeId') + this.$i18n.t('forms.notEmpty'),
+              trigger: 'blur'
+            }
+          ],
+          uri: [
+            {
+              required: true,
+              message: this.$i18n.t('forms.uri') + this.$i18n.t('forms.notEmpty'),
+              trigger: 'blur'
+            }
+          ],
+          orderNum: [
+            {
+              type: 'number',
+              required: true,
+              message: this.$i18n.t('forms.sort') + this.$i18n.t('forms.notEmpty'),
+              trigger: 'blur'
+            }
+          ],
+          predicates: [
+            {
+              required: true,
+              type: 'array',
+              min: 1,
+              message: this.$i18n.t('forms.predicates') + this.$i18n.t('forms.notEmpty'),
+              trigger: 'blur'
+            }
+          ]
+        }
+      }
+    },
+    methods: {
+      enabledText (enabled) {
+        return enabled ? this.$i18n.t('forms.enabled') : this.$i18n.t('forms.disabled')
+      },
+      handleAdd () {
+        this.editModal = true
+        this.$nextTick(() => {
+          this.$refs['editForm'].resetFields()
+          this.action = 0
+        })
+      },
+      doCancel () {
+        this.editModal = false
+      },
+      doSave (name) {
+        switch (this.action) {
+          case 0:
+            this.$refs[name].validate((valid) => {
+              if (valid) {
+                this.modal_loading = true
+                this.$api.request.route.create({
+                  routeId: this.editForm.routeId,
+                  uri: this.editForm.uri,
+                  orderNum: this.editForm.orderNum,
+                  predicates: JSON.stringify(this.editForm.predicates),
+                  filters: JSON.stringify(this.editForm.filters),
+                  enabled: this.editForm.enabled,
+                  remarks: this.editForm.remarks
+                }).then((res) => {
+                  this.modal_loading = false
+                  if (res) {
+                    this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
+                    this.editModal = false
+                    this.handleSearch()
+                  }
+                }).catch(() => {
+                  this.modal_loading = false
+                })
+              }
+            })
+            break
+          case 1:
+            this.$refs[name].validate((valid) => {
+              if (valid) {
+                this.modal_loading = true
+                this.$api.request.route.update({
+                  id: this.editForm.id,
+                  routeId: this.editForm.routeId,
+                  uri: this.editForm.uri,
+                  orderNum: this.editForm.orderNum,
+                  predicates: JSON.stringify(this.editForm.predicates),
+                  filters: JSON.stringify(this.editForm.filters),
+                  enabled: this.editForm.enabled,
+                  remarks: this.editForm.remarks
+                }).then((res) => {
+                  this.modal_loading = false
+                  if (res) {
+                    this.$message.success(this.$i18n.t('messages.updateSuccess') + '')
+                    this.editModal = false
+                    this.handleSearch()
+                  }
+                }).catch(() => {
+                  this.modal_loading = false
+                })
+              }
+            })
+            break
+        }
+      },
+      handleDelete (rowIds) {
+        this.modal_loading = true
+        this.$api.request.route.delete(rowIds).then((res) => {
+          this.modal_loading = false
+          if (res) {
+            this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
+            this.handleSearch()
+          }
+        }).catch(() => {
+          this.modal_loading = false
+        })
+      },
+      handlePageSearch (page) {
+        this.searchForm.currPage = page
+        this.handleSearch()
+      },
+      handlePageSizeSearch (size) {
+        this.searchForm.pageSize = size
+        this.handleSearch()
+      },
+      handleSearch () {
+        let searchParam = {
+          routeId: this.searchForm.routeId,
+          queryParam: {
+            currPage: this.searchForm.currPage,
+            pageSize: this.searchForm.pageSize
+          }
+        }
+        if (this.searchForm.enabled === 'true') {
+          searchParam.enabled = true
+        } else if (this.searchForm.enabled === 'false') {
+          searchParam.enabled = false
+        }
+        if (this.searchForm.orderParam.order !== 'normal') {
+          searchParam.queryParam.orderName = this.searchForm.orderParam.prop
+          searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
+        }
+        this.modal_loading = true
+        this.$api.request.route.query(searchParam).then((res) => {
+          this.modal_loading = false
+          if (res) {
+            this.selectedData = []
+            this.searchForm.currPage = res.data.pageable.pageNumber + 1
+            this.searchForm.totalRows = res.data.totalElements
+            this.searchData = res.data.content.map(item => {
+              if (item.enabled) {
+                item._disabled = true
+              }
+              return item
+            })
+            this.$nextTick(() => {
+              this.$refs['table'].doLayout()
+            })
+          }
+        }).catch(() => {
+          this.searchData = []
+          this.selectedData = []
+          this.modal_loading = false
+        })
+      },
+      handleRowClick (row) {
+        this.$refs['table'].toggleRowSelection(row)
+      },
+      handleSortChange (param) {
+        this.searchForm.orderParam.prop = param.prop
+        this.searchForm.orderParam.order = param.order
+        this.handleSearch()
+      },
+      handleSearchReset (name) {
+        this.$refs[name].resetFields()
+      },
+      handleSelect (selection) {
+        this.selectedData = selection
+      },
+      handleDeleteRow (row) {
+        if (row.enabled) {
+          this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
+            type: 'error'
+          })
+        } else {
+          this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+            type: 'warning'
+          }).then(() => {
+            this.handleDelete([row.id])
+          }).catch(() => {
+          })
+        }
+      },
+      handleDeleteMore () {
+        if (this.selectedData.length > 0) {
+          this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+            type: 'warning'
+          }).then(() => {
+            this.handleDelete(this.selectedData.map(item => item.id))
+          }).catch(() => {
+          })
+        } else {
+          this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
+            type: 'error'
+          })
+        }
+      },
+      handleEdit (row) {
+        this.editModal = true
+        this.$nextTick(() => {
+          this.$refs['editForm'].resetFields()
+          this.editForm.id = row.id
+          this.editForm.routeId = row.routeId
+          this.editForm.uri = row.uri
+          this.editForm.predicates = JSON.parse(row.predicates)
+          this.editForm.filters = JSON.parse(row.filters)
+          this.editForm.orderNum = row.orderNum
+          this.editForm.enabled = !!row.enabled
+          this.editForm.remarks = row.remarks
+          this.action = 1
+        })
+      },
+      handleRefresh () {
+        this.$confirm(this.$i18n.t('messages.refreshRouteConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+          type: 'warning'
+        }).then(() => {
+          this.modal_loading = true
+          this.$api.request.route.refreshRoute().then((res) => {
+            this.modal_loading = false
+            if (res) {
+              this.$message.success(res.data.message)
+              this.handleSearch()
+            }
+          }).catch(() => {
+            this.modal_loading = false
+          })
+        }).catch(() => {
+        })
+      }
+    },
+    mounted () {
+      this.handleSearch()
+    },
+    activated () {
+      this.$nextTick(() => {
+        this.$refs['table'].doLayout()
+      })
     }
+  }
 </script>
 <style>
   .jsoneditor-vue div.jsoneditor-outer {

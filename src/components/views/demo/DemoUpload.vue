@@ -27,7 +27,7 @@
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
             <img v-if="imageUrl" :src="imageUrl" class="avatar" alt=""/>
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            <i v-else class="el-icon-plus avatar-uploader-icon"/>
           </el-upload>
         </el-card>
       </el-col>
@@ -38,7 +38,7 @@
             list-type="picture-card"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove">
-            <i class="el-icon-plus"></i>
+            <i class="el-icon-plus"/>
           </el-upload>
           <el-dialog :visible.sync="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt="">
@@ -54,24 +54,24 @@
             :action="uploadURL"
             list-type="picture-card"
             :auto-upload="false">
-            <i slot="default" class="el-icon-plus"></i>
+            <i slot="default" class="el-icon-plus"/>
             <div slot="file" slot-scope="{file}">
               <img class="el-upload-list__item-thumbnail"
                    :src="file.url" alt=""/>
               <span class="el-upload-list__item-actions">
                 <span class="el-upload-list__item-preview"
                       @click="handlePictureCardPreview(file)">
-                  <i class="el-icon-zoom-in"></i>
+                  <i class="el-icon-zoom-in"/>
                 </span>
                 <span v-if="!disabled"
                       class="el-upload-list__item-delete"
                       @click="handleDownload(file)">
-                  <i class="el-icon-download"></i>
+                  <i class="el-icon-download"/>
                 </span>
                 <span v-if="!disabled"
                       class="el-upload-list__item-delete"
                       @click="handleRemove(file)">
-                  <i class="el-icon-delete"></i>
+                  <i class="el-icon-delete"/>
                 </span>
               </span>
             </div>
@@ -116,7 +116,7 @@
             drag
             :action="uploadURL"
             multiple>
-            <i class="el-icon-upload"></i>
+            <i class="el-icon-upload"/>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
           </el-upload>
@@ -170,68 +170,68 @@
   }
 </style>
 <script>
-    import appInfo from '@/store/config/appInfo'
+  import appInfo from '@/store/config/appInfo'
 
-    export default {
-        name: 'demoUpload',
-        data () {
-            return {
-                uploadURL: appInfo.baseURL + '/file/upload',
-                fileList: [{
-                    name: 'food.jpeg',
-                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-                }, {
-                    name: 'food2.jpeg',
-                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-                }],
-                imageUrl: '',
-                dialogImageUrl: '',
-                dialogVisible: false,
-                disabled: false
-            }
-        },
-        methods: {
-            submitUpload () {
-                this.$refs.upload.submit()
-            },
-            handleChange (file, fileList) {
-                this.fileList = fileList.slice(-3)
-            },
-            handleRemove (file, fileList) {
-                console.log(file, fileList)
-            },
-            handlePreview (file) {
-                console.log(file)
-            },
-            handleExceed (files, fileList) {
-                this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
-            },
-            beforeRemove (file, fileList) {
-                console.log(file, fileList)
-                return this.$confirm(`确定移除 ${file.name}？`)
-            },
-            handleAvatarSuccess (res, file) {
-                this.imageUrl = URL.createObjectURL(file.raw)
-            },
-            beforeAvatarUpload (file) {
-                const isJPG = file.type === 'image/jpeg'
-                const isLt2M = file.size / 1024 / 1024 < 2
+  export default {
+    name: 'demoUpload',
+    data () {
+      return {
+        uploadURL: appInfo.baseURL + '/file/upload',
+        fileList: [{
+          name: 'food.jpeg',
+          url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+        }, {
+          name: 'food2.jpeg',
+          url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+        }],
+        imageUrl: '',
+        dialogImageUrl: '',
+        dialogVisible: false,
+        disabled: false
+      }
+    },
+    methods: {
+      submitUpload () {
+        this.$refs.upload.submit()
+      },
+      handleChange (file, fileList) {
+        this.fileList = fileList.slice(-3)
+      },
+      handleRemove (file, fileList) {
+        console.log(file, fileList)
+      },
+      handlePreview (file) {
+        console.log(file)
+      },
+      handleExceed (files, fileList) {
+        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+      },
+      beforeRemove (file, fileList) {
+        console.log(file, fileList)
+        return this.$confirm(`确定移除 ${file.name}？`)
+      },
+      handleAvatarSuccess (res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw)
+      },
+      beforeAvatarUpload (file) {
+        const isJPG = file.type === 'image/jpeg'
+        const isLt2M = file.size / 1024 / 1024 < 2
 
-                if (!isJPG) {
-                    this.$message.error('上传头像图片只能是 JPG 格式!')
-                }
-                if (!isLt2M) {
-                    this.$message.error('上传头像图片大小不能超过 2MB!')
-                }
-                return isJPG && isLt2M
-            },
-            handlePictureCardPreview (file) {
-                this.dialogImageUrl = file.url
-                this.dialogVisible = true
-            },
-            handleDownload (file) {
-                console.log(file)
-            }
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!')
         }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!')
+        }
+        return isJPG && isLt2M
+      },
+      handlePictureCardPreview (file) {
+        this.dialogImageUrl = file.url
+        this.dialogVisible = true
+      },
+      handleDownload (file) {
+        console.log(file)
+      }
     }
+  }
 </script>

@@ -4,7 +4,7 @@
 > - [Upgrade] 修改应用列表获取排序规则
 > - [Upgrade] 去除部分多余代码
 > - [Upgrade] 调整日志查询界面文字描述
-> - [Upgrade] 与后台同步更新至v4.0.5
+> - [Upgrade] 修改.vue文件缩进，及空标签规范
 ##### v4.0.4
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 模块编码改用el-autocomplete组件，允许自定义

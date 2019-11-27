@@ -10,29 +10,29 @@
   </div>
 </template>
 <script>
-    import siderTrigger from './sider-trigger'
-    import customBreadCrumb from './custom-bread-crumb'
-    import './header-bar.less'
+  import siderTrigger from './sider-trigger'
+  import customBreadCrumb from './custom-bread-crumb'
+  import './header-bar.less'
 
-    export default {
-        name: 'HeaderBar',
-        components: {
-            siderTrigger,
-            customBreadCrumb
-        },
-        props: {
-            collapsed: Boolean,
-            mini: Boolean,
-            fullPath: String,
-            menuList: {
-                type: Array,
-                default: () => []
-            }
-        },
-        methods: {
-            handleCollpasedChange (state) {
-                this.$emit('on-coll-change', state)
-            }
-        }
+  export default {
+    name: 'HeaderBar',
+    components: {
+      siderTrigger,
+      customBreadCrumb
+    },
+    props: {
+      collapsed: Boolean,
+      mini: Boolean,
+      fullPath: String,
+      menuList: {
+        type: Array,
+        default: () => []
+      }
+    },
+    methods: {
+      handleCollpasedChange (state) {
+        this.$emit('on-coll-change', state)
+      }
     }
+  }
 </script>
