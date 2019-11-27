@@ -167,32 +167,40 @@ const ApiComm = {
   /**
    * 页面跳转
    * @param obj 跳转参数 stirng | route
-   * @param asyncFunc 跳转前执行的函数, asyncFunc(callBackFunc)
+   * @param asyncFunc 跳转前执行的函数, asyncFunc(callBackFunc);
+   *                  参数为一个函数，callBackFunc函数内容就是具体执行页面跳转;
+   *                  callBackFunc函数接收一个参数pass，当pass为true时执行页面跳转，当pass不为true时什么事都不做
    * @param pageName 页面名称
    * @param closeMore 是否关闭多个页面标签
    * @param replace 是否是replace方式跳转
    */
   turnToPage (obj, asyncFunc, pageName, closeMore = false, replace = false) {
-    let path = ''
+    let pathOrName = ''
     if (typeof obj === 'string') { // string
-      path = obj
+      pathOrName = obj
     } else { // route
       if (obj.path) {
-        path = obj.path
+        pathOrName = obj.path
+      } else if (obj.name) {
+        pathOrName = obj.name
+      } else {
+        return
       }
     }
     let targetMenu, currMenu
     currMenu = findMenuByPath(this.$router.currentRoute.fullPath, this.$store.state.app.user.menuList)
-    if (path.startsWith('/') || path.toLowerCase().startsWith('http')) {
+    if (pathOrName.startsWith('/') || pathOrName.toLowerCase().startsWith('http')) {
+      // 直接路由跳转 或 外部链接跳转
       if (!closeMore) {
-        if (this.$router.currentRoute.fullPath === path) {
+        if (this.$router.currentRoute.fullPath === pathOrName) {
           return
         }
       }
-      targetMenu = findMenuByPath(path, this.$store.state.app.user.menuList)
+      targetMenu = findMenuByPath(pathOrName, this.$store.state.app.user.menuList)
     } else {
+      // 路由名称跳转
       if (!closeMore) {
-        if (this.$router.currentRoute.name === path) {
+        if (this.$router.currentRoute.name === pathOrName) {
           return
         }
       }
@@ -205,13 +213,15 @@ const ApiComm = {
     } else {
       dataLose = true
     }
-    const dataLoseProcess = (lazyTime) => {
+    const process = (lazyTime) => {
       if (asyncFunc && typeof asyncFunc === 'function') {
         const doAsyncFunc = () => {
-          asyncFunc((result) => {
-            if (result) {
+          asyncFunc((pass) => {
+            if (pass) {
               if (dataLose) {
-                this.removeThisTag()
+                if (!closeMore) {
+                  this.removeThisTag()
+                }
               }
               ApiComm.routeSwitch(obj, targetMenu, replace)
             }
@@ -226,25 +236,27 @@ const ApiComm = {
         }
       } else {
         if (dataLose) {
-          this.removeThisTag()
+          if (!closeMore) {
+            this.removeThisTag()
+          }
         }
         ApiComm.routeSwitch(obj, targetMenu, replace)
       }
     }
     if ((!targetMenu || targetMenu.openType !== 1) && dataLose) {
-      if (obj.path === '/404' || obj.path === '/500' || obj.name === 'E404' || obj.name === 'E500') {
-        dataLoseProcess(0)
+      if (pathOrName === '/404' || pathOrName === '/500' || pathOrName === 'E404' || pathOrName === 'E500') {
+        process(0)
       } else {
         this.$confirm(this.getPageTitle(pageName, currMenu) + ' ' +
           this.$i18n.t('messages.leavePage'), this.$i18n.t('dialog.confirm'), {
           type: 'warning'
         }).then(() => {
-          dataLoseProcess(350)
+          process(350)
         }).catch(() => {
         })
       }
     } else {
-      dataLoseProcess(0)
+      process(0)
     }
   },
   /**
