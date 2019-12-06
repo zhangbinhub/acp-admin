@@ -754,8 +754,7 @@
                 this.reloadModuleFuncRoleList()
                 this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                 this.currModuleFuncData.name = this.moduleFuncEditForm.name
-                this.currModuleFuncData.title = this.moduleFuncEditForm.name
-                this.currModuleFuncData.label = this.moduleFuncEditForm.name
+                this.currModuleFuncData.label = this.moduleFuncEditForm.code !== '' ? this.moduleFuncEditForm.name + '(' + this.moduleFuncEditForm.code + ')' : this.moduleFuncEditForm.name
                 this.currModuleFuncData.code = this.moduleFuncEditForm.code
                 this.currModuleFuncData.parentId = this.moduleFuncEditForm.parentId
                 this.currModuleFuncData.roleIds = this.moduleFuncEditForm.roleIds

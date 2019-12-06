@@ -391,8 +391,7 @@
                 this.reloadUserList()
                 this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                 this.currRoleData.name = this.editForm.name
-                this.currRoleData.title = this.editForm.name
-                this.currRoleData.label = this.editForm.name
+                this.currRoleData.label = this.editForm.code !== '' ? this.editForm.name + '(' + this.editForm.code + ')' : this.editForm.name
                 this.currRoleData.code = this.editForm.code
                 this.currRoleData.levels = this.editForm.levels
                 this.currRoleData.sort = this.editForm.sort

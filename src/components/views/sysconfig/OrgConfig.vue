@@ -292,8 +292,7 @@
                 this.reloadUserList()
                 this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                 this.currOrgData.name = this.editForm.name
-                this.currOrgData.title = this.editForm.name
-                this.currOrgData.label = this.editForm.name
+                this.currOrgData.label = this.editForm.code !== '' ? this.editForm.name + '(' + this.editForm.code + ')' : this.editForm.name
                 this.currOrgData.code = this.editForm.code
                 this.currOrgData.parentId = this.editForm.parentId
                 this.currOrgData.sort = this.editForm.sort
