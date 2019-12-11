@@ -404,8 +404,10 @@
           this.tree_loading = false
         })
       },
-      refreshMenuTree () {
-        this.clearMenuCurrObj()
+      refreshMenuTree (clear = true) {
+        if (clear) {
+          this.clearMenuCurrObj()
+        }
         this.tree_loading = true
         this.$api.request.app.getList().then((appRes) => {
           if (appRes) {
@@ -441,8 +443,10 @@
           this.tree_loading = false
         })
       },
-      refreshModuleFuncTree () {
-        this.clearModuleFuncCurrObj()
+      refreshModuleFuncTree (clear = true) {
+        if (clear) {
+          this.clearModuleFuncCurrObj()
+        }
         this.tree_loading = true
         this.$api.request.app.getList().then((appRes) => {
           if (appRes) {
@@ -699,7 +703,6 @@
             }).then((res) => {
               this.tree_loading = false
               if (res) {
-                let oldParentId = this.currMenuData.parentId
                 this.reloadMenuRoleList()
                 this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                 this.currMenuData.name = this.menuEditForm.name
@@ -724,11 +727,7 @@
                   roleIds: this.menuEditForm.roleIds
                 }
                 this.currMenuFullPath = getTreeFullPathTitle(this.menuTreeData, this.currMenu.id)
-                if (oldParentId === this.currMenuData.parentId) {
-                  sortTreeNodes(this.menuTreeData)
-                } else {
-                  this.refreshMenuTree()
-                }
+                this.refreshMenuTree(false)
               }
             }).catch(() => {
               this.tree_loading = false
@@ -750,7 +749,6 @@
             }).then((res) => {
               this.tree_loading = false
               if (res) {
-                let oldParentId = this.currModuleFuncData.parentId
                 this.reloadModuleFuncRoleList()
                 this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                 this.currModuleFuncData.name = this.moduleFuncEditForm.name
@@ -767,11 +765,7 @@
                   roleIds: this.moduleFuncEditForm.roleIds
                 }
                 this.currModuleFuncFullPath = getTreeFullPathTitle(this.moduleFuncTreeData, this.currModuleFunc.id)
-                if (oldParentId === this.currModuleFuncData.parentId) {
-                  sortTreeNodes(this.moduleFuncTreeData, 'code')
-                } else {
-                  this.refreshModuleFuncTree()
-                }
+                this.refreshModuleFuncTree(false)
               }
             }).catch(() => {
               this.tree_loading = false

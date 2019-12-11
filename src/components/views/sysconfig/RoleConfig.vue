@@ -175,8 +175,10 @@
         }) : restaurants
         cb(results)
       },
-      refreshTree () {
-        this.clearCurrObj()
+      refreshTree (clear = true) {
+        if (clear) {
+          this.clearCurrObj()
+        }
         this.tree_loading = true
         this.$api.request.app.getList().then((appRes) => {
           if (appRes) {
@@ -424,7 +426,7 @@
                   })
                 })
                 this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)
-                sortTreeNodes(this.treeData)
+                this.refreshTree(false)
               }
             }).catch(() => {
               this.tree_loading = false

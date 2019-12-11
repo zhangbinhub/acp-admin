@@ -180,8 +180,10 @@
           this.currOrgData = {}
         }
       },
-      refreshOrgTree () {
-        this.clearCurrOrg()
+      refreshOrgTree (clear = true) {
+        if (clear) {
+          this.clearCurrOrg()
+        }
         this.tree_loading = true
         this.$api.request.org.getOrgList().then((res) => {
           this.tree_loading = false
@@ -288,7 +290,6 @@
             }).then((res) => {
               this.tree_loading = false
               if (res) {
-                let oldParentId = this.currOrgData.parentId
                 this.reloadUserList()
                 this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                 this.currOrgData.name = this.editForm.name
@@ -306,11 +307,7 @@
                   userIds: this.editForm.userIds
                 }
                 this.currOrgFullPath = getTreeFullPathTitle(this.treeData, this.currOrg.id)
-                if (oldParentId === this.currOrgData.parentId) {
-                  sortTreeNodes(this.treeData)
-                } else {
-                  this.refreshOrgTree()
-                }
+                this.refreshOrgTree(false)
               }
             }).catch(() => {
               this.tree_loading = false
