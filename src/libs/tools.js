@@ -122,9 +122,11 @@ export const processTreeNode = (nodeList, showCode = true) => {
     if (!item.children) {
       item.children = []
     }
-    item.label = item.name
-    if (showCode && item.code) {
-      item.label += '(' + item.code + ')'
+    if (!item.label || item.label === '') {
+      item.label = item.name
+      if (showCode && item.code) {
+        item.label += '(' + item.code + ')'
+      }
     }
     if (item.children.length > 0) {
       processTreeNode(item.children)

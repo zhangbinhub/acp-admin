@@ -3,6 +3,7 @@
 > - [Upgrade] 优化树形选择项显示名称
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 规范路由path写法
+> - [Upgrade] 优化 tools 中 processTreeNode 设置 label 的逻辑
 > - [Fix] 修复api异常时多次打开错误提示框的问题
 > - [Fix] 修复树形配置不会动态刷新节点排序的问题
 > - [Fix] 修复树形组件按钮错位的问题
