@@ -19,7 +19,7 @@ export default [{
     withInput: true
   }
 }, {
-  path: '/demoupload',
+  path: '/demo-upload',
   name: 'demoUpload',
   component: () => import('@/components/views/demo/DemoUpload.vue'),
   meta: {

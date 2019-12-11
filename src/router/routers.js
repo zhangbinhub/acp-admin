@@ -47,7 +47,7 @@ export default [{
       requireAuth: true
     }
   }, ...demo, {
-    path: '/personalInformation',
+    path: '/personal-information',
     name: 'personalInformation',
     component: () => import('@/components/views/main/PersonalInformation.vue'),
     meta: {
@@ -56,7 +56,7 @@ export default [{
       requireAuth: true
     }
   }, {
-    path: '/routeConfig',
+    path: '/route-config',
     name: 'routeConfig',
     component: () => import('@/components/views/main/RouteConfig.vue'),
     meta: {
@@ -65,7 +65,7 @@ export default [{
       requireAuth: true
     }
   }, {
-    path: '/routeLog',
+    path: '/route-log',
     name: 'routeLog',
     component: () => import('@/components/views/main/RouteLog.vue'),
     meta: {
@@ -74,7 +74,7 @@ export default [{
       requireAuth: true
     }
   }, {
-    path: '/logfile',
+    path: '/log-file',
     name: 'logFile',
     component: () => import('@/components/views/main/LogFile.vue'),
     meta: {
@@ -83,7 +83,7 @@ export default [{
       requireAuth: true
     }
   }, {
-    path: '/operatelog',
+    path: '/operate-log',
     name: 'operateLog',
     component: () => import('@/components/views/monitor/OperateLog.vue'),
     meta: {
@@ -91,7 +91,7 @@ export default [{
       requireAuth: true
     }
   }, {
-    path: '/loginlog',
+    path: '/login-log',
     name: 'loginLog',
     component: () => import('@/components/views/monitor/LoginLog.vue'),
     meta: {
@@ -99,7 +99,7 @@ export default [{
       requireAuth: true
     }
   }, {
-    path: '/appconfig',
+    path: '/app-config',
     name: 'appConfig',
     component: () => import('@/components/views/sysconfig/ApplicationConfig.vue'),
     meta: {
@@ -107,7 +107,7 @@ export default [{
       requireAuth: true
     }
   }, {
-    path: '/authconfig',
+    path: '/auth-config',
     name: 'authConfig',
     component: () => import('@/components/views/sysconfig/AuthConfig.vue'),
     meta: {
@@ -115,7 +115,7 @@ export default [{
       requireAuth: true
     }
   }, {
-    path: '/orgconfig',
+    path: '/org-config',
     name: 'orgConfig',
     component: () => import('@/components/views/sysconfig/OrgConfig.vue'),
     meta: {
@@ -123,7 +123,7 @@ export default [{
       requireAuth: true
     }
   }, {
-    path: '/runtimeconfig',
+    path: '/runtime-config',
     name: 'runtimeConfig',
     component: () => import('@/components/views/sysconfig/RuntimeConfig.vue'),
     meta: {
@@ -131,7 +131,7 @@ export default [{
       requireAuth: true
     }
   }, {
-    path: '/roleconfig',
+    path: '/role-config',
     name: 'roleConfig',
     component: () => import('@/components/views/sysconfig/RoleConfig.vue'),
     meta: {
@@ -139,7 +139,7 @@ export default [{
       requireAuth: true
     }
   }, {
-    path: '/userconfig',
+    path: '/user-config',
     name: 'userConfig',
     component: () => import('@/components/views/sysconfig/UserConfig.vue'),
     meta: {
