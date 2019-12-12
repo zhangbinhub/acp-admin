@@ -180,14 +180,19 @@
           this.currOrgData = {}
         }
       },
-      refreshOrgTree () {
-        this.clearCurrOrg()
+      refreshOrgTree (clear = true, callBackFun) {
+        if (clear) {
+          this.clearCurrOrg()
+        }
         this.tree_loading = true
         this.$api.request.org.getOrgList().then((res) => {
           this.tree_loading = false
           if (res) {
             processTreeNode(res.data)
             this.treeData[0].children = res.data
+            if (typeof callBackFun === 'function') {
+              callBackFun()
+            }
           }
         }).catch(() => {
           this.tree_loading = false
@@ -288,12 +293,10 @@
             }).then((res) => {
               this.tree_loading = false
               if (res) {
-                let oldParentId = this.currOrgData.parentId
                 this.reloadUserList()
                 this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                 this.currOrgData.name = this.editForm.name
-                this.currOrgData.title = this.editForm.name
-                this.currOrgData.label = this.editForm.name
+                this.currOrgData.label = this.editForm.code !== '' ? this.editForm.name + '(' + this.editForm.code + ')' : this.editForm.name
                 this.currOrgData.code = this.editForm.code
                 this.currOrgData.parentId = this.editForm.parentId
                 this.currOrgData.sort = this.editForm.sort
@@ -306,12 +309,9 @@
                   sort: this.editForm.sort,
                   userIds: this.editForm.userIds
                 }
-                this.currOrgFullPath = getTreeFullPathTitle(this.treeData, this.currOrg.id)
-                if (oldParentId === this.currOrgData.parentId) {
-                  sortTreeNodes(this.treeData)
-                } else {
-                  this.refreshOrgTree()
-                }
+                this.refreshOrgTree(false, (() => {
+                  this.currOrgFullPath = getTreeFullPathTitle(this.treeData, this.currOrg.id)
+                }))
               }
             }).catch(() => {
               this.tree_loading = false

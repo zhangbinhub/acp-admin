@@ -404,8 +404,10 @@
           this.tree_loading = false
         })
       },
-      refreshMenuTree () {
-        this.clearMenuCurrObj()
+      refreshMenuTree (clear = true, callBackFun) {
+        if (clear) {
+          this.clearMenuCurrObj()
+        }
         this.tree_loading = true
         this.$api.request.app.getList().then((appRes) => {
           if (appRes) {
@@ -432,6 +434,9 @@
                   }
                 }
                 this.menuTreeData = appData
+                if (typeof callBackFun === 'function') {
+                  callBackFun()
+                }
               }
             }).catch(() => {
               this.tree_loading = false
@@ -441,8 +446,10 @@
           this.tree_loading = false
         })
       },
-      refreshModuleFuncTree () {
-        this.clearModuleFuncCurrObj()
+      refreshModuleFuncTree (clear = true, callBackFun) {
+        if (clear) {
+          this.clearModuleFuncCurrObj()
+        }
         this.tree_loading = true
         this.$api.request.app.getList().then((appRes) => {
           if (appRes) {
@@ -468,6 +475,9 @@
                   }
                 }
                 this.moduleFuncTreeData = appData
+                if (typeof callBackFun === 'function') {
+                  callBackFun()
+                }
               }
             }).catch(() => {
               this.tree_loading = false
@@ -699,7 +709,6 @@
             }).then((res) => {
               this.tree_loading = false
               if (res) {
-                let oldParentId = this.currMenuData.parentId
                 this.reloadMenuRoleList()
                 this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                 this.currMenuData.name = this.menuEditForm.name
@@ -723,12 +732,9 @@
                   sort: this.menuEditForm.sort,
                   roleIds: this.menuEditForm.roleIds
                 }
-                this.currMenuFullPath = getTreeFullPathTitle(this.menuTreeData, this.currMenu.id)
-                if (oldParentId === this.currMenuData.parentId) {
-                  sortTreeNodes(this.menuTreeData)
-                } else {
-                  this.refreshMenuTree()
-                }
+                this.refreshMenuTree(false, (() => {
+                  this.currMenuFullPath = getTreeFullPathTitle(this.menuTreeData, this.currMenu.id)
+                }))
               }
             }).catch(() => {
               this.tree_loading = false
@@ -750,12 +756,10 @@
             }).then((res) => {
               this.tree_loading = false
               if (res) {
-                let oldParentId = this.currModuleFuncData.parentId
                 this.reloadModuleFuncRoleList()
                 this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                 this.currModuleFuncData.name = this.moduleFuncEditForm.name
-                this.currModuleFuncData.title = this.moduleFuncEditForm.name
-                this.currModuleFuncData.label = this.moduleFuncEditForm.name
+                this.currModuleFuncData.label = this.moduleFuncEditForm.code !== '' ? this.moduleFuncEditForm.name + '(' + this.moduleFuncEditForm.code + ')' : this.moduleFuncEditForm.name
                 this.currModuleFuncData.code = this.moduleFuncEditForm.code
                 this.currModuleFuncData.parentId = this.moduleFuncEditForm.parentId
                 this.currModuleFuncData.roleIds = this.moduleFuncEditForm.roleIds
@@ -767,12 +771,9 @@
                   parentId: this.moduleFuncEditForm.parentId,
                   roleIds: this.moduleFuncEditForm.roleIds
                 }
-                this.currModuleFuncFullPath = getTreeFullPathTitle(this.moduleFuncTreeData, this.currModuleFunc.id)
-                if (oldParentId === this.currModuleFuncData.parentId) {
-                  sortTreeNodes(this.moduleFuncTreeData, 'code')
-                } else {
-                  this.refreshModuleFuncTree()
-                }
+                this.refreshModuleFuncTree(false, (() => {
+                  this.currModuleFuncFullPath = getTreeFullPathTitle(this.moduleFuncTreeData, this.currModuleFunc.id)
+                }))
               }
             }).catch(() => {
               this.tree_loading = false

@@ -115,13 +115,19 @@ export const updateTagNavList = (tagNavList, menuList, route) => {
 /**
  * 将后台返回数据转换为tree组件数据
  * @param nodeList Array
+ * @param showCode label中是否显示code信息，默认true
  */
-export const processTreeNode = (nodeList) => {
+export const processTreeNode = (nodeList, showCode = true) => {
   for (let item of nodeList) {
     if (!item.children) {
       item.children = []
     }
-    item.label = item.name
+    if (!item.label || item.label === '') {
+      item.label = item.name
+      if (showCode && item.code) {
+        item.label += '(' + item.code + ')'
+      }
+    }
     if (item.children.length > 0) {
       processTreeNode(item.children)
     }
@@ -196,9 +202,9 @@ export const arrayIsContainOtherArray = (srcArray, searchArray) => {
 }
 
 /**
- * 树节点排序，根据sort属性
+ * 树节点排序
  * @param nodeList Array
- * @param property
+ * @param property 排序字段，默认sort
  */
 export const sortTreeNodes = (nodeList, property = 'sort') => {
   nodeList.sort((obj1, obj2) => {

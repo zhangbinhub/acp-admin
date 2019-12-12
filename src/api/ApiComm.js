@@ -44,6 +44,7 @@ const ApiComm = {
           case 400: // 业务错误
             if (!error.config.headers.Process400 || error.config.headers.Process400 !== 'false') {
               this.errorProcess(error)
+              return
             }
             break
           case 401: // token 失效
@@ -56,6 +57,7 @@ const ApiComm = {
             error.response.data.errorDescription = this.$i18n.t('messages.failed403')
             if (!error.config.headers.Process403 || error.config.headers.Process403 !== 'false') {
               this.errorProcess(error)
+              return
             }
             break
           case 404: // 页面找不到

@@ -175,8 +175,10 @@
         }) : restaurants
         cb(results)
       },
-      refreshTree () {
-        this.clearCurrObj()
+      refreshTree (clear = true, callBackFun) {
+        if (clear) {
+          this.clearCurrObj()
+        }
         this.tree_loading = true
         this.$api.request.app.getList().then((appRes) => {
           if (appRes) {
@@ -204,6 +206,9 @@
                   }
                 }
                 this.treeData = appData
+                if (typeof callBackFun === 'function') {
+                  callBackFun()
+                }
               }
             }).catch(() => {
               this.tree_loading = false
@@ -391,8 +396,7 @@
                 this.reloadUserList()
                 this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                 this.currRoleData.name = this.editForm.name
-                this.currRoleData.title = this.editForm.name
-                this.currRoleData.label = this.editForm.name
+                this.currRoleData.label = this.editForm.code !== '' ? this.editForm.name + '(' + this.editForm.code + ')' : this.editForm.name
                 this.currRoleData.code = this.editForm.code
                 this.currRoleData.levels = this.editForm.levels
                 this.currRoleData.sort = this.editForm.sort
@@ -425,7 +429,9 @@
                   })
                 })
                 this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)
-                sortTreeNodes(this.treeData)
+                this.refreshTree(false, (() => {
+                  this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)
+                }))
               }
             }).catch(() => {
               this.tree_loading = false
