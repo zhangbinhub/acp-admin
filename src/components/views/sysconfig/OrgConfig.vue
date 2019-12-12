@@ -180,7 +180,7 @@
           this.currOrgData = {}
         }
       },
-      refreshOrgTree (clear = true) {
+      refreshOrgTree (clear = true, callBackFun) {
         if (clear) {
           this.clearCurrOrg()
         }
@@ -190,6 +190,9 @@
           if (res) {
             processTreeNode(res.data)
             this.treeData[0].children = res.data
+            if (typeof callBackFun === 'function') {
+              callBackFun()
+            }
           }
         }).catch(() => {
           this.tree_loading = false
@@ -306,8 +309,9 @@
                   sort: this.editForm.sort,
                   userIds: this.editForm.userIds
                 }
-                this.currOrgFullPath = getTreeFullPathTitle(this.treeData, this.currOrg.id)
-                this.refreshOrgTree(false)
+                this.refreshOrgTree(false, (() => {
+                  this.currOrgFullPath = getTreeFullPathTitle(this.treeData, this.currOrg.id)
+                }))
               }
             }).catch(() => {
               this.tree_loading = false

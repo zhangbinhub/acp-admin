@@ -404,7 +404,7 @@
           this.tree_loading = false
         })
       },
-      refreshMenuTree (clear = true) {
+      refreshMenuTree (clear = true, callBackFun) {
         if (clear) {
           this.clearMenuCurrObj()
         }
@@ -434,6 +434,9 @@
                   }
                 }
                 this.menuTreeData = appData
+                if (typeof callBackFun === 'function') {
+                  callBackFun()
+                }
               }
             }).catch(() => {
               this.tree_loading = false
@@ -443,7 +446,7 @@
           this.tree_loading = false
         })
       },
-      refreshModuleFuncTree (clear = true) {
+      refreshModuleFuncTree (clear = true, callBackFun) {
         if (clear) {
           this.clearModuleFuncCurrObj()
         }
@@ -472,6 +475,9 @@
                   }
                 }
                 this.moduleFuncTreeData = appData
+                if (typeof callBackFun === 'function') {
+                  callBackFun()
+                }
               }
             }).catch(() => {
               this.tree_loading = false
@@ -726,8 +732,9 @@
                   sort: this.menuEditForm.sort,
                   roleIds: this.menuEditForm.roleIds
                 }
-                this.currMenuFullPath = getTreeFullPathTitle(this.menuTreeData, this.currMenu.id)
-                this.refreshMenuTree(false)
+                this.refreshMenuTree(false, (() => {
+                  this.currMenuFullPath = getTreeFullPathTitle(this.menuTreeData, this.currMenu.id)
+                }))
               }
             }).catch(() => {
               this.tree_loading = false
@@ -764,8 +771,9 @@
                   parentId: this.moduleFuncEditForm.parentId,
                   roleIds: this.moduleFuncEditForm.roleIds
                 }
-                this.currModuleFuncFullPath = getTreeFullPathTitle(this.moduleFuncTreeData, this.currModuleFunc.id)
-                this.refreshModuleFuncTree(false)
+                this.refreshModuleFuncTree(false, (() => {
+                  this.currModuleFuncFullPath = getTreeFullPathTitle(this.moduleFuncTreeData, this.currModuleFunc.id)
+                }))
               }
             }).catch(() => {
               this.tree_loading = false

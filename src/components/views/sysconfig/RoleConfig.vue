@@ -175,7 +175,7 @@
         }) : restaurants
         cb(results)
       },
-      refreshTree (clear = true) {
+      refreshTree (clear = true, callBackFun) {
         if (clear) {
           this.clearCurrObj()
         }
@@ -206,6 +206,9 @@
                   }
                 }
                 this.treeData = appData
+                if (typeof callBackFun === 'function') {
+                  callBackFun()
+                }
               }
             }).catch(() => {
               this.tree_loading = false
@@ -426,7 +429,9 @@
                   })
                 })
                 this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)
-                this.refreshTree(false)
+                this.refreshTree(false, (() => {
+                  this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)
+                }))
               }
             }).catch(() => {
               this.tree_loading = false
