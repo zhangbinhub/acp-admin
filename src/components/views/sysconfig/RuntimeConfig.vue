@@ -46,6 +46,7 @@
         type="selection"
         fixed="left"
         align="center"
+        :selectable="selectableFun"
         width="40">
       </el-table-column>
       <el-table-column
@@ -59,7 +60,7 @@
         <template slot-scope="scope">
           <el-input type="text" v-model="editValue" v-if="editIndex === scope.$index"
                     @keyup.enter.native="handleSave(scope.$index)"
-                    @keyup.native="handleCancel($event)"/>
+                    @keyup.esc.native="handleCancel"/>
           <span v-else>{{ scope.row.value }}</span>
         </template>
       </el-table-column>
@@ -69,7 +70,7 @@
         <template slot-scope="scope">
           <el-input type="text" v-model="editDes" v-if="editIndex === scope.$index"
                     @keyup.enter.native="handleSave(scope.$index)"
-                    @keyup.native="handleCancel($event)"/>
+                    @keyup.esc.native="handleCancel"/>
           <span v-else>{{ scope.row.configDes }}</span>
         </template>
       </el-table-column>
@@ -80,8 +81,7 @@
         width="100"
         :label="this.$i18n.t('forms.enabled')">
         <template slot-scope="scope">
-          <el-switch v-if="editIndex === scope.$index" v-model="editEnabled" :disabled="modal_loading"
-                     @keyup.native="handleKeyUp($event, scope.$index)"/>
+          <el-switch v-if="editIndex === scope.$index" v-model="editEnabled" :disabled="modal_loading"/>
           <span v-else :style="scope.row.enabled ? 'color:green':'color:red'">{{enabledText(scope.row.enabled)}}</span>
         </template>
       </el-table-column>
@@ -235,6 +235,9 @@
     methods: {
       enabledText (enabled) {
         return enabled ? this.$i18n.t('forms.enabled') : this.$i18n.t('forms.disabled')
+      },
+      selectableFun (row) {
+        return !row._disabled
       },
       handleAdd () {
         this.addModal = true
@@ -398,20 +401,8 @@
         this.editEnabled = !!row.enabled
         this.editIndex = index
       },
-      handleKeyUp (event, index) {
-        switch (event.which) {
-          case 13:
-            this.handleSave(index)
-            break
-          case 27:
-            this.editIndex = -1
-            break
-        }
-      },
-      handleCancel (event) {
-        if (event.which === 27) {
-          this.editIndex = -1
-        }
+      handleCancel () {
+        this.editIndex = -1
       }
     },
     mounted () {

@@ -44,6 +44,7 @@
         type="selection"
         fixed="left"
         align="center"
+        :selectable="selectableFun"
         width="40">
       </el-table-column>
       <el-table-column
@@ -298,6 +299,9 @@
     methods: {
       enabledText (enabled) {
         return enabled ? this.$i18n.t('forms.enabled') : this.$i18n.t('forms.disabled')
+      },
+      selectableFun (row) {
+        return !row._disabled
       },
       handleAdd () {
         this.editModal = true

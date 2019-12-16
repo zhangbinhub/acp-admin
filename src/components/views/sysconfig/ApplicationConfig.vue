@@ -32,6 +32,7 @@
         type="selection"
         fixed="left"
         align="center"
+        :selectable="selectableFun"
         width="40">
       </el-table-column>
       <el-table-column
@@ -246,6 +247,9 @@
       }
     },
     methods: {
+      selectableFun (row) {
+        return !row._disabled
+      },
       handleAdd () {
         this.editModal = true
         this.$nextTick(() => {

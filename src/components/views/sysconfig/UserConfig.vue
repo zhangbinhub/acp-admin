@@ -55,6 +55,7 @@
         type="selection"
         fixed="left"
         align="center"
+        :selectable="selectableFun"
         width="40">
       </el-table-column>
       <el-table-column
@@ -337,6 +338,9 @@
       }
     },
     methods: {
+      selectableFun (row) {
+        return !row._disabled
+      },
       refreshOrgTree (callBack) {
         this.modal_loading = true
         this.$api.request.org.getOrgList().then((res) => {
