@@ -9,6 +9,7 @@ const messages = Object.assign(twLocale, {
     loginInvalid: '用戶名或密碼錯誤',
     logoutConfirm: '確認退出當前系統嗎？',
     requestFailed: '請求失敗',
+    validateFailed: '校驗失败',
     failed403: '請求被拒絕，可能沒有權限，請聯繫系統管理員',
     leavePage: '輸入的數據將會丟失，確認關閉嗎？',
     allPages: '所有頁面',
