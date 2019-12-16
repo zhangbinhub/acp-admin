@@ -60,9 +60,17 @@ const ApiComm = {
               return
             }
             break
-          case 404: // 页面找不到
-            this.redirectE404()
-            return
+          case 404: // 找不到资源
+            error.response.data.errorDescription = this.$i18n.t('messages.failed404')
+            if (error.config.headers.Process404Page && error.config.headers.Process404Page === 'true') {
+              this.redirectE404()
+              return
+            }
+            if (!error.config.headers.Process404 || error.config.headers.Process404 !== 'false') {
+              this.errorProcess(error)
+              return
+            }
+            break
           case 500: // 系统内部异常
             let errorMsg = 'Internal System Error'
             if (error.response.data) {
@@ -79,9 +87,8 @@ const ApiComm = {
             this.redirectE500(errorMsg)
             return
         }
-        // return Promise.reject(error)
       }
-      this.errorProcess(error)
+      return Promise.reject(error)
     })
   },
   errorProcess (error, title) {
@@ -149,21 +156,6 @@ const ApiComm = {
   gotoPersonalInformation () {
     this.turnToPage({
       name: 'personalInformation'
-    })
-  },
-  gotoLogFile () {
-    this.turnToPage({
-      name: 'logFile'
-    })
-  },
-  gotoRouteConfig () {
-    this.turnToPage({
-      name: 'routeConfig'
-    })
-  },
-  gotoRouteLog () {
-    this.turnToPage({
-      name: 'routeLog'
     })
   },
   /**

@@ -11,6 +11,7 @@ const messages = Object.assign(twLocale, {
     requestFailed: '請求失敗',
     validateFailed: '校驗失败',
     failed403: '請求被拒絕，可能沒有權限，請聯繫系統管理員',
+    failed404: '找不到資源',
     leavePage: '輸入的數據將會丟失，確認關閉嗎？',
     allPages: '所有頁面',
     otherPages: '其他頁面',
