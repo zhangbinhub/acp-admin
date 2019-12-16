@@ -10,7 +10,7 @@ const messages = Object.assign(enLocale, {
     logoutConfirm: 'Confirm to logout current system ?',
     requestFailed: 'Request failed',
     validateFailed: 'Validate failed',
-    failed403: 'Request rejected, may not hava permission, please contact the system administrator',
+    failed403: 'Request rejected, may not have permission, please contact the system administrator',
     leavePage: 'The data entered will be lost. Are you sure to close?',
     allPages: 'All Pages',
     otherPages: 'Other Pages',
