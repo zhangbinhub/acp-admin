@@ -427,7 +427,9 @@
         this.handleSearch()
       },
       handleRowClick (row) {
-        this.$refs['table'].toggleRowSelection(row)
+        if (!row._disabled) {
+          this.$refs['table'].toggleRowSelection(row)
+        }
       },
       handleSearchReset (name) {
         this.$refs[name].resetFields()

@@ -429,7 +429,9 @@
         })
       },
       handleRowClick (row) {
-        this.$refs['table'].toggleRowSelection(row)
+        if (!row._disabled) {
+          this.$refs['table'].toggleRowSelection(row)
+        }
       },
       handleSortChange (param) {
         this.searchForm.orderParam.prop = param.prop
