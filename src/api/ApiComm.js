@@ -158,6 +158,21 @@ const ApiComm = {
       name: 'personalInformation'
     })
   },
+  gotoLogFile () {
+    this.turnToPage({
+      name: 'logFile'
+    })
+  },
+  gotoRouteConfig () {
+    this.turnToPage({
+      name: 'routeConfig'
+    })
+  },
+  gotoRouteLog () {
+    this.turnToPage({
+      name: 'routeLog'
+    })
+  },
   /**
    * 页面跳转
    * @param obj 跳转参数 stirng | route

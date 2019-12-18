@@ -296,8 +296,8 @@
       },
       enabledList () {
         return [
-          { value: 'true', label: this.$i18n.t('forms.enabled') },
-          { value: 'false', label: this.$i18n.t('forms.disabled') }
+          { value: true, label: this.$i18n.t('forms.enabled') },
+          { value: false, label: this.$i18n.t('forms.disabled') }
         ]
       },
       ruleEditForm () {
@@ -402,7 +402,9 @@
         })
       },
       enabledText (enabled) {
-        return enabled ? this.$i18n.t('forms.enabled') : this.$i18n.t('forms.disabled')
+        return this.enabledList.filter((item) => {
+          return item.value === enabled
+        })[0].label
       },
       orgNames (organizationSet) {
         const data = copy(organizationSet)
@@ -448,15 +450,11 @@
           loginNo: this.searchForm.loginNo,
           orgName: this.searchForm.organizationName,
           roleName: this.searchForm.roleName,
+          enabled: this.searchForm.enabled,
           queryParam: {
             currPage: this.searchForm.currPage,
             pageSize: this.searchForm.pageSize
           }
-        }
-        if (this.searchForm.enabled === 'true') {
-          searchParam.enabled = true
-        } else if (this.searchForm.enabled === 'false') {
-          searchParam.enabled = false
         }
         if (this.searchForm.orderParam.order !== 'normal') {
           searchParam.queryParam.orderName = this.searchForm.orderParam.prop
