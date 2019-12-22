@@ -55,6 +55,7 @@
         type="selection"
         fixed="left"
         align="center"
+        :selectable="selectableFun"
         width="40">
       </el-table-column>
       <el-table-column
@@ -295,8 +296,8 @@
       },
       enabledList () {
         return [
-          { value: 'true', label: this.$i18n.t('forms.enabled') },
-          { value: 'false', label: this.$i18n.t('forms.disabled') }
+          { value: true, label: this.$i18n.t('forms.enabled') },
+          { value: false, label: this.$i18n.t('forms.disabled') }
         ]
       },
       ruleEditForm () {
@@ -337,6 +338,9 @@
       }
     },
     methods: {
+      selectableFun (row) {
+        return !row._disabled
+      },
       refreshOrgTree (callBack) {
         this.modal_loading = true
         this.$api.request.org.getOrgList().then((res) => {
@@ -398,7 +402,9 @@
         })
       },
       enabledText (enabled) {
-        return enabled ? this.$i18n.t('forms.enabled') : this.$i18n.t('forms.disabled')
+        return this.enabledList.filter((item) => {
+          return item.value === enabled
+        })[0].label
       },
       orgNames (organizationSet) {
         const data = copy(organizationSet)
@@ -423,7 +429,9 @@
         this.handleSearch()
       },
       handleRowClick (row) {
-        this.$refs['table'].toggleRowSelection(row)
+        if (!row._disabled) {
+          this.$refs['table'].toggleRowSelection(row)
+        }
       },
       handleSearchReset (name) {
         this.$refs[name].resetFields()
@@ -442,15 +450,11 @@
           loginNo: this.searchForm.loginNo,
           orgName: this.searchForm.organizationName,
           roleName: this.searchForm.roleName,
+          enabled: this.searchForm.enabled,
           queryParam: {
             currPage: this.searchForm.currPage,
             pageSize: this.searchForm.pageSize
           }
-        }
-        if (this.searchForm.enabled === 'true') {
-          searchParam.enabled = true
-        } else if (this.searchForm.enabled === 'false') {
-          searchParam.enabled = false
         }
         if (this.searchForm.orderParam.order !== 'normal') {
           searchParam.queryParam.orderName = this.searchForm.orderParam.prop

@@ -43,12 +43,14 @@ const ApiComm = {
         switch (error.response.status) {
           case 400: // 业务错误
             if (!error.config.headers.Process400 || error.config.headers.Process400 !== 'false') {
+              // 默认处理方式
               this.errorProcess(error)
               return
             }
             break
           case 401: // token 失效
             if (!error.config.headers.Process401 || error.config.headers.Process401 !== 'false') {
+              // 默认处理方式
               this.redirectLogin()
               return
             }
@@ -56,13 +58,35 @@ const ApiComm = {
           case 403: // 权限不足
             error.response.data.errorDescription = this.$i18n.t('messages.failed403')
             if (!error.config.headers.Process403 || error.config.headers.Process403 !== 'false') {
+              // 默认处理方式
               this.errorProcess(error)
               return
             }
             break
-          case 404: // 页面找不到
-            this.redirectE404()
-            return
+          case 404: // 找不到资源
+            error.response.data.errorDescription = this.$i18n.t('messages.failed404')
+            if (!error.config.headers.Process404) {
+              // 默认处理方式
+              this.redirectE404()
+              return
+            } else {
+              if (error.config.headers.Process404 !== 'false') {
+                // 默认处理方式
+                this.redirectE404()
+                return
+              } else {
+                if (error.config.headers.Process404Page) {
+                  if (error.config.headers.Process404Page === 'true') {
+                    this.redirectE404()
+                    return
+                  } else {
+                    this.errorProcess(error)
+                    return
+                  }
+                }
+              }
+            }
+            break
           case 500: // 系统内部异常
             let errorMsg = 'Internal System Error'
             if (error.response.data) {
@@ -79,9 +103,8 @@ const ApiComm = {
             this.redirectE500(errorMsg)
             return
         }
-        // return Promise.reject(error)
       }
-      this.errorProcess(error)
+      return Promise.reject(error)
     })
   },
   errorProcess (error, title) {

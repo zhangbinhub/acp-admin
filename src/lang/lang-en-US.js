@@ -8,11 +8,14 @@ const messages = Object.assign(enLocale, {
     loginFailed: 'Login failed',
     loginInvalid: 'loginNo and password do not match',
     logoutConfirm: 'Confirm to logout current system ?',
-    requestFailed: 'Requesst failed',
-    failed403: 'Request rejected, may not hava permission, please contact the system administrator',
+    requestFailed: 'Request failed',
+    validateFailed: 'Validate failed',
+    failed403: 'Request rejected, may not have permission, please contact the system administrator',
+    failed404: 'Resource is not find',
     leavePage: 'The data entered will be lost. Are you sure to close?',
     allPages: 'All Pages',
     otherPages: 'Other Pages',
+    requestSuccess: 'Request Successfully',
     createSuccess: 'Create Successfully',
     saveSuccess: 'Save Successfully',
     updateSuccess: 'Update Successfully',
@@ -25,7 +28,8 @@ const messages = Object.assign(enLocale, {
     modifyLoginNo: 'Modifying the loginNo will reset the password. Do you want to continue?',
     resetPassword: 'Are you sure you want to reset the selected user password?',
     refreshServiceConfirm: 'Are you sure to refresh the service configuration information? The specified service retrieves configuration information from the configuration center',
-    refreshRouteConfirm: 'Are you sure to refresh gateway routing information?'
+    refreshRouteConfirm: 'Are you sure to refresh gateway routing information?',
+    deployWorkFlowConfirm: 'Are you sure to deploy the workflow definition？'
   },
   pageTitle: {
     test: 'test',
@@ -163,6 +167,14 @@ const messages = Object.assign(enLocale, {
     configRefreshMatcher: 'matcher',
     configRefreshMatcherDescribe: 'Please enter the matching expression of the service ID below (the fuzzy matching can be used "**"). The service ID format is as follows:',
     configRefreshAll: 'all servers',
+    resourceName: 'resource name',
+    content: 'content',
+    version: 'version',
+    createTime: 'create time',
+    modifyTime: 'modify time',
+    deployTime: 'deploy time',
+    processKey: 'workflow key',
+    processFile: 'workflow file',
     buttons: {
       login: 'login',
       submit: 'submit',
@@ -176,6 +188,7 @@ const messages = Object.assign(enLocale, {
       reset: 'reset',
       upload: 'upload',
       view: 'view',
+      image: 'image',
       free: 'Free',
       updateSecret: 'update secret',
       select: 'select',
@@ -183,7 +196,10 @@ const messages = Object.assign(enLocale, {
       refresh: 'Refresh',
       resetPwd: 'reset password',
       refreshService: 'refresh services',
-      refreshRoute: 'refresh routes'
+      refreshRoute: 'refresh routes',
+      chooseFile: 'choose file',
+      downLoadFile: 'download file',
+      deploy: 'deploy'
     }
   }
 })
