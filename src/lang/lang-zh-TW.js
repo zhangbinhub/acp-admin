@@ -15,6 +15,7 @@ const messages = Object.assign(twLocale, {
     leavePage: '輸入的數據將會丟失，確認關閉嗎？',
     allPages: '所有頁面',
     otherPages: '其他頁面',
+    requestSuccess: '請求成功',
     createSuccess: '創建成功',
     saveSuccess: '保存成功',
     updateSuccess: '更新成功',
@@ -27,7 +28,8 @@ const messages = Object.assign(twLocale, {
     modifyLoginNo: '修改登陸賬號將重置密碼，是否繼續？',
     resetPassword: '確定重置所選用戶密碼嗎？',
     refreshServiceConfirm: '確定刷新服務配置信息嗎？指定的服務將重新從配置中心獲取配置信息',
-    refreshRouteConfirm: '確定刷新網關路由信息嗎？'
+    refreshRouteConfirm: '確定刷新網關路由信息嗎？',
+    deployWorkFlowConfirm: '確定部署流程定義嗎？'
   },
   pageTitle: {
     test: '測試',
@@ -165,6 +167,14 @@ const messages = Object.assign(twLocale, {
     configRefreshMatcher: '匹配表達式',
     configRefreshMatcherDescribe: '請在下方輸入服務ID的匹配表達式（模糊匹配可用"**"），服務ID格式如下：',
     configRefreshAll: '所有服務',
+    resourceName: '資源名稱',
+    content: '內容',
+    version: '版本',
+    createTime: '創建時間',
+    modifyTime: '修改時間',
+    deployTime: '部署時間',
+    processKey: '流程定義鍵',
+    processFile: '流程文件',
     buttons: {
       login: '登錄',
       submit: '提交',
@@ -178,6 +188,7 @@ const messages = Object.assign(twLocale, {
       reset: '重置',
       upload: '上傳',
       view: '查看',
+      image: '圖片',
       free: '自定義',
       updateSecret: '更新密鑰',
       select: '選擇',
@@ -185,7 +196,10 @@ const messages = Object.assign(twLocale, {
       refresh: '刷新',
       resetPwd: '重置密碼',
       refreshService: '刷新服務',
-      refreshRoute: '刷新路由'
+      refreshRoute: '刷新路由',
+      chooseFile: '選擇文件',
+      downLoadFile: '文件下載',
+      deploy: '部署'
     }
   }
 })

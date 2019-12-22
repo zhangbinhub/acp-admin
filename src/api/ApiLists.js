@@ -7,6 +7,7 @@ import user from './sysconfig/userConfig'
 import role from './sysconfig/roleConfig'
 import log from './log/Log'
 import route from './route/RouteConfig'
+import workFlowDeploy from './sysconfig/workFlowDeploy'
 
 export default {
   auth: Object.assign(oauth, auth),
@@ -16,5 +17,6 @@ export default {
   user: user,
   role: role,
   log: log,
-  route: route
+  route: route,
+  workFlowDeploy: workFlowDeploy
 }

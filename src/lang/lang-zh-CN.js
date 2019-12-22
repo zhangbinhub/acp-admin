@@ -11,10 +11,11 @@ const messages = Object.assign(zhLocale, {
     requestFailed: '请求失败',
     validateFailed: '校验失败',
     failed403: '请求被拒绝，可能没有权限，请联系系统管理员',
-    failed404:'找不到资源',
+    failed404: '找不到资源',
     leavePage: '输入的数据将会丢失，确认关闭吗？',
     allPages: '所有页面',
     otherPages: '其他页面',
+    requestSuccess: '请求成功',
     createSuccess: '创建成功',
     saveSuccess: '保存成功',
     updateSuccess: '更新成功',
@@ -27,7 +28,8 @@ const messages = Object.assign(zhLocale, {
     modifyLoginNo: '修改登录账号将重置密码，是否继续？',
     resetPassword: '确定重置所选用户密码吗？',
     refreshServiceConfirm: '确定刷新服务配置信息吗？指定的服务将重新从配置中心获取配置信息',
-    refreshRouteConfirm: '确定刷新网关路由信息吗？'
+    refreshRouteConfirm: '确定刷新网关路由信息吗？',
+    deployWorkFlowConfirm: '确定部署流程定义吗？'
   },
   pageTitle: {
     test: '测试',
@@ -165,6 +167,14 @@ const messages = Object.assign(zhLocale, {
     configRefreshMatcher: '匹配表达式',
     configRefreshMatcherDescribe: '请在下方输入服务ID的匹配表达式（模糊匹配可用"**"），服务ID格式如下：',
     configRefreshAll: '所有服务',
+    resourceName: '资源名称',
+    content: '内容',
+    version: '版本',
+    createTime: '创建时间',
+    modifyTime: '修改时间',
+    deployTime: '部署时间',
+    processKey: '流程定义键',
+    processFile: '流程文件',
     buttons: {
       login: '登录',
       submit: '提交',
@@ -178,6 +188,7 @@ const messages = Object.assign(zhLocale, {
       reset: '重置',
       upload: '上传',
       view: '查看',
+      image: '图片',
       free: '自定义',
       updateSecret: '更新密钥',
       select: '选择',
@@ -185,7 +196,10 @@ const messages = Object.assign(zhLocale, {
       refresh: '刷新',
       resetPwd: '重置密码',
       refreshService: '刷新服务',
-      refreshRoute: '刷新路由'
+      refreshRoute: '刷新路由',
+      chooseFile: '选择文件',
+      downLoadFile: '文件下载',
+      deploy: '部署'
     }
   }
 })

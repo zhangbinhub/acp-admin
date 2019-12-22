@@ -1,3 +1,6 @@
+// 解决WebStorm无法识别vue-cli3+中的别名“@”
+// 将"node_modules/@vue/cli-service/webpack.config.js"配置到IDE设置中"File | Settings | Languages & Frameworks | JavaScript | Webpack"
+//
 // vue.config.js 配置说明
 // 官方vue.config.js 参考文档 https://cli.vuejs.org/zh/config/#css-loaderoptions
 // 这里只列一部分，具体配置参考文档
