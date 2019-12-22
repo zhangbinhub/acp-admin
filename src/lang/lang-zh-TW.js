@@ -48,7 +48,8 @@ const messages = Object.assign(twLocale, {
     orgConfig: '機構配置',
     runtimeConfig: '運行參數配置',
     roleConfig: '角色配置',
-    userConfig: '用戶配置'
+    userConfig: '用戶配置',
+    workflowDeploy: '工作流部署'
   },
   common: {
     exit: '退出'
