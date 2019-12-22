@@ -48,7 +48,8 @@ const messages = Object.assign(zhLocale, {
     orgConfig: '机构配置',
     runtimeConfig: '运行参数配置',
     roleConfig: '角色配置',
-    userConfig: '用户配置'
+    userConfig: '用户配置',
+    workflowDeploy: '工作流部署'
   },
   common: {
     exit: '退出'

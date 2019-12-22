@@ -151,7 +151,7 @@ export default [{
     name: '/workflowDeploy',
     component: () => import('@/components/views/sysconfig/WorkflowDeploy.vue'),
     meta: {
-      title: 'pageTitle.userConfig',
+      title: 'pageTitle.workflowDeploy',
       requireAuth: true
     }
   }]

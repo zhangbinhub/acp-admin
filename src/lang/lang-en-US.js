@@ -48,7 +48,8 @@ const messages = Object.assign(enLocale, {
     orgConfig: 'Organization Configure',
     runtimeConfig: 'Parameter Configure',
     roleConfig: 'Role Configure',
-    userConfig: 'User Configure'
+    userConfig: 'User Configure',
+    workflowDeploy: 'WorkFlow Deploy'
   },
   common: {
     exit: 'Exit'
