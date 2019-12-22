@@ -71,6 +71,7 @@
       </el-table-column>
       <el-table-column
         prop="createTime"
+        sortable="custom"
         width="140"
         :label="this.$i18n.t('forms.createTime')">
         <template slot-scope="scope">
@@ -79,6 +80,7 @@
       </el-table-column>
       <el-table-column
         prop="modifyTime"
+        sortable="custom"
         width="140"
         :label="this.$i18n.t('forms.modifyTime')">
         <template slot-scope="scope">
@@ -87,6 +89,7 @@
       </el-table-column>
       <el-table-column
         prop="deployTime"
+        sortable="custom"
         width="140"
         :label="this.$i18n.t('forms.deployTime')">
         <template slot-scope="scope">
@@ -372,7 +375,10 @@
             this.modal_loading = false
             if (res) {
               this.$message.success(this.$i18n.t('messages.requestSuccess') + '')
-              this.editModal = false
+              this.currObj = copy(res.data)
+              this.$nextTick(() => {
+                this.doReset()
+              })
               this.handleSearch()
             }
           }).catch(() => {
