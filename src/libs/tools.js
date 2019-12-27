@@ -286,3 +286,18 @@ export const filterTreeNode = (treeData, targetIds) => {
   }
   return filterData
 }
+
+/**
+ * 下载文件
+ * @param action 文件下载链接
+ */
+export const doDownLoadFile = (action) => {
+  let form = document.createElement('form')
+  form.style.display = 'none'
+  form.setAttribute('method', 'get')
+  form.setAttribute('action', action)
+  form.setAttribute('target', '')
+  document.body.appendChild(form)
+  form.submit()
+  form.remove()
+}

@@ -2,7 +2,7 @@ import ApiComm from '../ApiComm'
 
 export default {
   getModifiableUser: () => {
-    return ApiComm.$http.get('/oauth/moduserlist')
+    return ApiComm.$http.get('/oauth/mod-user-list')
   },
   query: (query) => {
     return ApiComm.$http.post('/oauth/user', query)
@@ -19,6 +19,6 @@ export default {
     return ApiComm.$http.patch('/oauth/user', userInfo)
   },
   resetPwd: (userId) => {
-    return ApiComm.$http.get('/oauth/user/resetpwd/' + userId)
+    return ApiComm.$http.get('/oauth/user/reset-pwd/' + userId)
   }
 }

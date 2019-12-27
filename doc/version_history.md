@@ -1,4 +1,8 @@
 ## 版本更新记录
+##### v4.x
+> - [Upgrade] 更新依赖插件至最新版本
+> - [Upgrade] 规范API接口URL
+> - [Upgrade] tools增加文件下载公共方法
 ##### v4.0.7
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 更新lang语言集
