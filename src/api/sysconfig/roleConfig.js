@@ -2,13 +2,13 @@ import ApiComm from '../ApiComm'
 
 export default {
   getCodeList: () => {
-    return ApiComm.$http.get('/oauth/role/rolecodes')
+    return ApiComm.$http.get('/oauth/role/role-code-list')
   },
   getList: () => {
     return ApiComm.$http.get('/oauth/role')
   },
   getRoleList: (appId) => {
-    return ApiComm.$http.get('/oauth/role/rolelist/' + appId)
+    return ApiComm.$http.get('/oauth/role/role-list/' + appId)
   },
   getRoleInfo: (roleId) => {
     return ApiComm.$http.get('/oauth/role/' + roleId)

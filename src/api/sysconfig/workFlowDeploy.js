@@ -1,15 +1,9 @@
 import ApiComm from '../ApiComm'
+import { doDownLoadFile } from '@/libs/tools'
 
 export default {
   downLoadFile: (id) => {
-    let form = document.createElement('form')
-    form.style.display = 'none'
-    form.setAttribute('method', 'get')
-    form.setAttribute('action', ApiComm.$store.state.app.appInfo.baseURL + '/workflow/definition/file/' + id)
-    form.setAttribute('target', '')
-    document.body.appendChild(form)
-    form.submit()
-    form.remove()
+    doDownLoadFile(ApiComm.$store.state.app.appInfo.baseURL + '/workflow/definition/file/' + id)
   },
   delete: (paramIds) => {
     return ApiComm.$http.delete('/workflow/definition', {

@@ -495,8 +495,7 @@
       },
       handleUploadError (err) {
         this.modal_loading = false
-        this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
-        this.$api.errorProcess(err)
+        this.$api.errorProcess({ response: { data: JSON.parse(String(err).substring(6)) } })
       },
       handleDownLoadFile () {
         this.$api.request.workFlowDeploy.downLoadFile(this.editForm.id)

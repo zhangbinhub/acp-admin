@@ -1,10 +1,11 @@
 import ApiComm from '../ApiComm'
 import Qs from 'qs'
 import encrypt from 'js-base64'
+import { doDownLoadFile } from '@/libs/tools'
 
 export default {
   getLoginInfo: () => {
-    return ApiComm.$http.get('/log/logininfo')
+    return ApiComm.$http.get('/log/login-info')
   },
   searchFile: (startDate, endDate) => {
     return ApiComm.$http.post('/log/files', {
@@ -21,22 +22,15 @@ export default {
     })
   },
   downLoadFile: (fileName) => {
-    let form = document.createElement('form')
-    form.style.display = 'none'
-    form.setAttribute('method', 'get')
-    form.setAttribute('action', ApiComm.$store.state.app.appInfo.baseURL + '/log/files/' + encodeURIComponent(encrypt.Base64.encode(fileName)))
-    form.setAttribute('target', '')
-    document.body.appendChild(form)
-    form.submit()
-    form.remove()
+    doDownLoadFile(ApiComm.$store.state.app.appInfo.baseURL + '/log/files/' + encodeURIComponent(encrypt.Base64.encode(fileName)))
   },
   queryRouteLog: (query) => {
-    return ApiComm.$http.post('/log/gatewayroutelog', query)
+    return ApiComm.$http.post('/log/gateway-route-log', query)
   },
   queryOperateLog: (query) => {
-    return ApiComm.$http.post('/log/operatelog', query)
+    return ApiComm.$http.post('/log/operate-log', query)
   },
   queryLoginLog: (query) => {
-    return ApiComm.$http.post('/log/loginlog', query)
+    return ApiComm.$http.post('/log/login-log', query)
   }
 }

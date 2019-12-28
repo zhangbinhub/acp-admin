@@ -38,7 +38,7 @@ export default {
     return ApiComm.$http.post('/oauth/logout')
   },
   getUserInfo: () => {
-    return ApiComm.$http.get('/oauth/userinfo')
+    return ApiComm.$http.get('/oauth/user-info')
   },
   updateUserInfo: (userInfo) => {
     if (userInfo.oldPassword) {
@@ -47,9 +47,9 @@ export default {
     if (userInfo.password) {
       userInfo.password = sha256.sha256(sha256.sha256(userInfo.password) + ApiComm.$store.state.app.user.userInfo.loginNo)
     }
-    return ApiComm.$http.patch('/oauth/userinfo', userInfo)
+    return ApiComm.$http.patch('/oauth/user-info', userInfo)
   },
   getOnlineInfo: () => {
-    return ApiComm.$http.get('/oauth/onlineinfo')
+    return ApiComm.$http.get('/oauth/online-info')
   }
 }
