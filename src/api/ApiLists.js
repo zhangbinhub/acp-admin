@@ -1,13 +1,13 @@
 import oauth from './oauth/OauthApi'
-import runtime from './sysconfig/runtimeConfig'
-import app from './sysconfig/appConfig'
-import auth from './sysconfig/authConfig'
-import org from './sysconfig/orgConfig'
-import user from './sysconfig/userConfig'
-import role from './sysconfig/roleConfig'
+import runtime from './sysConfig/runtimeConfig'
+import app from './sysConfig/appConfig'
+import auth from './sysConfig/authConfig'
+import org from './sysConfig/orgConfig'
+import user from './sysConfig/userConfig'
+import role from './sysConfig/roleConfig'
 import log from './log/Log'
 import route from './route/RouteConfig'
-import workFlowDeploy from './sysconfig/workFlowDeploy'
+import workFlowDeploy from './sysConfig/workFlowDeploy'
 
 export default {
   auth: Object.assign(oauth, auth),
