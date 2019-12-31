@@ -101,7 +101,7 @@ export default [{
   }, {
     path: '/app-config',
     name: 'appConfig',
-    component: () => import('@/components/views/sysconfig/ApplicationConfig.vue'),
+    component: () => import('@/components/views/sysConfig/ApplicationConfig.vue'),
     meta: {
       title: 'pageTitle.appConfig',
       requireAuth: true
@@ -109,7 +109,7 @@ export default [{
   }, {
     path: '/auth-config',
     name: 'authConfig',
-    component: () => import('@/components/views/sysconfig/AuthConfig.vue'),
+    component: () => import('@/components/views/sysConfig/AuthConfig.vue'),
     meta: {
       title: 'pageTitle.authConfig',
       requireAuth: true
@@ -117,7 +117,7 @@ export default [{
   }, {
     path: '/org-config',
     name: 'orgConfig',
-    component: () => import('@/components/views/sysconfig/OrgConfig.vue'),
+    component: () => import('@/components/views/sysConfig/OrgConfig.vue'),
     meta: {
       title: 'pageTitle.orgConfig',
       requireAuth: true
@@ -125,7 +125,7 @@ export default [{
   }, {
     path: '/runtime-config',
     name: 'runtimeConfig',
-    component: () => import('@/components/views/sysconfig/RuntimeConfig.vue'),
+    component: () => import('@/components/views/sysConfig/RuntimeConfig.vue'),
     meta: {
       title: 'pageTitle.runtimeConfig',
       requireAuth: true
@@ -133,7 +133,7 @@ export default [{
   }, {
     path: '/role-config',
     name: 'roleConfig',
-    component: () => import('@/components/views/sysconfig/RoleConfig.vue'),
+    component: () => import('@/components/views/sysConfig/RoleConfig.vue'),
     meta: {
       title: 'pageTitle.roleConfig',
       requireAuth: true
@@ -141,7 +141,7 @@ export default [{
   }, {
     path: '/user-config',
     name: 'userConfig',
-    component: () => import('@/components/views/sysconfig/UserConfig.vue'),
+    component: () => import('@/components/views/sysConfig/UserConfig.vue'),
     meta: {
       title: 'pageTitle.userConfig',
       requireAuth: true
@@ -149,7 +149,7 @@ export default [{
   }, {
     path: '/workflow-deploy',
     name: '/workflowDeploy',
-    component: () => import('@/components/views/sysconfig/WorkflowDeploy.vue'),
+    component: () => import('@/components/views/sysConfig/WorkflowDeploy.vue'),
     meta: {
       title: 'pageTitle.workflowDeploy',
       requireAuth: true
