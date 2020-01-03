@@ -148,7 +148,7 @@ export default [{
     }
   }, {
     path: '/workflow-deploy',
-    name: '/workflowDeploy',
+    name: 'workflowDeploy',
     component: () => import('@/components/views/sysConfig/WorkflowDeploy.vue'),
     meta: {
       title: 'pageTitle.workflowDeploy',
