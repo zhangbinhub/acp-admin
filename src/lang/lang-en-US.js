@@ -24,12 +24,12 @@ const messages = Object.assign(enLocale, {
     tableNoData: 'No data found',
     tableDataCannotDel: 'This data cannot be deleted',
     selectDataForDelete: 'Please select the data you want to delete',
-    deleteDataConfirm: 'Are you sure to delete the selected data?',
-    modifyLoginNo: 'Modifying the loginNo will reset the password. Do you want to continue?',
-    resetPassword: 'Are you sure you want to reset the selected user password?',
-    refreshServiceConfirm: 'Are you sure to refresh the service configuration information? The specified service retrieves configuration information from the configuration center',
-    refreshRouteConfirm: 'Are you sure to refresh gateway routing information?',
-    deployWorkFlowConfirm: 'Are you sure to deploy the workflow definition？'
+    deleteDataConfirm: 'Are you sure to delete the selected data ?',
+    modifyLoginNo: 'Modifying the loginNo will reset the password. Do you want to continue ?',
+    resetPassword: 'Are you sure you want to reset the selected user password ?',
+    refreshServiceConfirm: 'Are you sure to refresh the service configuration information ? The specified service retrieves configuration information from the configuration center',
+    refreshRouteConfirm: 'Are you sure to refresh gateway routing information ?',
+    deployWorkFlowConfirm: 'Are you sure to deploy the workflow definition ?'
   },
   pageTitle: {
     test: 'test',

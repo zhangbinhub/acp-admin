@@ -237,10 +237,10 @@
     },
     methods: {
       dateTimeFormat (time) {
-        return moment(time).format('YYYY-MM-DD HH:mm:ss')
+        return time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''
       },
       dateTimeMisFormat (time) {
-        return moment(time).format('YYYY-MM-DD HH:mm:ss.SSS')
+        return time ? moment(time).format('YYYY-MM-DD HH:mm:ss.SSS') : ''
       },
       doCancel () {
         this.editModal = false
