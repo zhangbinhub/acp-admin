@@ -15,7 +15,7 @@
                   <span v-else>{{node.label}}</span>
                   <span>
                     <el-button
-                      v-if="!data.isApp"
+                      v-if="!data.isApp && node.isLeaf"
                       type="text"
                       size="mini"
                       icon="el-icon-minus"
@@ -134,7 +134,7 @@
                   <span v-else>{{ node.label }}</span>
                   <span>
                     <el-button
-                      v-if="!data.isApp"
+                      v-if="!data.isApp && node.isLeaf"
                       type="text"
                       size="mini"
                       icon="el-icon-minus"
