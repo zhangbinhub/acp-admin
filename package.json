@@ -11,11 +11,11 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.19.1",
     "bufferutil": "^4.0.1",
-    "core-js": "^3.6.1",
+    "core-js": "^3.6.3",
     "cropperjs": "^1.5.6",
-    "css-loader": "^3.4.0",
+    "css-loader": "^3.4.2",
     "echarts": "^4.6.0",
     "element-ui": "^2.13.0",
     "js-base64": "^2.5.1",
@@ -36,8 +36,8 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
-    "@babel/core": "7.7.7",
-    "@babel/register": "7.7.7",
+    "@babel/core": "7.8.0",
+    "@babel/register": "7.8.0",
     "@vue/cli-plugin-babel": "^4.1.2",
     "@vue/cli-plugin-unit-jest": "^4.1.2",
     "@vue/cli-service": "^4.1.2",
