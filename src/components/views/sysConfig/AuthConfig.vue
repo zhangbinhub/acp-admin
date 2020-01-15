@@ -326,7 +326,7 @@
             type: 'string',
             required: true,
             message: this.$i18n.t('forms.code') + this.$i18n.t('forms.notEmpty'),
-            trigger: 'blur'
+            trigger: 'none'
           }],
           moduleFuncParentArray: [{
             type: 'array',
