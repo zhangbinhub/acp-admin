@@ -153,9 +153,8 @@
           </el-col>
           <el-col :lg="16">
             <el-form-item :label="$t('forms.remarks')" prop="remarks" style="width: 100%;">
-              <el-input v-model="editForm.remarks" :disabled="modal_loading"
-                        :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')"
-                        @keyup.enter.native="doSave('editForm')"/>
+              <el-input v-model="editForm.remarks" :disabled="modal_loading" type="textarea" :rows="3"
+                        :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')"/>
             </el-form-item>
           </el-col>
         </el-row>
