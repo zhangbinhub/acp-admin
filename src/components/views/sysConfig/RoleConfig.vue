@@ -147,7 +147,7 @@
             type: 'string',
             required: true,
             message: this.$i18n.t('forms.code') + this.$i18n.t('forms.notEmpty'),
-            trigger: 'change'
+            trigger: 'blur'
           }],
           levels: [{
             type: 'integer',
@@ -243,6 +243,9 @@
               return item
             })
           }
+          this.$nextTick(() => {
+            this.$refs['name'].focus()
+          })
         }).catch(() => {
           this.tree_loading = false
         })
@@ -369,9 +372,6 @@
               moduleFuncIds: this.currRoleData.moduleFuncIds
             }
             this.doReset()
-            this.$nextTick(() => {
-              this.$refs['name'].focus()
-            })
           }
         }).catch(() => {
           this.tree_loading = false
@@ -457,12 +457,14 @@
           this.$nextTick(() => {
             const checkedResult = findCheckedTreeNode(this.menuData, this.editForm.menuIds)
             this.$refs['menuTree'].setCheckedKeys(checkedResult.checkedIdList)
+            this.$refs['name'].focus()
           })
         })
         this.reloadModuleFuncList(() => {
           this.$nextTick(() => {
             const checkedResult = findCheckedTreeNode(this.moduleFuncData, this.editForm.moduleFuncIds)
             this.$refs['moduleFuncTree'].setCheckedKeys(checkedResult.checkedIdList)
+            this.$refs['name'].focus()
           })
         })
         this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)

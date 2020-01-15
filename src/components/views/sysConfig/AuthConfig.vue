@@ -43,7 +43,7 @@
               <el-row>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.name')" prop="name">
-                    <el-input v-model="menuEditForm.name" :disabled="treeLoading"
+                    <el-input v-model="menuEditForm.name" :disabled="treeLoading" ref="menuName"
                               :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                               @keyup.enter.native="doSaveMenu"/>
                   </el-form-item>
@@ -326,7 +326,7 @@
             type: 'string',
             required: true,
             message: this.$i18n.t('forms.code') + this.$i18n.t('forms.notEmpty'),
-            trigger: 'change'
+            trigger: 'blur'
           }],
           moduleFuncParentArray: [{
             type: 'array',
@@ -386,6 +386,9 @@
               return item
             })
           }
+          this.$nextTick(() => {
+            this.$refs.menuName.focus()
+          })
         }).catch(() => {
           this.tree_loading = false
         })
@@ -400,6 +403,9 @@
               return item
             })
           }
+          this.$nextTick(() => {
+            this.$refs.moduleFuncName.focus()
+          })
         }).catch(() => {
           this.tree_loading = false
         })

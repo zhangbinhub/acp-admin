@@ -208,6 +208,9 @@
               return item
             })
           }
+          this.$nextTick(() => {
+            this.$refs['name'].focus()
+          })
         }).catch(() => {
           this.tree_loading = false
         })
@@ -271,9 +274,6 @@
               userIds: this.currOrgData.userIds
             }
             this.doReset()
-            this.$nextTick(() => {
-              this.$refs['name'].focus()
-            })
           }
         }).catch(() => {
           this.tree_loading = false

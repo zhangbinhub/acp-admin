@@ -3,6 +3,7 @@
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 精细化控制树形配置时的按钮显示
 > - [Upgrade] 调整首页样式
+> - [Upgrade] 优化代码
 ##### v4.1.0
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 规范API接口URL
