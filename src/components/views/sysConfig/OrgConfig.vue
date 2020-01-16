@@ -52,11 +52,18 @@
                         @keyup.enter.native="doSave"/>
             </el-form-item>
           </el-col>
-          <el-col :sm="{ span: 12 }">
+          <el-col :sm="{ span: 24 }">
             <el-form-item :label="$t('forms.parent')" prop="parentArray">
               <el-cascader :options="cascaderData" v-model="editForm.parentArray" v-loading="treeLoading"
                            :disabled="treeLoading" style="width: 100%"
                            :props="{checkStrictly: true,value:'id'}"/>
+            </el-form-item>
+          </el-col>
+          <el-col :sm="{ span: 12 }">
+            <el-form-item :label="$t('forms.area')" prop="area">
+              <el-input v-model="editForm.area" :disabled="treeLoading"
+                        :placeholder="$t('forms.pleaseEnter') + $t('forms.area')"
+                        @keyup.enter.native="doSave"/>
             </el-form-item>
           </el-col>
           <el-col :sm="{ span: 12 }">
@@ -127,6 +134,16 @@
             message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
             trigger: 'blur'
           }],
+          code: [{
+            required: true,
+            message: this.$i18n.t('forms.code') + this.$i18n.t('forms.notEmpty'),
+            trigger: 'blur'
+          }],
+          area: [{
+            required: true,
+            message: this.$i18n.t('forms.area') + this.$i18n.t('forms.notEmpty'),
+            trigger: 'blur'
+          }],
           sort: [{
             type: 'integer',
             required: true,
@@ -175,6 +192,7 @@
           this.editForm = {
             id: '',
             name: '',
+            area: '',
             code: '',
             parentArray: [],
             parentId: '',
@@ -184,6 +202,7 @@
           this.currOrg = {
             id: '',
             name: '',
+            area: '',
             code: '',
             parentId: '',
             sort: 0,
@@ -233,6 +252,8 @@
         this.$api.request.org.createOrg({
           name: this.$i18n.t('forms.new') + this.$i18n.t('forms.organization'),
           parentId: data.id,
+          code: 'code',
+          area: 'area',
           sort: data.children.length + 1
         }).then((res) => {
           this.tree_loading = false
@@ -281,6 +302,7 @@
             this.currOrg = {
               id: this.currOrgData.id,
               name: this.currOrgData.name,
+              area: this.currOrgData.area,
               code: this.currOrgData.code,
               parentId: this.currOrgData.parentId,
               sort: this.currOrgData.sort,
@@ -300,6 +322,7 @@
               id: this.editForm.id,
               name: this.editForm.name,
               code: this.editForm.code,
+              area: this.editForm.area,
               parentId: this.editForm.parentId,
               sort: this.editForm.sort,
               userIds: this.editForm.userIds
@@ -310,6 +333,7 @@
                 this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
                 this.currOrgData.name = this.editForm.name
                 this.currOrgData.label = this.editForm.code !== '' ? this.editForm.name + '(' + this.editForm.code + ')' : this.editForm.name
+                this.currOrgData.area = this.editForm.area
                 this.currOrgData.code = this.editForm.code
                 this.currOrgData.parentId = this.editForm.parentId
                 this.currOrgData.sort = this.editForm.sort
@@ -317,6 +341,7 @@
                 this.currOrg = {
                   id: this.editForm.id,
                   name: this.editForm.name,
+                  area: this.editForm.area,
                   code: this.editForm.code,
                   parentId: this.editForm.parentId,
                   sort: this.editForm.sort,
@@ -338,6 +363,7 @@
         this.editForm = {
           id: this.currOrg.id,
           name: this.currOrg.name,
+          area: this.currOrg.area,
           code: this.currOrg.code,
           sort: this.currOrg.sort,
           parentArray: getTreeFullPathArray(this.treeData, this.currOrg.parentId).map(item => item.id),

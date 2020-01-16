@@ -176,6 +176,8 @@ const messages = Object.assign(enLocale, {
     deployTime: 'deploy time',
     processKey: 'workflow key',
     processFile: 'workflow file',
+    filterKey: 'filter key',
+    area: 'area',
     buttons: {
       login: 'login',
       submit: 'submit',
