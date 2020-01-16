@@ -6,8 +6,11 @@
         <el-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
           <el-card>
             <div style="overflow-x: auto;overflow-y: hidden">
-              <el-tree style="margin-right: 16px;min-height: 100px;" :data="menuTreeData" v-loading="treeLoading"
-                       :default-expand-all="true"
+              <el-input v-model="menuTreeFilterText" clearable
+                        :placeholder="$t('forms.pleaseEnter') + $t('forms.filterKey')"/>
+              <el-tree style="margin-right: 16px;min-height: 100px;margin-top: 10px;" :data="menuTreeData"
+                       v-loading="treeLoading"
+                       :default-expand-all="true" ref="menuTree" :filter-node-method="filterNode"
                        :expand-on-click-node="false">
                 <span class="config-tree-node" slot-scope="{ node, data }">
                   <span v-if="!data.isApp" @click="menuClick(data)">
@@ -126,8 +129,10 @@
         <el-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
           <el-card>
             <div style="overflow-x: auto;overflow-y: hidden">
-              <el-tree style="margin-right: 16px;min-height: 100px;" :data="moduleFuncTreeData" v-loading="treeLoading"
-                       :default-expand-all="true"
+              <el-input v-model="moduleFuncTreeFilterText" clearable
+                        :placeholder="$t('forms.pleaseEnter') + $t('forms.filterKey')"/>
+              <el-tree style="margin-right: 16px;min-height: 100px;margin-top: 10px" :data="moduleFuncTreeData" v-loading="treeLoading"
+                       :default-expand-all="true" ref="moduleFuncTree" :filter-node-method="filterNode"
                        :expand-on-click-node="false">
                 <span class="config-tree-node" slot-scope="{ node, data }">
                   <span v-if="!data.isApp" @click="moduleFuncClick(data)">{{ node.label }}</span>
@@ -162,7 +167,7 @@
               <el-row>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.name')" prop="name">
-                    <el-input v-model="moduleFuncEditForm.name" :disabled="treeLoading"
+                    <el-input v-model="moduleFuncEditForm.name" :disabled="treeLoading" ref="moduleFuncName"
                               :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                               @keyup.enter.native="doSaveModuleFunc"/>
                   </el-form-item>
@@ -237,7 +242,9 @@
         currModuleFunc: {},
         moduleFuncEditForm: {},
         optionalMenuRoles: [],
-        optionalModuleFuncRoles: []
+        optionalModuleFuncRoles: [],
+        menuTreeFilterText: '',
+        moduleFuncTreeFilterText: ''
       }
     },
     computed: {
@@ -338,6 +345,12 @@
       }
     },
     watch: {
+      menuTreeFilterText (value) {
+        this.$refs.menuTree.filter(value)
+      },
+      moduleFuncTreeFilterText (value) {
+        this.$refs.moduleFuncTree.filter(value)
+      },
       menuParentArray (selectedArray) {
         if (selectedArray.length > 0) {
           this.menuEditForm.parentId = selectedArray[selectedArray.length - 1]
@@ -360,6 +373,12 @@
           return item.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
         }) : restaurants
         cb(results)
+      },
+      filterNode (value, data) {
+        if (!value || value === '') {
+          return true
+        }
+        return data.label.indexOf(value) !== -1
       },
       refreshModuleFuncCodeList () {
         this.tree_loading = true
@@ -440,6 +459,7 @@
                   }
                 }
                 this.menuTreeData = appData
+                this.menuTreeFilterText = ''
                 if (typeof callBackFun === 'function') {
                   callBackFun()
                 }
@@ -481,6 +501,7 @@
                   }
                 }
                 this.moduleFuncTreeData = appData
+                this.moduleFuncTreeFilterText = ''
                 if (typeof callBackFun === 'function') {
                   callBackFun()
                 }

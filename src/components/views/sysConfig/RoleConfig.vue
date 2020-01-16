@@ -3,8 +3,10 @@
     <el-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
       <el-card>
         <div style="overflow-x: auto;overflow-y: hidden">
-          <el-tree style="margin-right: 16px;min-height: 100px;" :data="treeData" v-loading="treeLoading"
-                   :default-expand-all="true"
+          <el-input v-model="filterText" clearable :placeholder="$t('forms.pleaseEnter') + $t('forms.filterKey')"/>
+          <el-tree style="margin-right: 16px;min-height: 100px;margin-top: 10px;" :data="treeData"
+                   v-loading="treeLoading"
+                   :default-expand-all="true" ref="roleTree" :filter-node-method="filterNode"
                    :expand-on-click-node="false">
             <span class="config-tree-node" slot-scope="{ node, data }">
               <span v-if="data.isApp">{{ node.label }}</span>
@@ -132,7 +134,8 @@
           menuIds: [],
           moduleFuncIds: []
         },
-        optionalUsers: []
+        optionalUsers: [],
+        filterText: ''
       }
     },
     computed: {
@@ -167,6 +170,11 @@
         return this.tree_loading
       }
     },
+    watch: {
+      filterText (value) {
+        this.$refs.roleTree.filter(value)
+      }
+    },
     methods: {
       querySearch (queryString, cb) {
         let restaurants = this.roleCode
@@ -174,6 +182,12 @@
           return item.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0
         }) : restaurants
         cb(results)
+      },
+      filterNode (value, data) {
+        if (!value || value === '') {
+          return true
+        }
+        return data.label.indexOf(value) !== -1
       },
       refreshTree (clear = true, callBackFun) {
         if (clear) {
@@ -429,9 +443,6 @@
                   })
                 })
                 this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)
-                this.refreshTree(false, (() => {
-                  this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)
-                }))
               }
             }).catch(() => {
               this.tree_loading = false

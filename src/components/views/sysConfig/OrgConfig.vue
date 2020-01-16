@@ -3,8 +3,10 @@
     <el-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
       <el-card>
         <div style="overflow-x: auto;overflow-y: hidden">
-          <el-tree style="margin-right: 16px;min-height: 100px;" :data="treeData" v-loading="treeLoading"
-                   :default-expand-all="true"
+          <el-input v-model="filterText" clearable :placeholder="$t('forms.pleaseEnter') + $t('forms.filterKey')"/>
+          <el-tree style="margin-right: 16px;min-height: 100px;margin-top: 10px;" :data="treeData"
+                   v-loading="treeLoading"
+                   :default-expand-all="true" ref="orgTree" :filter-node-method="filterNode"
                    :expand-on-click-node="false">
             <span class="config-tree-node" slot-scope="{ node, data }">
               <span v-if="data.id!=='root'" @click="orgClick(data)">{{ node.label }}</span>
@@ -113,7 +115,8 @@
         currOrgData: {},
         currOrg: {},
         editForm: {},
-        optionalUsers: []
+        optionalUsers: [],
+        filterText: ''
       }
     },
     computed: {
@@ -155,9 +158,18 @@
         } else {
           this.editForm.parentId = ''
         }
+      },
+      filterText (value) {
+        this.$refs.orgTree.filter(value)
       }
     },
     methods: {
+      filterNode (value, data) {
+        if (!value || value === '') {
+          return true
+        }
+        return data.label.indexOf(value) !== -1
+      },
       clearCurrOrg (currOrgId) {
         if (!currOrgId || (currOrgId && currOrgId === this.currOrg.id)) {
           this.editForm = {
@@ -190,6 +202,7 @@
           if (res) {
             processTreeNode(res.data)
             this.treeData[0].children = res.data
+            this.filterText = ''
             if (typeof callBackFun === 'function') {
               callBackFun()
             }
