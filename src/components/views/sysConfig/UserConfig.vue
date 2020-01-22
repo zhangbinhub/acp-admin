@@ -645,6 +645,12 @@
           if (res) {
             this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
             this.editModal = false
+            // 获取用户信息
+            this.$api.request.auth.getUserInfo().then((res) => {
+              if (res && !res.data.errorDescription) {
+                this.$store.commit('SET_USER_INFO', res.data)
+              }
+            })
             this.handleSearch()
           }
         }).catch(() => {
@@ -669,17 +675,7 @@
       }
     },
     activated () {
-      // 获取用户信息
-      this.modal_loading = true
-      this.$api.request.auth.getUserInfo().then((res) => {
-        if (res && !res.data.errorDescription) {
-          this.modal_loading = false
-          this.$store.commit('SET_USER_INFO', res.data)
-          this.refreshOrgTree(this.handleSearch())
-        }
-      }).catch(() => {
-        this.modal_loading = false
-      })
+      this.refreshOrgTree(this.handleSearch())
       this.$nextTick(() => {
         this.$refs['table'].doLayout()
       })

@@ -250,18 +250,19 @@ export const getTreeFullPathTitle = (treeData, targetId, property = 'label', sep
 /**
  * 获取树中某个节点的全路径节点数组
  * @param treeData 树全数据 Array
- * @param targetId 指定节点id
+ * @param target 指定节点属性值
+ * @param property 匹配属性名，默认id
  * @returns Array
  */
-export const getTreeFullPathArray = (treeData, targetId) => {
+export const getTreeFullPathArray = (treeData, target, property = 'id') => {
   for (let item of treeData) {
-    if (item.id === targetId) {
+    if (item[property] === target) {
       return [item]
     } else {
       if (item.children && item.children.length > 0) {
-        const childrenArray = getTreeFullPathArray(item.children, targetId)
+        const childrenArray = getTreeFullPathArray(item.children, target, property)
         if (childrenArray.length > 0) {
-          return [item, ...getTreeFullPathArray(item.children, targetId)]
+          return [item, ...getTreeFullPathArray(item.children, target, property)]
         }
       }
     }

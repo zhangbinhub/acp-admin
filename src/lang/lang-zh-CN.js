@@ -176,6 +176,8 @@ const messages = Object.assign(zhLocale, {
     deployTime: '部署时间',
     processKey: '流程定义键',
     processFile: '流程文件',
+    filterKey: '过滤关键字',
+    area: '区域',
     buttons: {
       login: '登录',
       submit: '提交',
