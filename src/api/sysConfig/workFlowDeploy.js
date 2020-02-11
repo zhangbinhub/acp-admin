@@ -20,6 +20,6 @@ export default {
     return ApiComm.$http.put('/workflow/definition/deploy/' + id)
   },
   diagram: (key) => {
-    return ApiComm.$http.get('/workflow/definition/diagram/' + key + '/png')
+    return ApiComm.$http.get('/workflow/definition/diagram/' + key + '/gif')
   }
 }
