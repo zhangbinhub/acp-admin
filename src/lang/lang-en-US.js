@@ -146,6 +146,7 @@ const messages = Object.assign(enLocale, {
     uri: 'uri',
     predicates: 'predicates',
     filters: 'filters',
+    metadata: 'metadata',
     remoteIp: 'remote ip',
     gatewayIp: 'gateway ip',
     serverId: 'server id',

@@ -146,6 +146,7 @@ const messages = Object.assign(zhLocale, {
     uri: 'uri',
     predicates: '断言',
     filters: '过滤器',
+    metadata: '元数据',
     remoteIp: '客户端IP',
     gatewayIp: '网关IP',
     serverId: '服务ID',

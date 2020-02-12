@@ -257,7 +257,7 @@
         return this.diagramData
       },
       uploadURL () {
-        return this.$store.state.app.appInfo.baseURL + '/workflow/definition/file'
+        return this.$api.request.workFlowDeploy.uploadUrl
       },
       uploadHeaders () {
         return {
@@ -388,10 +388,19 @@
         })
       },
       handleViewDiagram () {
+        const currObj = this
         this.diagramModal = true
         this.$api.request.workFlowDeploy.diagram(this.editForm.deploymentId).then((image) => {
           if (image) {
-            this.diagramData = image.data
+            const dataInfo = image.data
+            const contentType = dataInfo.type
+            const reader = new window.FileReader()
+            reader.readAsArrayBuffer(dataInfo)
+            reader.onload = function (e) {
+              const result = e.target.result
+              const blob = new Blob([result], { type: contentType })
+              currObj.diagramData = window.URL.createObjectURL(blob)
+            }
           }
         })
       },

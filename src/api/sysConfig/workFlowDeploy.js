@@ -20,6 +20,11 @@ export default {
     return ApiComm.$http.put('/workflow/definition/deploy/' + id)
   },
   diagram: (key) => {
-    return ApiComm.$http.get('/workflow/definition/diagram/' + key + '/gif')
+    return ApiComm.$http.get('/workflow/definition/diagram/' + key + '/gif', {
+      responseType: 'blob'
+    })
+  },
+  uploadUrl: () => {
+    return ApiComm.$store.state.app.appInfo.baseURL + '/workflow/definition/file'
   }
 }
