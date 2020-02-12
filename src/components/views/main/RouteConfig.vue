@@ -50,26 +50,15 @@
       <el-table-column
         prop="routeId"
         sortable="custom"
-        :label="this.$i18n.t('forms.routeId')"
-        width="150">
+        :label="this.$i18n.t('forms.routeId')">
       </el-table-column>
       <el-table-column
         prop="uri"
-        :label="this.$i18n.t('forms.uri')"
-        width="150">
-      </el-table-column>
-      <el-table-column
-        prop="predicates"
-        :label="this.$i18n.t('forms.predicates')">
-      </el-table-column>
-      <el-table-column
-        prop="filters"
-        :label="this.$i18n.t('forms.filters')">
+        :label="this.$i18n.t('forms.uri')">
       </el-table-column>
       <el-table-column
         prop="remarks"
-        :label="this.$i18n.t('forms.remarks')"
-        width="150">
+        :label="this.$i18n.t('forms.remarks')">
       </el-table-column>
       <el-table-column
         prop="orderNum"
@@ -162,15 +151,24 @@
           <el-col :lg="12">
             <el-form-item :label="$t('forms.predicates')" prop="predicates" style="width: 100%">
               <vueJsonEditor v-model="editForm.predicates" :lang="jsonEditorLang" :showBtns="false"
-                             :modes="jsonEditModes"
-                             :mode="'tree'"/>
+                             :modes="jsonEditModes" :expandedOnStart="true"
+                             :mode="'text'"/>
             </el-form-item>
           </el-col>
           <el-col :lg="12">
             <el-form-item :label="$t('forms.filters')" prop="filters" style="width: 100%">
               <vueJsonEditor v-model="editForm.filters" :lang="jsonEditorLang" :showBtns="false"
-                             :modes="jsonEditModes"
-                             :mode="'tree'"/>
+                             :modes="jsonEditModes" :expandedOnStart="true"
+                             :mode="'text'"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :lg="24">
+            <el-form-item :label="$t('forms.metadata')" prop="metadata" style="width: 100%">
+              <vueJsonEditor v-model="editForm.metadata" :lang="jsonEditorLang" :showBtns="false"
+                             :modes="jsonEditModes" :expandedOnStart="true"
+                             :mode="'text'"/>
             </el-form-item>
           </el-col>
         </el-row>
@@ -215,6 +213,7 @@
           uri: '',
           predicates: [],
           filters: [],
+          metadata: {},
           orderNum: 0,
           enabled: true,
           remarks: ''
@@ -288,8 +287,7 @@
               required: true,
               type: 'array',
               min: 1,
-              message: this.$i18n.t('forms.predicates') + this.$i18n.t('forms.notEmpty'),
-              trigger: 'blur'
+              message: this.$i18n.t('forms.predicates') + this.$i18n.t('forms.notEmpty')
             }
           ]
         }
@@ -311,10 +309,47 @@
           this.action = 0
         })
       },
+      handleEdit (row) {
+        this.editModal = true
+        this.$nextTick(() => {
+          this.$refs['editForm'].resetFields()
+          this.editForm.id = row.id
+          this.editForm.routeId = row.routeId
+          this.editForm.uri = row.uri
+          this.editForm.predicates = row.predicates ? JSON.parse(row.predicates) : []
+          this.editForm.filters = row.filters ? JSON.parse(row.filters) : []
+          this.editForm.metadata = row.metadata ? JSON.parse(row.metadata) : {}
+          this.editForm.orderNum = row.orderNum
+          this.editForm.enabled = !!row.enabled
+          this.editForm.remarks = row.remarks
+          this.action = 1
+        })
+      },
       doCancel () {
         this.editModal = false
       },
       doSave (name) {
+        if (!(this.editForm.predicates instanceof Array)) {
+          this.$notify.error({
+            title: this.$i18n.t('messages.validateFailed') + '',
+            message: this.$i18n.t('forms.predicates') + this.$i18n.t('forms.incorrect')
+          })
+          return
+        }
+        if (!(this.editForm.filters instanceof Array)) {
+          this.$notify.error({
+            title: this.$i18n.t('messages.validateFailed') + '',
+            message: this.$i18n.t('forms.filters') + this.$i18n.t('forms.incorrect')
+          })
+          return
+        }
+        if (this.editForm.metadata instanceof Array) {
+          this.$notify.error({
+            title: this.$i18n.t('messages.validateFailed') + '',
+            message: this.$i18n.t('forms.metadata') + this.$i18n.t('forms.incorrect')
+          })
+          return
+        }
         switch (this.action) {
           case 0:
             this.$refs[name].validate((valid) => {
@@ -326,6 +361,7 @@
                   orderNum: this.editForm.orderNum,
                   predicates: JSON.stringify(this.editForm.predicates),
                   filters: JSON.stringify(this.editForm.filters),
+                  metadata: JSON.stringify(this.editForm.metadata),
                   enabled: this.editForm.enabled,
                   remarks: this.editForm.remarks
                 }).then((res) => {
@@ -352,6 +388,7 @@
                   orderNum: this.editForm.orderNum,
                   predicates: JSON.stringify(this.editForm.predicates),
                   filters: JSON.stringify(this.editForm.filters),
+                  metadata: JSON.stringify(this.editForm.metadata),
                   enabled: this.editForm.enabled,
                   remarks: this.editForm.remarks
                 }).then((res) => {
@@ -469,21 +506,6 @@
           })
         }
       },
-      handleEdit (row) {
-        this.editModal = true
-        this.$nextTick(() => {
-          this.$refs['editForm'].resetFields()
-          this.editForm.id = row.id
-          this.editForm.routeId = row.routeId
-          this.editForm.uri = row.uri
-          this.editForm.predicates = JSON.parse(row.predicates)
-          this.editForm.filters = JSON.parse(row.filters)
-          this.editForm.orderNum = row.orderNum
-          this.editForm.enabled = !!row.enabled
-          this.editForm.remarks = row.remarks
-          this.action = 1
-        })
-      },
       handleRefresh () {
         this.$confirm(this.$i18n.t('messages.refreshRouteConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
           type: 'warning'
@@ -512,12 +534,3 @@
     }
   }
 </script>
-<style>
-  .jsoneditor-vue div.jsoneditor-outer {
-    min-height: 150px;
-  }
-
-  .jsoneditor-vue div.jsoneditor-tree {
-    height: 350px;
-  }
-</style>
