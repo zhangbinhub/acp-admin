@@ -131,7 +131,8 @@
             <div style="overflow-x: auto;overflow-y: hidden">
               <el-input v-model="moduleFuncTreeFilterText" clearable
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.filterKey')"/>
-              <el-tree style="margin-right: 16px;min-height: 100px;margin-top: 10px" :data="moduleFuncTreeData" v-loading="treeLoading"
+              <el-tree style="margin-right: 16px;min-height: 100px;margin-top: 10px" :data="moduleFuncTreeData"
+                       v-loading="treeLoading"
                        :default-expand-all="true" ref="moduleFuncTree" :filter-node-method="filterNode"
                        :expand-on-click-node="false">
                 <span class="config-tree-node" slot-scope="{ node, data }">
@@ -761,6 +762,9 @@
                 }
                 this.refreshMenuTree(false, (() => {
                   this.currMenuFullPath = getTreeFullPathTitle(this.menuTreeData, this.currMenu.id)
+                  this.$nextTick(() => {
+                    this.$refs.menuName.focus()
+                  })
                 }))
               }
             }).catch(() => {
@@ -800,6 +804,9 @@
                 }
                 this.refreshModuleFuncTree(false, (() => {
                   this.currModuleFuncFullPath = getTreeFullPathTitle(this.moduleFuncTreeData, this.currModuleFunc.id)
+                  this.$nextTick(() => {
+                    this.$refs.moduleFuncName.focus()
+                  })
                 }))
               }
             }).catch(() => {

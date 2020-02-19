@@ -349,6 +349,9 @@
                 }
                 this.refreshOrgTree(false, (() => {
                   this.currOrgFullPath = getTreeFullPathTitle(this.treeData, this.currOrg.id)
+                  this.$nextTick(() => {
+                    this.$refs['name'].focus()
+                  })
                 }))
               }
             }).catch(() => {

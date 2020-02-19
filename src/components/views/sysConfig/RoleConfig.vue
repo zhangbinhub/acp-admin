@@ -442,7 +442,12 @@
                     this.$refs['moduleFuncTree'].setCheckedKeys(checkedResult.checkedIdList)
                   })
                 })
-                this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)
+                this.refreshTree(false, (() => {
+                  this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)
+                  this.$nextTick(() => {
+                    this.$refs['name'].focus()
+                  })
+                }))
               }
             }).catch(() => {
               this.tree_loading = false
