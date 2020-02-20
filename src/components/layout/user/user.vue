@@ -30,7 +30,7 @@
     },
     computed: {
       avatar () {
-        if (this.userAvatar !== '') {
+        if (this.userAvatar && this.userAvatar !== '') {
           return this.userAvatar
         } else {
           return avatarImg
