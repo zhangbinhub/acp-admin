@@ -3,9 +3,9 @@
     <el-row>
       <el-card shadow="always">
         <div slot="header">{{$t('forms.numberOfOnlineUsers')}}</div>
-        <el-row :gutter="8">
+        <el-row :gutter="8" style="margin-top: -8px">
           <el-col :lg='{span:6}' v-for="(item,index) in onlineMessage" :key="index"
-                  style="padding: 0">
+                  style="padding: 0;margin-top: 8px">
             <el-card shadow="hover" style="margin: 0 8px">
               <el-row>
                 <el-col :span="8">
