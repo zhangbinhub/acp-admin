@@ -200,7 +200,7 @@ export const menuList = () => {
         'appId': '8a80cb816d2eb97f016d2eba04710000',
         'name': '普通页面',
         'iconType': 'el-icon-caret-right',
-        'path': '/demo4?name=123',
+        'path': '/demo3?name=demo3',
         'enabled': true,
         'covert': true,
         'openType': 0,

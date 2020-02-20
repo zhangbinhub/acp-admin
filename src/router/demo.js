@@ -10,6 +10,13 @@
  * }
  */
 export default [{
+  path: '/demo3',
+  name: 'demo3',
+  component: () => import('@/components/views/demo/Demo3.vue'),
+  meta: {
+    requireAuth: true
+  }
+}, {
   path: '/demo4',
   name: 'demo4',
   component: () => import('@/components/views/demo/Demo4.vue'),
