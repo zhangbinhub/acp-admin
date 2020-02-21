@@ -4,7 +4,7 @@
 > - [Upgrade] 优化首页样式
 > - [Upgrade] 优化表格样式
 > - [Upgrade] 页面跳转公共方法支持按路由path或name进行跳转，并且可同时带入query和params（name跳转才有效）参数
-> - [Upgrade] 优化标签也组件
+> - [Upgrade] 优化标签页组件
 ##### v4.1.2
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 同步后端更新至4.1.2
