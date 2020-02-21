@@ -151,8 +151,8 @@ export const updateTagNavList = (tagNavList, menuList, route) => {
       path: fullPath,
       meta: route.meta,
       routeName: route.name,
-      routeQuery: route.query ? route.query : {},
-      routeParams: route.params ? route.params : {}
+      routeQuery: route.query || {},
+      routeParams: route.params || {}
     })
     return tagNavList
   }
