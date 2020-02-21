@@ -30,6 +30,8 @@
 </template>
 
 <script>
+  import { copy } from '@/libs/tools'
+
   export default {
     name: 'TagsNav',
     props: {
@@ -134,6 +136,14 @@
     watch: {
       '$route' (to) {
         this.$nextTick(() => {
+          let newTagNavList = copy(this.tagList)
+          newTagNavList.forEach((item) => {
+            if (item.path === to.fullPath) {
+              item.routeQuery = to.query
+              item.routeParams = to.params
+            }
+          })
+          this.$store.commit('SET_TAG_NAV_LIST', newTagNavList)
           this.focusTagElementByFullPath(to.fullPath)
         })
       },
