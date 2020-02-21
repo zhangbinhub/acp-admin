@@ -213,7 +213,7 @@ const ApiComm = {
       } else {
         return
       }
-      query = obj.query
+      query = obj.query || {}
     }
     let targetMenu, currMenu
     currMenu = findMenuByPath(this.$router.currentRoute.fullPath, this.$store.state.app.user.menuList)
@@ -229,7 +229,8 @@ const ApiComm = {
       // 路由名称跳转
       if (!closeMore) {
         if (this.$router.currentRoute.name === pathOrName) {
-          if (this.$router.currentRoute.query && deepEqual(this.$router.currentRoute.query, query)) {
+          let currentQuery = this.$router.currentRoute.query || {}
+          if (deepEqual(currentQuery, query)) {
             return
           }
         }
@@ -296,7 +297,7 @@ const ApiComm = {
    * @param replace 是否是replace方式跳转
    */
   routeSwitch (obj, menu, replace) {
-    let { pathOrName, params, query } = { pathOrName: '', query: {} }
+    let { pathOrName, params, query } = { pathOrName: '', query: {}, params: {} }
     if (typeof obj === 'string') { // string
       pathOrName = obj
     } else { // route
@@ -307,8 +308,8 @@ const ApiComm = {
       } else {
         return
       }
-      params = obj.params
-      query = obj.query
+      query = obj.query || {}
+      params = obj.params || {}
     }
     let option = {}
     if (pathOrName.startsWith('/') || pathOrName.toLowerCase().startsWith('http')) {
@@ -342,7 +343,8 @@ const ApiComm = {
         query: query
       }
       if (this.$router.currentRoute.name === pathOrName) {
-        if (this.$router.currentRoute.query && deepEqual(this.$router.currentRoute.query, query)) {
+        let currentQuery = this.$router.currentRoute.query || {}
+        if (deepEqual(currentQuery, query)) {
           return
         }
       }
