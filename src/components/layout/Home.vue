@@ -181,7 +181,10 @@
         if (tagNavList.length === 0) {
           tagNavList.push({
             isHome: true,
-            path: this.homePath
+            path: this.homePath,
+            routeName: this.homePath.substring(1),
+            routeQuery: {},
+            routeParams: {}
           })
         }
         this.$store.commit('SET_TAG_NAV_LIST', tagNavList)
@@ -221,8 +224,8 @@
           this.$store.commit('SET_TAG_NAV_LIST', tagList)
         }
       },
-      handleClick (path) {
-        this.$api.turnToPage(path)
+      handleClick (obj) {
+        this.$api.turnToPage(obj)
       }
     }
   }

@@ -8,6 +8,50 @@ export const copy = (srcObj) => {
 }
 
 /**
+ * 判断两个对象是否相等
+ * @param x {Object} 对象1
+ * @param y {Object} 对象2
+ * @return  {Boolean} true 为相等，false 为不等
+ */
+export const deepEqual = function (x, y) {
+  if (x === y) {
+    return true
+  } else if ((x && typeof x == 'object') && (y && typeof y == 'object')) {
+    if (Array.isArray(x) && Array.isArray(y)) {
+      // 数组
+      if (x.length !== y.length) {
+        return false
+      }
+      for (let item in x) {
+        if (y.indexOf(item) === -1) {
+          return false
+        }
+      }
+      return true
+    } else if (!Array.isArray(x) && !Array.isArray(y)) {
+      // 对象
+      if (Object.keys(x).length !== Object.keys(y).length) {
+        return false
+      }
+      for (let prop in x) {
+        if (y.hasOwnProperty(prop)) {
+          if (!deepEqual(x[prop], y[prop])) {
+            return false
+          }
+        } else {
+          return false
+        }
+      }
+      return true
+    } else {
+      return false
+    }
+  } else {
+    return false
+  }
+}
+
+/**
  * 根据 path 获取菜单全路径
  * @param path
  * @param menuList
@@ -106,7 +150,9 @@ export const updateTagNavList = (tagNavList, menuList, route) => {
       name: menu ? menu.name : undefined,
       path: fullPath,
       meta: route.meta,
-      routeName: route.name
+      routeName: route.name,
+      routeQuery: route.query ? route.query : {},
+      routeParams: route.params ? route.params : {}
     })
     return tagNavList
   }

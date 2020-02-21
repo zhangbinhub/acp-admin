@@ -1,5 +1,6 @@
 import {
-  findMenuByPath
+  findMenuByPath,
+  deepEqual
 } from '@/libs/tools'
 
 const ApiComm = {
@@ -200,6 +201,7 @@ const ApiComm = {
    * @param replace 是否是replace方式跳转
    */
   turnToPage (obj, asyncFunc, pageName, closeMore = false, replace = false) {
+    let query = {}
     let pathOrName = ''
     if (typeof obj === 'string') { // string
       pathOrName = obj
@@ -211,6 +213,7 @@ const ApiComm = {
       } else {
         return
       }
+      query = obj.query
     }
     let targetMenu, currMenu
     currMenu = findMenuByPath(this.$router.currentRoute.fullPath, this.$store.state.app.user.menuList)
@@ -226,7 +229,9 @@ const ApiComm = {
       // 路由名称跳转
       if (!closeMore) {
         if (this.$router.currentRoute.name === pathOrName) {
-          return
+          if (this.$router.currentRoute.query && deepEqual(this.$router.currentRoute.query, query)) {
+            return
+          }
         }
       }
     }
@@ -291,39 +296,55 @@ const ApiComm = {
    * @param replace 是否是replace方式跳转
    */
   routeSwitch (obj, menu, replace) {
-    let { name, params, query } = { name: '' }
+    let { pathOrName, params, query } = { pathOrName: '', query: {} }
     if (typeof obj === 'string') { // string
-      name = obj
+      pathOrName = obj
     } else { // route
-      name = obj.name
+      if (obj.path) {
+        pathOrName = obj.path
+      } else if (obj.name) {
+        pathOrName = obj.name
+      } else {
+        return
+      }
       params = obj.params
       query = obj.query
     }
-    let option = name
-    if (name.startsWith('/') || name.toLowerCase().startsWith('http')) {
+    let option = {}
+    if (pathOrName.startsWith('/') || pathOrName.toLowerCase().startsWith('http')) {
+      // path
+      let path = pathOrName
       if (menu) {
         switch (menu.openType) {
           case 0: // 内嵌模式
-            option = menu.path
+            path = menu.path
             break
           case 1: // 打开新页面
             window.open(menu.path)
             return
           default:
-            option = menu.path
+            path = menu.path
         }
       }
-      if (this.$router.currentRoute.fullPath === option) {
-        return
-      }
-    } else {
       option = {
-        name: name,
+        path: path,
         params: params,
         query: query
       }
-      if (this.$router.currentRoute.name === name) {
+      if (this.$router.currentRoute.fullPath === path) {
         return
+      }
+    } else {
+      // name
+      option = {
+        name: pathOrName,
+        params: params,
+        query: query
+      }
+      if (this.$router.currentRoute.name === pathOrName) {
+        if (this.$router.currentRoute.query && deepEqual(this.$router.currentRoute.query, query)) {
+          return
+        }
       }
     }
     if (replace) {
