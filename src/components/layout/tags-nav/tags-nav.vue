@@ -11,13 +11,18 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-    <el-tabs type="card" ref="header-tabs" v-model="currPath" :before-leave="handleClick" @tab-remove="handleClose">
+    <el-tabs type="card" ref="header-tabs" v-model="currPath"
+             :before-leave="handleBeforeLeave"
+             @tab-remove="handleClose"
+             @tab-click="handleClick">
       <el-tab-pane
         v-for="(item,index) in tagList"
         :key="item.path+'-'+index"
         :label="showTitleInside(item)"
         :name="item.path"
-        :data-route-item="item"
+        :data-route-name="item.routeName"
+        :data-route-query="JSON.stringify(item.routeQuery)"
+        :data-route-params="JSON.stringify(item.routeParams)"
         :closable="!item.isHome">
       </el-tab-pane>
     </el-tabs>
@@ -94,9 +99,15 @@
         }
         this.$emit('on-close', res, undefined, nextPath, pageName)
       },
-      handleClick (path) {
-        this.$emit('input', path)
+      handleBeforeLeave (path) {
         return this.$route.fullPath === path
+      },
+      handleClick (tab) {
+        this.$emit('input', {
+          name: tab.$attrs['data-route-name'],
+          query: JSON.parse(tab.$attrs['data-route-query']),
+          params: JSON.parse(tab.$attrs['data-route-params'])
+        })
       },
       showTitleInside (item) {
         if (item.isHome) {
