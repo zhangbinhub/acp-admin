@@ -257,7 +257,7 @@
         return this.diagramData
       },
       uploadURL () {
-        return this.$api.request.workFlowDeploy.uploadUrl
+        return this.$api.request.workFlowDeploy.uploadUrl()
       },
       uploadHeaders () {
         return {
