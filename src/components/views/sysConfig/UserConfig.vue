@@ -675,7 +675,9 @@
       }
     },
     activated () {
-      this.refreshOrgTree(this.handleSearch())
+      this.refreshOrgTree(() => {
+        this.handleSearch()
+      })
       this.$nextTick(() => {
         this.$refs['table'].doLayout()
       })
