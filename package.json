@@ -1,6 +1,6 @@
 {
   "name": "acp-admin",
-  "version": "4.1.4",
+  "version": "4.1.5",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
-    "@babel/core": "7.8.6",
+    "@babel/core": "7.8.7",
     "@babel/register": "7.8.6",
     "@vue/cli-plugin-babel": "^4.2.3",
     "@vue/cli-plugin-unit-jest": "^4.2.3",
@@ -49,7 +49,7 @@
     "less-loader": "^5.0.0",
     "lint-staged": "^10.0.8",
     "vue-template-compiler": "^2.6.11",
-    "webpack": "^4.41.6"
+    "webpack": "^4.42.0"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
