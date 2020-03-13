@@ -201,8 +201,8 @@
       </div>
     </el-dialog>
     <el-dialog :visible.sync="diagramModal" :title="$t('forms.buttons.image')" fullscreen>
-      <el-scrollbar style="padding-bottom: 20px">
-        <el-image :src="viewDiagram"/>
+      <el-scrollbar>
+        <el-image :src="viewDiagram" style="padding-bottom: 20px"/>
       </el-scrollbar>
     </el-dialog>
   </el-card>
