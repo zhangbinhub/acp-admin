@@ -619,7 +619,9 @@
         if (!data.covert) {
           this.$alert(this.$i18n.t('messages.tableDataCannotDel') + ': ' + getTreeFullPathTitle(this.menuTreeData, data.id),
             this.$i18n.t('dialog.error') + '', {
-              type: 'error'
+              type: 'error',
+              callback: () => {
+              }
             })
           return
         }
@@ -648,7 +650,9 @@
         if (!data.covert) {
           this.$alert(this.$i18n.t('messages.tableDataCannotDel') + ': ' + getTreeFullPathTitle(this.moduleFuncTreeData, data.id),
             this.$i18n.t('dialog.error') + '', {
-              type: 'error'
+              type: 'error',
+              callback: () => {
+              }
             })
           return
         }

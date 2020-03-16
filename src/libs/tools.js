@@ -337,13 +337,21 @@ export const filterTreeNode = (treeData, targetIds) => {
 /**
  * 下载文件
  * @param action 文件下载链接
+ * @param method 请求方法，默认 get
+ * @param params 请求参数，默认 undefined
  */
-export const doDownLoadFile = (action) => {
+export const doDownLoadFile = (action, method = 'get', params = undefined) => {
   let form = document.createElement('form')
   form.style.display = 'none'
-  form.setAttribute('method', 'get')
+  form.setAttribute('method', method)
   form.setAttribute('action', action)
   form.setAttribute('target', '')
+  if (params) {
+    let input = document.createElement('input')
+    input.name = 'params'
+    input.value = JSON.stringify(params)
+    form.appendChild(input)
+  }
   document.body.appendChild(form)
   form.submit()
   form.remove()

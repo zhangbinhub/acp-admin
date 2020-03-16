@@ -2,6 +2,8 @@
 ##### v4.1.5
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 优化workflow流程图样式
+> - [Upgrade] 优化文件下载公共方法
+> - [Upgrade] 优化$alert组件写法
 > - [Fix] 修复上传组件url无效的问题
 > - [Fix] 优化用户配置异步请求调用顺序
 ##### v4.1.4

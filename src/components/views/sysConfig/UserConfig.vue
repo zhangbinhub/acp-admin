@@ -501,7 +501,9 @@
       handleDeleteRow (row) {
         if (row.id === this.$store.state.app.user.userInfo.id || row.levels <= this.$store.state.app.user.userInfo.levels) {
           this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
-            type: 'error'
+            type: 'error',
+            callback: () => {
+            }
           })
         } else {
           this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
@@ -522,7 +524,9 @@
           })
         } else {
           this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
-            type: 'error'
+            type: 'error',
+            callback: () => {
+            }
           })
         }
       },

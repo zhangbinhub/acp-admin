@@ -339,7 +339,11 @@
               case 0:
                 if (this.fileList.length === 0) {
                   this.$alert(this.$i18n.t('forms.processFile') + this.$i18n.t('forms.notEmpty'),
-                    this.$i18n.t('messages.validateFailed'), { type: 'error' })
+                    this.$i18n.t('messages.validateFailed'), {
+                      type: 'error',
+                      callback: () => {
+                      }
+                    })
                   return
                 }
                 this.$refs['upload'].submit()
@@ -477,7 +481,9 @@
           })
         } else {
           this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
-            type: 'error'
+            type: 'error',
+            callback: () => {
+            }
           })
         }
       },
