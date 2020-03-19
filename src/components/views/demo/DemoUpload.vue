@@ -12,6 +12,7 @@
             multiple
             :limit="3"
             :on-exceed="handleExceed"
+            :on-success="handleFirstSuccess"
             :file-list="fileList">
             <el-button size="small" type="primary">点击上传</el-button>
             <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -193,6 +194,12 @@
     methods: {
       submitUpload () {
         this.$refs.upload.submit()
+      },
+      handleFirstSuccess (res, file) {
+        // file.name = res.message
+        // file.type = res.message
+        console.log(res)
+        console.log(file)
       },
       handleChange (file, fileList) {
         this.fileList = fileList.slice(-3)
