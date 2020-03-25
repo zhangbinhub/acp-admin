@@ -4,6 +4,7 @@
 > - [Upgrade] 优化workflow流程图样式
 > - [Upgrade] 优化文件下载公共方法
 > - [Upgrade] 优化$alert组件写法
+> - [Upgrade] 优化权限配置、角色配置界面样式
 > - [Fix] 修复上传组件url无效的问题
 > - [Fix] 优化用户配置异步请求调用顺序
 ##### v4.1.4
