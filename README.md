@@ -68,17 +68,9 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org
 ```bash
 npm config set registry https://registry.npm.taobao.org
 ```
-##### （三）安装 webpack
-``` bash
-npm install webpack -g
-```
-##### （四）安装升级插件
+##### （三）安装升级插件
 ```bash
 npm install -g npm-check-updates
-```
-##### （五）安装全局 vue-cli 脚手架
-``` bash
-npm install -g @vue/cli
 ```
 ## 二、依赖插件
 ##### （一）安装
