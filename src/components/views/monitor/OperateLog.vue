@@ -39,6 +39,11 @@
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
                         style="width: 185px"/>
       </el-form-item>
+      <el-form-item :label="$t('forms.responseStatus')" prop="responseStatus">
+        <el-input v-model="searchForm.responseStatus" :disabled="modal_loading" type="number"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.responseStatus')"
+                  @keyup.enter.native="handleSearch"/>
+      </el-form-item>
       <el-form-item :label="$t('forms.infoType')" prop="history">
         <el-select v-model="searchForm.history" :disabled="modal_loading" value=""
                    style="width:100px">
@@ -90,10 +95,10 @@
         :label="this.$i18n.t('forms.clientName')">
       </el-table-column>
       <el-table-column
-        prop="identify"
+        prop="method"
         sortable="custom"
-        width="80"
-        :label="this.$i18n.t('forms.identify')">
+        width="100"
+        :label="this.$i18n.t('forms.method')">
       </el-table-column>
       <el-table-column
         prop="requestTime"
@@ -109,6 +114,15 @@
         sortable="custom"
         width="130"
         :label="this.$i18n.t('forms.processTime')+'('+this.$i18n.t('forms.millisecond')+')'">
+      </el-table-column>
+      <el-table-column
+        prop="responseStatus"
+        sortable="custom"
+        width="110"
+        :label="this.$i18n.t('forms.responseStatus')">
+        <template slot-scope="scope">
+          <span :style="{color:scope.row.responseStatus>=200&&scope.row.responseStatus<300 ? 'green':'red'}">{{scope.row.responseStatus}}</span>
+        </template>
       </el-table-column>
       <el-table-column
         prop="action"
@@ -213,6 +227,7 @@
           history: 'false',
           startTime: '',
           endTime: '',
+          responseStatus: '',
           orderParam: {
             prop: 'requestTime',
             order: 'descending'
@@ -274,6 +289,7 @@
           history: this.searchForm.history === 'true',
           startTime: this.searchForm.startTime !== '' ? this.searchForm.startTime.getTime() : null,
           endTime: this.searchForm.endTime !== '' ? this.searchForm.endTime.getTime() : null,
+          responseStatus: this.searchForm.responseStatus !== '' ? parseInt(this.searchForm.responseStatus) : null,
           queryParam: {
             currPage: this.searchForm.currPage,
             pageSize: this.searchForm.pageSize
