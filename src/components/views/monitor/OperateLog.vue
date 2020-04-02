@@ -95,6 +95,12 @@
         :label="this.$i18n.t('forms.clientName')">
       </el-table-column>
       <el-table-column
+        prop="identify"
+        sortable="custom"
+        width="80"
+        :label="this.$i18n.t('forms.identify')">
+      </el-table-column>
+      <el-table-column
         prop="method"
         sortable="custom"
         width="100"
