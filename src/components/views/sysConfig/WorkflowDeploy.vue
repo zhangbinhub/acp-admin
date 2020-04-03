@@ -406,6 +406,8 @@
               currObj.diagramData = window.URL.createObjectURL(blob)
             }
           }
+        }).catch(() => {
+          this.$api.errorProcess('获取流程图失败！')
         })
       },
       handlePageSearch (page) {
