@@ -223,7 +223,7 @@
     </el-dialog>
   </el-card>
 </template>
-<style type="less">
+<style type="less" scoped>
   .card-col {
     margin-bottom: 10px;
   }
