@@ -4,6 +4,8 @@
   </el-link>
 </template>
 <script>
+  import './sider-trigger.less'
+
   export default {
     name: 'siderTrigger',
     props: {
@@ -16,6 +18,3 @@
     }
   }
 </script>
-<style lang="less">
-  @import './sider-trigger.less';
-</style>

@@ -48,7 +48,7 @@
                           @keyup.enter.native="doSave"/>
               </el-form-item>
               <el-form-item :label="$t('forms.code')" prop="code">
-                <el-autocomplete v-model="editForm.code" :disabled="treeLoading"
+                <el-autocomplete v-model="editForm.code" :disabled="treeLoading" style="width: 100%"
                                  :fetch-suggestions="querySearch"
                                  :placeholder="$t('forms.pleaseEnter') + $t('forms.code')"
                                  @keyup.enter.native="doSave"/>

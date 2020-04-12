@@ -116,13 +116,13 @@
       <el-table-column
         prop="processTime"
         sortable="custom"
-        width="80"
+        width="130"
         :label="this.$i18n.t('forms.processTime')+'('+this.$i18n.t('forms.millisecond')+')'">
       </el-table-column>
       <el-table-column
         prop="responseStatus"
         sortable="custom"
-        width="80"
+        width="110"
         :label="this.$i18n.t('forms.responseStatus')">
         <template slot-scope="scope">
           <span :style="{color:scope.row.responseStatus>=200&&scope.row.responseStatus<300 ? 'green':'red'}">{{scope.row.responseStatus}}</span>

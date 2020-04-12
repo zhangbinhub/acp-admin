@@ -223,7 +223,7 @@
     </el-dialog>
   </el-card>
 </template>
-<style type="less">
+<style type="less" scoped>
   .card-col {
     margin-bottom: 10px;
   }
@@ -501,7 +501,9 @@
       handleDeleteRow (row) {
         if (row.id === this.$store.state.app.user.userInfo.id || row.levels <= this.$store.state.app.user.userInfo.levels) {
           this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
-            type: 'error'
+            type: 'error',
+            callback: () => {
+            }
           })
         } else {
           this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
@@ -522,7 +524,9 @@
           })
         } else {
           this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
-            type: 'error'
+            type: 'error',
+            callback: () => {
+            }
           })
         }
       },
@@ -675,7 +679,9 @@
       }
     },
     activated () {
-      this.refreshOrgTree(this.handleSearch())
+      this.refreshOrgTree(() => {
+        this.handleSearch()
+      })
       this.$nextTick(() => {
         this.$refs['table'].doLayout()
       })

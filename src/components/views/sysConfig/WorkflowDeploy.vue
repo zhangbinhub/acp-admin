@@ -201,8 +201,8 @@
       </div>
     </el-dialog>
     <el-dialog :visible.sync="diagramModal" :title="$t('forms.buttons.image')" fullscreen>
-      <el-scrollbar style="padding-bottom: 20px">
-        <el-image :src="viewDiagram"/>
+      <el-scrollbar>
+        <el-image :src="viewDiagram" style="padding-bottom: 20px"/>
       </el-scrollbar>
     </el-dialog>
   </el-card>
@@ -257,7 +257,7 @@
         return this.diagramData
       },
       uploadURL () {
-        return this.$api.request.workFlowDeploy.uploadUrl
+        return this.$api.request.workFlowDeploy.uploadUrl()
       },
       uploadHeaders () {
         return {
@@ -339,7 +339,11 @@
               case 0:
                 if (this.fileList.length === 0) {
                   this.$alert(this.$i18n.t('forms.processFile') + this.$i18n.t('forms.notEmpty'),
-                    this.$i18n.t('messages.validateFailed'), { type: 'error' })
+                    this.$i18n.t('messages.validateFailed'), {
+                      type: 'error',
+                      callback: () => {
+                      }
+                    })
                   return
                 }
                 this.$refs['upload'].submit()
@@ -402,6 +406,8 @@
               currObj.diagramData = window.URL.createObjectURL(blob)
             }
           }
+        }).catch(() => {
+          this.$api.errorProcess('获取流程图失败！')
         })
       },
       handlePageSearch (page) {
@@ -477,7 +483,9 @@
           })
         } else {
           this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
-            type: 'error'
+            type: 'error',
+            callback: () => {
+            }
           })
         }
       },

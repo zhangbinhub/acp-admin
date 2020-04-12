@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="global-size">
     <router-view/>
   </div>
 </template>
@@ -9,21 +9,3 @@
     name: 'app'
   }
 </script>
-
-<style lang="less">
-  .size {
-    width: 100%;
-    height: 100%;
-  }
-
-  #app {
-    .size;
-  }
-
-  html, body {
-    .size;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-  }
-</style>

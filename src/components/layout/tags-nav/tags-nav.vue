@@ -31,6 +31,7 @@
 
 <script>
   import { copy } from '@/libs/tools'
+  import './tags-nav.less'
 
   export default {
     name: 'TagsNav',
@@ -157,7 +158,3 @@
     }
   }
 </script>
-
-<style lang="less">
-  @import './tags-nav.less';
-</style>

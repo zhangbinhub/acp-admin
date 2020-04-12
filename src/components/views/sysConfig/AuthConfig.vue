@@ -175,7 +175,7 @@
                 </el-col>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.code')" prop="code">
-                    <el-autocomplete v-model="moduleFuncEditForm.code" :disabled="treeLoading"
+                    <el-autocomplete v-model="moduleFuncEditForm.code" :disabled="treeLoading" style="width: 100%"
                                      :fetch-suggestions="querySearch"
                                      :placeholder="$t('forms.pleaseEnter') + $t('forms.code')"
                                      @keyup.enter.native="doSaveModuleFunc"/>
@@ -619,7 +619,9 @@
         if (!data.covert) {
           this.$alert(this.$i18n.t('messages.tableDataCannotDel') + ': ' + getTreeFullPathTitle(this.menuTreeData, data.id),
             this.$i18n.t('dialog.error') + '', {
-              type: 'error'
+              type: 'error',
+              callback: () => {
+              }
             })
           return
         }
@@ -648,7 +650,9 @@
         if (!data.covert) {
           this.$alert(this.$i18n.t('messages.tableDataCannotDel') + ': ' + getTreeFullPathTitle(this.moduleFuncTreeData, data.id),
             this.$i18n.t('dialog.error') + '', {
-              type: 'error'
+              type: 'error',
+              callback: () => {
+              }
             })
           return
         }

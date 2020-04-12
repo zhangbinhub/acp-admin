@@ -1,5 +1,5 @@
 # acp-admin
-###### v4.1.4 [版本更新日志](doc/version_history.md)
+###### v4.1.5 [版本更新日志](doc/version_history.md)
 兼容的浏览器及版本
 - Chrome latest（推荐，完美）
 - Firefox latest（完全支持）
@@ -7,7 +7,7 @@
 - IE 10+（不推荐，支持但体验不佳）
 
 > 使用vue全家桶(Vue+Vue-router+Vuex+axios)、ElementUI样式库构建的前端项目。该项目是前后端分离架构中的“前端部分”
-。后端工程[V4.1.4](https://github.com/zhangbin1010/acp-admin-cloud)
+。后端工程[V4.1.5](https://github.com/zhangbin1010/acp-admin-cloud)
 
 > 系统仍持续完善和优化中，数据初始化及后端数据结构请参看[后端工程](https://github.com/zhangbin1010/acp-admin-cloud)
 
@@ -68,17 +68,9 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org
 ```bash
 npm config set registry https://registry.npm.taobao.org
 ```
-##### （三）安装 webpack
-``` bash
-npm install webpack -g
-```
-##### （四）安装升级插件
+##### （三）安装升级插件
 ```bash
 npm install -g npm-check-updates
-```
-##### （五）安装全局 vue-cli 脚手架
-``` bash
-npm install -g @vue/cli
 ```
 ## 二、依赖插件
 ##### （一）安装

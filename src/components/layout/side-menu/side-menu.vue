@@ -23,6 +23,7 @@
 <script>
   import { getOpenedNamesByActiveName } from '@/libs/tools'
   import SideMenuItem from './side-menu-item.vue'
+  import './side-menu.less'
 
   export default {
     name: 'SideMenu',
@@ -87,6 +88,3 @@
     }
   }
 </script>
-<style lang="less">
-  @import './side-menu.less';
-</style>

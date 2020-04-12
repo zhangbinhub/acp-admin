@@ -21,7 +21,12 @@ export default {
   },
   diagram: (key) => {
     return ApiComm.$http.get('/workflow/definition/diagram/' + key + '/gif', {
-      responseType: 'blob'
+      responseType: 'blob',
+      headers: {
+        'Process400': 'false',
+        'Process401': 'false',
+        'Process403': 'false'
+      }
     })
   },
   uploadUrl: () => {
