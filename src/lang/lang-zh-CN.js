@@ -75,7 +75,8 @@ const messages = Object.assign(zhLocale, {
     message500: '服务器出错了',
     buttons: {
       back: '返回',
-      home: '主页'
+      home: '主页',
+      login: '登录'
     }
   },
   forms: {
