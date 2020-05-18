@@ -75,7 +75,8 @@ const messages = Object.assign(twLocale, {
     message500: '服務器出錯了',
     buttons: {
       back: '返回',
-      home: '主頁'
+      home: '主頁',
+      login: '登錄'
     }
   },
   forms: {

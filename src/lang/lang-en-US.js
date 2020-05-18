@@ -75,7 +75,8 @@ const messages = Object.assign(enLocale, {
     message500: 'Internal Server Error',
     buttons: {
       back: 'back',
-      home: 'home'
+      home: 'home',
+      login: 'login'
     }
   },
   forms: {

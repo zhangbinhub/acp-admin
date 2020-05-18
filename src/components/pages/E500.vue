@@ -23,6 +23,7 @@
         <div class="action-link-wrap">
           <a @click="goBack">{{$t('errorPage.buttons.back')}}</a>
           <a @click="goHome">{{$t('errorPage.buttons.home')}}</a>
+          <a @click="goLogin">{{$t('errorPage.buttons.login')}}</a>
         </div>
       </div>
     </div>
@@ -152,6 +153,9 @@
       },
       goHome () {
         this.$api.redirectHome()
+      },
+      goLogin () {
+        this.$api.redirectLogin()
       }
     }
   }
