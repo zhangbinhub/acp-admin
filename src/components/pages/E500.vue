@@ -18,7 +18,9 @@
     <div class="message-box">
       <h1>500</h1>
       <p>{{$t('errorPage.message500')}}</p>
-      <p>{{msg}}</p>
+      <div class="content">
+        <p>{{msg}}</p>
+      </div>
       <div class="buttons-con">
         <div class="action-link-wrap">
           <a @click="goBack">{{$t('errorPage.buttons.back')}}</a>
@@ -45,8 +47,6 @@
   }
 
   .message-box {
-    height: 200px;
-    width: 380px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -64,8 +64,9 @@
     text-shadow: 0 0 80px #ffffff, 0 0 30px #008000, 0 0 6px #0000ff;
   }
 
-  .buttons-con .action-link-wrap {
-    margin-top: 40px;
+  .message-box .content {
+    overflow: auto;
+    max-height: 200px
   }
 
   .buttons-con .action-link-wrap a {
