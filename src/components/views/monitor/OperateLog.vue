@@ -39,22 +39,6 @@
           </el-form-item>
         </el-col>
         <el-col :lg="{span:6}">
-          <el-form-item :label="$t('forms.startDate')" prop="startTime">
-            <el-date-picker type="date" :disabled="modal_loading" :picker-options="datePickerOptions"
-                            v-model="searchForm.startTime"
-                            :placeholder="$t('forms.pleaseEnter') + $t('forms.startDate')"
-                            style="width: 185px"/>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="{span:6}">
-          <el-form-item :label="$t('forms.endDate')" prop="endTime">
-            <el-date-picker type="date" :disabled="modal_loading" :picker-options="datePickerOptions"
-                            v-model="searchForm.endTime"
-                            :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
-                            style="width: 185px"/>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="{span:6}">
           <el-form-item :label="$t('forms.responseStatus')" prop="responseStatus">
             <el-input v-model="searchForm.responseStatus" :disabled="modal_loading" type="number"
                       :placeholder="$t('forms.pleaseEnter') + $t('forms.responseStatus')"
@@ -69,6 +53,12 @@
                          :key="'search_select_'+item.value">
               </el-option>
             </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :lg="{span:12}">
+          <el-form-item :label="$t('forms.startDate')" prop="startTime">
+            <el-date-picker v-model="searchForm.startTime" :disabled="modal_loading" type="daterange"
+                            :align="'right'" unlink-panels :picker-options="pickerOptions"/>
           </el-form-item>
         </el-col>
         <el-form-item style="float: right">
@@ -251,8 +241,7 @@
           clientName: '',
           userName: '',
           history: 'false',
-          startTime: '',
-          endTime: '',
+          startTime: [],
           responseStatus: '',
           orderParam: {
             prop: 'requestTime',
@@ -285,6 +274,41 @@
           { value: 'false', label: this.$i18n.t('forms.currentInfo') },
           { value: 'true', label: this.$i18n.t('forms.historyInfo') }
         ]
+      },
+      pickerOptions () {
+        return {
+          shortcuts: [{
+            text: this.$i18n.t('forms.buttons.lastWeek'),
+            onClick (picker) {
+              const end = new Date()
+              const start = new Date()
+              end.setHours(0, 0, 0, 0)
+              start.setHours(0, 0, 0, 0)
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+              picker.$emit('pick', [start, end])
+            }
+          }, {
+            text: this.$i18n.t('forms.buttons.lastMonth'),
+            onClick (picker) {
+              const end = new Date()
+              const start = new Date()
+              end.setHours(0, 0, 0, 0)
+              start.setHours(0, 0, 0, 0)
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+              picker.$emit('pick', [start, end])
+            }
+          }, {
+            text: this.$i18n.t('forms.buttons.lastThreeMonth'),
+            onClick (picker) {
+              const end = new Date()
+              const start = new Date()
+              end.setHours(0, 0, 0, 0)
+              start.setHours(0, 0, 0, 0)
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+              picker.$emit('pick', [start, end])
+            }
+          }]
+        }
       }
     },
     methods: {
@@ -313,8 +337,8 @@
           clientName: this.searchForm.clientName,
           userName: this.searchForm.userName,
           history: this.searchForm.history === 'true',
-          startTime: this.searchForm.startTime !== '' ? this.searchForm.startTime.getTime() : null,
-          endTime: this.searchForm.endTime !== '' ? this.searchForm.endTime.getTime() : null,
+          startTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[0].getTime() : null,
+          endTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[1].getTime() : null,
           responseStatus: this.searchForm.responseStatus !== '' ? parseInt(this.searchForm.responseStatus) : null,
           queryParam: {
             currPage: this.searchForm.currPage,
