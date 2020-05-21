@@ -120,10 +120,9 @@
     </el-table>
     <el-pagination style="margin-top: 10px;text-align: right"
                    @size-change="handlePageSizeSearch"
-                   @current-change="handlePageSearch"
-                   :current-page="searchForm.currPage"
+                   :current-page.sync="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
-                   :page-size="searchForm.pageSize"
+                   :page-size.sync="searchForm.pageSize"
                    layout="total, sizes, prev, pager, next, jumper"
                    :total="searchForm.totalRows">
     </el-pagination>
@@ -202,6 +201,9 @@
             this.$refs['name'].focus()
           })
         }
+      },
+      'searchForm.currPage' () {
+        this.handleSearch()
       }
     },
     computed: {
@@ -304,10 +306,6 @@
         }).catch(() => {
           this.modal_loading = false
         })
-      },
-      handlePageSearch (page) {
-        this.searchForm.currPage = page
-        this.handleSearch()
       },
       handlePageSizeSearch (size) {
         this.searchForm.pageSize = size
