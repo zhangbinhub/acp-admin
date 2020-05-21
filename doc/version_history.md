@@ -5,6 +5,7 @@
 > - [Upgrade] 404 与 500 界面增加“登录”按钮
 > - [Upgrade] 优化 500 界面错误信息显示
 > - [Upgrade] 优化路由日志、登录日志、操作日志查询界面
+> - [Upgrade] 优化查询界面分页组件，current-page 和 page-size 属性使用 .sync 修饰符
 ##### v4.1.5
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 优化workflow流程图样式
