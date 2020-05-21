@@ -156,7 +156,6 @@
     </el-table>
     <el-pagination style="margin-top: 10px;text-align: right"
                    @size-change="handlePageSizeSearch"
-                   @current-change="handlePageSearch"
                    :current-page.sync="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
                    :page-size.sync="searchForm.pageSize"
@@ -311,6 +310,11 @@
         }
       }
     },
+    watch: {
+      'searchForm.currPage' () {
+        this.handleSearch()
+      }
+    },
     methods: {
       dateTimeFormat (time) {
         return time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''
@@ -320,10 +324,6 @@
       },
       doCancel () {
         this.editModal = false
-      },
-      handlePageSearch (page) {
-        this.searchForm.currPage = page
-        this.handleSearch()
       },
       handlePageSizeSearch (size) {
         this.searchForm.pageSize = size
