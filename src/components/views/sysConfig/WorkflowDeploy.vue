@@ -437,7 +437,6 @@
           this.modal_loading = false
           if (res) {
             this.selectedData = []
-            this.searchForm.currPage = res.data.pageable.pageNumber + 1
             this.searchForm.totalRows = res.data.totalElements
             this.searchData = []
             this.searchData = res.data.content

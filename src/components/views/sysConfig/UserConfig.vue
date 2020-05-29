@@ -467,7 +467,6 @@
           this.modal_loading = false
           if (res) {
             this.selectedData = []
-            this.searchForm.currPage = res.data.pageable.pageNumber + 1
             this.searchForm.totalRows = res.data.totalElements
             this.searchData = res.data.content.map(item => {
               if (item.id === this.$store.state.app.user.userInfo.id || item.levels <= this.$store.state.app.user.userInfo.levels) {
