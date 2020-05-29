@@ -87,12 +87,14 @@
       </el-table-column>
       <el-table-column
         prop="organizationSet"
-        :label="this.$i18n.t('forms.organization')">
+        :label="this.$i18n.t('forms.organization')"
+        :show-overflow-tooltip="true">
         <template slot-scope="scope">{{orgNames(scope.row.organizationSet).join('\n')}}</template>
       </el-table-column>
       <el-table-column
         prop="roleSet"
-        :label="this.$i18n.t('forms.role')">
+        :label="this.$i18n.t('forms.role')"
+        :show-overflow-tooltip="true">
         <template slot-scope="scope">{{roleNames(scope.row.roleSet)}}</template>
       </el-table-column>
       <el-table-column
