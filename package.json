@@ -48,7 +48,7 @@
     "babel-plugin-import": "^1.13.0",
     "less": "^3.11.2",
     "less-loader": "^6.1.0",
-    "lint-staged": "^10.2.7",
+    "lint-staged": "^10.2.9",
     "vue-template-compiler": "^2.6.11",
     "webpack": "^4.43.0"
   },
