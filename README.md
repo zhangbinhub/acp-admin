@@ -1,5 +1,5 @@
 # acp-admin
-###### v4.1.6 [版本更新日志](doc/version_history.md)
+###### v4.1.7 [版本更新日志](doc/version_history.md)
 兼容的浏览器及版本
 - Chrome latest（推荐，完美）
 - Firefox latest（完全支持）
