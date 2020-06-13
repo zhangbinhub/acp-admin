@@ -48,32 +48,32 @@
       <el-table-column
         prop="processKey"
         sortable="custom"
-        :label="this.$i18n.t('forms.processKey')">
+        :label="$t('forms.processKey')">
       </el-table-column>
       <el-table-column
         prop="name"
         sortable="custom"
-        :label="this.$i18n.t('forms.name')">
+        :label="$t('forms.name')">
       </el-table-column>
       <el-table-column
         prop="version"
         sortable="custom"
         width="80"
-        :label="this.$i18n.t('forms.version')">
+        :label="$t('forms.version')">
       </el-table-column>
       <el-table-column
         prop="resourceName"
-        :label="this.$i18n.t('forms.resourceName')">
+        :label="$t('forms.resourceName')">
       </el-table-column>
       <el-table-column
         prop="remarks"
-        :label="this.$i18n.t('forms.remarks')">
+        :label="$t('forms.remarks')">
       </el-table-column>
       <el-table-column
         prop="createTime"
         sortable="custom"
         width="140"
-        :label="this.$i18n.t('forms.createTime')">
+        :label="$t('forms.createTime')">
         <template slot-scope="scope">
           <span>{{dateTimeFormat(scope.row.createTime)}}</span>
         </template>
@@ -82,7 +82,7 @@
         prop="modifyTime"
         sortable="custom"
         width="140"
-        :label="this.$i18n.t('forms.modifyTime')">
+        :label="$t('forms.modifyTime')">
         <template slot-scope="scope">
           <span>{{dateTimeFormat(scope.row.modifyTime)}}</span>
         </template>
@@ -91,14 +91,14 @@
         prop="deployTime"
         sortable="custom"
         width="140"
-        :label="this.$i18n.t('forms.deployTime')">
+        :label="$t('forms.deployTime')">
         <template slot-scope="scope">
           <span>{{dateTimeFormat(scope.row.deployTime)}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="action"
-        :label="this.$i18n.t('forms.action')"
+        :label="$t('forms.action')"
         align="center"
         width="90">
         <template slot-scope="scope">

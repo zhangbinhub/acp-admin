@@ -44,28 +44,28 @@
       <el-table-column
         prop="appName"
         sortable="custom"
-        :label="this.$i18n.t('forms.name')">
+        :label="$t('forms.name')">
       </el-table-column>
       <el-table-column
         prop="accessTokenValiditySeconds"
-        :label="this.$i18n.t('forms.accessTokenValiditySeconds')">
+        :label="$t('forms.accessTokenValiditySeconds')">
       </el-table-column>
       <el-table-column
         prop="refreshTokenValiditySeconds"
-        :label="this.$i18n.t('forms.refreshTokenValiditySeconds')">
+        :label="$t('forms.refreshTokenValiditySeconds')">
       </el-table-column>
       <el-table-column
         prop="identify"
         sortable="custom"
-        :label="this.$i18n.t('forms.identify')">
+        :label="$t('forms.identify')">
       </el-table-column>
       <el-table-column
         prop="scope"
-        :label="this.$i18n.t('forms.scope')">
+        :label="$t('forms.scope')">
       </el-table-column>
       <el-table-column
         prop="action"
-        :label="this.$i18n.t('forms.action')"
+        :label="$t('forms.action')"
         align="center"
         width="120">
         <template slot-scope="scope">

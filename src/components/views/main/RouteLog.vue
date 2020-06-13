@@ -87,40 +87,40 @@
               header-cell-class-name="query-table-header">
       <el-table-column
         prop="remoteIp"
-        :label="this.$i18n.t('forms.remoteIp')"
+        :label="$t('forms.remoteIp')"
         width="130">
       </el-table-column>
       <el-table-column
         prop="gatewayIp"
-        :label="this.$i18n.t('forms.gatewayIp')"
+        :label="$t('forms.gatewayIp')"
         width="130">
       </el-table-column>
       <el-table-column
         prop="path"
         sortable="custom"
-        :label="this.$i18n.t('forms.path')">
+        :label="$t('forms.path')">
       </el-table-column>
       <el-table-column
         prop="serverId"
         sortable="custom"
-        :label="this.$i18n.t('forms.serverId')">
+        :label="$t('forms.serverId')">
       </el-table-column>
       <el-table-column
         prop="clientName"
         sortable="custom"
-        :label="this.$i18n.t('forms.clientName')">
+        :label="$t('forms.clientName')">
       </el-table-column>
       <el-table-column
         prop="identify"
         sortable="custom"
         width="80"
-        :label="this.$i18n.t('forms.identify')">
+        :label="$t('forms.identify')">
       </el-table-column>
       <el-table-column
         prop="requestTime"
         sortable="custom"
         width="150"
-        :label="this.$i18n.t('forms.requestTime')">
+        :label="$t('forms.requestTime')">
         <template slot-scope="scope">
           <span>{{dateTimeFormat(scope.row.requestTime)}}</span>
         </template>
@@ -129,20 +129,20 @@
         prop="processTime"
         sortable="custom"
         width="130"
-        :label="this.$i18n.t('forms.processTime')+'('+this.$i18n.t('forms.millisecond')+')'">
+        :label="$t('forms.processTime')+'('+this.$i18n.t('forms.millisecond')+')'">
       </el-table-column>
       <el-table-column
         prop="responseStatus"
         sortable="custom"
         width="110"
-        :label="this.$i18n.t('forms.responseStatus')">
+        :label="$t('forms.responseStatus')">
         <template slot-scope="scope">
           <span :style="{color:scope.row.responseStatus>=200&&scope.row.responseStatus<300 ? 'green':'red'}">{{scope.row.responseStatus}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="action"
-        :label="this.$i18n.t('forms.action')"
+        :label="$t('forms.action')"
         align="center"
         width="50">
         <template slot-scope="scope">

@@ -50,28 +50,28 @@
       <el-table-column
         prop="routeId"
         sortable="custom"
-        :label="this.$i18n.t('forms.routeId')">
+        :label="$t('forms.routeId')">
       </el-table-column>
       <el-table-column
         prop="uri"
-        :label="this.$i18n.t('forms.uri')">
+        :label="$t('forms.uri')">
       </el-table-column>
       <el-table-column
         prop="remarks"
-        :label="this.$i18n.t('forms.remarks')">
+        :label="$t('forms.remarks')">
       </el-table-column>
       <el-table-column
         prop="orderNum"
         sortable="custom"
         align="center"
-        :label="this.$i18n.t('forms.sort')"
+        :label="$t('forms.sort')"
         width="80">
       </el-table-column>
       <el-table-column
         prop="enabled"
         sortable="custom"
         align="center"
-        :label="this.$i18n.t('forms.enabled')"
+        :label="$t('forms.enabled')"
         width="100">
         <template slot-scope="scope">
           <span :style="scope.row.enabled ? 'color:green':'color:red'">{{enabledText(scope.row.enabled)}}</span>
@@ -79,7 +79,7 @@
       </el-table-column>
       <el-table-column
         prop="action"
-        :label="this.$i18n.t('forms.action')"
+        :label="$t('forms.action')"
         align="center"
         width="90">
         <template slot-scope="scope">

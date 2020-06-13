@@ -44,7 +44,7 @@
           {{$t('forms.buttons.reset')}}
         </el-button>
         <el-button type="primary" @click="handleSubmit('formValidate')" :loading="modal_loading"
-                   style="margin-left: 10px">
+                  >
           {{$t('forms.buttons.submit')}}
         </el-button>
       </el-form-item>

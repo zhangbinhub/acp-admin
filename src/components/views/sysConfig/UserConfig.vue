@@ -63,37 +63,37 @@
         align="center"
         sortable="custom"
         width="70"
-        :label="this.$i18n.t('forms.sort')">
+        :label="$t('forms.sort')">
       </el-table-column>
       <el-table-column
         prop="name"
-        :label="this.$i18n.t('forms.name')">
+        :label="$t('forms.name')">
       </el-table-column>
       <el-table-column
         prop="loginNo"
-        :label="this.$i18n.t('forms.loginNo')">
+        :label="$t('forms.loginNo')">
       </el-table-column>
       <el-table-column
         prop="mobile"
         width="150"
-        :label="this.$i18n.t('forms.mobile')">
+        :label="$t('forms.mobile')">
       </el-table-column>
       <el-table-column
         prop="levels"
         align="center"
         sortable="custom"
         width="70"
-        :label="this.$i18n.t('forms.level')">
+        :label="$t('forms.level')">
       </el-table-column>
       <el-table-column
         prop="organizationSet"
-        :label="this.$i18n.t('forms.organization')"
+        :label="$t('forms.organization')"
         :show-overflow-tooltip="true">
         <template slot-scope="scope">{{orgNames(scope.row.organizationSet).join('\n')}}</template>
       </el-table-column>
       <el-table-column
         prop="roleSet"
-        :label="this.$i18n.t('forms.role')"
+        :label="$t('forms.role')"
         :show-overflow-tooltip="true">
         <template slot-scope="scope">{{roleNames(scope.row.roleSet)}}</template>
       </el-table-column>
@@ -102,14 +102,14 @@
         align="center"
         sortable="custom"
         width="100"
-        :label="this.$i18n.t('forms.enabled')">
+        :label="$t('forms.enabled')">
         <template slot-scope="scope">
           <span :style="scope.row.enabled ? 'color:green':'color:red'">{{enabledText(scope.row.enabled)}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="action"
-        :label="this.$i18n.t('forms.action')"
+        :label="$t('forms.action')"
         align="center"
         width="120">
         <template slot-scope="scope">

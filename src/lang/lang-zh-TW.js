@@ -49,7 +49,8 @@ const messages = Object.assign(twLocale, {
     runtimeConfig: '運行參數配置',
     roleConfig: '角色配置',
     userConfig: '用戶配置',
-    workflowDeploy: '工作流部署'
+    workflowDeploy: '工作流部署',
+    workflowManager: '工作流管理'
   },
   common: {
     exit: '退出'
@@ -177,6 +178,28 @@ const messages = Object.assign(twLocale, {
     modifyTime: '修改時間',
     deployTime: '部署時間',
     processKey: '流程定義鍵',
+    processInstanceId: '流程實例ID',
+    processBusinessKey: '流程業務鍵',
+    flowStatus: '流程狀態',
+    running: '運行中',
+    ended: '已結束',
+    beginTime: '開始時間',
+    finishTime: '完成時間',
+    flowName: '流程名稱',
+    title: '標題',
+    description: '描述',
+    deleteReason: '刪除原因',
+    startUser: '發起人',
+    currentUser: '當前處理人',
+    processUser: '處理人',
+    isPass: '是否通過',
+    isFinished: '是否已完成',
+    yes: '是',
+    no: '否',
+    processActivityRecords: '流程處理記錄',
+    comment: '意見',
+    processParams: '流程變量',
+    type: '類型',
     processFile: '流程文件',
     filterKey: '過濾關鍵字',
     area: '區域',
@@ -204,7 +227,10 @@ const messages = Object.assign(twLocale, {
       refreshRoute: '刷新路由',
       chooseFile: '選擇文件',
       downLoadFile: '文件下載',
-      deploy: '部署'
+      deploy: '部署',
+      lastWeek: '最近一周',
+      lastMonth: '最近一個月',
+      lastThreeMonth: '最近三個月'
     }
   }
 })

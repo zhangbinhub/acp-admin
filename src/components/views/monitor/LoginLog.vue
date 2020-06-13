@@ -59,42 +59,42 @@
               header-cell-class-name="query-table-header">
       <el-table-column
         prop="remoteIp"
-        :label="this.$i18n.t('forms.remoteIp')"
+        :label="$t('forms.remoteIp')"
         width="130">
       </el-table-column>
       <el-table-column
         prop="loginNo"
         sortable="custom"
         width="100"
-        :label="this.$i18n.t('forms.loginNo')">
+        :label="$t('forms.loginNo')">
       </el-table-column>
       <el-table-column
         prop="userName"
         sortable="custom"
         width="100"
-        :label="this.$i18n.t('forms.userName')">
+        :label="$t('forms.userName')">
       </el-table-column>
       <el-table-column
         prop="clientName"
         sortable="custom"
-        :label="this.$i18n.t('forms.clientName')">
+        :label="$t('forms.clientName')">
       </el-table-column>
       <el-table-column
         prop="clientId"
         sortable="custom"
-        :label="this.$i18n.t('forms.clientId')">
+        :label="$t('forms.clientId')">
       </el-table-column>
       <el-table-column
         prop="identify"
         sortable="custom"
         width="80"
-        :label="this.$i18n.t('forms.identify')">
+        :label="$t('forms.identify')">
       </el-table-column>
       <el-table-column
         prop="requestTime"
         sortable="custom"
         width="150"
-        :label="this.$i18n.t('forms.requestTime')">
+        :label="$t('forms.requestTime')">
         <template slot-scope="scope">
           <span>{{dateTimeFormat(scope.row.requestTime)}}</span>
         </template>
@@ -103,11 +103,11 @@
         prop="processTime"
         sortable="custom"
         width="130"
-        :label="this.$i18n.t('forms.processTime')+'('+this.$i18n.t('forms.millisecond')+')'">
+        :label="$t('forms.processTime')+'('+this.$i18n.t('forms.millisecond')+')'">
       </el-table-column>
       <el-table-column
         prop="action"
-        :label="this.$i18n.t('forms.action')"
+        :label="$t('forms.action')"
         align="center"
         width="50">
         <template slot-scope="scope">
