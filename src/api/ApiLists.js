@@ -8,6 +8,7 @@ import role from './sysConfig/roleConfig'
 import log from './log/Log'
 import route from './route/RouteConfig'
 import workFlowDeploy from './sysConfig/workFlowDeploy'
+import workFlow from './sysConfig/workFlow'
 
 export default {
   auth: Object.assign(oauth, auth),
@@ -18,5 +19,6 @@ export default {
   role: role,
   log: log,
   route: route,
-  workFlowDeploy: workFlowDeploy
+  workFlowDeploy: workFlowDeploy,
+  workFlow: workFlow
 }

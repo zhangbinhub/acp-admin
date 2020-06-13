@@ -49,7 +49,8 @@ const messages = Object.assign(enLocale, {
     runtimeConfig: 'Parameter Configure',
     roleConfig: 'Role Configure',
     userConfig: 'User Configure',
-    workflowDeploy: 'WorkFlow Deploy'
+    workflowDeploy: 'WorkFlow Deploy',
+    workflowManager: 'WorkFlow Manager'
   },
   common: {
     exit: 'Exit'
@@ -177,6 +178,28 @@ const messages = Object.assign(enLocale, {
     modifyTime: 'modify time',
     deployTime: 'deploy time',
     processKey: 'workflow key',
+    processInstanceId: 'workflow instance id',
+    processBusinessKey: 'business key',
+    flowStatus: 'workflow status',
+    running: 'running',
+    ended: 'ended',
+    beginTime: 'begin time',
+    finishTime: 'finish time',
+    flowName: 'workflow name',
+    title: 'title',
+    description: 'description',
+    deleteReason: 'delete reason',
+    startUser: 'start user',
+    currentUser: 'current user',
+    processUser: 'process user',
+    isPass: 'is pass',
+    isFinished: 'is finished',
+    yes: 'yes',
+    no: 'no',
+    processActivityRecords: 'workflow activity records',
+    comment: 'comment',
+    processParams: 'workflow params',
+    type: 'type',
     processFile: 'workflow file',
     filterKey: 'filter key',
     area: 'area',
@@ -204,7 +227,10 @@ const messages = Object.assign(enLocale, {
       refreshRoute: 'refresh routes',
       chooseFile: 'choose file',
       downLoadFile: 'download file',
-      deploy: 'deploy'
+      deploy: 'deploy',
+      lastWeek: 'last week',
+      lastMonth: 'last month',
+      lastThreeMonth: 'last three month'
     }
   }
 })

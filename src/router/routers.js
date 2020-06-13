@@ -154,6 +154,14 @@ export default [{
       title: 'pageTitle.workflowDeploy',
       requireAuth: true
     }
+  }, {
+    path: '/workflow-manager',
+    name: 'workflowManager',
+    component: () => import('@/components/views/sysConfig/WorkflowManager.vue'),
+    meta: {
+      title: 'pageTitle.workflowManager',
+      requireAuth: true
+    }
   }]
 }, {
   path: '*',
