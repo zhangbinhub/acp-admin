@@ -104,8 +104,7 @@
                    layout="total, sizes, prev, pager, next, jumper"
                    :total="searchForm.totalRows">
     </el-pagination>
-    <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false"
-               :fullscreen="true">
+    <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :fullscreen="true">
       <el-form ref="editForm" :model="editForm" :rules="ruleAddForm" label-width="80px" size="mini"
                style="padding-right: 25px;" v-loading="modal_loading" @submit.native.prevent>
         <el-row>
@@ -180,6 +179,7 @@
           {{$t('forms.buttons.submit')}}
         </el-button>
       </div>
+      <el-backtop :visibility-height="10" target=".el-dialog"/>
     </el-dialog>
   </el-card>
 </template>

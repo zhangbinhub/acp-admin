@@ -162,7 +162,7 @@
                    layout="total, sizes, prev, pager, next, jumper"
                    :total="searchForm.totalRows">
     </el-pagination>
-    <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false" width="600px">
+    <el-dialog :visible.sync="editModal" :title="$t('forms.info')" width="600px">
       <el-form ref="editForm" size="mini" :model="editForm" label-width="100px" :inline="true"
                v-loading="modal_loading" @submit.native.prevent>
         <el-form-item :label="$t('forms.remoteIp')+':'" prop="remoteIp">
