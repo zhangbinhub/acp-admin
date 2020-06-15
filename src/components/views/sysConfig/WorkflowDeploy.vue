@@ -203,6 +203,7 @@
       <el-scrollbar>
         <el-image :src="viewDiagram" style="padding-bottom: 20px"/>
       </el-scrollbar>
+      <el-backtop :visibility-height="10" target=".el-dialog"/>
     </el-dialog>
   </el-card>
 </template>
