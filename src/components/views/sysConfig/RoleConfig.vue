@@ -89,7 +89,7 @@
                      v-loading="treeLoading" :default-expanded-keys="editForm.moduleFuncIds"/>
           </el-tab-pane>
         </el-tabs>
-        <div style="text-align: center">
+        <div style="text-align: center;margin-top: 20px;">
           <el-button type="info" :loading="treeLoading" style="margin-right: 20px;"
                      @click="doReset">
             {{$t('forms.buttons.reset')}}
