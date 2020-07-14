@@ -7,9 +7,11 @@
         </div>
         <div class="right-con">
           <el-row style="height: 185px;">
-            <div class="preview-box preview-lg">
-              <div class="img-preview"></div>
-            </div>
+            <el-col :span="24">
+              <div class="preview-box preview-lg">
+                <div class="img-preview"></div>
+              </div>
+            </el-col>
           </el-row>
           <el-row style="height: 170px;">
             <div class="preview-box preview-md">
