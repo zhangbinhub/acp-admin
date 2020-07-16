@@ -65,6 +65,15 @@ export default [{
       requireAuth: true
     }
   }, {
+    path: '/deploy',
+    name: 'deploy',
+    component: () => import('@/components/views/main/Deploy.vue'),
+    meta: {
+      title: 'pageTitle.deploy',
+      icon: 'el-icon-s-tools',
+      requireAuth: true
+    }
+  }, {
     path: '/route-log',
     name: 'routeLog',
     component: () => import('@/components/views/main/RouteLog.vue'),

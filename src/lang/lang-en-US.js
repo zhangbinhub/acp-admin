@@ -29,7 +29,8 @@ const messages = Object.assign(enLocale, {
     resetPassword: 'Are you sure you want to reset the selected user password ?',
     refreshServiceConfirm: 'Are you sure to refresh the service configuration information ? The specified service retrieves configuration information from the configuration center',
     refreshRouteConfirm: 'Are you sure to refresh gateway routing information ?',
-    deployWorkFlowConfirm: 'Are you sure to deploy the workflow definition ?'
+    deployWorkFlowConfirm: 'Are you sure to deploy the workflow definition ?',
+    executeDeployConfirm: 'Are you sure to deploy the task？'
   },
   pageTitle: {
     test: 'test',
@@ -50,7 +51,8 @@ const messages = Object.assign(enLocale, {
     roleConfig: 'Role Configure',
     userConfig: 'User Configure',
     workflowDeploy: 'WorkFlow Deploy',
-    workflowManager: 'WorkFlow Manager'
+    workflowManager: 'WorkFlow Manager',
+    deploy: 'deploy'
   },
   common: {
     exit: 'Exit'
@@ -81,6 +83,8 @@ const messages = Object.assign(enLocale, {
     }
   },
   forms: {
+    scriptFile: 'Script File',
+    serverIpRegex: 'Server Ip Regex',
     loginStatistics: 'Login statistics',
     numberOfOnlineUsers: 'Number of online users',
     changePassword: 'Change Password',
@@ -177,6 +181,9 @@ const messages = Object.assign(enLocale, {
     createTime: 'create time',
     modifyTime: 'modify time',
     deployTime: 'deploy time',
+    execTime: 'execute time',
+    execUserName: 'execute user',
+    createUserName: 'create user',
     processKey: 'workflow key',
     processInstanceId: 'workflow instance id',
     processBusinessKey: 'business key',
@@ -227,7 +234,9 @@ const messages = Object.assign(enLocale, {
       refreshRoute: 'refresh routes',
       chooseFile: 'choose file',
       downLoadFile: 'download file',
+      fileManager: 'file manager',
       deploy: 'deploy',
+      execute: 'execute',
       lastWeek: 'last week',
       lastMonth: 'last month',
       lastThreeMonth: 'last three month'

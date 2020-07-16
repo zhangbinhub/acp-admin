@@ -6,6 +6,7 @@ import org from './sysConfig/orgConfig'
 import user from './sysConfig/userConfig'
 import role from './sysConfig/roleConfig'
 import log from './log/Log'
+import deploy from './deploy/Deploy'
 import route from './route/RouteConfig'
 import workFlowDeploy from './sysConfig/workFlowDeploy'
 import workFlow from './sysConfig/workFlow'
@@ -18,6 +19,7 @@ export default {
   user: user,
   role: role,
   log: log,
+  deploy: deploy,
   route: route,
   workFlowDeploy: workFlowDeploy,
   workFlow: workFlow

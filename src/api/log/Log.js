@@ -22,7 +22,7 @@ export default {
     })
   },
   downLoadFile: (fileName) => {
-    doDownLoadFile(ApiComm.$store.state.app.appInfo.baseURL + '/log/files/' + encodeURIComponent(encrypt.Base64.encode(fileName)))
+    doDownLoadFile(ApiComm.$store.state.app.appInfo.baseURL + '/log/files', 'get', { fileName: encrypt.Base64.encode(fileName) })
   },
   queryRouteLog: (query) => {
     return ApiComm.$http.post('/log/gateway-route-log', query)

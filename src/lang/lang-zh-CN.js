@@ -29,7 +29,8 @@ const messages = Object.assign(zhLocale, {
     resetPassword: '确定重置所选用户密码吗？',
     refreshServiceConfirm: '确定刷新服务配置信息吗？指定的服务将重新从配置中心获取配置信息',
     refreshRouteConfirm: '确定刷新网关路由信息吗？',
-    deployWorkFlowConfirm: '确定部署流程定义吗？'
+    deployWorkFlowConfirm: '确定部署流程定义吗？',
+    executeDeployConfirm: '确定执行部署任务吗？'
   },
   pageTitle: {
     test: '测试',
@@ -50,7 +51,8 @@ const messages = Object.assign(zhLocale, {
     roleConfig: '角色配置',
     userConfig: '用户配置',
     workflowDeploy: '工作流部署',
-    workflowManager: '工作流管理'
+    workflowManager: '工作流管理',
+    deploy: '部署'
   },
   common: {
     exit: '退出'
@@ -81,6 +83,8 @@ const messages = Object.assign(zhLocale, {
     }
   },
   forms: {
+    scriptFile: '脚本文件',
+    serverIpRegex: '服务器IP正则',
     loginStatistics: '登录统计',
     numberOfOnlineUsers: '在线用户数',
     changePassword: '修改密码',
@@ -177,6 +181,9 @@ const messages = Object.assign(zhLocale, {
     createTime: '创建时间',
     modifyTime: '修改时间',
     deployTime: '部署时间',
+    execTime: '执行时间',
+    execUserName: '执行人',
+    createUserName: '创建人',
     processKey: '流程定义键',
     processInstanceId: '流程实例ID',
     processBusinessKey: '流程业务键',
@@ -227,7 +234,9 @@ const messages = Object.assign(zhLocale, {
       refreshRoute: '刷新路由',
       chooseFile: '选择文件',
       downLoadFile: '文件下载',
+      fileManager: '文件管理',
       deploy: '部署',
+      execute: '执行',
       lastWeek: '最近一周',
       lastMonth: '最近一个月',
       lastThreeMonth: '最近三个月'
