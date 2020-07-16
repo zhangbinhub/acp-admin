@@ -19,6 +19,7 @@
           <logFileButton v-if="showLogFile"/>
           <routeLogButton v-if="showRouteLog"/>
           <routeConfigButton v-if="showRouteConfig"/>
+          <deployButton v-if="showDeploy"/>
           <fullscreen v-model="isFullscreen"/>
         </header-bar>
       </el-header>
@@ -54,6 +55,7 @@
   import logFileButton from './log-file-button'
   import routeConfigButton from './route-config-button'
   import routeLogButton from './route-log-button'
+  import deployButton from './deploy-button'
   import './Home.less'
   import {
     getOpenedNamesByActiveName,
@@ -71,7 +73,8 @@
       User,
       routeConfigButton,
       logFileButton,
-      routeLogButton
+      routeLogButton,
+      deployButton
     },
     data () {
       return {
@@ -90,6 +93,9 @@
     computed: {
       mainHeight () {
         return this.$store.state.app.mainHeight
+      },
+      showDeploy () {
+        return this.$store.state.app.user.userInfo.levels <= 0
       },
       showRouteConfig () {
         return this.$store.state.app.user.userInfo.levels <= 0

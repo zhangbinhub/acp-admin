@@ -190,6 +190,11 @@ const ApiComm = {
       name: 'routeLog'
     })
   },
+  gotoDeploy () {
+    this.turnToPage({
+      name: 'deploy'
+    })
+  },
   /**
    * 页面跳转
    * @param obj 跳转参数 stirng | route
