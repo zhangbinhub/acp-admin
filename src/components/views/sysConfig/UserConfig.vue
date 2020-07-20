@@ -89,7 +89,7 @@
         prop="organizationSet"
         :label="$t('forms.organization')"
         :show-overflow-tooltip="true">
-        <template slot-scope="scope">{{orgNames(scope.row.organizationSet).join('\n')}}</template>
+        <template slot-scope="scope">{{orgNames(scope.row.organizationSet).join(',')}}</template>
       </el-table-column>
       <el-table-column
         prop="roleSet"
