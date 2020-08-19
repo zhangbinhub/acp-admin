@@ -23,16 +23,16 @@
       <el-form-item style="float: right">
         <el-button-group>
           <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
-            {{$t('forms.buttons.search')}}
+            {{ $t('forms.buttons.search') }}
           </el-button>
           <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
-            {{$t('forms.buttons.reset')}}
+            {{ $t('forms.buttons.reset') }}
           </el-button>
           <el-button :loading="modal_loading" @click="handleAdd()" type="primary">
-            {{$t('forms.buttons.add')}}
+            {{ $t('forms.buttons.add') }}
           </el-button>
           <el-button :loading="modal_loading" @click="handleDeleteMore()" type="primary">
-            {{$t('forms.buttons.delete')}}
+            {{ $t('forms.buttons.delete') }}
           </el-button>
         </el-button-group>
       </el-form-item>
@@ -82,10 +82,12 @@
         :label="$t('forms.enabled')">
         <template slot-scope="scope">
           <el-switch v-if="editIndex === scope.$index" v-model="editEnabled" :disabled="modal_loading"/>
-          <span v-else :style="scope.row.enabled ? 'color:green':'color:red'">{{enabledText(scope.row.enabled)}}</span>
+          <span v-else
+                :style="scope.row.enabled ? 'color:green':'color:red'">{{ enabledText(scope.row.enabled) }}</span>
         </template>
       </el-table-column>
       <el-table-column
+        fixed="right"
         prop="action"
         :label="$t('forms.action')"
         align="center"
@@ -150,269 +152,269 @@
       </el-form>
       <div slot="footer">
         <el-button type="info" :loading="modal_loading" @click="doCancel()">
-          {{$t('forms.buttons.cancel')}}
+          {{ $t('forms.buttons.cancel') }}
         </el-button>
         <el-button type="primary" :loading="modal_loading" @click="doAdd('addForm')">
-          {{$t('forms.buttons.submit')}}
+          {{ $t('forms.buttons.submit') }}
         </el-button>
       </div>
     </el-dialog>
   </el-card>
 </template>
 <script>
-  export default {
-    name: 'runtimeConfig',
-    data () {
-      return {
-        searchForm: {
-          name: '',
-          value: '',
-          enabled: '',
-          orderParam: {
-            prop: 'name',
-            order: 'ascending'
-          },
-          currPage: 1,
-          totalRows: 0,
-          pageSize: 10,
-          pageSizeArray: [10, 20, 30, 40]
+export default {
+  name: 'runtimeConfig',
+  data () {
+    return {
+      searchForm: {
+        name: '',
+        value: '',
+        enabled: '',
+        orderParam: {
+          prop: 'name',
+          order: 'ascending'
         },
-        addForm: {
-          name: '',
-          value: '',
-          describe: '',
-          enabled: true
-        },
-        addModal: false,
-        modal_loading: false,
-        searchData: [],
-        editIndex: -1,
-        editName: '',
-        editValue: '',
-        editDes: '',
-        editEnabled: true,
-        selectedData: []
-      }
-    },
-    watch: {
-      addModal (value) {
-        if (value) {
-          this.$nextTick(() => {
-            this.$refs['name'].focus()
-          })
-        }
+        currPage: 1,
+        totalRows: 0,
+        pageSize: 10,
+        pageSizeArray: [10, 20, 30, 40]
       },
-      'searchForm.currPage' () {
-        this.handleSearch()
-      }
-    },
-    computed: {
-      tableHeight () {
-        const minHeight = 300
-        const height = this.$store.state.app.mainHeight - 80 - 46 - 42 - 4
-        if (height < minHeight) {
-          return minHeight - 2
-        } else {
-          return height
-        }
+      addForm: {
+        name: '',
+        value: '',
+        describe: '',
+        enabled: true
       },
-      enabledList () {
-        return [
-          { value: true, label: this.$i18n.t('forms.enabled') },
-          { value: false, label: this.$i18n.t('forms.disabled') }
-        ]
-      },
-      ruleAddForm () {
-        return {
-          name: [
-            {
-              required: true,
-              message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
-              trigger: 'blur'
-            }
-          ]
-        }
-      }
-    },
-    methods: {
-      enabledText (enabled) {
-        return this.enabledList.filter((item) => {
-          return item.value === enabled
-        })[0].label
-      },
-      selectableFun (row) {
-        return !row._disabled
-      },
-      handleAdd () {
-        this.addModal = true
+      addModal: false,
+      modal_loading: false,
+      searchData: [],
+      editIndex: -1,
+      editName: '',
+      editValue: '',
+      editDes: '',
+      editEnabled: true,
+      selectedData: []
+    }
+  },
+  watch: {
+    addModal (value) {
+      if (value) {
         this.$nextTick(() => {
-          this.$refs['addForm'].resetFields()
+          this.$refs['name'].focus()
         })
-      },
-      doCancel () {
-        this.addModal = false
-      },
-      doAdd (name) {
-        this.$refs[name].validate((valid) => {
-          if (valid) {
-            this.modal_loading = true
-            this.$api.request.runtime.create({
-              name: this.addForm.name,
-              value: this.addForm.value,
-              configDes: this.addForm.describe,
-              enabled: this.addForm.enabled
-            }).then((res) => {
-              this.modal_loading = false
-              if (res) {
-                this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
-                this.addModal = false
-                this.handleSearch()
-              }
-            }).catch(() => {
-              this.modal_loading = false
-            })
-          }
-        })
-      },
-      handleDelete (rowIds) {
-        this.modal_loading = true
-        this.$api.request.runtime.delete(rowIds).then((res) => {
-          this.modal_loading = false
-          if (res) {
-            this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
-            this.handleSearch()
-          }
-        }).catch(() => {
-          this.modal_loading = false
-        })
-      },
-      handleSave (index) {
-        this.modal_loading = true
-        this.$api.request.runtime.update({
-          id: this.searchData[index].id,
-          name: this.editName,
-          value: this.editValue,
-          configDes: this.editDes,
-          enabled: this.editEnabled
-        }).then((res) => {
-          this.modal_loading = false
-          if (res) {
-            this.searchData[index].value = this.editValue
-            this.searchData[index].configDes = this.editDes
-            this.searchData[index].enabled = this.editEnabled
-            this.editIndex = -1
-            this.$message.success(this.$i18n.t('messages.updateSuccess') + '')
-          }
-        }).catch(() => {
-          this.modal_loading = false
-        })
-      },
-      handlePageSizeSearch (size) {
-        this.searchForm.pageSize = size
-        this.handleSearch()
-      },
-      handleSearch () {
-        let searchParam = {
-          name: this.searchForm.name,
-          value: this.searchForm.value,
-          enabled: this.searchForm.enabled,
-          queryParam: {
-            currPage: this.searchForm.currPage,
-            pageSize: this.searchForm.pageSize
-          }
-        }
-        if (this.searchForm.orderParam.order !== 'normal') {
-          searchParam.queryParam.orderName = this.searchForm.orderParam.prop
-          searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
-        }
-        this.modal_loading = true
-        this.$api.request.runtime.query(searchParam).then((res) => {
-          this.modal_loading = false
-          if (res) {
-            this.selectedData = []
-            this.searchForm.totalRows = res.data.totalElements
-            this.searchData = res.data.content.map(item => {
-              if (!item.covert) {
-                item._disabled = true
-              }
-              return item
-            })
-            this.$nextTick(() => {
-              this.$refs['table'].doLayout()
-            })
-          }
-        }).catch(() => {
-          this.searchData = []
-          this.selectedData = []
-          this.modal_loading = false
-        })
-      },
-      handleRowClick (row) {
-        if (!row._disabled) {
-          this.$refs['table'].toggleRowSelection(row)
-        }
-      },
-      handleSortChange (param) {
-        this.searchForm.orderParam.prop = param.prop
-        this.searchForm.orderParam.order = param.order
-        this.handleSearch()
-      },
-      handleSearchReset (name) {
-        this.$refs[name].resetFields()
-      },
-      handleSelect (selection) {
-        this.selectedData = selection
-      },
-      handleDeleteRow (row) {
-        if (!row.covert) {
-          this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
-            type: 'error',
-            callback: () => {
-            }
-          })
-        } else {
-          this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
-            type: 'warning'
-          }).then(() => {
-            this.handleDelete([row.id])
-          }).catch(() => {
-          })
-        }
-      },
-      handleDeleteMore () {
-        if (this.selectedData.length > 0) {
-          this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
-            type: 'warning'
-          }).then(() => {
-            this.handleDelete(this.selectedData.map(item => item.id))
-          }).catch(() => {
-          })
-        } else {
-          this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
-            type: 'error',
-            callback: () => {
-            }
-          })
-        }
-      },
-      handleEdit (row, index) {
-        this.editName = row.name
-        this.editValue = row.value
-        this.editDes = row.configDes
-        this.editEnabled = !!row.enabled
-        this.editIndex = index
-      },
-      handleCancel () {
-        this.editIndex = -1
       }
     },
-    mounted () {
+    'searchForm.currPage' () {
+      this.handleSearch()
+    }
+  },
+  computed: {
+    tableHeight () {
+      const minHeight = 300
+      const height = this.$store.state.app.mainHeight - 80 - 46 - 42 - 4
+      if (height < minHeight) {
+        return minHeight - 2
+      } else {
+        return height
+      }
+    },
+    enabledList () {
+      return [
+        { value: true, label: this.$i18n.t('forms.enabled') },
+        { value: false, label: this.$i18n.t('forms.disabled') }
+      ]
+    },
+    ruleAddForm () {
+      return {
+        name: [
+          {
+            required: true,
+            message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
+            trigger: 'blur'
+          }
+        ]
+      }
+    }
+  },
+  methods: {
+    enabledText (enabled) {
+      return this.enabledList.filter((item) => {
+        return item.value === enabled
+      })[0].label
+    },
+    selectableFun (row) {
+      return !row._disabled
+    },
+    handleAdd () {
+      this.addModal = true
+      this.$nextTick(() => {
+        this.$refs['addForm'].resetFields()
+      })
+    },
+    doCancel () {
+      this.addModal = false
+    },
+    doAdd (name) {
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          this.modal_loading = true
+          this.$api.request.runtime.create({
+            name: this.addForm.name,
+            value: this.addForm.value,
+            configDes: this.addForm.describe,
+            enabled: this.addForm.enabled
+          }).then((res) => {
+            this.modal_loading = false
+            if (res) {
+              this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
+              this.addModal = false
+              this.handleSearch()
+            }
+          }).catch(() => {
+            this.modal_loading = false
+          })
+        }
+      })
+    },
+    handleDelete (rowIds) {
+      this.modal_loading = true
+      this.$api.request.runtime.delete(rowIds).then((res) => {
+        this.modal_loading = false
+        if (res) {
+          this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
+          this.handleSearch()
+        }
+      }).catch(() => {
+        this.modal_loading = false
+      })
+    },
+    handleSave (index) {
+      this.modal_loading = true
+      this.$api.request.runtime.update({
+        id: this.searchData[index].id,
+        name: this.editName,
+        value: this.editValue,
+        configDes: this.editDes,
+        enabled: this.editEnabled
+      }).then((res) => {
+        this.modal_loading = false
+        if (res) {
+          this.searchData[index].value = this.editValue
+          this.searchData[index].configDes = this.editDes
+          this.searchData[index].enabled = this.editEnabled
+          this.editIndex = -1
+          this.$message.success(this.$i18n.t('messages.updateSuccess') + '')
+        }
+      }).catch(() => {
+        this.modal_loading = false
+      })
+    },
+    handlePageSizeSearch (size) {
+      this.searchForm.pageSize = size
       this.handleSearch()
     },
-    activated () {
-      this.$nextTick(() => {
-        this.$refs['table'].doLayout()
+    handleSearch () {
+      let searchParam = {
+        name: this.searchForm.name,
+        value: this.searchForm.value,
+        enabled: this.searchForm.enabled,
+        queryParam: {
+          currPage: this.searchForm.currPage,
+          pageSize: this.searchForm.pageSize
+        }
+      }
+      if (this.searchForm.orderParam.order !== 'normal') {
+        searchParam.queryParam.orderName = this.searchForm.orderParam.prop
+        searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
+      }
+      this.modal_loading = true
+      this.$api.request.runtime.query(searchParam).then((res) => {
+        this.modal_loading = false
+        if (res) {
+          this.selectedData = []
+          this.searchForm.totalRows = res.data.totalElements
+          this.searchData = res.data.content.map(item => {
+            if (!item.covert) {
+              item._disabled = true
+            }
+            return item
+          })
+          this.$nextTick(() => {
+            this.$refs['table'].doLayout()
+          })
+        }
+      }).catch(() => {
+        this.searchData = []
+        this.selectedData = []
+        this.modal_loading = false
       })
+    },
+    handleRowClick (row) {
+      if (!row._disabled) {
+        this.$refs['table'].toggleRowSelection(row)
+      }
+    },
+    handleSortChange (param) {
+      this.searchForm.orderParam.prop = param.prop
+      this.searchForm.orderParam.order = param.order
+      this.handleSearch()
+    },
+    handleSearchReset (name) {
+      this.$refs[name].resetFields()
+    },
+    handleSelect (selection) {
+      this.selectedData = selection
+    },
+    handleDeleteRow (row) {
+      if (!row.covert) {
+        this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
+          type: 'error',
+          callback: () => {
+          }
+        })
+      } else {
+        this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+          type: 'warning'
+        }).then(() => {
+          this.handleDelete([row.id])
+        }).catch(() => {
+        })
+      }
+    },
+    handleDeleteMore () {
+      if (this.selectedData.length > 0) {
+        this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+          type: 'warning'
+        }).then(() => {
+          this.handleDelete(this.selectedData.map(item => item.id))
+        }).catch(() => {
+        })
+      } else {
+        this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
+          type: 'error',
+          callback: () => {
+          }
+        })
+      }
+    },
+    handleEdit (row, index) {
+      this.editName = row.name
+      this.editValue = row.value
+      this.editDes = row.configDes
+      this.editEnabled = !!row.enabled
+      this.editIndex = index
+    },
+    handleCancel () {
+      this.editIndex = -1
     }
+  },
+  mounted () {
+    this.handleSearch()
+  },
+  activated () {
+    this.$nextTick(() => {
+      this.$refs['table'].doLayout()
+    })
   }
+}
 </script>

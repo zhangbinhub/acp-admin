@@ -45,10 +45,10 @@
         <el-form-item style="float: right">
           <el-button-group>
             <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
-              {{$t('forms.buttons.search')}}
+              {{ $t('forms.buttons.search') }}
             </el-button>
             <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
-              {{$t('forms.buttons.reset')}}
+              {{ $t('forms.buttons.reset') }}
             </el-button>
           </el-button-group>
         </el-form-item>
@@ -68,7 +68,7 @@
         width="150"
         :label="$t('forms.beginTime')">
         <template slot-scope="scope">
-          <span>{{dateTimeFormat(scope.row.startTime)}}</span>
+          <span>{{ dateTimeFormat(scope.row.startTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -91,7 +91,7 @@
         width="150"
         :label="$t('forms.finishTime')">
         <template slot-scope="scope">
-          <span>{{scope.row.endTime>0?dateTimeFormat(scope.row.endTime):''}}</span>
+          <span>{{ scope.row.endTime > 0 ? dateTimeFormat(scope.row.endTime) : '' }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -99,16 +99,21 @@
         width="80"
         :label="$t('forms.flowStatus')">
         <template slot-scope="scope">
-          <span>{{statusText(scope.row.finished)}}</span>
+          <span>{{ statusText(scope.row.finished) }}</span>
         </template>
       </el-table-column>
       <el-table-column
         :label="$t('forms.currentUser')">
         <template slot-scope="scope">
-          <span>{{scope.row.activityUser.map((user)=>{return user.name+'（'+user.loginNo+'）'}).join(',')}}</span>
+          <span>{{
+              scope.row.activityUser.map((user) => {
+                return user.name + '（' + user.loginNo + '）'
+              }).join(',')
+            }}</span>
         </template>
       </el-table-column>
       <el-table-column
+        fixed="right"
         prop="action"
         :label="$t('forms.action')"
         align="center"
@@ -134,62 +139,66 @@
       <div>
         <el-card shadow="hover">
           <div slot="header">
-            <span>{{$t('forms.basicInfo')}}</span><i class="el-icon-info" style="color: #409EFF; margin-left: 5px"/>
+            <span>{{ $t('forms.basicInfo') }}</span><i class="el-icon-info" style="color: #409EFF; margin-left: 5px"/>
           </div>
           <el-form size="mini" :model="currObj" label-width="100px" :inline="true"
                    @submit.native.prevent>
             <el-row :gutter="10">
               <el-col :lg="{span: 8}">
                 <el-form-item :label="$t('forms.processInstanceId')+':'" prop="processInstanceId">
-                  <span>{{currObj.processInstanceId}}</span>
+                  <span>{{ currObj.processInstanceId }}</span>
                 </el-form-item>
               </el-col>
               <el-col :lg="{span: 8}">
                 <el-form-item :label="$t('forms.processBusinessKey')+':'" prop="businessKey">
-                  <span>{{currObj.businessKey}}</span>
+                  <span>{{ currObj.businessKey }}</span>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row :gutter="10">
               <el-col :lg="{span: 8}">
                 <el-form-item :label="$t('forms.processKey')+':'" prop="processDefinitionKey">
-                  <span>{{currObj.processDefinitionKey}}</span>
+                  <span>{{ currObj.processDefinitionKey }}</span>
                 </el-form-item>
               </el-col>
               <el-col :lg="{span: 8}">
                 <el-form-item :label="$t('forms.flowName')+':'" prop="flowName">
-                  <span>{{currObj.flowName}}</span>
+                  <span>{{ currObj.flowName }}</span>
                 </el-form-item>
               </el-col>
               <el-col :lg="{span: 8}">
                 <el-form-item :label="$t('forms.title')+':'" prop="title">
-                  <span>{{currObj.title}}</span>
+                  <span>{{ currObj.title }}</span>
                 </el-form-item>
               </el-col>
               <el-col :lg="{span: 8}">
                 <el-form-item :label="$t('forms.isFinished')+':'" prop="finished">
                   <span
-                    :style="{color:currObj.finished?'green':'red'}">{{currObj.finished?$t('forms.yes'):$t('forms.no')}}</span>
+                    :style="{color:currObj.finished?'green':'red'}">{{ currObj.finished ? $t('forms.yes') : $t('forms.no') }}</span>
                 </el-form-item>
               </el-col>
               <el-col :lg="{span: 8}">
                 <el-form-item :label="$t('forms.beginTime')+':'" prop="startTime">
-                  <span>{{dateTimeFormat(currObj.startTime)}}</span>
+                  <span>{{ dateTimeFormat(currObj.startTime) }}</span>
                 </el-form-item>
               </el-col>
               <el-col :lg="{span: 8}">
                 <el-form-item :label="$t('forms.finishTime')+':'" prop="endTime">
-                  <span>{{dateTimeFormat(currObj.endTime)}}</span>
+                  <span>{{ dateTimeFormat(currObj.endTime) }}</span>
                 </el-form-item>
               </el-col>
               <el-col :lg="{span: 8}">
                 <el-form-item :label="$t('forms.startUser')+':'" prop="startUser">
-                  <span>{{currObj.startUser&&currObj.startUser.name?currObj.startUser.name+'（'+currObj.startUser.loginNo+'）':''}}</span>
+                  <span>{{ currObj.startUser && currObj.startUser.name ? currObj.startUser.name + '（' + currObj.startUser.loginNo + '）' : '' }}</span>
                 </el-form-item>
               </el-col>
               <el-col :lg="{span: 8}">
                 <el-form-item :label="$t('forms.currentUser')+':'" prop="activityUser">
-                  <span>{{currObj.activityUser?currObj.activityUser.map((item)=>{return item.name+'（'+item.loginNo+'）'}).join(','):''}}</span>
+                  <span>{{
+                      currObj.activityUser ? currObj.activityUser.map((item) => {
+                        return item.name + '（' + item.loginNo + '）'
+                      }).join(',') : ''
+                    }}</span>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -210,7 +219,7 @@
             <el-row :gutter="10">
               <el-col :lg="{span: 24}">
                 <el-form-item prop="deleteReason" style="color:red">
-                  <span slot="label" style="color: red">{{$t('forms.deleteReason')+':'}}</span>
+                  <span slot="label" style="color: red">{{ $t('forms.deleteReason') + ':' }}</span>
                   <el-input v-model="currObj.deleteReason" type="textarea" :rows="3" readonly/>
                 </el-form-item>
               </el-col>
@@ -221,7 +230,7 @@
               <el-collapse>
                 <el-collapse-item>
                   <div slot="title">
-                    <span>{{$t('forms.processParams')}}</span>
+                    <span>{{ $t('forms.processParams') }}</span>
                     <i class="el-icon-info" style="color: #409EFF; margin-left: 5px"/>
                   </div>
                   <el-table size="mini" :stripe="true" :data="params">
@@ -255,7 +264,8 @@
         </el-card>
         <el-card shadow="hover" style="margin-top: 10px">
           <div slot="header">
-            <span>{{$t('forms.buttons.image')}}</span><i class="el-icon-info" style="color: #409EFF; margin-left: 5px"/>
+            <span>{{ $t('forms.buttons.image') }}</span><i class="el-icon-info"
+                                                           style="color: #409EFF; margin-left: 5px"/>
           </div>
           <el-scrollbar>
             <el-image :src="viewDiagram" style="padding-bottom: 20px"/>
@@ -263,7 +273,7 @@
         </el-card>
         <el-card shadow="hover" style="margin-top: 10px">
           <div slot="header">
-            <span>{{$t('forms.processActivityRecords')}}</span>
+            <span>{{ $t('forms.processActivityRecords') }}</span>
             <i class="el-icon-info" style="color: #409EFF; margin-left: 5px"/>
           </div>
           <el-table size="mini" :stripe="true" :data="processActivityList">
@@ -274,14 +284,14 @@
             <el-table-column
               :label="$t('forms.processUser')">
               <template slot-scope="scope">
-                <span>{{scope.row.user.name+'（'+scope.row.user.loginNo+'）'}}</span>
+                <span>{{ scope.row.user.name + '（' + scope.row.user.loginNo + '）' }}</span>
               </template>
             </el-table-column>
             <el-table-column
               prop="pass"
               :label="$t('forms.isPass')">
               <template slot-scope="scope">
-                <span :style="{color:scope.row.pass?'green':'red'}">{{scope.row.pass?'通过':'不通过'}}</span>
+                <span :style="{color:scope.row.pass?'green':'red'}">{{ scope.row.pass ? '通过' : '不通过' }}</span>
               </template>
             </el-table-column>
             <el-table-column
@@ -289,21 +299,21 @@
               :label="$t('forms.comment')"
               :show-overflow-tooltip="true">
               <template slot-scope="scope">
-                <span style="white-space: pre-line">{{scope.row.comment}}</span>
+                <span style="white-space: pre-line">{{ scope.row.comment }}</span>
               </template>
             </el-table-column>
             <el-table-column
               prop="startTime"
               :label="$t('forms.beginTime')">
               <template slot-scope="scope">
-                <span>{{dateTimeFormat(scope.row.startTime)}}</span>
+                <span>{{ dateTimeFormat(scope.row.startTime) }}</span>
               </template>
             </el-table-column>
             <el-table-column
               prop="endTime"
               :label="$t('forms.finishTime')">
               <template slot-scope="scope">
-                <span>{{dateTimeFormat(scope.row.endTime)}}</span>
+                <span>{{ dateTimeFormat(scope.row.endTime) }}</span>
               </template>
             </el-table-column>
           </el-table>
@@ -311,7 +321,7 @@
       </div>
       <div slot="footer" v-if="!currObj.finished" style="text-align: left">
         <el-button type="danger" :loading="modal_loading" @click="termination()">
-          {{$t('forms.buttons.delete')}}
+          {{ $t('forms.buttons.delete') }}
         </el-button>
       </div>
       <el-backtop :visibility-height="10" target=".el-dialog"/>
@@ -325,251 +335,251 @@
       </el-form>
       <div slot="footer" style="text-align: center">
         <el-button type="info" :loading="modal_loading" @click="doCancel()">
-          {{$t('forms.buttons.cancel')}}
+          {{ $t('forms.buttons.cancel') }}
         </el-button>
         <el-button type="primary" :loading="modal_loading" @click="doTermination()">
-          {{$t('forms.buttons.submit')}}
+          {{ $t('forms.buttons.submit') }}
         </el-button>
       </div>
     </el-dialog>
   </el-card>
 </template>
 <script>
-  import moment from 'moment'
+import moment from 'moment'
 
-  export default {
-    name: 'workflowManager',
-    data () {
-      return {
-        searchForm: {
-          processDefinitionKey: '',
-          processInstanceId: '',
-          processBusinessKey: '',
-          history: 'false',
-          startTime: [],
-          orderParam: {
-            prop: 'startTime',
-            order: 'ascending'
-          },
-          currPage: 1,
-          totalRows: 0,
-          pageSize: 10,
-          pageSizeArray: [10, 20, 30, 40]
+export default {
+  name: 'workflowManager',
+  data () {
+    return {
+      searchForm: {
+        processDefinitionKey: '',
+        processInstanceId: '',
+        processBusinessKey: '',
+        history: 'false',
+        startTime: [],
+        orderParam: {
+          prop: 'startTime',
+          order: 'ascending'
         },
-        modal_loading: false,
-        deleteModal: false,
-        viewModal: false,
-        currObj: {},
-        diagramData: '',
-        deleteReason: '',
-        processActivityList: [],
-        searchData: [],
-        params: []
+        currPage: 1,
+        totalRows: 0,
+        pageSize: 10,
+        pageSizeArray: [10, 20, 30, 40]
+      },
+      modal_loading: false,
+      deleteModal: false,
+      viewModal: false,
+      currObj: {},
+      diagramData: '',
+      deleteReason: '',
+      processActivityList: [],
+      searchData: [],
+      params: []
+    }
+  },
+  computed: {
+    tableHeight () {
+      const minHeight = 300
+      const height = this.$store.state.app.mainHeight - 80 - 92 - 42 - 4
+      if (height < minHeight) {
+        return minHeight - 2
+      } else {
+        return height
       }
     },
-    computed: {
-      tableHeight () {
-        const minHeight = 300
-        const height = this.$store.state.app.mainHeight - 80 - 92 - 42 - 4
-        if (height < minHeight) {
-          return minHeight - 2
-        } else {
-          return height
-        }
-      },
-      infoTypeList () {
-        return [
-          { value: 'false', label: this.$i18n.t('forms.running') },
-          { value: 'true', label: this.$i18n.t('forms.ended') }
-        ]
-      },
-      pickerOptions () {
-        return {
-          disabledDate: (date) => {
-            const now = new Date()
-            now.setHours(0, 0, 0, 0)
-            return date.getTime() > now.getTime()
-          },
-          shortcuts: [{
-            text: this.$i18n.t('forms.buttons.lastWeek'),
-            onClick (picker) {
-              const end = new Date()
-              const start = new Date()
-              end.setHours(0, 0, 0, 0)
-              start.setHours(0, 0, 0, 0)
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-              picker.$emit('pick', [start, end])
-            }
-          }, {
-            text: this.$i18n.t('forms.buttons.lastMonth'),
-            onClick (picker) {
-              const end = new Date()
-              const start = new Date()
-              end.setHours(0, 0, 0, 0)
-              start.setHours(0, 0, 0, 0)
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-              picker.$emit('pick', [start, end])
-            }
-          }, {
-            text: this.$i18n.t('forms.buttons.lastThreeMonth'),
-            onClick (picker) {
-              const end = new Date()
-              const start = new Date()
-              end.setHours(0, 0, 0, 0)
-              start.setHours(0, 0, 0, 0)
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-              picker.$emit('pick', [start, end])
-            }
-          }]
-        }
-      },
-      viewDiagram () {
-        return this.diagramData
+    infoTypeList () {
+      return [
+        { value: 'false', label: this.$i18n.t('forms.running') },
+        { value: 'true', label: this.$i18n.t('forms.ended') }
+      ]
+    },
+    pickerOptions () {
+      return {
+        disabledDate: (date) => {
+          const now = new Date()
+          now.setHours(0, 0, 0, 0)
+          return date.getTime() > now.getTime()
+        },
+        shortcuts: [{
+          text: this.$i18n.t('forms.buttons.lastWeek'),
+          onClick (picker) {
+            const end = new Date()
+            const start = new Date()
+            end.setHours(0, 0, 0, 0)
+            start.setHours(0, 0, 0, 0)
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: this.$i18n.t('forms.buttons.lastMonth'),
+          onClick (picker) {
+            const end = new Date()
+            const start = new Date()
+            end.setHours(0, 0, 0, 0)
+            start.setHours(0, 0, 0, 0)
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: this.$i18n.t('forms.buttons.lastThreeMonth'),
+          onClick (picker) {
+            const end = new Date()
+            const start = new Date()
+            end.setHours(0, 0, 0, 0)
+            start.setHours(0, 0, 0, 0)
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            picker.$emit('pick', [start, end])
+          }
+        }]
       }
     },
-    watch: {
-      'searchForm.currPage' () {
-        this.handleSearch()
-      },
-      currObj (processInstance) {
-        this.doInitData(processInstance.processInstanceId)
-      }
-    },
-    methods: {
-      dateTimeFormat (time) {
-        return time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''
-      },
-      statusText (isFinished) {
-        return this.infoTypeList.filter((item) => {
-          return item.value === isFinished.toString()
-        })[0].label
-      },
-      handlePageSizeSearch (size) {
-        this.searchForm.pageSize = size
-        this.handleSearch()
-      },
-      handleSortChange (param) {
-        this.searchForm.orderParam.prop = param.prop
-        this.searchForm.orderParam.order = param.order
-        this.handleSearch()
-      },
-      handleSearchReset (name) {
-        this.$refs[name].resetFields()
-      },
-      handleSearch () {
-        let searchParam = {
-          processDefinitionKeys: [],
-          processInstanceIds: [],
-          processBusinessKey: this.searchForm.processBusinessKey,
-          startTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[0].getTime() : null,
-          endTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[1].getTime() + (24 * 60 * 60 * 1000) : null,
-          queryParam: {
-            currPage: this.searchForm.currPage,
-            pageSize: this.searchForm.pageSize
-          }
-        }
-        if (this.searchForm.processDefinitionKey && this.searchForm.processDefinitionKey !== '') {
-          searchParam.processDefinitionKeys.push(this.searchForm.processDefinitionKey)
-        }
-        if (this.searchForm.processInstanceId && this.searchForm.processInstanceId !== '') {
-          searchParam.processInstanceIds.push(this.searchForm.processInstanceId)
-        }
-        if (this.searchForm.orderParam.order !== 'normal') {
-          searchParam.queryParam.orderName = this.searchForm.orderParam.prop
-          searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
-        }
-        this.modal_loading = true
-        this.$api.request.workFlow.queryInstance(this.searchForm.history === 'true', searchParam).then((res) => {
-          this.modal_loading = false
-          if (res) {
-            this.searchForm.totalRows = res.data.totalElements
-            this.searchData = res.data.content
-            this.$nextTick(() => {
-              this.$refs['table'].doLayout()
-            })
-          }
-        }).catch(() => {
-          this.searchData = []
-          this.modal_loading = false
-        })
-      },
-      gotoFlowView (processInstance) {
-        this.viewModal = true
-        this.currObj = processInstance
-      },
-      doInitData (processInstanceId) {
-        // 获取流程图
-        const currObj = this
-        this.$api.request.workFlow.diagram(processInstanceId).then((image) => {
-          if (image) {
-            const dataInfo = image.data
-            const contentType = dataInfo.type
-            const reader = new window.FileReader()
-            reader.readAsArrayBuffer(dataInfo)
-            reader.onload = function (e) {
-              const result = e.target.result
-              const blob = new Blob([result], { type: contentType })
-              currObj.diagramData = window.URL.createObjectURL(blob)
-            }
-          }
-        }).catch(() => {
-          this.$api.errorProcess('获取流程图失败！')
-        })
-        // 获取流程处理记录
-        this.$api.request.workFlow.getInstanceActivity(processInstanceId).then((res) => {
-          if (res) {
-            this.processActivityList = res.data
-          }
-        }).catch(() => {
-          this.processActivityList = []
-        })
-        this.params = []
-        Object.keys(this.currObj.params).forEach((item) => {
-          const value = this.currObj.params[item]
-          this.params.push({
-            name: item,
-            type: typeof value,
-            value: String(value)
-          })
-        })
-      },
-      doCancel () {
-        this.deleteModal = false
-      },
-      termination () {
-        this.deleteModal = true
-      },
-      doTermination () {
-        if (!this.deleteReason && this.deleteReason === '') {
-          this.$message.error(this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.deleteReason'))
-          return
-        }
-        this.$confirm(this.$i18n.t('messages.deleteDataConfirm'), this.$i18n.t('dialog.confirm'), {
-          type: 'warning'
-        }).then(() => {
-          this.modal_loading = true
-          this.$api.request.workFlow.termination(this.currObj.processInstanceId, this.deleteReason).then((res) => {
-            this.modal_loading = false
-            if (res) {
-              this.$message.success(this.$i18n.t('messages.requestSuccess') + '')
-              this.deleteModal = false
-              this.viewModal = false
-              this.handleSearch()
-            }
-          }).catch(() => {
-            this.modal_loading = false
-          })
-        }).catch(() => {
-        })
-      }
-    },
-    mounted () {
+    viewDiagram () {
+      return this.diagramData
+    }
+  },
+  watch: {
+    'searchForm.currPage' () {
       this.handleSearch()
     },
-    activated () {
-      this.$nextTick(() => {
-        this.$refs['table'].doLayout()
+    currObj (processInstance) {
+      this.doInitData(processInstance.processInstanceId)
+    }
+  },
+  methods: {
+    dateTimeFormat (time) {
+      return time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''
+    },
+    statusText (isFinished) {
+      return this.infoTypeList.filter((item) => {
+        return item.value === isFinished.toString()
+      })[0].label
+    },
+    handlePageSizeSearch (size) {
+      this.searchForm.pageSize = size
+      this.handleSearch()
+    },
+    handleSortChange (param) {
+      this.searchForm.orderParam.prop = param.prop
+      this.searchForm.orderParam.order = param.order
+      this.handleSearch()
+    },
+    handleSearchReset (name) {
+      this.$refs[name].resetFields()
+    },
+    handleSearch () {
+      let searchParam = {
+        processDefinitionKeys: [],
+        processInstanceIds: [],
+        processBusinessKey: this.searchForm.processBusinessKey,
+        startTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[0].getTime() : null,
+        endTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[1].getTime() + (24 * 60 * 60 * 1000) : null,
+        queryParam: {
+          currPage: this.searchForm.currPage,
+          pageSize: this.searchForm.pageSize
+        }
+      }
+      if (this.searchForm.processDefinitionKey && this.searchForm.processDefinitionKey !== '') {
+        searchParam.processDefinitionKeys.push(this.searchForm.processDefinitionKey)
+      }
+      if (this.searchForm.processInstanceId && this.searchForm.processInstanceId !== '') {
+        searchParam.processInstanceIds.push(this.searchForm.processInstanceId)
+      }
+      if (this.searchForm.orderParam.order !== 'normal') {
+        searchParam.queryParam.orderName = this.searchForm.orderParam.prop
+        searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
+      }
+      this.modal_loading = true
+      this.$api.request.workFlow.queryInstance(this.searchForm.history === 'true', searchParam).then((res) => {
+        this.modal_loading = false
+        if (res) {
+          this.searchForm.totalRows = res.data.totalElements
+          this.searchData = res.data.content
+          this.$nextTick(() => {
+            this.$refs['table'].doLayout()
+          })
+        }
+      }).catch(() => {
+        this.searchData = []
+        this.modal_loading = false
+      })
+    },
+    gotoFlowView (processInstance) {
+      this.viewModal = true
+      this.currObj = processInstance
+    },
+    doInitData (processInstanceId) {
+      // 获取流程图
+      const currObj = this
+      this.$api.request.workFlow.diagram(processInstanceId).then((image) => {
+        if (image) {
+          const dataInfo = image.data
+          const contentType = dataInfo.type
+          const reader = new window.FileReader()
+          reader.readAsArrayBuffer(dataInfo)
+          reader.onload = function (e) {
+            const result = e.target.result
+            const blob = new Blob([result], { type: contentType })
+            currObj.diagramData = window.URL.createObjectURL(blob)
+          }
+        }
+      }).catch(() => {
+        this.$api.errorProcess('获取流程图失败！')
+      })
+      // 获取流程处理记录
+      this.$api.request.workFlow.getInstanceActivity(processInstanceId).then((res) => {
+        if (res) {
+          this.processActivityList = res.data
+        }
+      }).catch(() => {
+        this.processActivityList = []
+      })
+      this.params = []
+      Object.keys(this.currObj.params).forEach((item) => {
+        const value = this.currObj.params[item]
+        this.params.push({
+          name: item,
+          type: typeof value,
+          value: String(value)
+        })
+      })
+    },
+    doCancel () {
+      this.deleteModal = false
+    },
+    termination () {
+      this.deleteModal = true
+    },
+    doTermination () {
+      if (!this.deleteReason && this.deleteReason === '') {
+        this.$message.error(this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.deleteReason'))
+        return
+      }
+      this.$confirm(this.$i18n.t('messages.deleteDataConfirm'), this.$i18n.t('dialog.confirm'), {
+        type: 'warning'
+      }).then(() => {
+        this.modal_loading = true
+        this.$api.request.workFlow.termination(this.currObj.processInstanceId, this.deleteReason).then((res) => {
+          this.modal_loading = false
+          if (res) {
+            this.$message.success(this.$i18n.t('messages.requestSuccess') + '')
+            this.deleteModal = false
+            this.viewModal = false
+            this.handleSearch()
+          }
+        }).catch(() => {
+          this.modal_loading = false
+        })
+      }).catch(() => {
       })
     }
+  },
+  mounted () {
+    this.handleSearch()
+  },
+  activated () {
+    this.$nextTick(() => {
+      this.$refs['table'].doLayout()
+    })
   }
+}
 </script>

@@ -18,20 +18,20 @@
       <el-form-item style="float: right">
         <el-button-group style="margin-right: 20px">
           <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
-            {{$t('forms.buttons.search')}}
+            {{ $t('forms.buttons.search') }}
           </el-button>
           <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
-            {{$t('forms.buttons.reset')}}
+            {{ $t('forms.buttons.reset') }}
           </el-button>
           <el-button :loading="modal_loading" @click="handleAdd()" type="primary">
-            {{$t('forms.buttons.add')}}
+            {{ $t('forms.buttons.add') }}
           </el-button>
           <el-button :loading="modal_loading" @click="handleDeleteMore()" type="primary">
-            {{$t('forms.buttons.delete')}}
+            {{ $t('forms.buttons.delete') }}
           </el-button>
         </el-button-group>
         <el-button :loading="modal_loading" @click="handleRefresh()" type="success">
-          {{$t('forms.buttons.refreshRoute')}}
+          {{ $t('forms.buttons.refreshRoute') }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -74,10 +74,11 @@
         :label="$t('forms.enabled')"
         width="100">
         <template slot-scope="scope">
-          <span :style="scope.row.enabled ? 'color:green':'color:red'">{{enabledText(scope.row.enabled)}}</span>
+          <span :style="scope.row.enabled ? 'color:green':'color:red'">{{ enabledText(scope.row.enabled) }}</span>
         </template>
       </el-table-column>
       <el-table-column
+        fixed="right"
         prop="action"
         :label="$t('forms.action')"
         align="center"
@@ -173,10 +174,10 @@
       </el-form>
       <div slot="footer" style="text-align: center">
         <el-button type="default" :loading="modal_loading" @click="doCancel()">
-          {{$t('forms.buttons.cancel')}}
+          {{ $t('forms.buttons.cancel') }}
         </el-button>
         <el-button type="primary" :loading="modal_loading" @click="doSave('editForm')">
-          {{$t('forms.buttons.submit')}}
+          {{ $t('forms.buttons.submit') }}
         </el-button>
       </div>
       <el-backtop :visibility-height="10" target=".el-dialog"/>
@@ -184,354 +185,354 @@
   </el-card>
 </template>
 <script>
-  import vueJsonEditor from 'vue-json-editor'
+import vueJsonEditor from 'vue-json-editor'
 
-  export default {
-    name: 'routeConfig',
-    components: {
-      vueJsonEditor
+export default {
+  name: 'routeConfig',
+  components: {
+    vueJsonEditor
+  },
+  data () {
+    return {
+      jsonEditModes: ['tree', 'text'],
+      searchForm: {
+        routeId: '',
+        enabled: '',
+        orderParam: {
+          prop: 'routeId',
+          order: 'ascending'
+        },
+        currPage: 1,
+        totalRows: 0,
+        pageSize: 10,
+        pageSizeArray: [10, 20, 30, 40]
+      },
+      editForm: {
+        id: '',
+        routeId: '',
+        uri: '',
+        predicates: [],
+        filters: [],
+        metadata: {},
+        orderNum: 0,
+        enabled: true,
+        remarks: ''
+      },
+      editModal: false,
+      modal_loading: false,
+      searchData: [],
+      selectedData: [],
+      action: 0
+    }
+  },
+  watch: {
+    editModal (value) {
+      if (value) {
+        this.$nextTick(() => {
+          this.$refs['routeId'].focus()
+        })
+      }
     },
-    data () {
+    'searchForm.currPage' () {
+      this.handleSearch()
+    }
+  },
+  computed: {
+    tableHeight () {
+      const minHeight = 300
+      const height = this.$store.state.app.mainHeight - 80 - 46 - 42 - 4
+      if (height < minHeight) {
+        return minHeight - 2
+      } else {
+        return height
+      }
+    },
+    jsonEditorLang () {
+      const lang = this.$store.state.app.lang.lang
+      if (lang === 'CN') {
+        return 'zh'
+      } else {
+        return 'en'
+      }
+    },
+    enabledList () {
+      return [
+        { value: true, label: this.$i18n.t('forms.enabled') },
+        { value: false, label: this.$i18n.t('forms.disabled') }
+      ]
+    },
+    ruleAddForm () {
       return {
-        jsonEditModes: ['tree', 'text'],
-        searchForm: {
-          routeId: '',
-          enabled: '',
-          orderParam: {
-            prop: 'routeId',
-            order: 'ascending'
-          },
-          currPage: 1,
-          totalRows: 0,
-          pageSize: 10,
-          pageSizeArray: [10, 20, 30, 40]
-        },
-        editForm: {
-          id: '',
-          routeId: '',
-          uri: '',
-          predicates: [],
-          filters: [],
-          metadata: {},
-          orderNum: 0,
-          enabled: true,
-          remarks: ''
-        },
-        editModal: false,
-        modal_loading: false,
-        searchData: [],
-        selectedData: [],
-        action: 0
-      }
-    },
-    watch: {
-      editModal (value) {
-        if (value) {
-          this.$nextTick(() => {
-            this.$refs['routeId'].focus()
-          })
-        }
-      },
-      'searchForm.currPage' () {
-        this.handleSearch()
-      }
-    },
-    computed: {
-      tableHeight () {
-        const minHeight = 300
-        const height = this.$store.state.app.mainHeight - 80 - 46 - 42 - 4
-        if (height < minHeight) {
-          return minHeight - 2
-        } else {
-          return height
-        }
-      },
-      jsonEditorLang () {
-        const lang = this.$store.state.app.lang.lang
-        if (lang === 'CN') {
-          return 'zh'
-        } else {
-          return 'en'
-        }
-      },
-      enabledList () {
-        return [
-          { value: true, label: this.$i18n.t('forms.enabled') },
-          { value: false, label: this.$i18n.t('forms.disabled') }
+        routeId: [
+          {
+            required: true,
+            message: this.$i18n.t('forms.routeId') + this.$i18n.t('forms.notEmpty'),
+            trigger: 'blur'
+          }
+        ],
+        uri: [
+          {
+            required: true,
+            message: this.$i18n.t('forms.uri') + this.$i18n.t('forms.notEmpty'),
+            trigger: 'blur'
+          }
+        ],
+        orderNum: [
+          {
+            type: 'number',
+            required: true,
+            message: this.$i18n.t('forms.sort') + this.$i18n.t('forms.notEmpty'),
+            trigger: 'blur'
+          }
+        ],
+        predicates: [
+          {
+            required: true,
+            type: 'array',
+            min: 1,
+            message: this.$i18n.t('forms.predicates') + this.$i18n.t('forms.notEmpty')
+          }
         ]
-      },
-      ruleAddForm () {
-        return {
-          routeId: [
-            {
-              required: true,
-              message: this.$i18n.t('forms.routeId') + this.$i18n.t('forms.notEmpty'),
-              trigger: 'blur'
+      }
+    }
+  },
+  methods: {
+    enabledText (enabled) {
+      return this.enabledList.filter((item) => {
+        return item.value === enabled
+      })[0].label
+    },
+    selectableFun (row) {
+      return !row._disabled
+    },
+    handleAdd () {
+      this.editModal = true
+      this.$nextTick(() => {
+        this.$refs['editForm'].resetFields()
+        this.action = 0
+      })
+    },
+    handleEdit (row) {
+      this.editModal = true
+      this.$nextTick(() => {
+        this.$refs['editForm'].resetFields()
+        this.editForm.id = row.id
+        this.editForm.routeId = row.routeId
+        this.editForm.uri = row.uri
+        this.editForm.predicates = row.predicates ? JSON.parse(row.predicates) : []
+        this.editForm.filters = row.filters ? JSON.parse(row.filters) : []
+        this.editForm.metadata = row.metadata ? JSON.parse(row.metadata) : {}
+        this.editForm.orderNum = row.orderNum
+        this.editForm.enabled = !!row.enabled
+        this.editForm.remarks = row.remarks
+        this.action = 1
+      })
+    },
+    doCancel () {
+      this.editModal = false
+    },
+    doSave (name) {
+      if (!(this.editForm.predicates instanceof Array)) {
+        this.$notify.error({
+          title: this.$i18n.t('messages.validateFailed') + '',
+          message: this.$i18n.t('forms.predicates') + this.$i18n.t('forms.incorrect')
+        })
+        return
+      }
+      if (!(this.editForm.filters instanceof Array)) {
+        this.$notify.error({
+          title: this.$i18n.t('messages.validateFailed') + '',
+          message: this.$i18n.t('forms.filters') + this.$i18n.t('forms.incorrect')
+        })
+        return
+      }
+      if (this.editForm.metadata instanceof Array) {
+        this.$notify.error({
+          title: this.$i18n.t('messages.validateFailed') + '',
+          message: this.$i18n.t('forms.metadata') + this.$i18n.t('forms.incorrect')
+        })
+        return
+      }
+      switch (this.action) {
+        case 0:
+          this.$refs[name].validate((valid) => {
+            if (valid) {
+              this.modal_loading = true
+              this.$api.request.route.create({
+                routeId: this.editForm.routeId,
+                uri: this.editForm.uri,
+                orderNum: this.editForm.orderNum,
+                predicates: JSON.stringify(this.editForm.predicates),
+                filters: JSON.stringify(this.editForm.filters),
+                metadata: JSON.stringify(this.editForm.metadata),
+                enabled: this.editForm.enabled,
+                remarks: this.editForm.remarks
+              }).then((res) => {
+                this.modal_loading = false
+                if (res) {
+                  this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
+                  this.editModal = false
+                  this.handleSearch()
+                }
+              }).catch(() => {
+                this.modal_loading = false
+              })
             }
-          ],
-          uri: [
-            {
-              required: true,
-              message: this.$i18n.t('forms.uri') + this.$i18n.t('forms.notEmpty'),
-              trigger: 'blur'
+          })
+          break
+        case 1:
+          this.$refs[name].validate((valid) => {
+            if (valid) {
+              this.modal_loading = true
+              this.$api.request.route.update({
+                id: this.editForm.id,
+                routeId: this.editForm.routeId,
+                uri: this.editForm.uri,
+                orderNum: this.editForm.orderNum,
+                predicates: JSON.stringify(this.editForm.predicates),
+                filters: JSON.stringify(this.editForm.filters),
+                metadata: JSON.stringify(this.editForm.metadata),
+                enabled: this.editForm.enabled,
+                remarks: this.editForm.remarks
+              }).then((res) => {
+                this.modal_loading = false
+                if (res) {
+                  this.$message.success(this.$i18n.t('messages.updateSuccess') + '')
+                  this.editModal = false
+                  this.handleSearch()
+                }
+              }).catch(() => {
+                this.modal_loading = false
+              })
             }
-          ],
-          orderNum: [
-            {
-              type: 'number',
-              required: true,
-              message: this.$i18n.t('forms.sort') + this.$i18n.t('forms.notEmpty'),
-              trigger: 'blur'
-            }
-          ],
-          predicates: [
-            {
-              required: true,
-              type: 'array',
-              min: 1,
-              message: this.$i18n.t('forms.predicates') + this.$i18n.t('forms.notEmpty')
-            }
-          ]
-        }
+          })
+          break
       }
     },
-    methods: {
-      enabledText (enabled) {
-        return this.enabledList.filter((item) => {
-          return item.value === enabled
-        })[0].label
-      },
-      selectableFun (row) {
-        return !row._disabled
-      },
-      handleAdd () {
-        this.editModal = true
-        this.$nextTick(() => {
-          this.$refs['editForm'].resetFields()
-          this.action = 0
+    handleDelete (rowIds) {
+      this.modal_loading = true
+      this.$api.request.route.delete(rowIds).then((res) => {
+        this.modal_loading = false
+        if (res) {
+          this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
+          this.handleSearch()
+        }
+      }).catch(() => {
+        this.modal_loading = false
+      })
+    },
+    handlePageSizeSearch (size) {
+      this.searchForm.pageSize = size
+      this.handleSearch()
+    },
+    handleSearch () {
+      let searchParam = {
+        routeId: this.searchForm.routeId,
+        enabled: this.searchForm.enabled,
+        queryParam: {
+          currPage: this.searchForm.currPage,
+          pageSize: this.searchForm.pageSize
+        }
+      }
+      if (this.searchForm.orderParam.order !== 'normal') {
+        searchParam.queryParam.orderName = this.searchForm.orderParam.prop
+        searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
+      }
+      this.modal_loading = true
+      this.$api.request.route.query(searchParam).then((res) => {
+        this.modal_loading = false
+        if (res) {
+          this.selectedData = []
+          this.searchForm.totalRows = res.data.totalElements
+          this.searchData = res.data.content.map(item => {
+            if (item.enabled) {
+              item._disabled = true
+            }
+            return item
+          })
+          this.$nextTick(() => {
+            this.$refs['table'].doLayout()
+          })
+        }
+      }).catch(() => {
+        this.searchData = []
+        this.selectedData = []
+        this.modal_loading = false
+      })
+    },
+    handleRowClick (row) {
+      if (!row._disabled) {
+        this.$refs['table'].toggleRowSelection(row)
+      }
+    },
+    handleSortChange (param) {
+      this.searchForm.orderParam.prop = param.prop
+      this.searchForm.orderParam.order = param.order
+      this.handleSearch()
+    },
+    handleSearchReset (name) {
+      this.$refs[name].resetFields()
+    },
+    handleSelect (selection) {
+      this.selectedData = selection
+    },
+    handleDeleteRow (row) {
+      if (row.enabled) {
+        this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
+          type: 'error',
+          callback: () => {
+          }
         })
-      },
-      handleEdit (row) {
-        this.editModal = true
-        this.$nextTick(() => {
-          this.$refs['editForm'].resetFields()
-          this.editForm.id = row.id
-          this.editForm.routeId = row.routeId
-          this.editForm.uri = row.uri
-          this.editForm.predicates = row.predicates ? JSON.parse(row.predicates) : []
-          this.editForm.filters = row.filters ? JSON.parse(row.filters) : []
-          this.editForm.metadata = row.metadata ? JSON.parse(row.metadata) : {}
-          this.editForm.orderNum = row.orderNum
-          this.editForm.enabled = !!row.enabled
-          this.editForm.remarks = row.remarks
-          this.action = 1
+      } else {
+        this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+          type: 'warning'
+        }).then(() => {
+          this.handleDelete([row.id])
+        }).catch(() => {
         })
-      },
-      doCancel () {
-        this.editModal = false
-      },
-      doSave (name) {
-        if (!(this.editForm.predicates instanceof Array)) {
-          this.$notify.error({
-            title: this.$i18n.t('messages.validateFailed') + '',
-            message: this.$i18n.t('forms.predicates') + this.$i18n.t('forms.incorrect')
-          })
-          return
-        }
-        if (!(this.editForm.filters instanceof Array)) {
-          this.$notify.error({
-            title: this.$i18n.t('messages.validateFailed') + '',
-            message: this.$i18n.t('forms.filters') + this.$i18n.t('forms.incorrect')
-          })
-          return
-        }
-        if (this.editForm.metadata instanceof Array) {
-          this.$notify.error({
-            title: this.$i18n.t('messages.validateFailed') + '',
-            message: this.$i18n.t('forms.metadata') + this.$i18n.t('forms.incorrect')
-          })
-          return
-        }
-        switch (this.action) {
-          case 0:
-            this.$refs[name].validate((valid) => {
-              if (valid) {
-                this.modal_loading = true
-                this.$api.request.route.create({
-                  routeId: this.editForm.routeId,
-                  uri: this.editForm.uri,
-                  orderNum: this.editForm.orderNum,
-                  predicates: JSON.stringify(this.editForm.predicates),
-                  filters: JSON.stringify(this.editForm.filters),
-                  metadata: JSON.stringify(this.editForm.metadata),
-                  enabled: this.editForm.enabled,
-                  remarks: this.editForm.remarks
-                }).then((res) => {
-                  this.modal_loading = false
-                  if (res) {
-                    this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
-                    this.editModal = false
-                    this.handleSearch()
-                  }
-                }).catch(() => {
-                  this.modal_loading = false
-                })
-              }
-            })
-            break
-          case 1:
-            this.$refs[name].validate((valid) => {
-              if (valid) {
-                this.modal_loading = true
-                this.$api.request.route.update({
-                  id: this.editForm.id,
-                  routeId: this.editForm.routeId,
-                  uri: this.editForm.uri,
-                  orderNum: this.editForm.orderNum,
-                  predicates: JSON.stringify(this.editForm.predicates),
-                  filters: JSON.stringify(this.editForm.filters),
-                  metadata: JSON.stringify(this.editForm.metadata),
-                  enabled: this.editForm.enabled,
-                  remarks: this.editForm.remarks
-                }).then((res) => {
-                  this.modal_loading = false
-                  if (res) {
-                    this.$message.success(this.$i18n.t('messages.updateSuccess') + '')
-                    this.editModal = false
-                    this.handleSearch()
-                  }
-                }).catch(() => {
-                  this.modal_loading = false
-                })
-              }
-            })
-            break
-        }
-      },
-      handleDelete (rowIds) {
+      }
+    },
+    handleDeleteMore () {
+      if (this.selectedData.length > 0) {
+        this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+          type: 'warning'
+        }).then(() => {
+          this.handleDelete(this.selectedData.map(item => item.id))
+        }).catch(() => {
+        })
+      } else {
+        this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
+          type: 'error',
+          callback: () => {
+          }
+        })
+      }
+    },
+    handleRefresh () {
+      this.$confirm(this.$i18n.t('messages.refreshRouteConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
+        type: 'warning'
+      }).then(() => {
         this.modal_loading = true
-        this.$api.request.route.delete(rowIds).then((res) => {
+        this.$api.request.route.refreshRoute().then((res) => {
           this.modal_loading = false
           if (res) {
-            this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
+            this.$message.success(res.data.message)
             this.handleSearch()
           }
         }).catch(() => {
           this.modal_loading = false
         })
-      },
-      handlePageSizeSearch (size) {
-        this.searchForm.pageSize = size
-        this.handleSearch()
-      },
-      handleSearch () {
-        let searchParam = {
-          routeId: this.searchForm.routeId,
-          enabled: this.searchForm.enabled,
-          queryParam: {
-            currPage: this.searchForm.currPage,
-            pageSize: this.searchForm.pageSize
-          }
-        }
-        if (this.searchForm.orderParam.order !== 'normal') {
-          searchParam.queryParam.orderName = this.searchForm.orderParam.prop
-          searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
-        }
-        this.modal_loading = true
-        this.$api.request.route.query(searchParam).then((res) => {
-          this.modal_loading = false
-          if (res) {
-            this.selectedData = []
-            this.searchForm.totalRows = res.data.totalElements
-            this.searchData = res.data.content.map(item => {
-              if (item.enabled) {
-                item._disabled = true
-              }
-              return item
-            })
-            this.$nextTick(() => {
-              this.$refs['table'].doLayout()
-            })
-          }
-        }).catch(() => {
-          this.searchData = []
-          this.selectedData = []
-          this.modal_loading = false
-        })
-      },
-      handleRowClick (row) {
-        if (!row._disabled) {
-          this.$refs['table'].toggleRowSelection(row)
-        }
-      },
-      handleSortChange (param) {
-        this.searchForm.orderParam.prop = param.prop
-        this.searchForm.orderParam.order = param.order
-        this.handleSearch()
-      },
-      handleSearchReset (name) {
-        this.$refs[name].resetFields()
-      },
-      handleSelect (selection) {
-        this.selectedData = selection
-      },
-      handleDeleteRow (row) {
-        if (row.enabled) {
-          this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
-            type: 'error',
-            callback: () => {
-            }
-          })
-        } else {
-          this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
-            type: 'warning'
-          }).then(() => {
-            this.handleDelete([row.id])
-          }).catch(() => {
-          })
-        }
-      },
-      handleDeleteMore () {
-        if (this.selectedData.length > 0) {
-          this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
-            type: 'warning'
-          }).then(() => {
-            this.handleDelete(this.selectedData.map(item => item.id))
-          }).catch(() => {
-          })
-        } else {
-          this.$alert(this.$i18n.t('messages.selectDataForDelete') + '', this.$i18n.t('dialog.info') + '', {
-            type: 'error',
-            callback: () => {
-            }
-          })
-        }
-      },
-      handleRefresh () {
-        this.$confirm(this.$i18n.t('messages.refreshRouteConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
-          type: 'warning'
-        }).then(() => {
-          this.modal_loading = true
-          this.$api.request.route.refreshRoute().then((res) => {
-            this.modal_loading = false
-            if (res) {
-              this.$message.success(res.data.message)
-              this.handleSearch()
-            }
-          }).catch(() => {
-            this.modal_loading = false
-          })
-        }).catch(() => {
-        })
-      }
-    },
-    mounted () {
-      this.handleSearch()
-    },
-    activated () {
-      this.$nextTick(() => {
-        this.$refs['table'].doLayout()
+      }).catch(() => {
       })
     }
+  },
+  mounted () {
+    this.handleSearch()
+  },
+  activated () {
+    this.$nextTick(() => {
+      this.$refs['table'].doLayout()
+    })
   }
+}
 </script>
