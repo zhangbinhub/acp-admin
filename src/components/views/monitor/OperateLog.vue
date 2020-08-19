@@ -64,10 +64,10 @@
         <el-form-item style="float: right">
           <el-button-group style="margin-right: 20px">
             <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
-              {{$t('forms.buttons.search')}}
+              {{ $t('forms.buttons.search') }}
             </el-button>
             <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
-              {{$t('forms.buttons.reset')}}
+              {{ $t('forms.buttons.reset') }}
             </el-button>
           </el-button-group>
         </el-form-item>
@@ -122,7 +122,7 @@
         width="150"
         :label="$t('forms.requestTime')">
         <template slot-scope="scope">
-          <span>{{dateTimeFormat(scope.row.requestTime)}}</span>
+          <span>{{ dateTimeFormat(scope.row.requestTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -137,10 +137,12 @@
         width="110"
         :label="$t('forms.responseStatus')">
         <template slot-scope="scope">
-          <span :style="{color:scope.row.responseStatus>=200&&scope.row.responseStatus<300 ? 'green':'red'}">{{scope.row.responseStatus}}</span>
+          <span
+            :style="{color:scope.row.responseStatus>=200&&scope.row.responseStatus<300 ? 'green':'red'}">{{ scope.row.responseStatus }}</span>
         </template>
       </el-table-column>
       <el-table-column
+        fixed="right"
         prop="action"
         :label="$t('forms.action')"
         align="center"
@@ -166,229 +168,230 @@
       <el-form ref="editForm" size="mini" :model="editForm" label-width="100px" :inline="true"
                v-loading="modal_loading" @submit.native.prevent>
         <el-form-item :label="$t('forms.remoteIp')+':'" prop="remoteIp">
-          <span>{{editForm.remoteIp}}</span>
+          <span>{{ editForm.remoteIp }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.gatewayIp')+':'" prop="gatewayIp">
-          <span>{{editForm.gatewayIp}}</span>
+          <span>{{ editForm.gatewayIp }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.serverId')+':'" prop="serverId">
-          <span>{{editForm.serverId}}</span>
+          <span>{{ editForm.serverId }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.responseStatus')+':'" prop="responseStatus">
-          <span :style="{color:editForm.responseStatus>=200&&editForm.responseStatus<300 ? 'green':'red'}">{{editForm.responseStatus}}</span>
+          <span
+            :style="{color:editForm.responseStatus>=200&&editForm.responseStatus<300 ? 'green':'red'}">{{ editForm.responseStatus }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.path')+':'" prop="path" style="width: 100%">
-          <span>{{editForm.path}}</span>
+          <span>{{ editForm.path }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.targetUri')+':'" prop="targetUri" style="width: 100%">
-          <span>{{editForm.targetUri}}</span>
+          <span>{{ editForm.targetUri }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.targetPath')+':'" prop="targetPath" style="width: 100%">
-          <span>{{editForm.targetPath}}</span>
+          <span>{{ editForm.targetPath }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.method')+':'" prop="method" style="width: 100%">
-          <span>{{editForm.method}}</span>
+          <span>{{ editForm.method }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.token')+':'" prop="token" style="width: 100%">
-          <span>{{editForm.token}}</span>
+          <span>{{ editForm.token }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.clientName')+':'" prop="clientName" style="width: 100%">
-          <span>{{editForm.clientName}}</span>
+          <span>{{ editForm.clientName }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.identify')+':'" prop="identify" style="width: 100%">
-          <span>{{editForm.identify}}</span>
+          <span>{{ editForm.identify }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.userName')+':'" prop="userName" style="width: 100%">
-          <span>{{editForm.userName}}</span>
+          <span>{{ editForm.userName }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.requestTime')+':'" prop="requestTime" style="width: 100%">
-          <span>{{dateTimeMisFormat(editForm.requestTime)}}</span>
+          <span>{{ dateTimeMisFormat(editForm.requestTime) }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.processTime')+':'" prop="processTime" style="width: 100%">
-          <span>{{editForm.processTime}} {{$t('forms.millisecond')}}</span>
+          <span>{{ editForm.processTime }} {{ $t('forms.millisecond') }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.responseTime')+':'" prop="responseTime" style="width: 100%">
-          <span>{{dateTimeMisFormat(editForm.responseTime)}}</span>
+          <span>{{ dateTimeMisFormat(editForm.responseTime) }}</span>
         </el-form-item>
       </el-form>
       <div slot="footer" style="text-align: center">
         <el-button type="info" :loading="modal_loading" @click="doCancel()">
-          {{$t('forms.buttons.cancel')}}
+          {{ $t('forms.buttons.cancel') }}
         </el-button>
       </div>
     </el-dialog>
   </el-card>
 </template>
 <script>
-  import moment from 'moment'
+import moment from 'moment'
 
-  export default {
-    name: 'operateLog',
-    data () {
+export default {
+  name: 'operateLog',
+  data () {
+    return {
+      datePickerOptions: {
+        disabledDate: (date) => {
+          const now = new Date()
+          now.setHours(0, 0, 0, 0)
+          return date.getTime() > now.getTime()
+        }
+      },
+      searchForm: {
+        remoteIp: '',
+        path: '',
+        serverId: '',
+        clientName: '',
+        userName: '',
+        history: 'false',
+        startTime: [],
+        responseStatus: '',
+        orderParam: {
+          prop: 'requestTime',
+          order: 'descending'
+        },
+        currPage: 1,
+        totalRows: 0,
+        pageSize: 10,
+        pageSizeArray: [10, 20, 30, 40]
+      },
+      editForm: {},
+      editModal: false,
+      modal_loading: false,
+      searchData: [],
+      selectedData: []
+    }
+  },
+  computed: {
+    tableHeight () {
+      const minHeight = 300
+      const height = this.$store.state.app.mainHeight - 80 - 140 - 42 - 4
+      if (height < minHeight) {
+        return minHeight - 2
+      } else {
+        return height
+      }
+    },
+    infoTypeList () {
+      return [
+        { value: 'false', label: this.$i18n.t('forms.currentInfo') },
+        { value: 'true', label: this.$i18n.t('forms.historyInfo') }
+      ]
+    },
+    pickerOptions () {
       return {
-        datePickerOptions: {
-          disabledDate: (date) => {
-            const now = new Date()
-            now.setHours(0, 0, 0, 0)
-            return date.getTime() > now.getTime()
+        shortcuts: [{
+          text: this.$i18n.t('forms.buttons.lastWeek'),
+          onClick (picker) {
+            const end = new Date()
+            const start = new Date()
+            end.setHours(0, 0, 0, 0)
+            start.setHours(0, 0, 0, 0)
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', [start, end])
           }
-        },
-        searchForm: {
-          remoteIp: '',
-          path: '',
-          serverId: '',
-          clientName: '',
-          userName: '',
-          history: 'false',
-          startTime: [],
-          responseStatus: '',
-          orderParam: {
-            prop: 'requestTime',
-            order: 'descending'
-          },
-          currPage: 1,
-          totalRows: 0,
-          pageSize: 10,
-          pageSizeArray: [10, 20, 30, 40]
-        },
-        editForm: {},
-        editModal: false,
-        modal_loading: false,
-        searchData: [],
-        selectedData: []
-      }
-    },
-    computed: {
-      tableHeight () {
-        const minHeight = 300
-        const height = this.$store.state.app.mainHeight - 80 - 140 - 42 - 4
-        if (height < minHeight) {
-          return minHeight - 2
-        } else {
-          return height
-        }
-      },
-      infoTypeList () {
-        return [
-          { value: 'false', label: this.$i18n.t('forms.currentInfo') },
-          { value: 'true', label: this.$i18n.t('forms.historyInfo') }
-        ]
-      },
-      pickerOptions () {
-        return {
-          shortcuts: [{
-            text: this.$i18n.t('forms.buttons.lastWeek'),
-            onClick (picker) {
-              const end = new Date()
-              const start = new Date()
-              end.setHours(0, 0, 0, 0)
-              start.setHours(0, 0, 0, 0)
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-              picker.$emit('pick', [start, end])
-            }
-          }, {
-            text: this.$i18n.t('forms.buttons.lastMonth'),
-            onClick (picker) {
-              const end = new Date()
-              const start = new Date()
-              end.setHours(0, 0, 0, 0)
-              start.setHours(0, 0, 0, 0)
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-              picker.$emit('pick', [start, end])
-            }
-          }, {
-            text: this.$i18n.t('forms.buttons.lastThreeMonth'),
-            onClick (picker) {
-              const end = new Date()
-              const start = new Date()
-              end.setHours(0, 0, 0, 0)
-              start.setHours(0, 0, 0, 0)
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-              picker.$emit('pick', [start, end])
-            }
-          }]
-        }
-      }
-    },
-    watch: {
-      'searchForm.currPage' () {
-        this.handleSearch()
-      }
-    },
-    methods: {
-      dateTimeFormat (time) {
-        return time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''
-      },
-      dateTimeMisFormat (time) {
-        return time ? moment(time).format('YYYY-MM-DD HH:mm:ss.SSS') : ''
-      },
-      doCancel () {
-        this.editModal = false
-      },
-      handlePageSizeSearch (size) {
-        this.searchForm.pageSize = size
-        this.handleSearch()
-      },
-      handleSearch () {
-        let searchParam = {
-          remoteIp: this.searchForm.remoteIp,
-          path: this.searchForm.path,
-          serverId: this.searchForm.serverId,
-          clientName: this.searchForm.clientName,
-          userName: this.searchForm.userName,
-          history: this.searchForm.history === 'true',
-          startTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[0].getTime() : null,
-          endTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[1].getTime() : null,
-          responseStatus: this.searchForm.responseStatus !== '' ? parseInt(this.searchForm.responseStatus) : null,
-          queryParam: {
-            currPage: this.searchForm.currPage,
-            pageSize: this.searchForm.pageSize
+        }, {
+          text: this.$i18n.t('forms.buttons.lastMonth'),
+          onClick (picker) {
+            const end = new Date()
+            const start = new Date()
+            end.setHours(0, 0, 0, 0)
+            start.setHours(0, 0, 0, 0)
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            picker.$emit('pick', [start, end])
           }
-        }
-        if (this.searchForm.orderParam.order !== 'normal') {
-          searchParam.queryParam.orderName = this.searchForm.orderParam.prop
-          searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
-        }
-        this.modal_loading = true
-        this.$api.request.log.queryOperateLog(searchParam).then((res) => {
-          this.modal_loading = false
-          if (res) {
-            this.selectedData = []
-            this.searchForm.totalRows = res.data.totalElements
-            this.searchData = res.data.content
-            this.$nextTick(() => {
-              this.$refs['table'].doLayout()
-            })
+        }, {
+          text: this.$i18n.t('forms.buttons.lastThreeMonth'),
+          onClick (picker) {
+            const end = new Date()
+            const start = new Date()
+            end.setHours(0, 0, 0, 0)
+            start.setHours(0, 0, 0, 0)
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            picker.$emit('pick', [start, end])
           }
-        }).catch(() => {
-          this.searchData = []
-          this.selectedData = []
-          this.modal_loading = false
-        })
-      },
-      handleSortChange (param) {
-        this.searchForm.orderParam.prop = param.prop
-        this.searchForm.orderParam.order = param.order
-        this.handleSearch()
-      },
-      handleSearchReset (name) {
-        this.$refs[name].resetFields()
-      },
-      handleSelect (selection) {
-        this.selectedData = selection
-      },
-      handleView (row) {
-        this.editForm = row
-        this.editModal = true
+        }]
       }
+    }
+  },
+  watch: {
+    'searchForm.currPage' () {
+      this.handleSearch()
+    }
+  },
+  methods: {
+    dateTimeFormat (time) {
+      return time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''
     },
-    mounted () {
+    dateTimeMisFormat (time) {
+      return time ? moment(time).format('YYYY-MM-DD HH:mm:ss.SSS') : ''
+    },
+    doCancel () {
+      this.editModal = false
+    },
+    handlePageSizeSearch (size) {
+      this.searchForm.pageSize = size
       this.handleSearch()
     },
-    activated () {
-      this.$nextTick(() => {
-        this.$refs['table'].doLayout()
+    handleSearch () {
+      let searchParam = {
+        remoteIp: this.searchForm.remoteIp,
+        path: this.searchForm.path,
+        serverId: this.searchForm.serverId,
+        clientName: this.searchForm.clientName,
+        userName: this.searchForm.userName,
+        history: this.searchForm.history === 'true',
+        startTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[0].getTime() : null,
+        endTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[1].getTime() : null,
+        responseStatus: this.searchForm.responseStatus !== '' ? parseInt(this.searchForm.responseStatus) : null,
+        queryParam: {
+          currPage: this.searchForm.currPage,
+          pageSize: this.searchForm.pageSize
+        }
+      }
+      if (this.searchForm.orderParam.order !== 'normal') {
+        searchParam.queryParam.orderName = this.searchForm.orderParam.prop
+        searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
+      }
+      this.modal_loading = true
+      this.$api.request.log.queryOperateLog(searchParam).then((res) => {
+        this.modal_loading = false
+        if (res) {
+          this.selectedData = []
+          this.searchForm.totalRows = res.data.totalElements
+          this.searchData = res.data.content
+          this.$nextTick(() => {
+            this.$refs['table'].doLayout()
+          })
+        }
+      }).catch(() => {
+        this.searchData = []
+        this.selectedData = []
+        this.modal_loading = false
       })
+    },
+    handleSortChange (param) {
+      this.searchForm.orderParam.prop = param.prop
+      this.searchForm.orderParam.order = param.order
+      this.handleSearch()
+    },
+    handleSearchReset (name) {
+      this.$refs[name].resetFields()
+    },
+    handleSelect (selection) {
+      this.selectedData = selection
+    },
+    handleView (row) {
+      this.editForm = row
+      this.editModal = true
     }
+  },
+  mounted () {
+    this.handleSearch()
+  },
+  activated () {
+    this.$nextTick(() => {
+      this.$refs['table'].doLayout()
+    })
   }
+}
 </script>
