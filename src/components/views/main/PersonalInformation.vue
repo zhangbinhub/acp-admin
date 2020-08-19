@@ -8,6 +8,9 @@
                      @click.native="openAvatarUpload"/>
         </el-tooltip>
       </el-form-item>
+      <el-form-item :label="$t('forms.loginNo')" prop="loginNo">
+        <span>{{ userInfo.loginNo }}</span>
+      </el-form-item>
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input ref="name" type="text" v-model="formValidate.name" @keyup.enter.native="handleSubmit('formValidate')"
                   :disabled="modal_loading"
@@ -41,11 +44,11 @@
       </el-form-item>
       <el-form-item>
         <el-button type="default" @click="handleReset('formValidate')" :loading="modal_loading">
-          {{$t('forms.buttons.reset')}}
+          {{ $t('forms.buttons.reset') }}
         </el-button>
         <el-button type="primary" @click="handleSubmit('formValidate')" :loading="modal_loading"
-                  >
-          {{$t('forms.buttons.submit')}}
+        >
+          {{ $t('forms.buttons.submit') }}
         </el-button>
       </el-form-item>
     </el-form>
@@ -56,171 +59,171 @@
   </el-card>
 </template>
 <script>
-  import avatarImg from '@/assets/images/avatar/avatar.jpg'
-  import Cropper from '@/components/cropper'
-  import 'cropperjs/dist/cropper.min.css'
+import avatarImg from '@/assets/images/avatar/avatar.jpg'
+import Cropper from '@/components/cropper'
+import 'cropperjs/dist/cropper.min.css'
 
-  export default {
-    name: 'personalInformation',
-    components: {
-      Cropper
-    },
-    data () {
+export default {
+  name: 'personalInformation',
+  components: {
+    Cropper
+  },
+  data () {
+    return {
+      formValidate: {
+        avatar: avatarImg,
+        name: '',
+        mobile: '',
+        oldPassword: '',
+        password: '',
+        repeatPassword: ''
+      },
+      updatePassword: false,
+      avatarUpload: false,
+      modal_loading: false
+    }
+  },
+  created () {
+    this.resetFieldsValue(this.userInfo)
+  },
+  watch: {
+    userInfo (newUserInfo) {
+      this.resetFieldsValue(newUserInfo)
+    }
+  },
+  computed: {
+    ruleValidate () {
       return {
-        formValidate: {
-          avatar: avatarImg,
-          name: '',
-          mobile: '',
-          oldPassword: '',
-          password: '',
-          repeatPassword: ''
-        },
-        updatePassword: false,
-        avatarUpload: false,
-        modal_loading: false
+        name: [
+          {
+            required: true,
+            message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
+            trigger: 'blur'
+          }
+        ],
+        mobile: [
+          {
+            required: true,
+            message: this.$i18n.t('forms.mobile') + this.$i18n.t('forms.notEmpty'),
+            trigger: 'blur'
+          },
+          {
+            type: 'string',
+            pattern: /^1[0-9]{10}$/,
+            message: this.$i18n.t('forms.mobile') + this.$i18n.t('forms.invalid'),
+            trigger: 'blur'
+          }
+        ],
+        oldPassword: [{
+          required: true,
+          validator: (rule, value, callback) => {
+            if (this.updatePassword) {
+              if (value === '') {
+                callback(new Error(this.$i18n.t('forms.old') + this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty')))
+                return
+              }
+            }
+            callback()
+          },
+          trigger: 'blur'
+        }],
+        password: [{
+          required: true,
+          validator: (rule, value, callback) => {
+            if (this.updatePassword) {
+              if (value === '') {
+                callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty')))
+                return
+              }
+            }
+            callback()
+          },
+          trigger: 'blur'
+        }],
+        repeatPassword: [{
+          required: true,
+          validator: (rule, value, callback) => {
+            if (this.updatePassword) {
+              if (value === '') {
+                callback(new Error(this.$i18n.t('forms.confirmPassword') + this.$i18n.t('forms.notEmpty')))
+                return
+              } else if (value !== this.formValidate.password) {
+                callback(new Error(this.$i18n.t('forms.passwordNotEqual') + ''))
+                return
+              }
+            }
+            callback()
+          },
+          trigger: 'blur'
+        }]
       }
     },
-    created () {
+    userInfo () {
+      return this.$store.state.app.user.userInfo
+    }
+  },
+  methods: {
+    openAvatarUpload () {
+      this.avatarUpload = true
+    },
+    handleCroped (data) {
+      this.avatarUpload = false
+      this.formValidate.avatar = data
+    },
+    handleSubmit (name) {
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          this.modal_loading = true
+          const userParam = {
+            avatar: this.formValidate.avatar,
+            name: this.formValidate.name,
+            mobile: this.formValidate.mobile
+          }
+          if (this.updatePassword) {
+            userParam.oldPassword = this.formValidate.oldPassword
+            userParam.password = this.formValidate.password
+          }
+          this.$api.request.auth.updateUserInfo(userParam).then((res) => {
+            this.$store.commit('SET_USER_INFO', res.data)
+            this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
+            if (this.updatePassword) {
+              this.$alert(this.$i18n.t('messages.changedPassword') + '', this.$i18n.t('dialog.info'), {
+                callback: () => {
+                  this.modal_loading = false
+                  this.$api.redirectLogin((callBackFunc) => {
+                    this.$api.request.auth.doLogOut().then(() => {
+                      callBackFunc()
+                    })
+                  })
+                }
+              })
+            } else {
+              this.modal_loading = false
+            }
+          }).catch(() => {
+            this.modal_loading = false
+          })
+        }
+      })
+    },
+    handleReset (name) {
+      this.$refs[name].resetFields()
       this.resetFieldsValue(this.userInfo)
     },
-    watch: {
-      userInfo (newUserInfo) {
-        this.resetFieldsValue(newUserInfo)
+    resetFieldsValue (userInfo) {
+      if (userInfo.avatar && userInfo.avatar !== '') {
+        this.formValidate.avatar = userInfo.avatar
+      } else {
+        this.formValidate.avatar = avatarImg
       }
-    },
-    computed: {
-      ruleValidate () {
-        return {
-          name: [
-            {
-              required: true,
-              message: this.$i18n.t('forms.name') + this.$i18n.t('forms.notEmpty'),
-              trigger: 'blur'
-            }
-          ],
-          mobile: [
-            {
-              required: true,
-              message: this.$i18n.t('forms.mobile') + this.$i18n.t('forms.notEmpty'),
-              trigger: 'blur'
-            },
-            {
-              type: 'string',
-              pattern: /^1[0-9]{10}$/,
-              message: this.$i18n.t('forms.mobile') + this.$i18n.t('forms.invalid'),
-              trigger: 'blur'
-            }
-          ],
-          oldPassword: [{
-            required: true,
-            validator: (rule, value, callback) => {
-              if (this.updatePassword) {
-                if (value === '') {
-                  callback(new Error(this.$i18n.t('forms.old') + this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty')))
-                  return
-                }
-              }
-              callback()
-            },
-            trigger: 'blur'
-          }],
-          password: [{
-            required: true,
-            validator: (rule, value, callback) => {
-              if (this.updatePassword) {
-                if (value === '') {
-                  callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty')))
-                  return
-                }
-              }
-              callback()
-            },
-            trigger: 'blur'
-          }],
-          repeatPassword: [{
-            required: true,
-            validator: (rule, value, callback) => {
-              if (this.updatePassword) {
-                if (value === '') {
-                  callback(new Error(this.$i18n.t('forms.confirmPassword') + this.$i18n.t('forms.notEmpty')))
-                  return
-                } else if (value !== this.formValidate.password) {
-                  callback(new Error(this.$i18n.t('forms.passwordNotEqual') + ''))
-                  return
-                }
-              }
-              callback()
-            },
-            trigger: 'blur'
-          }]
-        }
-      },
-      userInfo () {
-        return this.$store.state.app.user.userInfo
-      }
-    },
-    methods: {
-      openAvatarUpload () {
-        this.avatarUpload = true
-      },
-      handleCroped (data) {
-        this.avatarUpload = false
-        this.formValidate.avatar = data
-      },
-      handleSubmit (name) {
-        this.$refs[name].validate((valid) => {
-          if (valid) {
-            this.modal_loading = true
-            const userParam = {
-              avatar: this.formValidate.avatar,
-              name: this.formValidate.name,
-              mobile: this.formValidate.mobile
-            }
-            if (this.updatePassword) {
-              userParam.oldPassword = this.formValidate.oldPassword
-              userParam.password = this.formValidate.password
-            }
-            this.$api.request.auth.updateUserInfo(userParam).then((res) => {
-              this.$store.commit('SET_USER_INFO', res.data)
-              this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
-              if (this.updatePassword) {
-                this.$alert(this.$i18n.t('messages.changedPassword') + '', this.$i18n.t('dialog.info'), {
-                  callback: () => {
-                    this.modal_loading = false
-                    this.$api.redirectLogin((callBackFunc) => {
-                      this.$api.request.auth.doLogOut().then(() => {
-                        callBackFunc()
-                      })
-                    })
-                  }
-                })
-              } else {
-                this.modal_loading = false
-              }
-            }).catch(() => {
-              this.modal_loading = false
-            })
-          }
-        })
-      },
-      handleReset (name) {
-        this.$refs[name].resetFields()
-        this.resetFieldsValue(this.userInfo)
-      },
-      resetFieldsValue (userInfo) {
-        if (userInfo.avatar && userInfo.avatar !== '') {
-          this.formValidate.avatar = userInfo.avatar
-        } else {
-          this.formValidate.avatar = avatarImg
-        }
-        this.formValidate.name = userInfo.name
-        this.formValidate.mobile = userInfo.mobile
-      }
-    },
-    activated () {
-      this.$nextTick(() => {
-        this.$refs['name'].focus()
-      })
+      this.formValidate.name = userInfo.name
+      this.formValidate.mobile = userInfo.mobile
     }
+  },
+  activated () {
+    this.$nextTick(() => {
+      this.$refs['name'].focus()
+    })
   }
+}
 </script>
