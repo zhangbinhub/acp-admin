@@ -10,6 +10,7 @@
 > - [Upgrade] 新增部署界面
 > - [Upgrade] 优化标签缓存
 > - [Upgrade] 个人信息界面增加登录账号显示
+> - [Upgrade] 优化样式
 > - [Fix] 修复 js-base64 引入写法
 ##### v4.1.6
 > - [Upgrade] 更新依赖插件至最新版本
