@@ -2,11 +2,17 @@
 
 ###### v4.2.0 [版本更新日志](doc/version_history.md)
 
-兼容的浏览器及版本（注：从4.2.0开始不再支持IE）
+## 浏览器兼容性
+
+> 由于js-base64 3.0及以上版本不再支持IE，因此从4.2.0开始不再支持IE
+
+支持的浏览器：
 
 - Chrome latest（推荐，完美）
 - Firefox latest（完全支持）
 - Edge（完全支持）
+
+## 简介
 
 > 使用vue全家桶(Vue+Vue-router+Vuex+axios)、ElementUI样式库构建的前端项目。该项目是前后端分离架构中的“前端部分” 。后端工程[V4.2.0](https://github.com/zhangbin1010/acp-admin-cloud)
 
@@ -47,7 +53,7 @@
 > - 前后端交互 HttpStatus Code 说明
     >
     >     | HttpStatus | 描述 |
-    >     | --- | --- | 
+    >     | --- | --- |
     >     | 200 | 请求成功 |
     >     | 201 | 资源创建成功 |
     >     | 400 | 业务错误 |
@@ -148,9 +154,12 @@ npm install
 > - 入口及全局配置：[src/plugins/plugin-axios.js](src/plugins/plugin-axios.js)
 > - 请求 api
     >
+
 - 路径：src/api
->   - 入口：[src/api/index.js](src/api/index.js)
->   - api 编写：新增或修改文件，在[src/api/ApiLists.js](src/api/ApiLists.js)中引入并配置
+
+> - 入口：[src/api/index.js](src/api/index.js)
+    >
+- api 编写：新增或修改文件，在[src/api/ApiLists.js](src/api/ApiLists.js)中引入并配置
 
 ##### （七）页面布局
 
