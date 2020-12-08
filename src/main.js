@@ -3,17 +3,19 @@ import App from './App.vue'
 import store from './store'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import NProgress from 'nprogress'
+import Nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
 import router from './router'
 import './plugins/plugin-axios.js'
 import api from './api'
 import './assets/styles/layout.less'
 import './assets/styles/transition.less'
-import eCharts from 'echarts'
+import * as echarts from 'echarts'
 import './mock'
 
-NProgress.configure({ showSpinner: false })
+Vue.config.productionTip = false
+
+Nprogress.configure({ showSpinner: false })
 
 // 响应式布局
 const autoWidth = () => {
@@ -30,9 +32,6 @@ const autoHeight = () => {
   const winHeight = document.documentElement.clientHeight
   store.commit('MAIN_HEIGHT', winHeight - 120)
 }
-
-Vue.config.productionTip = false
-
 autoWidth()
 autoHeight()
 window.onresize = function () {
@@ -41,7 +40,7 @@ window.onresize = function () {
 }
 
 // 加载 eCharts
-Vue.prototype.$echarts = eCharts
+Vue.prototype.$echarts = echarts
 // 加载 ElementUI ，并启用 i18n
 const i18n = store.state.app.i18n
 Vue.use(ElementUI, {
@@ -58,7 +57,7 @@ Vue.use(api, {
   http: Vue.prototype.$http,
   store: store,
   router: router,
-  loading: NProgress
+  loading: Nprogress
 })
 new Vue({
   router,
