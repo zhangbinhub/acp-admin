@@ -2,7 +2,7 @@
 ##### v4.2.0
 > - [Upgrade] 更新依赖插件至最新稳定版本
 > - [Upgrade] 去除 lint-staged 依赖
-> - [Upgrade] 不在支持IE
+> - [Upgrade] 不再支持IE
 > - [Upgrade] 删除无用的配置文件
 ##### v4.1.7
 > - [Upgrade] 更新依赖插件至最新版本
