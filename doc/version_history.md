@@ -4,6 +4,7 @@
 > - [Upgrade] 去除 lint-staged 依赖
 > - [Upgrade] 不再支持IE
 > - [Upgrade] 删除无用的配置文件
+> - [Upgrade] 修改登录方式
 ##### v4.1.7
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 优化用户配置界面显示

@@ -14,13 +14,12 @@ export default {
     hour = hour < 10 ? ('0' + hour) : hour
     password = sha256.sha256(sha256.sha256(sha256.sha256(password) + loginNo) + year + month + day + hour)
     return ApiComm.$http.post('/oauth/token', {
-      grant_type: 'password',
+      grant_type: 'user_password',
       username: loginNo,
       password: password
     }, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Process400': 'false',
         'Process401': 'false',
         'Process403': 'false'
       },

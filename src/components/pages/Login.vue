@@ -5,10 +5,10 @@
                  :modal="false" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
         <div slot="title" style="text-align: center">
           <h1>
-            <span>{{title}}</span>
+            <span>{{ title }}</span>
           </h1>
           <div style="height: 20px">
-            <span style="text-align: center;font-size: x-small;">v{{version}}</span>
+            <span style="text-align: center;font-size: x-small;">v{{ version }}</span>
           </div>
         </div>
         <div>
@@ -32,7 +32,7 @@
             <el-form-item style="margin-bottom: 0;">
               <el-checkbox v-model="formValidate.remember" :disabled="modal_loading"
                            @keyup.native.enter="handleSubmit('formValidate')">
-                {{text.rememberMe}}
+                {{ text.rememberMe }}
               </el-checkbox>
             </el-form-item>
           </el-form>
@@ -40,104 +40,100 @@
         <div slot="footer">
           <el-button type="primary" :loading="modal_loading" style="width: 100%"
                      @click="handleSubmit('formValidate')">
-            {{$t('forms.buttons.login')}}
+            {{ $t('forms.buttons.login') }}
           </el-button>
-          <small style="text-align: center;display: block;margin-top: 10px;">{{copyright}}</small>
+          <small style="text-align: center;display: block;margin-top: 10px;">{{ copyright }}</small>
         </div>
       </el-dialog>
     </div>
   </div>
 </template>
 <script>
-  import '@/assets/styles/login.less'
+import '@/assets/styles/login.less'
 
-  export default {
-    name: 'login',
-    data () {
-      return {
-        title: this.$store.state.app.appInfo.appName,
-        version: this.$store.state.app.appInfo.appVersion,
-        copyright: this.$store.state.app.appInfo.copyright,
-        homePath: this.$store.state.app.appInfo.homePath,
-        text: {
-          usernamePlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.loginNo'),
-          passwordPlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.password'),
-          rememberMe: this.$i18n.t('forms.rememberMe')
-        },
-        loginModal: true,
-        modal_loading: false,
-        formValidate: {
-          loginNo: this.$store.state.app.user.loginNo,
-          password: '',
-          remember: this.$store.state.app.user.remember
-        },
-        ruleValidate: {
-          loginNo: [
-            {
-              required: true,
-              message: this.$i18n.t('forms.loginNo') + this.$i18n.t('forms.notEmpty'),
-              trigger: 'blur'
-            }
-          ],
-          password: [
-            {
-              required: true,
-              message: this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty'),
-              trigger: 'blur'
-            }
-          ]
-        }
-      }
-    },
-    methods: {
-      passwordFocus (event) {
-        event.target.type = 'password'
+export default {
+  name: 'login',
+  data() {
+    return {
+      title: this.$store.state.app.appInfo.appName,
+      version: this.$store.state.app.appInfo.appVersion,
+      copyright: this.$store.state.app.appInfo.copyright,
+      homePath: this.$store.state.app.appInfo.homePath,
+      text: {
+        usernamePlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.loginNo'),
+        passwordPlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.password'),
+        rememberMe: this.$i18n.t('forms.rememberMe')
       },
-      handleSubmit (name) {
-        const currObj = this
-        currObj.$refs[name].validate((valid) => {
-          if (valid) {
-            currObj.modal_loading = true
-            currObj.$api.request.auth.doLogin(currObj.formValidate.loginNo, currObj.formValidate.password).then(res => {
-              if (res) {
-                if (res.data.access_token) {
-                  currObj.$message.success(currObj.$i18n.t('messages.loginSuccess') + '')
-                  currObj.$store.commit('SET_TOKEN', res.data.access_token)
-                  currObj.$store.commit('SET_TOKEN_TYPE', res.data.token_type)
-                  currObj.$store.commit('SET_SCOPE', res.data.scope)
-                  if (currObj.formValidate.remember) {
-                    currObj.$store.commit('SET_LOGIN_NO', currObj.formValidate.loginNo)
-                  } else {
-                    currObj.$store.commit('SET_LOGIN_NO', '')
-                  }
-                  currObj.$store.commit('SET_REMEMBER', currObj.formValidate.remember)
-                  let redirectPath = this.homePath
-                  if (currObj.$route.params.redirect) {
-                    redirectPath = currObj.$route.params.redirect
-                  }
-                  currObj.$router.replace(redirectPath)
-                } else {
-                  currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
-                }
-              }
-              currObj.modal_loading = false
-            }).catch((error) => {
-                currObj.modal_loading = false
-                if (error.response && error.response.status && error.response.status === 400) {
-                  currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
-                } else {
-                  currObj.$api.errorProcess(currObj.$i18n.t('messages.failed403'), currObj.$i18n.t('messages.loginFailed'))
-                }
-              }
-            )
+      loginModal: true,
+      modal_loading: false,
+      formValidate: {
+        loginNo: this.$store.state.app.user.loginNo,
+        password: '',
+        remember: this.$store.state.app.user.remember
+      },
+      ruleValidate: {
+        loginNo: [
+          {
+            required: true,
+            message: this.$i18n.t('forms.loginNo') + this.$i18n.t('forms.notEmpty'),
+            trigger: 'blur'
           }
-        })
+        ],
+        password: [
+          {
+            required: true,
+            message: this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty'),
+            trigger: 'blur'
+          }
+        ]
       }
+    }
+  },
+  methods: {
+    passwordFocus(event) {
+      event.target.type = 'password'
     },
-    mounted () {
-      this.$nextTick(() => {
-        this.$refs['loginNo'].focus()
+    handleSubmit(name) {
+      const currObj = this
+      currObj.$refs[name].validate((valid) => {
+        if (valid) {
+          currObj.modal_loading = true
+          currObj.$api.request.auth.doLogin(currObj.formValidate.loginNo, currObj.formValidate.password).then(res => {
+            if (res) {
+              if (res.data.access_token) {
+                currObj.$message.success(currObj.$i18n.t('messages.loginSuccess') + '')
+                currObj.$store.commit('SET_TOKEN', res.data.access_token)
+                currObj.$store.commit('SET_TOKEN_TYPE', res.data.token_type)
+                currObj.$store.commit('SET_SCOPE', res.data.scope)
+                if (currObj.formValidate.remember) {
+                  currObj.$store.commit('SET_LOGIN_NO', currObj.formValidate.loginNo)
+                } else {
+                  currObj.$store.commit('SET_LOGIN_NO', '')
+                }
+                currObj.$store.commit('SET_REMEMBER', currObj.formValidate.remember)
+                let redirectPath = this.homePath
+                if (currObj.$route.params.redirect) {
+                  redirectPath = currObj.$route.params.redirect
+                }
+                currObj.$router.replace(redirectPath)
+              } else {
+                currObj.$api.errorProcess(currObj.$i18n.t('messages.loginInvalid'), currObj.$i18n.t('messages.loginFailed'))
+              }
+            }
+            currObj.modal_loading = false
+          }).catch(() => {
+              currObj.modal_loading = false
+              currObj.$api.errorProcess(currObj.$i18n.t('messages.failed403'), currObj.$i18n.t('messages.loginFailed'))
+            }
+          )
+        }
       })
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.$refs['loginNo'].focus()
+    })
   }
+}
 </script>
