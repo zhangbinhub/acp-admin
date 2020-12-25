@@ -14,5 +14,8 @@ export default {
   },
   query: (query) => {
     return ApiComm.$http.post('/oauth/runtime', query)
+  },
+  getConfig: (name) => {
+    return ApiComm.$http.get('/oauth/runtime/' + name)
   }
 }
