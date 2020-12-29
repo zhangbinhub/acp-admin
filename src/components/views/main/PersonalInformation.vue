@@ -47,7 +47,7 @@
           {{ $t('forms.buttons.reset') }}
         </el-button>
         <el-button type="primary" @click="handleSubmit('formValidate')" :loading="modal_loading"
-        >
+                   style="margin-left: 10px">
           {{ $t('forms.buttons.submit') }}
         </el-button>
       </el-form-item>
@@ -68,7 +68,7 @@ export default {
   components: {
     Cropper
   },
-  data () {
+  data() {
     return {
       formValidate: {
         avatar: avatarImg,
@@ -78,21 +78,22 @@ export default {
         password: '',
         repeatPassword: ''
       },
+      passwordComplexityPolicy: 0,
       updatePassword: false,
       avatarUpload: false,
       modal_loading: false
     }
   },
-  created () {
+  created() {
     this.resetFieldsValue(this.userInfo)
   },
   watch: {
-    userInfo (newUserInfo) {
+    userInfo(newUserInfo) {
       this.resetFieldsValue(newUserInfo)
     }
   },
   computed: {
-    ruleValidate () {
+    ruleValidate() {
       return {
         name: [
           {
@@ -130,11 +131,28 @@ export default {
         password: [{
           required: true,
           validator: (rule, value, callback) => {
-            if (this.updatePassword) {
-              if (value === '') {
-                callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty')))
-                return
-              }
+            if (value === '') {
+              callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty')))
+              return
+            }
+            if (value.length < 8) {
+              callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.lengthNotEnough') + ' 8'))
+              return
+            }
+            switch (this.passwordComplexityPolicy) {
+              case 1:
+                if (!/([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)/.test(value)) {
+                  callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.incorrectFormat')))
+                  return
+                }
+                break
+              case 2:
+                if (!/([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)/.test(value)
+                  || !/[`~!@#$%^&*()+=|{}':;,\\"\[\].<>]+/.test(value)) {
+                  callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.incorrectFormat')))
+                  return
+                }
+                break
             }
             callback()
           },
@@ -158,19 +176,19 @@ export default {
         }]
       }
     },
-    userInfo () {
+    userInfo() {
       return this.$store.state.app.user.userInfo
     }
   },
   methods: {
-    openAvatarUpload () {
+    openAvatarUpload() {
       this.avatarUpload = true
     },
-    handleCroped (data) {
+    handleCroped(data) {
       this.avatarUpload = false
       this.formValidate.avatar = data
     },
-    handleSubmit (name) {
+    handleSubmit(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
           this.modal_loading = true
@@ -206,11 +224,11 @@ export default {
         }
       })
     },
-    handleReset (name) {
+    handleReset(name) {
       this.$refs[name].resetFields()
       this.resetFieldsValue(this.userInfo)
     },
-    resetFieldsValue (userInfo) {
+    resetFieldsValue(userInfo) {
       if (userInfo.avatar && userInfo.avatar !== '') {
         this.formValidate.avatar = userInfo.avatar
       } else {
@@ -220,9 +238,17 @@ export default {
       this.formValidate.mobile = userInfo.mobile
     }
   },
-  activated () {
+  activated() {
     this.$nextTick(() => {
       this.$refs['name'].focus()
+    })
+    // 获取运行配置参数
+    this.$api.request.runtime.getConfig(this.$store.state.app.appInfo.passwordComplexityPolicy).then((res) => {
+      if (res && res.data && res.data.enabled) {
+        this.passwordComplexityPolicy = parseInt(res.data.value)
+      } else {
+        this.passwordComplexityPolicy = 0
+      }
     })
   }
 }

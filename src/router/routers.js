@@ -19,6 +19,13 @@ export default [{
     title: 'pageTitle.login'
   }
 }, {
+  path: '/passwordExpire',
+  name: 'passwordExpire',
+  component: () => import('@/components/pages/PasswordExpire.vue'),
+  meta: {
+    title: 'pageTitle.passwordExpire'
+  }
+}, {
   path: '/404',
   name: 'E404',
   component: () => import('@/components/pages/E404.vue'),

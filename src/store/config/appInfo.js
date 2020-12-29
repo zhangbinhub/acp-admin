@@ -8,6 +8,7 @@ export default {
   cookieExpires: 1, // day
   baseURL: '/v1/api', // back server url
   timeOut: 60000,
+  passwordComplexityPolicy: 'PASSWORD_COMPLEXITY_POLICY',
 
   // dev
   appId: '8a80cb816d2eb97f016d2eba04710000',
