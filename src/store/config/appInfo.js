@@ -11,6 +11,6 @@ export default {
   passwordComplexityPolicy: 'PASSWORD_COMPLEXITY_POLICY',
 
   // dev
-  appId: '8a80cb816d2eb97f016d2eba04710000',
+  appId: '2c9cc08176b1fcd00176b1fd83b50000',
   appSecret: '2523342F2BD345EA9658452A289364AA'
 }
