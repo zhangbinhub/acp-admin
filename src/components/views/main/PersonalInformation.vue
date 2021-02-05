@@ -131,28 +131,30 @@ export default {
         password: [{
           required: true,
           validator: (rule, value, callback) => {
-            if (value === '') {
-              callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty')))
-              return
-            }
-            if (value.length < 8) {
-              callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.lengthNotEnough') + ' 8'))
-              return
-            }
-            switch (this.passwordComplexityPolicy) {
-              case 1:
-                if (!/([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)/.test(value)) {
-                  callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.incorrectFormat')))
-                  return
-                }
-                break
-              case 2:
-                if (!/([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)/.test(value)
-                  || !/[`~!@#$%^&*()+=|{}':;,\\"\[\].<>]+/.test(value)) {
-                  callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.incorrectFormat')))
-                  return
-                }
-                break
+            if (this.updatePassword) {
+              if (value === '') {
+                callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.notEmpty')))
+                return
+              }
+              if (value.length < 8) {
+                callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.lengthNotEnough') + ' 8'))
+                return
+              }
+              switch (this.passwordComplexityPolicy) {
+                case 1:
+                  if (!/([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)/.test(value)) {
+                    callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.incorrectFormat')))
+                    return
+                  }
+                  break
+                case 2:
+                  if (!/([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+)/.test(value)
+                    || !/[`~!@#$%^&*()+=|{}':;,\\"\[\].<>]+/.test(value)) {
+                    callback(new Error(this.$i18n.t('forms.new') + this.$i18n.t('forms.password') + this.$i18n.t('forms.incorrectFormat')))
+                    return
+                  }
+                  break
+              }
             }
             callback()
           },
@@ -193,7 +195,7 @@ export default {
         if (valid) {
           this.modal_loading = true
           const userParam = {
-            avatar: this.formValidate.avatar,
+            avatar: this.formValidate.avatar !== avatarImg ? this.formValidate.avatar : '',
             name: this.formValidate.name,
             mobile: this.formValidate.mobile
           }
