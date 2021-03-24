@@ -1,6 +1,6 @@
 {
   "name": "acp-admin",
-  "version": "4.2.3",
+  "version": "4.2.4",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     "vue": "^2.6.12",
     "vue-axios": "^3.2.4",
     "vue-count-to": "^1.0.13",
-    "vue-i18n": "^8.24.1",
+    "vue-i18n": "^8.24.2",
     "vue-json-editor": "^1.4.3",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
