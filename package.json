@@ -1,6 +1,6 @@
 {
   "name": "acp-admin",
-  "version": "4.2.4",
+  "version": "5.0.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -12,11 +12,11 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "core-js": "^3.10.1",
+    "core-js": "^3.12.0",
     "cropperjs": "^1.5.11",
-    "css-loader": "^5.2.1",
-    "echarts": "^5.1.0",
-    "element-ui": "^2.15.1",
+    "css-loader": "^5.2.4",
+    "echarts": "^5.1.1",
+    "element-plus": "^1.0.2-beta.41",
     "js-base64": "^3.6.0",
     "js-cookie": "^2.2.1",
     "js-sha256": "^0.9.0",
@@ -24,23 +24,24 @@
     "moment": "^2.29.1",
     "nprogress": "^0.2.0",
     "qs": "^6.10.1",
-    "vue": "^2.6.12",
+    "vue": "^3.0.9",
     "vue-axios": "^3.2.4",
     "vue-count-to": "^1.0.13",
-    "vue-i18n": "^8.24.3",
+    "vue-i18n": "^9.1.6",
     "vue-json-editor": "^1.4.3",
-    "vue-router": "^3.5.1",
-    "vuex": "^3.6.2"
+    "vue-router": "^4.0.6",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.12",
-    "@vue/cli-plugin-router": "^4.5.12",
-    "@vue/cli-plugin-vuex": "^4.5.12",
-    "@vue/cli-service": "^4.5.12",
+    "@vue/cli-plugin-babel": "^5.0.0-beta.0",
+    "@vue/cli-plugin-router": "^5.0.0-beta.0",
+    "@vue/cli-plugin-vuex": "^5.0.0-beta.0",
+    "@vue/cli-service": "^5.0.0-beta.0",
+    "@vue/compiler-sfc": "^3.0.11",
     "less": "^4.1.1",
-    "less-loader": "^7.2.1",
+    "less-loader": "^8.1.1",
     "vue-template-compiler": "^2.6.12",
-    "webpack": "^4.44.2"
+    "webpack": "^5.36.2"
   },
   "browserslist": [
     "> 1%",
