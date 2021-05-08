@@ -1,6 +1,6 @@
 # acp-admin
 
-###### v4.2.4 [版本更新日志](doc/version_history.md)
+###### v5.0.0 [版本更新日志](doc/version_history.md)
 
 ## 浏览器兼容性
 
@@ -20,9 +20,9 @@
 
 ## 相关组件官方文档
 
-- [Vue](http://www.runoob.com/vue2/vue-tutorial.html)
-- [Vue CLI 4](https://cli.vuejs.org/zh/)
-- [ElementUI](https://element.eleme.cn/#/zh-CN)
+- [Vue](https://v3.cn.vuejs.org/)
+- [Vue CLI 5](https://cli.vuejs.org/zh/)
+- [Element-plus](https://element-plus.gitee.io/#/zh-CN)
 - [echarts](https://www.echartsjs.com/index.html)
 - [cropperjs](https://github.com/fengyuanchen/cropperjs)
 
@@ -30,8 +30,8 @@
 
 - webpack
 - nodejs
-- vue2
-- vue cli 4
+- vue3
+- vue cli 5
 - vuex
 - vue-router
 - axios
@@ -41,7 +41,7 @@
 - js-sha256
 - js-base64
 - vue-json-editor
-- Element-UI
+- Element-plus
 - vue-count-to
 
 ## 总体架构
