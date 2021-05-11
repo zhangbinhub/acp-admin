@@ -1,4 +1,4 @@
-import enLocale from 'element-ui/lib/locale/lang/en'
+import enLocale from 'element-plus/lib/locale/lang/en'
 
 const messages = Object.assign(enLocale, {
   lang: 'Lang',

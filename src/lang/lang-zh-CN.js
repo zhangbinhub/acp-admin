@@ -1,4 +1,4 @@
-import zhLocale from 'element-ui/lib/locale/lang/zh-CN'
+import zhLocale from 'element-plus/lib/locale/lang/zh-cn'
 
 const messages = Object.assign(zhLocale, {
   lang: '语言',

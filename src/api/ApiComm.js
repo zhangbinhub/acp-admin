@@ -11,8 +11,8 @@ const ApiComm = {
   $store: undefined,
   $router: undefined,
   $loading: undefined,
-  install: function (Vue, options) {
-    Vue.prototype.$api = this
+  install: function (app, options) {
+    app.config.globalProperties.$api = this
     this.$confirm = options.confirm
     this.$notify = options.notify
     this.$i18n = options.i18n

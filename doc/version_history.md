@@ -3,6 +3,7 @@
 > - [Upgrade] vue2 升级至 vue3
 > - [Upgrade] webpack 升级至 5
 > - [Upgrade] element-ui 替换为 element-plus
+> - [Upgrade] 更新各插件写法，迁移到vue3
 ##### v4.2.4
 > - [Upgrade] 更新依赖插件至最新稳定版本
 ##### v4.2.3

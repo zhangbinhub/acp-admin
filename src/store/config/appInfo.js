@@ -4,6 +4,7 @@ export default {
   copyright: 'Copyright © 2019 by ZhangBin',
   theme: 'dark',
   minWidth: 768,
+  routeBase: '/admin',
   homePath: '/index',
   cookieExpires: 1, // day
   baseURL: '/v1/api', // back server url
