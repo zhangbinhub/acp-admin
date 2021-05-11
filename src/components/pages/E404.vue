@@ -31,6 +31,7 @@
 </template>
 <style scoped>
   .e404 {
+    position: absolute;
     background-color: #404040;
     width: 100%;
     height: 100%

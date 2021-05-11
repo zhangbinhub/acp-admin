@@ -1,6 +1,4 @@
-import Vue from 'vue'
 import Axios from 'axios'
-import VueAxios from 'vue-axios'
 import appInfo from '../store/config/appInfo'
 
 let axiosInstance = Axios.create({
@@ -11,4 +9,4 @@ let axiosInstance = Axios.create({
   timeout: appInfo.timeOut
 })
 
-Vue.use(VueAxios, axiosInstance)
+export default axiosInstance

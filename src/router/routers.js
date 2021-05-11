@@ -180,7 +180,7 @@ export default [{
     }
   }]
 }, {
-  path: '*',
+  path: "/:catchAll(.*)",
   name: '404',
   redirect: '/404'
 }]

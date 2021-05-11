@@ -1,21 +1,20 @@
-import Vue from 'vue'
-import App from './App.vue'
-import store from './store'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import * as Vue from 'vue'
+import App from '@/App.vue'
+import store from '@/store'
+import ElementUI from 'element-plus'
+import 'element-plus/lib/theme-chalk/index.css'
 import Nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
-import router from './router'
-import './plugins/plugin-axios.js'
-import api from './api'
-import './assets/styles/layout.less'
-import './assets/styles/transition.less'
+import router from '@/router'
+import VueAxios from 'vue-axios'
+import axiosInstance from "@/plugins/plugin-axios"
+import api from '@/api'
+import '@/assets/styles/layout.less'
+import '@/assets/styles/transition.less'
 import * as echarts from 'echarts'
-import './mock'
+import '@/mock'
 
-Vue.config.productionTip = false
-
-Nprogress.configure({ showSpinner: false })
+Nprogress.configure({showSpinner: false})
 
 // 响应式布局
 const autoWidth = () => {
@@ -38,30 +37,41 @@ window.onresize = function () {
   autoWidth()
   autoHeight()
 }
+const app = Vue.createApp(App)
+app.config.productionTip = false
 
-// 加载 eCharts
-Vue.prototype.$echarts = echarts
+// 加载 router
+app.use(router)
+
+// 加载 store
+app.use(store)
+
 // 加载 ElementUI ，并启用 i18n
 const i18n = store.state.app.i18n
-Vue.use(ElementUI, {
+app.use(i18n)
+app.use(ElementUI, {
   i18n: function (path, options) {
     let value = i18n.t(path, options)
     if (value !== null && value !== undefined) return value
     return ''
   }
 })
-Vue.use(api, {
-  confirm: Vue.prototype.$confirm,
-  notify: Vue.prototype.$notify,
+
+// 加载 axios
+app.use(VueAxios, axiosInstance)
+
+// 加载 api
+app.use(api, {
+  confirm: app.config.globalProperties.$confirm,
+  notify: app.config.globalProperties.$notify,
   i18n: i18n,
-  http: Vue.prototype.$http,
+  http: app.config.globalProperties.$http,
   store: store,
   router: router,
   loading: Nprogress
 })
-new Vue({
-  router,
-  store,
-  i18n,
-  render: h => h(App)
-}).$mount('#app')
+
+// 加载 eCharts
+app.config.globalProperties.$echarts = echarts
+
+app.mount('#app')

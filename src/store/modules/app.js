@@ -1,12 +1,8 @@
-import Vue from 'vue'
-import VueI18n from 'vue-i18n'
-import router from '@/router'
+import {createI18n} from 'vue-i18n'
 import Cookies from 'js-cookie'
 import langInfo from '@/lang'
-import appInfo from '../config/appInfo'
+import appInfo from '@/store/config/appInfo'
 
-// 配置 i18n 国际化
-Vue.use(VueI18n)
 let langList = []
 for (let key of Object.keys(langInfo.messages)) {
   langList.push({
@@ -19,7 +15,7 @@ if (!lang || !langInfo.langArrays.includes(lang)) {
   lang = langInfo.defaultLang
 }
 let cookieProperties = {
-  path: router.options.base,
+  path: appInfo.routeBase,
   expires: appInfo.cookieExpires
 }
 Cookies.set('lang', lang, cookieProperties)
@@ -30,7 +26,7 @@ export default {
     cacheList: [],
     tagNavList: Cookies.get('tagNavList') ? JSON.parse(Cookies.get('tagNavList')) : [],
     isMini: false,
-    i18n: new VueI18n({
+    i18n: createI18n({
       locale: lang,
       messages: langInfo.messages
     }),
