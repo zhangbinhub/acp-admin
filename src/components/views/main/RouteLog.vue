@@ -387,10 +387,8 @@ export default {
       this.editModal = true
     }
   },
-  mounted () {
-    this.handleSearch()
-  },
   activated () {
+    this.handleSearch()
     this.$nextTick(() => {
       this.$refs['table'].doLayout()
     })
