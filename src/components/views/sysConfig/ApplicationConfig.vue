@@ -163,9 +163,11 @@
   </el-card>
 </template>
 <script>
+import {nextTick} from "vue";
+
 export default {
   name: 'appConfig',
-  data () {
+  data() {
     return {
       searchForm: {
         appName: '',
@@ -196,21 +198,21 @@ export default {
     }
   },
   watch: {
-    editModal (value) {
+    editModal(value) {
       if (value) {
-        this.$nextTick(() => {
+        nextTick(() => {
           if (this.action !== 2) {
             this.$refs['appName'].focus()
           }
         })
       }
     },
-    'searchForm.currPage' () {
+    'searchForm.currPage'() {
       this.handleSearch()
     }
   },
   computed: {
-    tableHeight () {
+    tableHeight() {
       const minHeight = 300
       const height = this.$store.state.app.mainHeight - 80 - 46 - 42 - 4
       if (height < minHeight) {
@@ -219,7 +221,7 @@ export default {
         return height
       }
     },
-    ruleEditForm () {
+    ruleEditForm() {
       return {
         appName: [{
           required: true,
@@ -250,12 +252,12 @@ export default {
     }
   },
   methods: {
-    selectableFun (row) {
+    selectableFun(row) {
       return !row._disabled
     },
-    handleAdd () {
+    handleAdd() {
       this.editModal = true
-      this.$nextTick(() => {
+      nextTick(() => {
         this.$refs['editForm'].resetFields()
         this.editForm.id = ''
         this.editForm.appName = ''
@@ -268,10 +270,10 @@ export default {
         this.action = 0
       })
     },
-    doCancel () {
+    doCancel() {
       this.editModal = false
     },
-    doSave (name) {
+    doSave(name) {
       switch (this.action) {
         case 0: // 新增
           this.$refs[name].validate((valid) => {
@@ -333,7 +335,7 @@ export default {
           break
       }
     },
-    handleDelete (rowIds) {
+    handleDelete(rowIds) {
       this.modal_loading = true
       this.$api.request.app.delete(rowIds).then((res) => {
         this.modal_loading = false
@@ -345,11 +347,11 @@ export default {
         this.modal_loading = false
       })
     },
-    handlePageSizeSearch (size) {
+    handlePageSizeSearch(size) {
       this.searchForm.pageSize = size
       this.handleSearch()
     },
-    handleSearch () {
+    handleSearch() {
       let searchParam = {
         appName: this.searchForm.appName,
         queryParam: {
@@ -373,7 +375,7 @@ export default {
             }
             return item
           })
-          this.$nextTick(() => {
+          nextTick(() => {
             this.$refs['table'].doLayout()
           })
         }
@@ -383,23 +385,23 @@ export default {
         this.modal_loading = false
       })
     },
-    handleSortChange (param) {
+    handleSortChange(param) {
       this.searchForm.orderParam.prop = param.prop
       this.searchForm.orderParam.order = param.order
       this.handleSearch()
     },
-    handleRowClick (row) {
+    handleRowClick(row) {
       if (!row._disabled) {
         this.$refs['table'].toggleRowSelection(row)
       }
     },
-    handleSearchReset (name) {
+    handleSearchReset(name) {
       this.$refs[name].resetFields()
     },
-    handleSelect (selection) {
+    handleSelect(selection) {
       this.selectedData = selection
     },
-    handleDeleteRow (row) {
+    handleDeleteRow(row) {
       if (!row.covert) {
         this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
           type: 'error',
@@ -415,7 +417,7 @@ export default {
         })
       }
     },
-    handleDeleteMore () {
+    handleDeleteMore() {
       if (this.selectedData.length > 0) {
         this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
           type: 'warning'
@@ -431,9 +433,9 @@ export default {
         })
       }
     },
-    handleEdit (row, action, index) {
+    handleEdit(row, action, index) {
       this.editModal = true
-      this.$nextTick(() => {
+      nextTick(() => {
         this.$refs['editForm'].resetFields()
         this.editForm.id = row.id
         this.editForm.appName = row.appName
@@ -447,11 +449,11 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     this.handleSearch()
   },
-  activated () {
-    this.$nextTick(() => {
+  activated() {
+    nextTick(() => {
       this.$refs['table'].doLayout()
     })
   }

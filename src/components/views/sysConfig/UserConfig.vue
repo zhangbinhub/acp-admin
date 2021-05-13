@@ -231,11 +231,12 @@
 }
 </style>
 <script>
-import { copy, processTreeNode, getTreeFullPathTitle, sortTreeNodes } from '@/libs/tools'
+import {copy, processTreeNode, getTreeFullPathTitle, sortTreeNodes} from '@/libs/tools'
+import {nextTick} from "vue";
 
 export default {
   name: 'userConfig',
-  data () {
+  data() {
     return {
       roleTreeData: [],
       orgTreeData: [],
@@ -287,7 +288,7 @@ export default {
     }
   },
   computed: {
-    tableHeight () {
+    tableHeight() {
       const minHeight = 300
       const height = this.$store.state.app.mainHeight - 80 - 92 - 42 - 4
       if (height < minHeight) {
@@ -296,13 +297,13 @@ export default {
         return height
       }
     },
-    enabledList () {
+    enabledList() {
       return [
-        { value: true, label: this.$i18n.t('forms.enabled') },
-        { value: false, label: this.$i18n.t('forms.disabled') }
+        {value: true, label: this.$i18n.t('forms.enabled')},
+        {value: false, label: this.$i18n.t('forms.disabled')}
       ]
     },
-    ruleEditForm () {
+    ruleEditForm() {
       return {
         name: [{
           required: true,
@@ -340,15 +341,15 @@ export default {
     }
   },
   watch: {
-    'searchForm.currPage' () {
+    'searchForm.currPage'() {
       this.handleSearch()
     }
   },
   methods: {
-    selectableFun (row) {
+    selectableFun(row) {
       return !row._disabled
     },
-    refreshOrgTree (callBack) {
+    refreshOrgTree(callBack) {
       this.modal_loading = true
       this.$api.request.org.getOrgList().then((res) => {
         this.modal_loading = false
@@ -369,7 +370,7 @@ export default {
         this.modal_loading = false
       })
     },
-    refreshRoleTree (callBack) {
+    refreshRoleTree(callBack) {
       this.modal_loading = true
       this.$api.request.app.getList().then((appRes) => {
         if (appRes) {
@@ -408,17 +409,17 @@ export default {
         this.modal_loading = false
       })
     },
-    enabledText (enabled) {
+    enabledText(enabled) {
       return this.enabledList.filter((item) => {
         return item.value === enabled
       })[0].label
     },
-    orgNames (organizationSet) {
+    orgNames(organizationSet) {
       const data = copy(organizationSet)
       sortTreeNodes(data)
       return data.map(org => getTreeFullPathTitle(this.orgTreeData, org.id))
     },
-    roleNames (roleSet) {
+    roleNames(roleSet) {
       const data = copy(roleSet)
       return data.sort((obj1, obj2) => {
         if (obj1.sort > obj2.sort) {
@@ -430,24 +431,24 @@ export default {
         }
       }).map(role => role.name).join(',')
     },
-    handleSortChange (param) {
+    handleSortChange(param) {
       this.searchForm.orderParam.prop = param.prop
       this.searchForm.orderParam.order = param.order
       this.handleSearch()
     },
-    handleRowClick (row) {
+    handleRowClick(row) {
       if (!row._disabled) {
         this.$refs['table'].toggleRowSelection(row)
       }
     },
-    handleSearchReset (name) {
+    handleSearchReset(name) {
       this.$refs[name].resetFields()
     },
-    handlePageSizeSearch (size) {
+    handlePageSizeSearch(size) {
       this.searchForm.pageSize = size
       this.handleSearch()
     },
-    handleSearch () {
+    handleSearch() {
       let searchParam = {
         name: this.searchForm.name,
         loginNo: this.searchForm.loginNo,
@@ -475,7 +476,7 @@ export default {
             }
             return item
           })
-          this.$nextTick(() => {
+          nextTick(() => {
             this.$refs['table'].doLayout()
           })
         }
@@ -485,10 +486,10 @@ export default {
         this.modal_loading = false
       })
     },
-    handleSelect (selection) {
+    handleSelect(selection) {
       this.selectedData = selection
     },
-    handleDelete (rowIds) {
+    handleDelete(rowIds) {
       this.modal_loading = true
       this.$api.request.user.delete(rowIds).then((res) => {
         this.modal_loading = false
@@ -500,7 +501,7 @@ export default {
         this.modal_loading = false
       })
     },
-    handleDeleteRow (row) {
+    handleDeleteRow(row) {
       if (row.id === this.$store.state.app.user.userInfo.id || row.levels <= this.$store.state.app.user.userInfo.levels) {
         this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
           type: 'error',
@@ -516,7 +517,7 @@ export default {
         })
       }
     },
-    handleDeleteMore () {
+    handleDeleteMore() {
       if (this.selectedData.length > 0) {
         this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
           type: 'warning'
@@ -532,7 +533,7 @@ export default {
         })
       }
     },
-    clearCurrObj () {
+    clearCurrObj() {
       this.currObj = {
         id: '',
         name: '',
@@ -549,24 +550,24 @@ export default {
         roleSet: []
       }
     },
-    handleEdit (row) {
+    handleEdit(row) {
       this.editModal = true
-      this.$nextTick(() => {
+      nextTick(() => {
         this.currObj = copy(row)
         this.doReset()
       })
     },
-    handleAdd () {
+    handleAdd() {
       this.editModal = true
-      this.$nextTick(() => {
+      nextTick(() => {
         this.clearCurrObj()
         this.doReset()
       })
     },
-    doCancel () {
+    doCancel() {
       this.editModal = false
     },
-    doReset () {
+    doReset() {
       this.$refs['editForm'].resetFields()
       this.currObj.orgIds = this.currObj.organizationSet.map(item => item.id)
       this.currObj.orgMngIds = this.currObj.organizationMngSet.map(item => item.id)
@@ -579,18 +580,18 @@ export default {
       this.editForm.enabled = this.currObj.enabled
       this.editForm.sort = this.currObj.sort
       this.refreshOrgTree(() => {
-        this.$nextTick(() => {
+        nextTick(() => {
           this.$refs['orgTree'].setCheckedKeys(this.currObj.orgIds)
           this.$refs['orgMngTree'].setCheckedKeys(this.currObj.orgMngIds)
         })
       })
       this.refreshRoleTree(() => {
-        this.$nextTick(() => {
+        nextTick(() => {
           this.$refs['roleTree'].setCheckedKeys(this.currObj.roleIds)
         })
       })
     },
-    doSave () {
+    doSave() {
       this.$refs['editForm'].validate((valid) => {
         if (valid) {
           if (this.editForm.id && this.editForm.id !== '') {
@@ -610,7 +611,7 @@ export default {
         }
       })
     },
-    doCreate () {
+    doCreate() {
       this.modal_loading = true
       this.$api.request.user.create({
         name: this.editForm.name,
@@ -633,7 +634,7 @@ export default {
         this.modal_loading = false
       })
     },
-    doUpdate () {
+    doUpdate() {
       this.modal_loading = true
       this.$api.request.user.update({
         id: this.editForm.id,
@@ -663,7 +664,7 @@ export default {
         this.modal_loading = false
       })
     },
-    doResetPwd (userId) {
+    doResetPwd(userId) {
       this.$confirm(this.$i18n.t('messages.resetPassword') + '', this.$i18n.t('dialog.confirm') + '', {
         type: 'warning'
       }).then(() => {
@@ -680,11 +681,11 @@ export default {
       })
     }
   },
-  activated () {
+  activated() {
     this.refreshOrgTree(() => {
       this.handleSearch()
     })
-    this.$nextTick(() => {
+    nextTick(() => {
       this.$refs['table'].doLayout()
     })
   }

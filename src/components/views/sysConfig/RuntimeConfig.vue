@@ -162,9 +162,11 @@
   </el-card>
 </template>
 <script>
+import {nextTick} from "vue";
+
 export default {
   name: 'runtimeConfig',
-  data () {
+  data() {
     return {
       searchForm: {
         name: '',
@@ -197,19 +199,19 @@ export default {
     }
   },
   watch: {
-    addModal (value) {
+    addModal(value) {
       if (value) {
-        this.$nextTick(() => {
+        nextTick(() => {
           this.$refs['name'].focus()
         })
       }
     },
-    'searchForm.currPage' () {
+    'searchForm.currPage'() {
       this.handleSearch()
     }
   },
   computed: {
-    tableHeight () {
+    tableHeight() {
       const minHeight = 300
       const height = this.$store.state.app.mainHeight - 80 - 46 - 42 - 4
       if (height < minHeight) {
@@ -218,13 +220,13 @@ export default {
         return height
       }
     },
-    enabledList () {
+    enabledList() {
       return [
-        { value: true, label: this.$i18n.t('forms.enabled') },
-        { value: false, label: this.$i18n.t('forms.disabled') }
+        {value: true, label: this.$i18n.t('forms.enabled')},
+        {value: false, label: this.$i18n.t('forms.disabled')}
       ]
     },
-    ruleAddForm () {
+    ruleAddForm() {
       return {
         name: [
           {
@@ -237,24 +239,24 @@ export default {
     }
   },
   methods: {
-    enabledText (enabled) {
+    enabledText(enabled) {
       return this.enabledList.filter((item) => {
         return item.value === enabled
       })[0].label
     },
-    selectableFun (row) {
+    selectableFun(row) {
       return !row._disabled
     },
-    handleAdd () {
+    handleAdd() {
       this.addModal = true
-      this.$nextTick(() => {
+      nextTick(() => {
         this.$refs['addForm'].resetFields()
       })
     },
-    doCancel () {
+    doCancel() {
       this.addModal = false
     },
-    doAdd (name) {
+    doAdd(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
           this.modal_loading = true
@@ -276,7 +278,7 @@ export default {
         }
       })
     },
-    handleDelete (rowIds) {
+    handleDelete(rowIds) {
       this.modal_loading = true
       this.$api.request.runtime.delete(rowIds).then((res) => {
         this.modal_loading = false
@@ -288,7 +290,7 @@ export default {
         this.modal_loading = false
       })
     },
-    handleSave (index) {
+    handleSave(index) {
       this.modal_loading = true
       this.$api.request.runtime.update({
         id: this.searchData[index].id,
@@ -309,11 +311,11 @@ export default {
         this.modal_loading = false
       })
     },
-    handlePageSizeSearch (size) {
+    handlePageSizeSearch(size) {
       this.searchForm.pageSize = size
       this.handleSearch()
     },
-    handleSearch () {
+    handleSearch() {
       let searchParam = {
         name: this.searchForm.name,
         value: this.searchForm.value,
@@ -339,7 +341,7 @@ export default {
             }
             return item
           })
-          this.$nextTick(() => {
+          nextTick(() => {
             this.$refs['table'].doLayout()
           })
         }
@@ -349,23 +351,23 @@ export default {
         this.modal_loading = false
       })
     },
-    handleRowClick (row) {
+    handleRowClick(row) {
       if (!row._disabled) {
         this.$refs['table'].toggleRowSelection(row)
       }
     },
-    handleSortChange (param) {
+    handleSortChange(param) {
       this.searchForm.orderParam.prop = param.prop
       this.searchForm.orderParam.order = param.order
       this.handleSearch()
     },
-    handleSearchReset (name) {
+    handleSearchReset(name) {
       this.$refs[name].resetFields()
     },
-    handleSelect (selection) {
+    handleSelect(selection) {
       this.selectedData = selection
     },
-    handleDeleteRow (row) {
+    handleDeleteRow(row) {
       if (!row.covert) {
         this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
           type: 'error',
@@ -381,7 +383,7 @@ export default {
         })
       }
     },
-    handleDeleteMore () {
+    handleDeleteMore() {
       if (this.selectedData.length > 0) {
         this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
           type: 'warning'
@@ -397,22 +399,22 @@ export default {
         })
       }
     },
-    handleEdit (row, index) {
+    handleEdit(row, index) {
       this.editName = row.name
       this.editValue = row.value
       this.editDes = row.configDes
       this.editEnabled = !!row.enabled
       this.editIndex = index
     },
-    handleCancel () {
+    handleCancel() {
       this.editIndex = -1
     }
   },
-  mounted () {
+  mounted() {
     this.handleSearch()
   },
-  activated () {
-    this.$nextTick(() => {
+  activated() {
+    nextTick(() => {
       this.$refs['table'].doLayout()
     })
   }

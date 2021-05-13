@@ -30,7 +30,8 @@
 </template>
 
 <script>
-import { copy } from '@/libs/tools'
+import {nextTick} from 'vue'
+import {copy} from '@/libs/tools'
 import './tags-nav.less'
 
 export default {
@@ -39,7 +40,7 @@ export default {
     value: Object,
     list: {
       type: Array,
-      default () {
+      default() {
         return []
       }
     },
@@ -49,12 +50,12 @@ export default {
     },
     fullPath: {
       type: String,
-      default () {
+      default() {
         return ''
       }
     }
   },
-  data () {
+  data() {
     return {
       tagBodyLeft: 0,
       rightOffset: 40,
@@ -67,12 +68,12 @@ export default {
     }
   },
   computed: {
-    tagList () {
+    tagList() {
       return this.list
     }
   },
   methods: {
-    handleTagsOption (type) {
+    handleTagsOption(type) {
       if (type.includes('all')) {
         const res = this.list.filter(item => item.path === this.homePath)
         this.$emit('on-close', res, 'all')
@@ -82,10 +83,10 @@ export default {
         this.focusTagElementByFullPath(this.fullPath)
       }
     },
-    handleClose (path) {
+    handleClose(path) {
       this.close(path)
     },
-    close (path) {
+    close(path) {
       const res = this.list.filter(item => item.path !== path)
       const currIndex = this.list.findIndex(item => item.path === path)
       const currTag = this.list.filter(item => item.path === path)[0]
@@ -102,17 +103,17 @@ export default {
       }
       this.$emit('on-close', res, undefined, nextPath, pageName)
     },
-    handleBeforeLeave (path) {
+    handleBeforeLeave(path) {
       return this.$route.fullPath === path
     },
-    handleClick (tab) {
+    handleClick(tab) {
       this.$emit('input', {
         name: tab.$attrs['data-route-name'],
         query: JSON.parse(tab.$attrs['data-route-query']),
         params: JSON.parse(tab.$attrs['data-route-params'])
       })
     },
-    showTitleInside (item) {
+    showTitleInside(item) {
       if (item.isHome) {
         return this.$i18n.t('pageTitle.home')
       } else {
@@ -125,20 +126,20 @@ export default {
         }
       }
     },
-    focusTagElementByFullPath (fullPath) {
-      this.$nextTick(() => {
+    focusTagElementByFullPath(fullPath) {
+      nextTick(() => {
         this.currPath = fullPath
       })
     },
-    closeMenu () {
+    closeMenu() {
       this.visible = false
     }
   },
   watch: {
     '$route': {
       immediate: true,
-      handler (to) {
-        this.$nextTick(() => {
+      handler(to) {
+        nextTick(() => {
           let newTagNavList = copy(this.tagList)
           newTagNavList.forEach((item) => {
             if (item.path === to.fullPath) {
@@ -151,7 +152,7 @@ export default {
         })
       }
     },
-    visible (value) {
+    visible(value) {
       if (value) {
         document.body.addEventListener('click', this.closeMenu)
       } else {

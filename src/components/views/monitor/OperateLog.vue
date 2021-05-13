@@ -138,7 +138,9 @@
         :label="$t('forms.responseStatus')">
         <template slot-scope="scope">
           <span
-            :style="{color:scope.row.responseStatus>=200&&scope.row.responseStatus<300 ? 'green':'red'}">{{ scope.row.responseStatus }}</span>
+            :style="{color:scope.row.responseStatus>=200&&scope.row.responseStatus<300 ? 'green':'red'}">{{
+              scope.row.responseStatus
+            }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -178,7 +180,9 @@
         </el-form-item>
         <el-form-item :label="$t('forms.responseStatus')+':'" prop="responseStatus">
           <span
-            :style="{color:editForm.responseStatus>=200&&editForm.responseStatus<300 ? 'green':'red'}">{{ editForm.responseStatus }}</span>
+            :style="{color:editForm.responseStatus>=200&&editForm.responseStatus<300 ? 'green':'red'}">{{
+              editForm.responseStatus
+            }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.path')+':'" prop="path" style="width: 100%">
           <span>{{ editForm.path }}</span>
@@ -224,10 +228,11 @@
 </template>
 <script>
 import moment from 'moment'
+import {nextTick} from "vue";
 
 export default {
   name: 'operateLog',
-  data () {
+  data() {
     return {
       datePickerOptions: {
         disabledDate: (date) => {
@@ -262,7 +267,7 @@ export default {
     }
   },
   computed: {
-    tableHeight () {
+    tableHeight() {
       const minHeight = 300
       const height = this.$store.state.app.mainHeight - 80 - 140 - 42 - 4
       if (height < minHeight) {
@@ -271,17 +276,17 @@ export default {
         return height
       }
     },
-    infoTypeList () {
+    infoTypeList() {
       return [
-        { value: 'false', label: this.$i18n.t('forms.currentInfo') },
-        { value: 'true', label: this.$i18n.t('forms.historyInfo') }
+        {value: 'false', label: this.$i18n.t('forms.currentInfo')},
+        {value: 'true', label: this.$i18n.t('forms.historyInfo')}
       ]
     },
-    pickerOptions () {
+    pickerOptions() {
       return {
         shortcuts: [{
           text: this.$i18n.t('forms.buttons.lastWeek'),
-          onClick (picker) {
+          onClick(picker) {
             const end = new Date()
             const start = new Date()
             end.setHours(0, 0, 0, 0)
@@ -291,7 +296,7 @@ export default {
           }
         }, {
           text: this.$i18n.t('forms.buttons.lastMonth'),
-          onClick (picker) {
+          onClick(picker) {
             const end = new Date()
             const start = new Date()
             end.setHours(0, 0, 0, 0)
@@ -301,7 +306,7 @@ export default {
           }
         }, {
           text: this.$i18n.t('forms.buttons.lastThreeMonth'),
-          onClick (picker) {
+          onClick(picker) {
             const end = new Date()
             const start = new Date()
             end.setHours(0, 0, 0, 0)
@@ -314,25 +319,25 @@ export default {
     }
   },
   watch: {
-    'searchForm.currPage' () {
+    'searchForm.currPage'() {
       this.handleSearch()
     }
   },
   methods: {
-    dateTimeFormat (time) {
+    dateTimeFormat(time) {
       return time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''
     },
-    dateTimeMisFormat (time) {
+    dateTimeMisFormat(time) {
       return time ? moment(time).format('YYYY-MM-DD HH:mm:ss.SSS') : ''
     },
-    doCancel () {
+    doCancel() {
       this.editModal = false
     },
-    handlePageSizeSearch (size) {
+    handlePageSizeSearch(size) {
       this.searchForm.pageSize = size
       this.handleSearch()
     },
-    handleSearch () {
+    handleSearch() {
       let searchParam = {
         remoteIp: this.searchForm.remoteIp,
         path: this.searchForm.path,
@@ -359,7 +364,7 @@ export default {
           this.selectedData = []
           this.searchForm.totalRows = res.data.totalElements
           this.searchData = res.data.content
-          this.$nextTick(() => {
+          nextTick(() => {
             this.$refs['table'].doLayout()
           })
         }
@@ -369,25 +374,25 @@ export default {
         this.modal_loading = false
       })
     },
-    handleSortChange (param) {
+    handleSortChange(param) {
       this.searchForm.orderParam.prop = param.prop
       this.searchForm.orderParam.order = param.order
       this.handleSearch()
     },
-    handleSearchReset (name) {
+    handleSearchReset(name) {
       this.$refs[name].resetFields()
     },
-    handleSelect (selection) {
+    handleSelect(selection) {
       this.selectedData = selection
     },
-    handleView (row) {
+    handleView(row) {
       this.editForm = row
       this.editModal = true
     }
   },
-  activated () {
+  activated() {
     this.handleSearch()
-    this.$nextTick(() => {
+    nextTick(() => {
       this.$refs['table'].doLayout()
     })
   }

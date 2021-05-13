@@ -174,7 +174,9 @@
               <el-col :lg="{span: 8}">
                 <el-form-item :label="$t('forms.isFinished')+':'" prop="finished">
                   <span
-                    :style="{color:currObj.finished?'green':'red'}">{{ currObj.finished ? $t('forms.yes') : $t('forms.no') }}</span>
+                    :style="{color:currObj.finished?'green':'red'}">{{
+                      currObj.finished ? $t('forms.yes') : $t('forms.no')
+                    }}</span>
                 </el-form-item>
               </el-col>
               <el-col :lg="{span: 8}">
@@ -189,7 +191,9 @@
               </el-col>
               <el-col :lg="{span: 8}">
                 <el-form-item :label="$t('forms.startUser')+':'" prop="startUser">
-                  <span>{{ currObj.startUser && currObj.startUser.name ? currObj.startUser.name + '（' + currObj.startUser.loginNo + '）' : '' }}</span>
+                  <span>{{
+                      currObj.startUser && currObj.startUser.name ? currObj.startUser.name + '（' + currObj.startUser.loginNo + '）' : ''
+                    }}</span>
                 </el-form-item>
               </el-col>
               <el-col :lg="{span: 8}">
@@ -346,10 +350,11 @@
 </template>
 <script>
 import moment from 'moment'
+import {nextTick} from "vue";
 
 export default {
   name: 'workflowManager',
-  data () {
+  data() {
     return {
       searchForm: {
         processDefinitionKey: '',
@@ -378,7 +383,7 @@ export default {
     }
   },
   computed: {
-    tableHeight () {
+    tableHeight() {
       const minHeight = 300
       const height = this.$store.state.app.mainHeight - 80 - 92 - 42 - 4
       if (height < minHeight) {
@@ -387,13 +392,13 @@ export default {
         return height
       }
     },
-    infoTypeList () {
+    infoTypeList() {
       return [
-        { value: 'false', label: this.$i18n.t('forms.running') },
-        { value: 'true', label: this.$i18n.t('forms.ended') }
+        {value: 'false', label: this.$i18n.t('forms.running')},
+        {value: 'true', label: this.$i18n.t('forms.ended')}
       ]
     },
-    pickerOptions () {
+    pickerOptions() {
       return {
         disabledDate: (date) => {
           const now = new Date()
@@ -402,7 +407,7 @@ export default {
         },
         shortcuts: [{
           text: this.$i18n.t('forms.buttons.lastWeek'),
-          onClick (picker) {
+          onClick(picker) {
             const end = new Date()
             const start = new Date()
             end.setHours(0, 0, 0, 0)
@@ -412,7 +417,7 @@ export default {
           }
         }, {
           text: this.$i18n.t('forms.buttons.lastMonth'),
-          onClick (picker) {
+          onClick(picker) {
             const end = new Date()
             const start = new Date()
             end.setHours(0, 0, 0, 0)
@@ -422,7 +427,7 @@ export default {
           }
         }, {
           text: this.$i18n.t('forms.buttons.lastThreeMonth'),
-          onClick (picker) {
+          onClick(picker) {
             const end = new Date()
             const start = new Date()
             end.setHours(0, 0, 0, 0)
@@ -433,40 +438,40 @@ export default {
         }]
       }
     },
-    viewDiagram () {
+    viewDiagram() {
       return this.diagramData
     }
   },
   watch: {
-    'searchForm.currPage' () {
+    'searchForm.currPage'() {
       this.handleSearch()
     },
-    currObj (processInstance) {
+    currObj(processInstance) {
       this.doInitData(processInstance.processInstanceId)
     }
   },
   methods: {
-    dateTimeFormat (time) {
+    dateTimeFormat(time) {
       return time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''
     },
-    statusText (isFinished) {
+    statusText(isFinished) {
       return this.infoTypeList.filter((item) => {
         return item.value === isFinished.toString()
       })[0].label
     },
-    handlePageSizeSearch (size) {
+    handlePageSizeSearch(size) {
       this.searchForm.pageSize = size
       this.handleSearch()
     },
-    handleSortChange (param) {
+    handleSortChange(param) {
       this.searchForm.orderParam.prop = param.prop
       this.searchForm.orderParam.order = param.order
       this.handleSearch()
     },
-    handleSearchReset (name) {
+    handleSearchReset(name) {
       this.$refs[name].resetFields()
     },
-    handleSearch () {
+    handleSearch() {
       let searchParam = {
         processDefinitionKeys: [],
         processInstanceIds: [],
@@ -494,7 +499,7 @@ export default {
         if (res) {
           this.searchForm.totalRows = res.data.totalElements
           this.searchData = res.data.content
-          this.$nextTick(() => {
+          nextTick(() => {
             this.$refs['table'].doLayout()
           })
         }
@@ -503,11 +508,11 @@ export default {
         this.modal_loading = false
       })
     },
-    gotoFlowView (processInstance) {
+    gotoFlowView(processInstance) {
       this.viewModal = true
       this.currObj = processInstance
     },
-    doInitData (processInstanceId) {
+    doInitData(processInstanceId) {
       // 获取流程图
       const currObj = this
       this.$api.request.workFlow.diagram(processInstanceId).then((image) => {
@@ -518,7 +523,7 @@ export default {
           reader.readAsArrayBuffer(dataInfo)
           reader.onload = function (e) {
             const result = e.target.result
-            const blob = new Blob([result], { type: contentType })
+            const blob = new Blob([result], {type: contentType})
             currObj.diagramData = window.URL.createObjectURL(blob)
           }
         }
@@ -543,13 +548,13 @@ export default {
         })
       })
     },
-    doCancel () {
+    doCancel() {
       this.deleteModal = false
     },
-    termination () {
+    termination() {
       this.deleteModal = true
     },
-    doTermination () {
+    doTermination() {
       if (!this.deleteReason && this.deleteReason === '') {
         this.$message.error(this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.deleteReason'))
         return
@@ -573,11 +578,11 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     this.handleSearch()
   },
-  activated () {
-    this.$nextTick(() => {
+  activated() {
+    nextTick(() => {
       this.$refs['table'].doLayout()
     })
   }
