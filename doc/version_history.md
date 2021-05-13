@@ -1,5 +1,6 @@
 ## 版本更新记录
 ##### v5.0.0
+> - [Upgrade] 更新依赖插件至最新稳定版本
 > - [Upgrade] vue2 升级至 vue3
 > - [Upgrade] webpack 升级至 5
 > - [Upgrade] element-ui 替换为 element-plus
