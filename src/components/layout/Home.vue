@@ -46,6 +46,7 @@
   </el-container>
 </template>
 <script>
+import {nextTick} from 'vue'
 import SideMenu from './side-menu'
 import HeaderBar from './header-bar'
 import TagsNav from './tags-nav'
@@ -148,7 +149,7 @@ export default {
       this.updateTagList(this.tagNavList, this.menuList, newRoute)
     },
     mainHeight() {
-      this.$nextTick(() => {
+      nextTick(() => {
         this.$refs['main-scrollbar'].update()
       })
     }

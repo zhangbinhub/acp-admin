@@ -50,6 +50,7 @@
 </template>
 <script>
 import '@/assets/styles/login.less'
+import {nextTick} from "vue";
 
 export default {
   name: 'login',
@@ -131,7 +132,7 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => {
+    nextTick(() => {
       this.$refs['loginNo'].focus()
     })
   }

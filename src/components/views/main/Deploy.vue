@@ -182,10 +182,11 @@
 </template>
 <script>
 import moment from 'moment'
+import {nextTick} from "vue";
 
 export default {
   name: 'deploy',
-  data () {
+  data() {
     return {
       searchForm: {
         name: '',
@@ -216,12 +217,12 @@ export default {
     }
   },
   watch: {
-    'searchForm.currPage' () {
+    'searchForm.currPage'() {
       this.handleSearch()
     }
   },
   computed: {
-    tableHeight () {
+    tableHeight() {
       const minHeight = 300
       const height = this.$store.state.app.mainHeight - 80 - 46 - 42 - 4
       if (height < minHeight) {
@@ -230,11 +231,11 @@ export default {
         return height
       }
     },
-    pickerOptions () {
+    pickerOptions() {
       return {
         shortcuts: [{
           text: this.$i18n.t('forms.buttons.lastWeek'),
-          onClick (picker) {
+          onClick(picker) {
             const end = new Date()
             const start = new Date()
             end.setHours(0, 0, 0, 0)
@@ -244,7 +245,7 @@ export default {
           }
         }, {
           text: this.$i18n.t('forms.buttons.lastMonth'),
-          onClick (picker) {
+          onClick(picker) {
             const end = new Date()
             const start = new Date()
             end.setHours(0, 0, 0, 0)
@@ -254,7 +255,7 @@ export default {
           }
         }, {
           text: this.$i18n.t('forms.buttons.lastThreeMonth'),
-          onClick (picker) {
+          onClick(picker) {
             const end = new Date()
             const start = new Date()
             end.setHours(0, 0, 0, 0)
@@ -265,7 +266,7 @@ export default {
         }]
       }
     },
-    ruleAddForm () {
+    ruleAddForm() {
       return {
         name: [
           {
@@ -283,29 +284,29 @@ export default {
         ]
       }
     },
-    uploadFileUrl () {
+    uploadFileUrl() {
       return this.$api.request.deploy.uploadFileUrl()
     },
-    uploadHeaders () {
+    uploadHeaders() {
       return {
         Authorization: `${this.$store.state.app.user.tokenType} ${this.$store.state.app.user.token}`
       }
     }
   },
   methods: {
-    dateTimeFormat (time) {
+    dateTimeFormat(time) {
       return time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''
     },
-    handleAdd () {
+    handleAdd() {
       this.editModal = true
-      this.$nextTick(() => {
+      nextTick(() => {
         this.$refs['editForm'].resetFields()
         this.action = 0
       })
     },
-    handleEdit (row) {
+    handleEdit(row) {
       this.editModal = true
-      this.$nextTick(() => {
+      nextTick(() => {
         this.$refs['editForm'].resetFields()
         this.editForm.id = row.id
         this.editForm.name = row.name
@@ -321,10 +322,10 @@ export default {
         this.action = 1
       })
     },
-    doCancel () {
+    doCancel() {
       this.editModal = false
     },
-    doSave (name) {
+    doSave(name) {
       switch (this.action) {
         case 0:
           this.$refs[name].validate((valid) => {
@@ -373,7 +374,7 @@ export default {
           break
       }
     },
-    handleDelete (rowIds) {
+    handleDelete(rowIds) {
       this.modal_loading = true
       this.$api.request.deploy.delete(rowIds).then((res) => {
         this.modal_loading = false
@@ -385,11 +386,11 @@ export default {
         this.modal_loading = false
       })
     },
-    handlePageSizeSearch (size) {
+    handlePageSizeSearch(size) {
       this.searchForm.pageSize = size
       this.handleSearch()
     },
-    handleSearch () {
+    handleSearch() {
       let searchParam = {
         name: this.searchForm.name,
         startTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[0].getTime() : null,
@@ -410,7 +411,7 @@ export default {
           this.selectedData = []
           this.searchForm.totalRows = res.data.totalElements
           this.searchData = res.data.content
-          this.$nextTick(() => {
+          nextTick(() => {
             this.$refs['table'].doLayout()
           })
         }
@@ -420,21 +421,21 @@ export default {
         this.modal_loading = false
       })
     },
-    handleRowClick (row) {
+    handleRowClick(row) {
       this.$refs['table'].toggleRowSelection(row)
     },
-    handleSortChange (param) {
+    handleSortChange(param) {
       this.searchForm.orderParam.prop = param.prop
       this.searchForm.orderParam.order = param.order
       this.handleSearch()
     },
-    handleSearchReset (name) {
+    handleSearchReset(name) {
       this.$refs[name].resetFields()
     },
-    handleSelect (selection) {
+    handleSelect(selection) {
       this.selectedData = selection
     },
-    handleDeleteRow (row) {
+    handleDeleteRow(row) {
       this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '[' + row.name + ']', this.$i18n.t('dialog.confirm') + '', {
         type: 'warning'
       }).then(() => {
@@ -442,7 +443,7 @@ export default {
       }).catch(() => {
       })
     },
-    handleDeleteMore () {
+    handleDeleteMore() {
       if (this.selectedData.length > 0) {
         this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
           type: 'warning'
@@ -458,7 +459,7 @@ export default {
         })
       }
     },
-    handleExecute (row) {
+    handleExecute(row) {
       this.$confirm(this.$i18n.t('messages.executeDeployConfirm') + '[' + row.name + ']', this.$i18n.t('dialog.confirm') + '', {
         type: 'warning'
       }).then(() => {
@@ -474,14 +475,14 @@ export default {
         })
       })
     },
-    handleOpenFileManager () {
+    handleOpenFileManager() {
       this.fileModal = true
       this.modal_loading = true
       this.$api.request.deploy.searchFile().then((res) => {
         this.modal_loading = false
         if (res) {
           this.fileList = res.data.map((item) => {
-            return { name: item }
+            return {name: item}
           })
         }
       }).catch(() => {
@@ -489,12 +490,12 @@ export default {
         this.modal_loading = false
       })
     },
-    handleBeforeRemoveFile (file) {
+    handleBeforeRemoveFile(file) {
       return this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + ' ' + file.name, this.$i18n.t('dialog.confirm') + '', {
         type: 'warning'
       })
     },
-    handleRemoveFile (file) {
+    handleRemoveFile(file) {
       this.modal_loading = true
       this.$api.request.deploy.deleteFile(file.name).then((res) => {
         this.modal_loading = false
@@ -505,21 +506,21 @@ export default {
         this.modal_loading = false
       })
     },
-    handleDownloadFile (file) {
+    handleDownloadFile(file) {
       this.$api.request.deploy.downLoadFile(file.name)
     },
-    handleUploadSuccess (res, file) {
+    handleUploadSuccess(res, file) {
       file.name = res.message
     },
-    handleUploadError (err) {
-      this.$api.errorProcess({ response: { data: JSON.parse(String(err).substring(6)) } })
+    handleUploadError(err) {
+      this.$api.errorProcess({response: {data: JSON.parse(String(err).substring(6))}})
     }
   },
-  mounted () {
+  mounted() {
     this.handleSearch()
   },
-  activated () {
-    this.$nextTick(() => {
+  activated() {
+    nextTick(() => {
       this.$refs['table'].doLayout()
     })
   }

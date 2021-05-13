@@ -186,13 +186,14 @@
 </template>
 <script>
 import vueJsonEditor from 'vue-json-editor'
+import {nextTick} from "vue";
 
 export default {
   name: 'routeConfig',
   components: {
     vueJsonEditor
   },
-  data () {
+  data() {
     return {
       jsonEditModes: ['tree', 'text'],
       searchForm: {
@@ -226,19 +227,19 @@ export default {
     }
   },
   watch: {
-    editModal (value) {
+    editModal(value) {
       if (value) {
-        this.$nextTick(() => {
+        nextTick(() => {
           this.$refs['routeId'].focus()
         })
       }
     },
-    'searchForm.currPage' () {
+    'searchForm.currPage'() {
       this.handleSearch()
     }
   },
   computed: {
-    tableHeight () {
+    tableHeight() {
       const minHeight = 300
       const height = this.$store.state.app.mainHeight - 80 - 46 - 42 - 4
       if (height < minHeight) {
@@ -247,7 +248,7 @@ export default {
         return height
       }
     },
-    jsonEditorLang () {
+    jsonEditorLang() {
       const lang = this.$store.state.app.lang.lang
       if (lang === 'CN') {
         return 'zh'
@@ -255,13 +256,13 @@ export default {
         return 'en'
       }
     },
-    enabledList () {
+    enabledList() {
       return [
-        { value: true, label: this.$i18n.t('forms.enabled') },
-        { value: false, label: this.$i18n.t('forms.disabled') }
+        {value: true, label: this.$i18n.t('forms.enabled')},
+        {value: false, label: this.$i18n.t('forms.disabled')}
       ]
     },
-    ruleAddForm () {
+    ruleAddForm() {
       return {
         routeId: [
           {
@@ -297,24 +298,24 @@ export default {
     }
   },
   methods: {
-    enabledText (enabled) {
+    enabledText(enabled) {
       return this.enabledList.filter((item) => {
         return item.value === enabled
       })[0].label
     },
-    selectableFun (row) {
+    selectableFun(row) {
       return !row._disabled
     },
-    handleAdd () {
+    handleAdd() {
       this.editModal = true
-      this.$nextTick(() => {
+      nextTick(() => {
         this.$refs['editForm'].resetFields()
         this.action = 0
       })
     },
-    handleEdit (row) {
+    handleEdit(row) {
       this.editModal = true
-      this.$nextTick(() => {
+      nextTick(() => {
         this.$refs['editForm'].resetFields()
         this.editForm.id = row.id
         this.editForm.routeId = row.routeId
@@ -328,10 +329,10 @@ export default {
         this.action = 1
       })
     },
-    doCancel () {
+    doCancel() {
       this.editModal = false
     },
-    doSave (name) {
+    doSave(name) {
       if (!(this.editForm.predicates instanceof Array)) {
         this.$notify.error({
           title: this.$i18n.t('messages.validateFailed') + '',
@@ -409,7 +410,7 @@ export default {
           break
       }
     },
-    handleDelete (rowIds) {
+    handleDelete(rowIds) {
       this.modal_loading = true
       this.$api.request.route.delete(rowIds).then((res) => {
         this.modal_loading = false
@@ -421,11 +422,11 @@ export default {
         this.modal_loading = false
       })
     },
-    handlePageSizeSearch (size) {
+    handlePageSizeSearch(size) {
       this.searchForm.pageSize = size
       this.handleSearch()
     },
-    handleSearch () {
+    handleSearch() {
       let searchParam = {
         routeId: this.searchForm.routeId,
         enabled: this.searchForm.enabled,
@@ -450,7 +451,7 @@ export default {
             }
             return item
           })
-          this.$nextTick(() => {
+          nextTick(() => {
             this.$refs['table'].doLayout()
           })
         }
@@ -460,23 +461,23 @@ export default {
         this.modal_loading = false
       })
     },
-    handleRowClick (row) {
+    handleRowClick(row) {
       if (!row._disabled) {
         this.$refs['table'].toggleRowSelection(row)
       }
     },
-    handleSortChange (param) {
+    handleSortChange(param) {
       this.searchForm.orderParam.prop = param.prop
       this.searchForm.orderParam.order = param.order
       this.handleSearch()
     },
-    handleSearchReset (name) {
+    handleSearchReset(name) {
       this.$refs[name].resetFields()
     },
-    handleSelect (selection) {
+    handleSelect(selection) {
       this.selectedData = selection
     },
-    handleDeleteRow (row) {
+    handleDeleteRow(row) {
       if (row.enabled) {
         this.$alert(this.$i18n.t('messages.tableDataCannotDel') + '', this.$i18n.t('dialog.error') + '', {
           type: 'error',
@@ -492,7 +493,7 @@ export default {
         })
       }
     },
-    handleDeleteMore () {
+    handleDeleteMore() {
       if (this.selectedData.length > 0) {
         this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
           type: 'warning'
@@ -508,7 +509,7 @@ export default {
         })
       }
     },
-    handleRefresh () {
+    handleRefresh() {
       this.$confirm(this.$i18n.t('messages.refreshRouteConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
         type: 'warning'
       }).then(() => {
@@ -526,11 +527,11 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     this.handleSearch()
   },
-  activated () {
-    this.$nextTick(() => {
+  activated() {
+    nextTick(() => {
       this.$refs['table'].doLayout()
     })
   }

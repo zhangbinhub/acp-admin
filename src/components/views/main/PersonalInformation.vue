@@ -62,6 +62,7 @@
 import avatarImg from '@/assets/images/avatar/avatar.jpg'
 import Cropper from '@/components/cropper'
 import 'cropperjs/dist/cropper.min.css'
+import {nextTick} from "vue";
 
 export default {
   name: 'personalInformation',
@@ -241,7 +242,7 @@ export default {
     }
   },
   activated() {
-    this.$nextTick(() => {
+    nextTick(() => {
       this.$refs['name'].focus()
     })
     // 获取运行配置参数

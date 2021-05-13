@@ -38,7 +38,6 @@ window.onresize = function () {
   autoHeight()
 }
 const app = Vue.createApp(App)
-app.config.productionTip = false
 
 // 加载 router
 app.use(router)

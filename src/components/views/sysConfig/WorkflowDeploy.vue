@@ -210,11 +210,12 @@
 </template>
 <script>
 import moment from 'moment'
-import { copy } from '@/libs/tools'
+import {copy} from '@/libs/tools'
+import {nextTick} from "vue";
 
 export default {
   name: 'workflowDeploy',
-  data () {
+  data() {
     return {
       searchForm: {
         resourceName: '',
@@ -254,21 +255,21 @@ export default {
     }
   },
   computed: {
-    viewDiagram () {
+    viewDiagram() {
       return this.diagramData
     },
-    uploadURL () {
+    uploadURL() {
       return this.$api.request.workFlowDeploy.uploadUrl()
     },
-    uploadHeaders () {
+    uploadHeaders() {
       return {
         Authorization: `${this.$store.state.app.user.tokenType} ${this.$store.state.app.user.token}`
       }
     },
-    remarks () {
+    remarks() {
       return this.editForm.remarks
     },
-    tableHeight () {
+    tableHeight() {
       const minHeight = 300
       const height = this.$store.state.app.mainHeight - 80 - 46 - 42 - 4
       if (height < minHeight) {
@@ -279,16 +280,16 @@ export default {
     }
   },
   watch: {
-    'searchForm.currPage' () {
+    'searchForm.currPage'() {
       this.handleSearch()
     }
   },
   methods: {
-    dateTimeFormat (time) {
+    dateTimeFormat(time) {
       return time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''
     },
-    doReset () {
-      this.$nextTick(() => {
+    doReset() {
+      nextTick(() => {
         this.$refs['editForm'].resetFields()
         if (this.action === 0) {
           this.$refs['upload'].clearFiles()
@@ -298,8 +299,8 @@ export default {
         this.diagramData = ''
       })
     },
-    clearCurrObj () {
-      this.$nextTick(() => {
+    clearCurrObj() {
+      nextTick(() => {
         this.currObj = {
           id: '',
           resourceName: '',
@@ -315,18 +316,18 @@ export default {
         }
       })
     },
-    handleAdd () {
+    handleAdd() {
       this.editModal = true
       this.action = 0
-      this.$nextTick(() => {
+      nextTick(() => {
         this.clearCurrObj()
         this.doReset()
       })
     },
-    doCancel () {
+    doCancel() {
       this.editModal = false
     },
-    handleDelete (rowIds) {
+    handleDelete(rowIds) {
       this.modal_loading = true
       this.$api.request.workFlowDeploy.delete(rowIds).then((res) => {
         this.modal_loading = false
@@ -338,7 +339,7 @@ export default {
         this.modal_loading = false
       })
     },
-    handleSave (name) {
+    handleSave(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
           switch (this.action) {
@@ -376,7 +377,7 @@ export default {
         }
       })
     },
-    handleDeploy () {
+    handleDeploy() {
       this.$confirm(this.$i18n.t('messages.deployWorkFlowConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
         type: 'warning'
       }).then(() => {
@@ -386,7 +387,7 @@ export default {
           if (res) {
             this.$message.success(this.$i18n.t('messages.requestSuccess') + '')
             this.currObj = copy(res.data)
-            this.$nextTick(() => {
+            nextTick(() => {
               this.doReset()
             })
             this.handleSearch()
@@ -397,7 +398,7 @@ export default {
       }).catch(() => {
       })
     },
-    handleViewDiagram () {
+    handleViewDiagram() {
       const currObj = this
       this.diagramModal = true
       this.$api.request.workFlowDeploy.diagram(this.editForm.deploymentId).then((image) => {
@@ -408,7 +409,7 @@ export default {
           reader.readAsArrayBuffer(dataInfo)
           reader.onload = function (e) {
             const result = e.target.result
-            const blob = new Blob([result], { type: contentType })
+            const blob = new Blob([result], {type: contentType})
             currObj.diagramData = window.URL.createObjectURL(blob)
           }
         }
@@ -416,11 +417,11 @@ export default {
         this.$api.errorProcess('获取流程图失败！')
       })
     },
-    handlePageSizeSearch (size) {
+    handlePageSizeSearch(size) {
       this.searchForm.pageSize = size
       this.handleSearch()
     },
-    handleSearch () {
+    handleSearch() {
       let searchParam = {
         resourceName: this.searchForm.resourceName,
         processKey: this.searchForm.processKey,
@@ -442,7 +443,7 @@ export default {
           this.searchForm.totalRows = res.data.totalElements
           this.searchData = []
           this.searchData = res.data.content
-          this.$nextTick(() => {
+          nextTick(() => {
             this.$refs['table'].doLayout()
           })
         }
@@ -452,21 +453,21 @@ export default {
         this.modal_loading = false
       })
     },
-    handleRowClick (row) {
+    handleRowClick(row) {
       this.$refs['table'].toggleRowSelection(row)
     },
-    handleSortChange (param) {
+    handleSortChange(param) {
       this.searchForm.orderParam.prop = param.prop
       this.searchForm.orderParam.order = param.order
       this.handleSearch()
     },
-    handleSearchReset (name) {
+    handleSearchReset(name) {
       this.$refs[name].resetFields()
     },
-    handleSelect (selection) {
+    handleSelect(selection) {
       this.selectedData = selection
     },
-    handleDeleteRow (row) {
+    handleDeleteRow(row) {
       this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
         type: 'warning'
       }).then(() => {
@@ -474,7 +475,7 @@ export default {
       }).catch(() => {
       })
     },
-    handleDeleteMore () {
+    handleDeleteMore() {
       if (this.selectedData.length > 0) {
         this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + '', this.$i18n.t('dialog.confirm') + '', {
           type: 'warning'
@@ -490,40 +491,40 @@ export default {
         })
       }
     },
-    handleEdit (row) {
+    handleEdit(row) {
       this.editModal = true
       this.action = 1
       this.currObj = copy(row)
-      this.$nextTick(() => {
+      nextTick(() => {
         this.doReset()
       })
     },
-    handleChangeUpload (file, fileList) {
+    handleChangeUpload(file, fileList) {
       this.fileList = fileList
     },
-    handleBeforeUpload () {
+    handleBeforeUpload() {
       this.modal_loading = true
       return true
     },
-    handleUploadSuccess () {
+    handleUploadSuccess() {
       this.editModal = false
       this.modal_loading = false
       this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
       this.handleSearch()
     },
-    handleUploadError (err) {
+    handleUploadError(err) {
       this.modal_loading = false
-      this.$api.errorProcess({ response: { data: JSON.parse(String(err).substring(6)) } })
+      this.$api.errorProcess({response: {data: JSON.parse(String(err).substring(6))}})
     },
-    handleDownLoadFile () {
+    handleDownLoadFile() {
       this.$api.request.workFlowDeploy.downLoadFile(this.editForm.id)
     }
   },
-  mounted () {
+  mounted() {
     this.handleSearch()
   },
-  activated () {
-    this.$nextTick(() => {
+  activated() {
+    nextTick(() => {
       this.$refs['table'].doLayout()
     })
   }
