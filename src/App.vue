@@ -1,7 +1,5 @@
 <template>
-  <div id="app" class="global-size">
-    <router-view/>
-  </div>
+  <router-view/>
 </template>
 
 <script>

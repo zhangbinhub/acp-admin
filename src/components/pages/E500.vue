@@ -33,7 +33,6 @@
 </template>
 <style scoped>
   .e500 {
-    position: absolute;
     background-color: #404040;
     width: 100%;
     height: 100%
