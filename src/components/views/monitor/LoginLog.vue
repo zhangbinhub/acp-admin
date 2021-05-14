@@ -180,11 +180,13 @@
           <span>{{ dateTimeMisFormat(editForm.responseTime) }}</span>
         </el-form-item>
       </el-form>
-      <div slot="footer" style="text-align: center">
-        <el-button type="info" :loading="modal_loading" @click="doCancel()">
-          {{ $t('forms.buttons.cancel') }}
-        </el-button>
-      </div>
+      <template #footer>
+        <div style="text-align: center">
+          <el-button type="info" :loading="modal_loading" @click="doCancel()">
+            {{ $t('forms.buttons.cancel') }}
+          </el-button>
+        </div>
+      </template>
     </el-dialog>
   </el-card>
 </template>

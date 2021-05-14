@@ -150,14 +150,16 @@
           <el-switch v-model="addForm.enabled" :disabled="modal_loading"/>
         </el-form-item>
       </el-form>
-      <div slot="footer">
-        <el-button type="info" :loading="modal_loading" @click="doCancel()">
-          {{ $t('forms.buttons.cancel') }}
-        </el-button>
-        <el-button type="primary" :loading="modal_loading" @click="doAdd('addForm')">
-          {{ $t('forms.buttons.submit') }}
-        </el-button>
-      </div>
+      <template #footer>
+        <div>
+          <el-button type="info" :loading="modal_loading" @click="doCancel()">
+            {{ $t('forms.buttons.cancel') }}
+          </el-button>
+          <el-button type="primary" :loading="modal_loading" @click="doAdd('addForm')">
+            {{ $t('forms.buttons.submit') }}
+          </el-button>
+        </div>
+      </template>
     </el-dialog>
   </el-card>
 </template>

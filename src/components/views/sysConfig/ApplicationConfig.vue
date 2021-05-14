@@ -146,19 +146,21 @@
           </span>
         </el-form-item>
       </el-form>
-      <div slot="footer">
-        <el-button type="info" :loading="modal_loading" @click="doCancel()">
-          {{ $t('forms.buttons.cancel') }}
-        </el-button>
-        <el-button v-if="action===0||action===1" type="primary" :loading="modal_loading"
-                   @click="doSave('editForm')">
-          {{ $t('forms.buttons.submit') }}
-        </el-button>
-        <el-button v-else type="primary" :loading="modal_loading"
-                   @click="doSave('editForm')">
-          {{ $t('forms.buttons.updateSecret') }}
-        </el-button>
-      </div>
+      <template #footer>
+        <div>
+          <el-button type="info" :loading="modal_loading" @click="doCancel()">
+            {{ $t('forms.buttons.cancel') }}
+          </el-button>
+          <el-button v-if="action===0||action===1" type="primary" :loading="modal_loading"
+                     @click="doSave('editForm')">
+            {{ $t('forms.buttons.submit') }}
+          </el-button>
+          <el-button v-else type="primary" :loading="modal_loading"
+                     @click="doSave('editForm')">
+            {{ $t('forms.buttons.updateSecret') }}
+          </el-button>
+        </div>
+      </template>
     </el-dialog>
   </el-card>
 </template>

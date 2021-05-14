@@ -323,11 +323,13 @@
           </el-table>
         </el-card>
       </div>
-      <div slot="footer" v-if="!currObj.finished" style="text-align: left">
-        <el-button type="danger" :loading="modal_loading" @click="termination()">
-          {{ $t('forms.buttons.delete') }}
-        </el-button>
-      </div>
+      <template #footer>
+        <div v-if="!currObj.finished" style="text-align: left">
+          <el-button type="danger" :loading="modal_loading" @click="termination()">
+            {{ $t('forms.buttons.delete') }}
+          </el-button>
+        </div>
+      </template>
       <el-backtop :visibility-height="10" target=".el-dialog"/>
     </el-dialog>
     <el-dialog v-model="deleteModal" :title="$t('forms.info')" :close-on-click-modal="false" append-to-body>
@@ -337,14 +339,16 @@
                     :placeholder="$t('forms.pleaseEnter')+$t('forms.deleteReason')"/>
         </el-form-item>
       </el-form>
-      <div slot="footer" style="text-align: center">
-        <el-button type="info" :loading="modal_loading" @click="doCancel()">
-          {{ $t('forms.buttons.cancel') }}
-        </el-button>
-        <el-button type="primary" :loading="modal_loading" @click="doTermination()">
-          {{ $t('forms.buttons.submit') }}
-        </el-button>
-      </div>
+      <template #footer>
+        <div style="text-align: center">
+          <el-button type="info" :loading="modal_loading" @click="doCancel()">
+            {{ $t('forms.buttons.cancel') }}
+          </el-button>
+          <el-button type="primary" :loading="modal_loading" @click="doTermination()">
+            {{ $t('forms.buttons.submit') }}
+          </el-button>
+        </div>
+      </template>
     </el-dialog>
   </el-card>
 </template>

@@ -179,26 +179,28 @@
           </el-form-item>
         </div>
       </el-form>
-      <div slot="footer">
-        <el-button type="info" :loading="modal_loading" @click="doCancel()">
-          {{ $t('forms.buttons.cancel') }}
-        </el-button>
-        <el-button type="warning" :loading="modal_loading" @click="doReset()">
-          {{ $t('forms.buttons.reset') }}
-        </el-button>
-        <el-button type="primary" :loading="modal_loading" @click="handleSave('editForm')">
-          {{ $t('forms.buttons.submit') }}
-        </el-button>
-        <div v-if="action===1" style="float: left">
-          <el-button type="success" :loading="modal_loading" @click="handleDeploy">
-            {{ $t('forms.buttons.deploy') }}
+      <template #footer>
+        <div>
+          <el-button type="info" :loading="modal_loading" @click="doCancel()">
+            {{ $t('forms.buttons.cancel') }}
           </el-button>
-          <el-button v-if="this.editForm.deploymentId && this.editForm.deploymentId!==''" type="info"
-                     :loading="modal_loading" icon="el-icon-search" @click="handleViewDiagram">
-            {{ $t('forms.buttons.view') }}
+          <el-button type="warning" :loading="modal_loading" @click="doReset()">
+            {{ $t('forms.buttons.reset') }}
           </el-button>
+          <el-button type="primary" :loading="modal_loading" @click="handleSave('editForm')">
+            {{ $t('forms.buttons.submit') }}
+          </el-button>
+          <div v-if="action===1" style="float: left">
+            <el-button type="success" :loading="modal_loading" @click="handleDeploy">
+              {{ $t('forms.buttons.deploy') }}
+            </el-button>
+            <el-button v-if="this.editForm.deploymentId && this.editForm.deploymentId!==''" type="info"
+                       :loading="modal_loading" icon="el-icon-search" @click="handleViewDiagram">
+              {{ $t('forms.buttons.view') }}
+            </el-button>
+          </div>
         </div>
-      </div>
+      </template>
     </el-dialog>
     <el-dialog v-model="diagramModal" :title="$t('forms.buttons.image')" fullscreen>
       <el-scrollbar>
