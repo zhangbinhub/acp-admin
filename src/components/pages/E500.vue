@@ -35,7 +35,7 @@
   .e500 {
     background-color: #404040;
     width: 100%;
-    height: 100%
+    height: 100%;
   }
 
   svg {
