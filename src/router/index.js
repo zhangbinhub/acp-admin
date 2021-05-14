@@ -1,10 +1,10 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import routes from './routers'
 import store from '@/store'
 import NProgress from 'nprogress'
 
 const router = createRouter({
-  history: createWebHashHistory(store.state.app.routeBase),
+  history: createWebHistory(store.state.app.appInfo.routeBase),
   routes: routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
