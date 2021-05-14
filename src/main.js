@@ -50,7 +50,7 @@ const i18n = store.state.app.i18n
 app.use(i18n)
 app.use(ElementUI, {
   i18n: function (path, options) {
-    let value = i18n.t(path, options)
+    let value = i18n.global.t(path, options)
     if (value !== null && value !== undefined) return value
     return ''
   }
