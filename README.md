@@ -20,7 +20,7 @@
 
 ## 相关组件官方文档
 
-- [Vue](https://v3.cn.vuejs.org/)
+- [Vue 3](https://v3.cn.vuejs.org/)
 - [Vue CLI 5](https://cli.vuejs.org/zh/)
 - [Element-plus](https://element-plus.gitee.io/#/zh-CN)
 - [echarts](https://www.echartsjs.com/index.html)
@@ -28,7 +28,7 @@
 
 ## 技术栈
 
-- webpack
+- webpack 5
 - nodejs
 - vue3
 - vue cli 5
