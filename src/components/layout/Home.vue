@@ -26,7 +26,7 @@
       <el-container>
         <el-header style="padding: 0;height: 33px">
           <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList"
-                    @input="handleClick" @on-close="handleCloseTag"/>
+                    @update:modelValue="handleClick" @on-close="handleCloseTag"/>
         </el-header>
         <el-scrollbar ref="main-scrollbar" class="main-scrollbar" :style="{height:mainHeight+'px'}">
           <el-main class="main-content">

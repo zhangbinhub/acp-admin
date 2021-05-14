@@ -41,7 +41,7 @@
             :on-remove="handleRemove">
             <i class="el-icon-plus"/>
           </el-upload>
-          <el-dialog :visible.sync="dialogVisible">
+          <el-dialog v-model="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt="">
           </el-dialog>
         </el-card>
@@ -77,7 +77,7 @@
               </span>
             </div>
           </el-upload>
-          <el-dialog :visible.sync="dialogVisible">
+          <el-dialog v-model="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt="">
           </el-dialog>
         </el-card>

@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="bg">
-      <el-dialog custom-class="login-dialog" :visible.syn="loginModal" width="300px"
+      <el-dialog custom-class="login-dialog" v-model="loginModal" width="300px"
                  :modal="false" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
         <div slot="title" style="text-align: center">
           <h1>

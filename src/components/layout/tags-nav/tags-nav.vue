@@ -37,7 +37,7 @@ import './tags-nav.less'
 export default {
   name: 'TagsNav',
   props: {
-    value: Object,
+    modelValue: Object,
     list: {
       type: Array,
       default() {
@@ -107,7 +107,7 @@ export default {
       return this.$route.fullPath === path
     },
     handleClick(tab) {
-      this.$emit('input', {
+      this.$emit('update:modelValue', {
         name: tab.$attrs['data-route-name'],
         query: JSON.parse(tab.$attrs['data-route-query']),
         params: JSON.parse(tab.$attrs['data-route-params'])

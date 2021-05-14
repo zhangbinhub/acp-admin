@@ -137,13 +137,13 @@
     </el-table>
     <el-pagination style="margin-top: 10px;text-align: right"
                    @size-change="handlePageSizeSearch"
-                   :current-page.sync="searchForm.currPage"
+                   v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
-                   :page-size.sync="searchForm.pageSize"
+                   v-model:page-size="searchForm.pageSize"
                    layout="total, sizes, prev, pager, next, jumper"
                    :total="searchForm.totalRows">
     </el-pagination>
-    <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :fullscreen="true">
+    <el-dialog v-model="editModal" :title="$t('forms.info')" :fullscreen="true">
       <el-row :gutter="10">
         <el-col :lg="6" class="card-col">
           <el-card>

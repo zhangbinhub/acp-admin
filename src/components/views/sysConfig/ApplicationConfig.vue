@@ -91,13 +91,13 @@
     </el-table>
     <el-pagination style="margin-top: 10px;text-align: right"
                    @size-change="handlePageSizeSearch"
-                   :current-page.sync="searchForm.currPage"
+                   v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
-                   :page-size.sync="searchForm.pageSize"
+                   v-model:page-size="searchForm.pageSize"
                    layout="total, sizes, prev, pager, next, jumper"
                    :total="searchForm.totalRows">
     </el-pagination>
-    <el-dialog :visible.sync="editModal" :title="$t('forms.info')" :close-on-click-modal="false">
+    <el-dialog v-model="editModal" :title="$t('forms.info')" :close-on-click-modal="false">
       <el-form ref="editForm" :model="editForm" :rules="ruleEditForm" label-width="150px" style="padding-right: 25px;"
                size="mini" v-loading="modal_loading" @submit.native.prevent>
         <el-form-item :label="'appId:'" prop="id" v-if="action===2">

@@ -122,13 +122,13 @@
     </el-table>
     <el-pagination style="margin-top: 10px;text-align: right"
                    @size-change="handlePageSizeSearch"
-                   :current-page.sync="searchForm.currPage"
+                   v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
-                   :page-size.sync="searchForm.pageSize"
+                   v-model:page-size="searchForm.pageSize"
                    layout="total, sizes, prev, pager, next, jumper"
                    :total="searchForm.totalRows">
     </el-pagination>
-    <el-dialog :visible.sync="addModal" :title="$t('forms.buttons.add')" :close-on-click-modal="false">
+    <el-dialog v-model="addModal" :title="$t('forms.buttons.add')" :close-on-click-modal="false">
       <el-form ref="addForm" :model="addForm" :rules="ruleAddForm" label-width="60px" size="mini"
                v-loading="modal_loading" @submit.native.prevent style="padding-right: 25px;">
         <el-form-item :label="$t('forms.name')" prop="name">

@@ -129,13 +129,13 @@
     </el-table>
     <el-pagination style="margin-top: 10px;text-align: right"
                    @size-change="handlePageSizeSearch"
-                   :current-page.sync="searchForm.currPage"
+                   v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
-                   :page-size.sync="searchForm.pageSize"
+                   v-model:page-size="searchForm.pageSize"
                    layout="total, sizes, prev, pager, next, jumper"
                    :total="searchForm.totalRows">
     </el-pagination>
-    <el-dialog :visible.sync="viewModal" :title="$t('forms.info')" :fullscreen="true">
+    <el-dialog v-model="viewModal" :title="$t('forms.info')" :fullscreen="true">
       <div>
         <el-card shadow="hover">
           <div slot="header">
@@ -330,7 +330,7 @@
       </div>
       <el-backtop :visibility-height="10" target=".el-dialog"/>
     </el-dialog>
-    <el-dialog :visible.sync="deleteModal" :title="$t('forms.info')" :close-on-click-modal="false" append-to-body>
+    <el-dialog v-model="deleteModal" :title="$t('forms.info')" :close-on-click-modal="false" append-to-body>
       <el-form v-loading="modal_loading" @submit.native.prevent>
         <el-form-item :label="$t('forms.deleteReason')" required>
           <el-input v-model="deleteReason" type="textarea" :rows="3"
