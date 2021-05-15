@@ -3,14 +3,16 @@
     <div class="bg">
       <el-dialog custom-class="login-dialog" v-model="loginModal" width="300px"
                  :modal="false" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
-        <div slot="title" style="text-align: center">
-          <h1>
-            <span>{{ title }}</span>
-          </h1>
-          <div style="height: 20px">
-            <span style="text-align: center;font-size: x-small;">v{{ version }}</span>
+        <template #title>
+          <div style="text-align: center">
+            <h1>
+              <span>{{ title }}</span>
+            </h1>
+            <div style="height: 20px">
+              <span style="text-align: center;font-size: x-small;">v{{ version }}</span>
+            </div>
           </div>
-        </div>
+        </template>
         <div>
           <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" @submit.native.prevent>
             <el-form-item>
@@ -37,13 +39,15 @@
             </el-form-item>
           </el-form>
         </div>
-        <div slot="footer">
-          <el-button type="primary" :loading="modal_loading" style="width: 100%"
-                     @click="handleSubmit('formValidate')">
-            {{ $t('forms.buttons.login') }}
-          </el-button>
-          <small style="text-align: center;display: block;margin-top: 10px;">{{ copyright }}</small>
-        </div>
+        <template #footer>
+          <div style="text-align: center">
+            <el-button type="primary" :loading="modal_loading" style="width: 100%"
+                       @click="handleSubmit('formValidate')">
+              {{ $t('forms.buttons.login') }}
+            </el-button>
+            <small style="text-align: center;display: block;margin-top: 10px;">{{ copyright }}</small>
+          </div>
+        </template>
       </el-dialog>
     </div>
   </div>

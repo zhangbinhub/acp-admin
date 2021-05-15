@@ -3,11 +3,13 @@
     <div class="bg">
       <el-dialog custom-class="login-dialog" v-model="submitModal" width="300px"
                  :modal="false" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
-        <div slot="title" style="text-align: center">
-          <h1>
-            <span>{{ $t('pageTitle.passwordExpire') }}</span>
-          </h1>
-        </div>
+        <template #title>
+          <div style="text-align: center">
+            <h1>
+              <span>{{ $t('pageTitle.passwordExpire') }}</span>
+            </h1>
+          </div>
+        </template>
         <div>
           <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" @submit.native.prevent>
             <el-form-item>
@@ -36,16 +38,18 @@
             </el-form-item>
           </el-form>
         </div>
-        <div slot="footer">
-          <el-button type="primary" :loading="modal_loading" style="width: 100%"
-                     @click="handleSubmit('formValidate')">
-            {{ $t('forms.buttons.submit') }}
-          </el-button>
-          <small style="text-align: center;display: block;margin-top: 10px;">
-            <el-link type="info" @click="gotoLogin">重新登录</el-link>
-          </small>
-          <small style="text-align: center;display: block;margin-top: 10px;">{{ copyright }}</small>
-        </div>
+        <template #footer>
+          <div style="text-align: center">
+            <el-button type="primary" :loading="modal_loading" style="width: 100%"
+                       @click="handleSubmit('formValidate')">
+              {{ $t('forms.buttons.submit') }}
+            </el-button>
+            <small style="text-align: center;display: block;margin-top: 10px;">
+              <el-link type="info" @click="gotoLogin">重新登录</el-link>
+            </small>
+            <small style="text-align: center;display: block;margin-top: 10px;">{{ copyright }}</small>
+          </div>
+        </template>
       </el-dialog>
     </div>
   </div>

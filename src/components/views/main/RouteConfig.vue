@@ -172,14 +172,16 @@
           </el-col>
         </el-row>
       </el-form>
-      <div slot="footer" style="text-align: center">
-        <el-button type="default" :loading="modal_loading" @click="doCancel()">
-          {{ $t('forms.buttons.cancel') }}
-        </el-button>
-        <el-button type="primary" :loading="modal_loading" @click="doSave('editForm')">
-          {{ $t('forms.buttons.submit') }}
-        </el-button>
-      </div>
+      <template #footer>
+        <div style="text-align: center">
+          <el-button type="default" :loading="modal_loading" @click="doCancel()">
+            {{ $t('forms.buttons.cancel') }}
+          </el-button>
+          <el-button type="primary" :loading="modal_loading" @click="doSave('editForm')">
+            {{ $t('forms.buttons.submit') }}
+          </el-button>
+        </div>
+      </template>
       <el-backtop :visibility-height="10" target=".el-dialog"/>
     </el-dialog>
   </el-card>

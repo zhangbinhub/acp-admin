@@ -210,17 +210,19 @@
           </el-card>
         </el-col>
       </el-row>
-      <div slot="footer" style="text-align: center">
-        <el-button type="info" :loading="modal_loading" @click="doCancel()">
-          {{ $t('forms.buttons.cancel') }}
-        </el-button>
-        <el-button type="warning" :loading="modal_loading" @click="doReset()">
-          {{ $t('forms.buttons.reset') }}
-        </el-button>
-        <el-button type="primary" :loading="modal_loading" @click="doSave()">
-          {{ $t('forms.buttons.submit') }}
-        </el-button>
-      </div>
+      <template #footer>
+        <div style="text-align: center">
+          <el-button type="info" :loading="modal_loading" @click="doCancel()">
+            {{ $t('forms.buttons.cancel') }}
+          </el-button>
+          <el-button type="warning" :loading="modal_loading" @click="doReset()">
+            {{ $t('forms.buttons.reset') }}
+          </el-button>
+          <el-button type="primary" :loading="modal_loading" @click="doSave()">
+            {{ $t('forms.buttons.submit') }}
+          </el-button>
+        </div>
+      </template>
       <el-backtop :visibility-height="10" target=".el-dialog"/>
     </el-dialog>
   </el-card>
