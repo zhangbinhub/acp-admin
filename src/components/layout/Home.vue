@@ -120,10 +120,10 @@ export default {
       return this.$store.state.app.isMini
     },
     minLogo() {
-      return require('@/assets/images/logo/logo.png')
+      return require('@/assets/images/logo/logo.png').default
     },
     mainLogo() {
-      return require('@/assets/images/logo/logo-main-' + this.$store.state.app.appInfo.theme + '.png')
+      return require('@/assets/images/logo/logo-main-' + this.$store.state.app.appInfo.theme + '.png').default
     },
     tagNavList() {
       return this.$store.state.app.tagNavList
