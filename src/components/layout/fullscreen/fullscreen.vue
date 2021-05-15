@@ -1,6 +1,6 @@
 <template>
   <div v-if="showFullScreenBtn" class="header-bar-button">
-    <el-tooltip :content="value ? $t('home.exitFullScreen') : $t('home.fullScreen')" placement="bottom">
+    <el-tooltip :content="modelValue ? $t('home.exitFullScreen') : $t('home.fullScreen')" placement="bottom">
       <el-button type="text" @click="handleChange">
         <i style="font-size: 23px" class="el-icon-full-screen"/>
       </el-button>
@@ -25,7 +25,7 @@ export default {
   methods: {
     handleFullscreen() {
       let main = document.body
-      if (this.value) {
+      if (this.modelValue) {
         if (document.exitFullscreen) {
           document.exitFullscreen()
         } else if (document.mozCancelFullScreen) {
@@ -55,24 +55,24 @@ export default {
     let isFullscreen = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen
     isFullscreen = !!isFullscreen
     document.addEventListener('fullscreenchange', () => {
-      this.$emit('update:modelValue', !this.value)
-      this.$emit('on-change', !this.value)
+      this.$emit('update:modelValue', !this.modelValue)
+      this.$emit('on-change', !this.modelValue)
     })
     document.addEventListener('mozfullscreenchange', () => {
-      this.$emit('update:modelValue', !this.value)
-      this.$emit('on-change', !this.value)
+      this.$emit('update:modelValue', !this.modelValue)
+      this.$emit('on-change', !this.modelValue)
     })
     document.addEventListener('webkitfullscreenchange', () => {
-      this.$emit('update:modelValue', !this.value)
-      this.$emit('on-change', !this.value)
+      this.$emit('update:modelValue', !this.modelValue)
+      this.$emit('on-change', !this.modelValue)
     })
     document.addEventListener('msfullscreenchange', () => {
-      this.$emit('update:modelValue', !this.value)
-      this.$emit('on-change', !this.value)
+      this.$emit('update:modelValue', !this.modelValue)
+      this.$emit('on-change', !this.modelValue)
     })
     document.addEventListener('MSFullscreenChange', () => {
-      this.$emit('update:modelValue', !this.value)
-      this.$emit('on-change', !this.value)
+      this.$emit('update:modelValue', !this.modelValue)
+      this.$emit('on-change', !this.modelValue)
     })
     this.$emit('update:modelValue', isFullscreen)
   }
