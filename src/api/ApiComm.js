@@ -157,7 +157,7 @@ const ApiComm = {
     this.turnToPage({
       name: 'E404',
       params: {
-        redirect: this.$router.currentRoute.fullPath
+        redirect: this.$router.currentRoute.value.fullPath
       }
     })
   },
@@ -166,7 +166,7 @@ const ApiComm = {
       name: 'E500',
       params: {
         msg: errorMsg,
-        redirect: this.$router.currentRoute.fullPath
+        redirect: this.$router.currentRoute.value.fullPath
       }
     })
   },
@@ -221,11 +221,11 @@ const ApiComm = {
       query = obj.query || {}
     }
     let targetMenu, currMenu
-    currMenu = findMenuByPath(this.$router.currentRoute.fullPath, this.$store.state.app.user.menuList)
+    currMenu = findMenuByPath(this.$router.currentRoute.value.fullPath, this.$store.state.app.user.menuList)
     if (pathOrName.startsWith('/') || pathOrName.toLowerCase().startsWith('http')) {
       // 直接路由跳转 或 外部链接跳转
       if (!closeMore) {
-        if (this.$router.currentRoute.fullPath === pathOrName) {
+        if (this.$router.currentRoute.value.fullPath === pathOrName) {
           return
         }
       }
@@ -337,7 +337,7 @@ const ApiComm = {
         params: params,
         query: query
       }
-      if (this.$router.currentRoute.fullPath === path) {
+      if (this.$router.currentRoute.value.fullPath === path) {
         return
       }
     } else {
@@ -374,11 +374,11 @@ const ApiComm = {
     return pageTitle
   },
   removeThisTag () {
-    const res = this.$store.state.app.tagNavList.filter(item => item.path !== this.$router.currentRoute.fullPath)
+    const res = this.$store.state.app.tagNavList.filter(item => item.path !== this.$router.currentRoute.value.fullPath)
     this.$store.commit('SET_TAG_NAV_LIST', res)
   },
   closeThisTagImmediately () {
-    const currIndex = this.$store.state.app.tagNavList.findIndex(item => item.path === this.$router.currentRoute.fullPath)
+    const currIndex = this.$store.state.app.tagNavList.findIndex(item => item.path === this.$router.currentRoute.value.fullPath)
     let nextPath = this.$store.state.app.appInfo.homePath
     if (currIndex === this.$store.state.app.tagNavList.length - 1) {
       nextPath = this.$store.state.app.tagNavList[this.$store.state.app.tagNavList.length - 2].path
