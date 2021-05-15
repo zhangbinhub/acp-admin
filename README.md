@@ -42,7 +42,6 @@
 - js-base64
 - vue-json-editor
 - Element-plus
-- vue-count-to
 
 ## 总体架构
 
@@ -151,7 +150,7 @@ npm install
 ##### （六）http 请求
 
 > - 组件：axios、vue-axios
-> - 入口及全局配置：[src/plugins/plugin-axios.js](src/plugins/plugin-axios.js)
+> - 入口及全局配置：[src/plugins/plugin-axios.js](src/plugins/axios/plugin-axios.js)
 > - 请求 api
     >
 

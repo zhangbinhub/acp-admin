@@ -1,5 +1,5 @@
 import Axios from 'axios'
-import appInfo from '../store/config/appInfo'
+import appInfo from '../../store/config/appInfo'
 
 let axiosInstance = Axios.create({
   headers: {

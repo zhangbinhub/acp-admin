@@ -7,7 +7,7 @@ import Nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
 import router from '@/router'
 import VueAxios from 'vue-axios'
-import axiosInstance from "@/plugins/plugin-axios"
+import axiosInstance from "@/plugins/axios/plugin-axios"
 import api from '@/api'
 import '@/assets/styles/layout.less'
 import '@/assets/styles/transition.less'
