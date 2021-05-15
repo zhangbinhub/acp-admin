@@ -36,7 +36,7 @@
   </div>
 </template>
 <script>
-  import countTo from 'vue-count-to'
+  import countTo from '@/plugins/vue-count-to'
 
   export default {
     name: 'index',
