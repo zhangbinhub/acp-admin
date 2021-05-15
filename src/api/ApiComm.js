@@ -233,8 +233,8 @@ const ApiComm = {
     } else {
       // 路由名称跳转
       if (!closeMore) {
-        if (this.$router.currentRoute.name === pathOrName) {
-          let currentQuery = this.$router.currentRoute.query || {}
+        if (this.$router.currentRoute.value.name === pathOrName) {
+          let currentQuery = this.$router.currentRoute.value.query || {}
           if (deepEqual(currentQuery, query)) {
             return
           }
@@ -243,8 +243,8 @@ const ApiComm = {
     }
     let dataLose = false
     if (!closeMore) {
-      if (this.$router.currentRoute.meta) {
-        dataLose = this.$router.currentRoute.meta.withInput && this.$router.currentRoute.meta.notCache
+      if (this.$router.currentRoute.value.meta) {
+        dataLose = this.$router.currentRoute.value.meta.withInput && this.$router.currentRoute.value.meta.notCache
       }
     } else {
       dataLose = true
@@ -347,8 +347,8 @@ const ApiComm = {
         params: params,
         query: query
       }
-      if (this.$router.currentRoute.name === pathOrName) {
-        let currentQuery = this.$router.currentRoute.query || {}
+      if (this.$router.currentRoute.value.name === pathOrName) {
+        let currentQuery = this.$router.currentRoute.value.query || {}
         if (deepEqual(currentQuery, query)) {
           return
         }
@@ -366,8 +366,8 @@ const ApiComm = {
       if (pageMenu) {
         pageTitle = pageMenu.name
       } else {
-        if (this.$router.currentRoute.meta.title) {
-          pageTitle = this.$i18n.t(this.$router.currentRoute.meta.title)
+        if (this.$router.currentRoute.value.meta.title) {
+          pageTitle = this.$i18n.t(this.$router.currentRoute.value.meta.title)
         }
       }
     }
