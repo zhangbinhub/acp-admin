@@ -30,11 +30,13 @@
         </el-header>
         <el-scrollbar ref="main-scrollbar" class="main-scrollbar" :style="{height:mainHeight+'px'}">
           <el-main class="main-content">
-            <transition name="fade-transform" mode="out-in" :appear="true">
-              <keep-alive :include="cacheList">
-                <router-view/>
-              </keep-alive>
-            </transition>
+            <router-view v-slot="{ Component }">
+              <transition name="fade-transform" mode="out-in" :appear="true">
+                <keep-alive :include="cacheList">
+                  <component :is="Component"/>
+                </keep-alive>
+              </transition>
+            </router-view>
           </el-main>
           <el-backtop :visibility-height="100" target=".main-scrollbar .el-scrollbar__wrap"/>
         </el-scrollbar>
@@ -120,10 +122,10 @@ export default {
       return this.$store.state.app.isMini
     },
     minLogo() {
-      return require('@/assets/images/logo/logo.png')
+      return require('@/assets/images/logo/logo.png').default
     },
     mainLogo() {
-      return require('@/assets/images/logo/logo-main-' + this.$store.state.app.appInfo.theme + '.png')
+      return require('@/assets/images/logo/logo-main-' + this.$store.state.app.appInfo.theme + '.png').default
     },
     tagNavList() {
       return this.$store.state.app.tagNavList

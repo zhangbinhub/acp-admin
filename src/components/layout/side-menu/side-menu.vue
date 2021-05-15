@@ -13,7 +13,7 @@
           <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"/>
           <el-menu-item v-else :index="item.path">
             <i :class="item.iconType"/>
-            <span slot="title">{{ item.name }}</span>
+            <template #title>{{ item.name }}</template>
           </el-menu-item>
         </template>
       </el-menu>
