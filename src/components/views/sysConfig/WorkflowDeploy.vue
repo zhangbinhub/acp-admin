@@ -74,7 +74,7 @@
         sortable="custom"
         width="140"
         :label="$t('forms.createTime')">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ dateTimeFormat(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
@@ -83,7 +83,7 @@
         sortable="custom"
         width="140"
         :label="$t('forms.modifyTime')">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ dateTimeFormat(scope.row.modifyTime) }}</span>
         </template>
       </el-table-column>
@@ -92,7 +92,7 @@
         sortable="custom"
         width="140"
         :label="$t('forms.deployTime')">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ dateTimeFormat(scope.row.deployTime) }}</span>
         </template>
       </el-table-column>
@@ -102,7 +102,7 @@
         :label="$t('forms.action')"
         align="center"
         width="90">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
             <el-button type="text" @click="handleEdit(scope.row)">
               <i style="font-size: 15px" class="el-icon-edit"/>

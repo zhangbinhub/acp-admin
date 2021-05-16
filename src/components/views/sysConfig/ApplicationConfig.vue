@@ -69,7 +69,7 @@
         :label="$t('forms.action')"
         align="center"
         width="120">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
             <el-button type="text" @click="handleEdit(scope.row,1)">
               <i style="font-size: 15px" class="el-icon-edit"/>

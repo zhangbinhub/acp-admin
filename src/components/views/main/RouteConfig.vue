@@ -73,7 +73,7 @@
         align="center"
         :label="$t('forms.enabled')"
         width="100">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span :style="scope.row.enabled ? 'color:green':'color:red'">{{ enabledText(scope.row.enabled) }}</span>
         </template>
       </el-table-column>
@@ -83,7 +83,7 @@
         :label="$t('forms.action')"
         align="center"
         width="90">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
             <el-button type="text" @click="handleEdit(scope.row)">
               <i style="font-size: 15px" class="el-icon-edit"/>

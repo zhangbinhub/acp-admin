@@ -12,28 +12,30 @@
                        v-loading="treeLoading"
                        :default-expand-all="true" ref="menuTree" :filter-node-method="filterNode"
                        :expand-on-click-node="false">
-                <span class="config-tree-node" slot-scope="{ node, data }">
-                  <span v-if="!data.isApp" @click="menuClick(data)">
-                    <i :class="data.iconType" style="margin-right: 5px"/>{{ node.label }}</span>
-                  <span v-else>{{ node.label }}</span>
-                  <span>
-                    <el-button
-                      v-if="!data.isApp && node.isLeaf"
-                      type="text"
-                      size="mini"
-                      icon="el-icon-minus"
-                      :loading="treeLoading"
-                      @click="removeMenu(node, data)">
-                    </el-button>
-                    <el-button
-                      type="text"
-                      size="mini"
-                      icon="el-icon-plus"
-                      :loading="treeLoading"
-                      @click="appendMenu(data)">
-                    </el-button>
+                <template #default="{ node, data }">
+                  <span class="config-tree-node">
+                    <span v-if="!data.isApp" @click="menuClick(data)">
+                      <i :class="data.iconType" style="margin-right: 5px"/>{{ node.label }}</span>
+                    <span v-else>{{ node.label }}</span>
+                    <span>
+                      <el-button
+                        v-if="!data.isApp && node.isLeaf"
+                        type="text"
+                        size="mini"
+                        icon="el-icon-minus"
+                        :loading="treeLoading"
+                        @click="removeMenu(node, data)">
+                      </el-button>
+                      <el-button
+                        type="text"
+                        size="mini"
+                        icon="el-icon-plus"
+                        :loading="treeLoading"
+                        @click="appendMenu(data)">
+                      </el-button>
+                    </span>
                   </span>
-                </span>
+                </template>
               </el-tree>
             </div>
           </el-card>
@@ -135,7 +137,8 @@
                        v-loading="treeLoading"
                        :default-expand-all="true" ref="moduleFuncTree" :filter-node-method="filterNode"
                        :expand-on-click-node="false">
-                <span class="config-tree-node" slot-scope="{ node, data }">
+                <template #default="{ node, data }">
+                  <span class="config-tree-node">
                   <span v-if="!data.isApp" @click="moduleFuncClick(data)">{{ node.label }}</span>
                   <span v-else>{{ node.label }}</span>
                   <span>
@@ -156,6 +159,7 @@
                     </el-button>
                   </span>
                 </span>
+                </template>
               </el-tree>
             </div>
           </el-card>
