@@ -2,57 +2,43 @@
   <el-card>
     <el-form ref="searchForm" :model="searchForm" label-width="150px" :inline="true" size="mini"
              @submit.native.prevent>
-      <el-row>
-        <el-col :lg="{span:8}">
-          <el-form-item :label="$t('forms.processKey')" prop="processDefinitionKey">
-            <el-input v-model="searchForm.processDefinitionKey" :disabled="modal_loading" style="width: 200px"
-                      :placeholder="$t('forms.pleaseEnter') + $t('forms.processKey')"
-                      @keyup.enter.native="handleSearch"/>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="{span:8}">
-          <el-form-item :label="$t('forms.processInstanceId')" prop="processInstanceId">
-            <el-input v-model="searchForm.processInstanceId" :disabled="modal_loading" style="width: 200px"
-                      :placeholder="$t('forms.pleaseEnter') + $t('forms.processInstanceId')"
-                      @keyup.enter.native="handleSearch"/>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="{span:8}">
-          <el-form-item :label="$t('forms.processBusinessKey')" prop="processBusinessKey">
-            <el-input v-model="searchForm.processBusinessKey" :disabled="modal_loading" style="width: 200px"
-                      :placeholder="$t('forms.pleaseEnter') + $t('forms.processBusinessKey')"
-                      @keyup.enter.native="handleSearch"/>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :lg="{span:8}">
-          <el-form-item :label="$t('forms.flowStatus')" prop="history">
-            <el-select v-model="searchForm.history" :disabled="modal_loading" value=""
-                       style="width:100px">
-              <el-option v-for="item in infoTypeList" :value="item.value" :label="item.label"
-                         :key="'search_select_'+item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="{span:10}">
-          <el-form-item :label="$t('forms.startDate')" prop="startTime">
-            <el-date-picker v-model="searchForm.startTime" :disabled="modal_loading" type="daterange"
-                            :shortcuts="pickerShortcuts"/>
-          </el-form-item>
-        </el-col>
-        <el-form-item style="float: right">
-          <el-button-group>
-            <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
-              {{ $t('forms.buttons.search') }}
-            </el-button>
-            <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
-              {{ $t('forms.buttons.reset') }}
-            </el-button>
-          </el-button-group>
-        </el-form-item>
-      </el-row>
+      <el-form-item :label="$t('forms.processKey')" prop="processDefinitionKey">
+        <el-input v-model="searchForm.processDefinitionKey" :disabled="modal_loading" style="width: 200px"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.processKey')"
+                  @keyup.enter.native="handleSearch"/>
+      </el-form-item>
+      <el-form-item :label="$t('forms.processInstanceId')" prop="processInstanceId">
+        <el-input v-model="searchForm.processInstanceId" :disabled="modal_loading" style="width: 200px"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.processInstanceId')"
+                  @keyup.enter.native="handleSearch"/>
+      </el-form-item>
+      <el-form-item :label="$t('forms.processBusinessKey')" prop="processBusinessKey">
+        <el-input v-model="searchForm.processBusinessKey" :disabled="modal_loading" style="width: 200px"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.processBusinessKey')"
+                  @keyup.enter.native="handleSearch"/>
+      </el-form-item>
+      <el-form-item :label="$t('forms.flowStatus')" prop="history">
+        <el-select v-model="searchForm.history" :disabled="modal_loading" value=""
+                   style="width:100px">
+          <el-option v-for="item in infoTypeList" :value="item.value" :label="item.label"
+                     :key="'search_select_'+item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item :label="$t('forms.startDate')" prop="startTime">
+        <el-date-picker v-model="searchForm.startTime" :disabled="modal_loading" type="daterange"
+                        :shortcuts="pickerShortcuts"/>
+      </el-form-item>
+      <el-form-item style="float: right">
+        <el-button-group>
+          <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
+            {{ $t('forms.buttons.search') }}
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
+            {{ $t('forms.buttons.reset') }}
+          </el-button>
+        </el-button-group>
+      </el-form-item>
     </el-form>
     <el-table ref="table" border :height="tableHeight" size="mini" :default-sort="searchForm.orderParam"
               :data="searchData"
