@@ -5,10 +5,12 @@
         <el-button type="text" size="mini" style="padding-top: 6px">
           <i style="font-size: 18px" class="el-icon-error"/>
         </el-button>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="close-others">{{ $t('home.closeOther') }}</el-dropdown-item>
-          <el-dropdown-item command="close-all">{{ $t('home.closeAll') }}</el-dropdown-item>
-        </el-dropdown-menu>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item command="close-others">{{ $t('home.closeOther') }}</el-dropdown-item>
+            <el-dropdown-item command="close-all">{{ $t('home.closeAll') }}</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
       </el-dropdown>
     </div>
     <el-tabs type="card" ref="header-tabs" v-model="currPath"
