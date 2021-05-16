@@ -110,9 +110,9 @@ export default {
     },
     handleClick(tab) {
       this.$emit('update:modelValue', {
-        name: tab.$attrs['data-route-name'],
-        query: JSON.parse(tab.$attrs['data-route-query']),
-        params: JSON.parse(tab.$attrs['data-route-params'])
+        name: tab.instance.attrs['data-route-name'],
+        query: JSON.parse(tab.instance.attrs['data-route-query']),
+        params: JSON.parse(tab.instance.attrs['data-route-params'])
       })
     },
     showTitleInside(item) {
