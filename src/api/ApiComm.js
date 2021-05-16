@@ -57,7 +57,7 @@ const ApiComm = {
             }
             break
           case 403: // 权限不足
-            error.response.data.errorDescription = this.$i18n.t('messages.failed403')
+            error.response.data.errorDescription = this.$i18n.global.t('messages.failed403')
             if (!error.config.headers.Process403 || error.config.headers.Process403 !== 'false') {
               // 默认处理方式
               this.errorProcess(error)
@@ -65,7 +65,7 @@ const ApiComm = {
             }
             break
           case 404: // 找不到资源
-            error.response.data.errorDescription = this.$i18n.t('messages.failed404')
+            error.response.data.errorDescription = this.$i18n.global.t('messages.failed404')
             if (!error.config.headers.Process404) {
               // 默认处理方式
               this.redirectE404()
@@ -108,7 +108,7 @@ const ApiComm = {
       return Promise.reject(error)
     })
   },
-  errorProcess (error, title) {
+  errorProcess(error, title) {
     let errorMessage = ''
     if (error.response) {
       if (typeof error.response.data === 'string') {
@@ -124,15 +124,15 @@ const ApiComm = {
       errorMessage = error
     }
     this.$notify.error({
-      title: title || this.$i18n.t('messages.requestFailed'),
+      title: title || this.$i18n.global.t('messages.requestFailed'),
       message: errorMessage
     })
   },
-  redirectHome () {
+  redirectHome() {
     this.turnToPage(this.$store.state.app.appInfo.homePath,
       undefined, undefined, false, true)
   },
-  redirectLogin (asyncFunc, isHoldTagNavList = false) {
+  redirectLogin(asyncFunc, isHoldTagNavList = false) {
     this.turnToPage({
       name: 'login'
     }, (callBackFunc) => {
@@ -153,7 +153,7 @@ const ApiComm = {
       }
     }, undefined, false, true)
   },
-  redirectE404 () {
+  redirectE404() {
     this.turnToPage({
       name: 'E404',
       params: {
@@ -161,7 +161,7 @@ const ApiComm = {
       }
     })
   },
-  redirectE500 (errorMsg) {
+  redirectE500(errorMsg) {
     this.turnToPage({
       name: 'E500',
       params: {
@@ -170,27 +170,27 @@ const ApiComm = {
       }
     })
   },
-  gotoPersonalInformation () {
+  gotoPersonalInformation() {
     this.turnToPage({
       name: 'personalInformation'
     })
   },
-  gotoLogFile () {
+  gotoLogFile() {
     this.turnToPage({
       name: 'logFile'
     })
   },
-  gotoRouteConfig () {
+  gotoRouteConfig() {
     this.turnToPage({
       name: 'routeConfig'
     })
   },
-  gotoRouteLog () {
+  gotoRouteLog() {
     this.turnToPage({
       name: 'routeLog'
     })
   },
-  gotoDeploy () {
+  gotoDeploy() {
     this.turnToPage({
       name: 'deploy'
     })
@@ -205,7 +205,7 @@ const ApiComm = {
    * @param closeMore 是否关闭多个页面标签
    * @param replace 是否是replace方式跳转
    */
-  turnToPage (obj, asyncFunc, pageName, closeMore = false, replace = false) {
+  turnToPage(obj, asyncFunc, pageName, closeMore = false, replace = false) {
     let query = {}
     let pathOrName = ''
     if (typeof obj === 'string') { // string
@@ -284,7 +284,7 @@ const ApiComm = {
         process(0)
       } else {
         this.$confirm(this.getPageTitle(pageName, currMenu) + ' ' +
-          this.$i18n.t('messages.leavePage'), this.$i18n.t('dialog.confirm'), {
+          this.$i18n.global.t('messages.leavePage'), this.$i18n.global.t('dialog.confirm'), {
           type: 'warning'
         }).then(() => {
           process(350)
@@ -301,8 +301,8 @@ const ApiComm = {
    * @param menu 目标菜单对象
    * @param replace 是否是replace方式跳转
    */
-  routeSwitch (obj, menu, replace) {
-    let { pathOrName, params, query } = { pathOrName: '', query: {}, params: {} }
+  routeSwitch(obj, menu, replace) {
+    let {pathOrName, params, query} = {pathOrName: '', query: {}, params: {}}
     if (typeof obj === 'string') { // string
       pathOrName = obj
     } else { // route
@@ -360,24 +360,24 @@ const ApiComm = {
       this.$router.push(option)
     }
   },
-  getPageTitle (pageName, pageMenu) {
+  getPageTitle(pageName, pageMenu) {
     let pageTitle = pageName
     if (!pageTitle) {
       if (pageMenu) {
         pageTitle = pageMenu.name
       } else {
         if (this.$router.currentRoute.value.meta.title) {
-          pageTitle = this.$i18n.t(this.$router.currentRoute.value.meta.title)
+          pageTitle = this.$i18n.global.t(this.$router.currentRoute.value.meta.title)
         }
       }
     }
     return pageTitle
   },
-  removeThisTag () {
+  removeThisTag() {
     const res = this.$store.state.app.tagNavList.filter(item => item.path !== this.$router.currentRoute.value.fullPath)
     this.$store.commit('SET_TAG_NAV_LIST', res)
   },
-  closeThisTagImmediately () {
+  closeThisTagImmediately() {
     const currIndex = this.$store.state.app.tagNavList.findIndex(item => item.path === this.$router.currentRoute.value.fullPath)
     let nextPath = this.$store.state.app.appInfo.homePath
     if (currIndex === this.$store.state.app.tagNavList.length - 1) {
