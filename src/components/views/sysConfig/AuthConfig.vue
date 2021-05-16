@@ -105,7 +105,7 @@
               </el-row>
               <el-form-item :label="$t('forms.roleList')">
                 <el-transfer :data="optionalMenuRoles" v-model="menuEditForm.roleIds" v-loading="treeLoading"
-                             :filterable="true" :props="{key:'id'}"
+                             :filterable="true" :props="{key:'id',label:'label'}"
                              :titles="[$t('forms.optional'),$t('forms.selected')]"
                              :button-texts="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
                              @change="handleMenuRoleListChange">
@@ -198,7 +198,7 @@
               </el-row>
               <el-form-item :label="$t('forms.roleList')">
                 <el-transfer :data="optionalModuleFuncRoles" v-model="moduleFuncEditForm.roleIds"
-                             v-loading="treeLoading" :filterable="true" :props="{key:'id'}"
+                             v-loading="treeLoading" :filterable="true" :props="{key:'id',label:'label'}"
                              :titles="[$t('forms.optional'),$t('forms.selected')]"
                              :button-texts="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
                              @change="handleModuleFuncRoleListChange"/>

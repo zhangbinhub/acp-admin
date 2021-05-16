@@ -79,7 +79,7 @@
           <el-col :sm="{ span: 24 }">
             <el-form-item :label="$t('forms.userList')">
               <el-transfer :data="optionalUsers" v-model="editForm.userIds" v-loading="treeLoading"
-                           :filterable="true" :props="{key:'id'}"
+                           :filterable="true" :props="{key:'id',label:'label'}"
                            :titles="[$t('forms.optional'),$t('forms.selected')]"
                            :button-texts="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
                            @change="handleUserListChange">

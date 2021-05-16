@@ -73,7 +73,7 @@
           <el-tab-pane name="people">
             <template #label><i class="el-icon-user" style="margin-right: 5px"/>{{ $t('forms.userList') }}</template>
             <el-transfer :data="optionalUsers" v-model="editForm.userIds" v-loading="treeLoading"
-                         :filterable="true" :props="{key:'id'}"
+                         :filterable="true" :props="{key:'id',label:'label'}"
                          :titles="[$t('forms.optional'),$t('forms.selected')]"
                          :button-texts="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
                          @change="handleUserListChange">
