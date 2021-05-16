@@ -2,76 +2,58 @@
   <el-card>
     <el-form ref="searchForm" :model="searchForm" label-width="100px" :inline="true" size="mini"
              @submit.native.prevent>
-      <el-row>
-        <el-col :lg="{span:6}">
-          <el-form-item :label="$t('forms.remoteIp')" prop="remoteIp">
-            <el-input v-model="searchForm.remoteIp" :disabled="modal_loading"
-                      :placeholder="$t('forms.pleaseEnter') + $t('forms.remoteIp')"
-                      @keyup.enter.native="handleSearch"/>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="{span:6}">
-          <el-form-item :label="$t('forms.path')" prop="path">
-            <el-input v-model="searchForm.path" :disabled="modal_loading"
-                      :placeholder="$t('forms.pleaseEnter') + $t('forms.path')"
-                      @keyup.enter.native="handleSearch"/>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="{span:6}">
-          <el-form-item :label="$t('forms.serverId')" prop="serverId">
-            <el-input v-model="searchForm.serverId" :disabled="modal_loading"
-                      :placeholder="$t('forms.pleaseEnter') + $t('forms.serverId')"
-                      @keyup.enter.native="handleSearch"/>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="{span:6}">
-          <el-form-item :label="$t('forms.clientName')" prop="clientName">
-            <el-input v-model="searchForm.clientName" :disabled="modal_loading"
-                      :placeholder="$t('forms.pleaseEnter') + $t('forms.clientName')"
-                      @keyup.enter.native="handleSearch"/>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="{span:6}">
-          <el-form-item :label="$t('forms.userName')" prop="userName">
-            <el-input v-model="searchForm.userName" :disabled="modal_loading"
-                      :placeholder="$t('forms.pleaseEnter') + $t('forms.userName')"
-                      @keyup.enter.native="handleSearch"/>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="{span:6}">
-          <el-form-item :label="$t('forms.responseStatus')" prop="responseStatus">
-            <el-input v-model="searchForm.responseStatus" :disabled="modal_loading" type="number"
-                      :placeholder="$t('forms.pleaseEnter') + $t('forms.responseStatus')"
-                      @keyup.enter.native="handleSearch"/>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="{span:6}">
-          <el-form-item :label="$t('forms.infoType')" prop="history">
-            <el-select v-model="searchForm.history" :disabled="modal_loading" value=""
-                       style="width:100px">
-              <el-option v-for="item in infoTypeList" :value="item.value" :label="item.label"
-                         :key="'search_select_'+item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :lg="{span:12}">
-          <el-form-item :label="$t('forms.startDate')" prop="startTime">
-            <el-date-picker v-model="searchForm.startTime" :disabled="modal_loading" type="daterange"
-                            :shortcuts="pickerShortcuts"/>
-          </el-form-item>
-        </el-col>
-        <el-form-item style="float: right">
-          <el-button-group style="margin-right: 20px">
-            <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
-              {{ $t('forms.buttons.search') }}
-            </el-button>
-            <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
-              {{ $t('forms.buttons.reset') }}
-            </el-button>
-          </el-button-group>
-        </el-form-item>
-      </el-row>
+      <el-form-item :label="$t('forms.remoteIp')" prop="remoteIp">
+        <el-input v-model="searchForm.remoteIp" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.remoteIp')"
+                  @keyup.enter.native="handleSearch"/>
+      </el-form-item>
+      <el-form-item :label="$t('forms.path')" prop="path">
+        <el-input v-model="searchForm.path" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.path')"
+                  @keyup.enter.native="handleSearch"/>
+      </el-form-item>
+      <el-form-item :label="$t('forms.serverId')" prop="serverId">
+        <el-input v-model="searchForm.serverId" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.serverId')"
+                  @keyup.enter.native="handleSearch"/>
+      </el-form-item>
+      <el-form-item :label="$t('forms.clientName')" prop="clientName">
+        <el-input v-model="searchForm.clientName" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.clientName')"
+                  @keyup.enter.native="handleSearch"/>
+      </el-form-item>
+      <el-form-item :label="$t('forms.userName')" prop="userName">
+        <el-input v-model="searchForm.userName" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.userName')"
+                  @keyup.enter.native="handleSearch"/>
+      </el-form-item>
+      <el-form-item :label="$t('forms.responseStatus')" prop="responseStatus">
+        <el-input v-model="searchForm.responseStatus" :disabled="modal_loading" type="number"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.responseStatus')"
+                  @keyup.enter.native="handleSearch"/>
+      </el-form-item>
+      <el-form-item :label="$t('forms.infoType')" prop="history">
+        <el-select v-model="searchForm.history" :disabled="modal_loading" value=""
+                   style="width:100px">
+          <el-option v-for="item in infoTypeList" :value="item.value" :label="item.label"
+                     :key="'search_select_'+item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item :label="$t('forms.startDate')" prop="startTime">
+        <el-date-picker v-model="searchForm.startTime" :disabled="modal_loading" type="daterange"
+                        :shortcuts="pickerShortcuts"/>
+      </el-form-item>
+      <el-form-item style="float: right">
+        <el-button-group style="margin-right: 20px">
+          <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
+            {{ $t('forms.buttons.search') }}
+          </el-button>
+          <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
+            {{ $t('forms.buttons.reset') }}
+          </el-button>
+        </el-button-group>
+      </el-form-item>
     </el-form>
     <el-table ref="table" border :height="tableHeight" size="mini" :default-sort="searchForm.orderParam"
               :data="searchData"

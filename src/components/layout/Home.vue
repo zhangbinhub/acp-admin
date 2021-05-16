@@ -204,7 +204,7 @@ export default {
       this.$store.commit('SET_TAG_NAV_LIST', tagNavList)
     },
     updateTagList(tagNavList, menuList, route) {
-      if (route.name !== 'E404' && route.name !== 'E500' && route.name !== 'passwordExpire') {
+      if (route.name !== 'login' && route.name !== 'E404' && route.name !== 'E500' && route.name !== 'passwordExpire') {
         const newTagNavList = updateTagNavList(tagNavList, menuList, route)
         if (newTagNavList && newTagNavList.length > 0) {
           this.$store.commit('SET_TAG_NAV_LIST', newTagNavList)
