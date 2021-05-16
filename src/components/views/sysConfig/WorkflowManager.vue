@@ -138,9 +138,9 @@
     <el-dialog v-model="viewModal" :title="$t('forms.info')" :fullscreen="true">
       <div>
         <el-card shadow="hover">
-          <div slot="header">
+          <template #header>
             <span>{{ $t('forms.basicInfo') }}</span><i class="el-icon-info" style="color: #409EFF; margin-left: 5px"/>
-          </div>
+          </template>
           <el-form size="mini" :model="currObj" label-width="100px" :inline="true"
                    @submit.native.prevent>
             <el-row :gutter="10">
@@ -223,7 +223,9 @@
             <el-row :gutter="10">
               <el-col :lg="{span: 24}">
                 <el-form-item prop="deleteReason" style="color:red">
-                  <span slot="label" style="color: red">{{ $t('forms.deleteReason') + ':' }}</span>
+                  <template #label>
+                    <span style="color: red">{{ $t('forms.deleteReason') + ':' }}</span>
+                  </template>
                   <el-input v-model="currObj.deleteReason" type="textarea" :rows="3" readonly/>
                 </el-form-item>
               </el-col>
@@ -233,10 +235,10 @@
             <el-col :lg="{span:24}">
               <el-collapse>
                 <el-collapse-item>
-                  <div slot="title">
+                  <template #title>
                     <span>{{ $t('forms.processParams') }}</span>
                     <i class="el-icon-info" style="color: #409EFF; margin-left: 5px"/>
-                  </div>
+                  </template>
                   <el-table size="mini" :stripe="true" :data="params">
                     <el-table-column
                       type="index"
@@ -267,19 +269,19 @@
           </el-row>
         </el-card>
         <el-card shadow="hover" style="margin-top: 10px">
-          <div slot="header">
-            <span>{{ $t('forms.buttons.image') }}</span><i class="el-icon-info"
-                                                           style="color: #409EFF; margin-left: 5px"/>
-          </div>
+          <template #header>
+            <span>{{ $t('forms.buttons.image') }}</span>
+            <i class="el-icon-info" style="color: #409EFF; margin-left: 5px"/>
+          </template>
           <el-scrollbar>
             <el-image :src="viewDiagram" style="padding-bottom: 20px"/>
           </el-scrollbar>
         </el-card>
         <el-card shadow="hover" style="margin-top: 10px">
-          <div slot="header">
+          <template #header>
             <span>{{ $t('forms.processActivityRecords') }}</span>
             <i class="el-icon-info" style="color: #409EFF; margin-left: 5px"/>
-          </div>
+          </template>
           <el-table size="mini" :stripe="true" :data="processActivityList">
             <el-table-column
               prop="activityName"

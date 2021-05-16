@@ -2,7 +2,7 @@
   <div class="index">
     <el-row>
       <el-card shadow="always">
-        <div slot="header">{{ $t('forms.numberOfOnlineUsers') }}</div>
+        <template #header>{{ $t('forms.numberOfOnlineUsers') }}</template>
         <el-row :gutter="8" style="margin-top: -8px">
           <el-col :lg='{span:6}' v-for="(item,index) in onlineMessage" :key="index"
                   style="padding: 0;margin-top: 8px">

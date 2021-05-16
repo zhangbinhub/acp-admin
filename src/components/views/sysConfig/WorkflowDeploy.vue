@@ -149,9 +149,11 @@
                      :on-success="handleUploadSuccess"
                      :on-error="handleUploadError"
                      :auto-upload="false">
-            <el-button slot="trigger" size="mini" type="primary">
-              {{ $t('forms.buttons.chooseFile') }}
-            </el-button>
+            <template #trigger>
+              <el-button size="mini" type="primary">
+                {{ $t('forms.buttons.chooseFile') }}
+              </el-button>
+            </template>
           </el-upload>
           <el-button v-else size="mini" type="primary" @click="handleDownLoadFile">
             {{ $t('forms.buttons.downLoadFile') }}

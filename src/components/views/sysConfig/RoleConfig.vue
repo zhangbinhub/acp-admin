@@ -36,10 +36,10 @@
     </el-col>
     <el-col :lg="{ span: 15 }" v-show="currRole.id&&currRole.id!==''" style="margin-bottom: 16px;">
       <el-card>
-        <div slot="header">{{ currRoleFullPath }}</div>
+        <template #header>{{ currRoleFullPath }}</template>
         <el-tabs v-model="activeName">
           <el-tab-pane name="basicInfo">
-            <span slot="label"><i class="el-icon-info" style="margin-right: 5px"/>{{ $t('forms.basicInfo') }}</span>
+            <template #label><i class="el-icon-info" style="margin-right: 5px"/>{{ $t('forms.basicInfo') }}</template>
             <el-form ref="editForm" size="mini" :model="editForm" :rules="ruleEditForm" label-width="60px"
                      v-loading="treeLoading" @submit.native.prevent>
               <el-form-item :label="$t('forms.name')" prop="name">
@@ -69,7 +69,7 @@
             </el-form>
           </el-tab-pane>
           <el-tab-pane name="people">
-            <span slot="label"><i class="el-icon-user" style="margin-right: 5px"/>{{ $t('forms.userList') }}</span>
+            <template #label><i class="el-icon-user" style="margin-right: 5px"/>{{ $t('forms.userList') }}</template>
             <el-transfer :data="optionalUsers" v-model="editForm.userIds" v-loading="treeLoading"
                          :filterable="true" :props="{key:'id'}"
                          :titles="[$t('forms.optional'),$t('forms.selected')]"
@@ -78,13 +78,14 @@
             </el-transfer>
           </el-tab-pane>
           <el-tab-pane name="menuList">
-            <span slot="label"><i class="el-icon-s-order" style="margin-right: 5px"/>{{ $t('forms.menuList') }}</span>
+            <template #label><i class="el-icon-s-order" style="margin-right: 5px"/>{{ $t('forms.menuList') }}</template>
             <el-tree ref="menuTree" :data="menuData" :show-checkbox="true" node-key="id"
                      v-loading="treeLoading" :default-expanded-keys="editForm.menuIds"/>
           </el-tab-pane>
           <el-tab-pane name="moduleFuncList">
-            <span slot="label"><i class="el-icon-s-grid"
-                                  style="margin-right: 5px"/>{{ $t('forms.moduleFuncList') }}</span>
+            <template #label>
+              <i class="el-icon-s-grid" style="margin-right: 5px"/>{{ $t('forms.moduleFuncList') }}
+            </template>
             <el-tree ref="moduleFuncTree" :data="moduleFuncData" :show-checkbox="true" node-key="id"
                      v-loading="treeLoading" :default-expanded-keys="editForm.moduleFuncIds"/>
           </el-tab-pane>

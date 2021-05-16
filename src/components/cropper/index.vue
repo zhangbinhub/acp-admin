@@ -43,26 +43,26 @@
         <div class="input-box">
           <el-col :span="6">
             <el-input v-model="X" @blur="reSize" @keyup.enter.native="reSize" size="small">
-              <span slot="prepend">X</span>
-              <span slot="append">px</span>
+              <template #prepend>X</template>
+              <template #append>px</template>
             </el-input>
           </el-col>
           <el-col :span="6">
             <el-input v-model="Y" @on-blur="reSize" @keyup.enter.native="reSize" size="small">
-              <span slot="prepend">Y</span>
-              <span slot="append">px</span>
+              <template #prepend>Y</template>
+              <template #append>px</template>
             </el-input>
           </el-col>
           <el-col :span="6">
             <el-input v-model="width" @on-blur="reSize" @keyup.enter.native="reSize" size="small">
-              <span slot="prepend">{{ $t('forms.width') }}</span>
-              <span slot="append">px</span>
+              <template #prepend>{{ $t('forms.width') }}</template>
+              <template #append>px</template>
             </el-input>
           </el-col>
           <el-col :span="6">
             <el-input v-model="height" @on-blur="reSize" @keyup.enter.native="reSize" size="small">
-              <span slot="prepend">{{ $t('forms.height') }}</span>
-              <span slot="append">px</span>
+              <template #prepend>{{ $t('forms.height') }}</template>
+              <template #append>px</template>
             </el-input>
           </el-col>
         </div>

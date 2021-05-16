@@ -147,7 +147,7 @@
       <el-row :gutter="10">
         <el-col :lg="6" class="card-col">
           <el-card>
-            <div slot="header">{{ $t('forms.basicInfo') }}</div>
+            <template #header>{{ $t('forms.basicInfo') }}</template>
             <el-form ref="editForm" :model="editForm" :rules="ruleEditForm" label-width="80px"
                      size="mini" v-loading="modal_loading" @submit.native.prevent>
               <el-form-item :label="$t('forms.name')" prop="name">
@@ -182,7 +182,7 @@
         </el-col>
         <el-col :lg="6" class="card-col">
           <el-card>
-            <div slot="header">{{ $t('forms.orgList') }}</div>
+            <template #header>{{ $t('forms.orgList') }}</template>
             <div style="overflow-x: auto;overflow-y: hidden">
               <el-tree ref="orgTree" :data="orgTreeDataS1" node-key="id" v-loading="modal_loading"
                        :show-checkbox="true" :check-strictly="true"
@@ -192,7 +192,7 @@
         </el-col>
         <el-col :lg="6" class="card-col">
           <el-card>
-            <div slot="header">{{ $t('forms.orgMngList') }}</div>
+            <template #header>{{ $t('forms.orgMngList') }}</template>
             <div style="overflow-x: auto;overflow-y: hidden">
               <el-tree ref="orgMngTree" :data="orgTreeDataS2" node-key="id" v-loading="modal_loading"
                        :show-checkbox="true" :check-strictly="true"
@@ -202,7 +202,7 @@
         </el-col>
         <el-col :lg="6" class="card-col">
           <el-card>
-            <div slot="header">{{ $t('forms.roleList') }}</div>
+            <template #header>{{ $t('forms.roleList') }}</template>
             <div style="overflow-x: auto;overflow-y: hidden">
               <el-tree ref="roleTree" :data="roleTreeData" node-key="id" v-loading="modal_loading"
                        :default-expand-all="true" :show-checkbox="true" :check-strictly="true"/>
