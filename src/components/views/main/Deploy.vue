@@ -8,7 +8,7 @@
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.execTime')" prop="startTime">
-        <el-date-picker type="daterange" :disabled="modal_loading" :picker-options="pickerOptions"
+        <el-date-picker type="daterange" :disabled="modal_loading" :shortcuts="pickerShortcuts"
                         v-model="searchForm.startTime"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.execTime')"/>
       </el-form-item>
@@ -233,40 +233,38 @@ export default {
         return height
       }
     },
-    pickerOptions() {
-      return {
-        shortcuts: [{
-          text: this.$i18n.t('forms.buttons.lastWeek'),
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            end.setHours(0, 0, 0, 0)
-            start.setHours(0, 0, 0, 0)
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: this.$i18n.t('forms.buttons.lastMonth'),
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            end.setHours(0, 0, 0, 0)
-            start.setHours(0, 0, 0, 0)
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: this.$i18n.t('forms.buttons.lastThreeMonth'),
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            end.setHours(0, 0, 0, 0)
-            start.setHours(0, 0, 0, 0)
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-            picker.$emit('pick', [start, end])
-          }
-        }]
-      }
+    pickerShortcuts() {
+      return [{
+        text: this.$i18n.t('forms.buttons.lastWeek'),
+        value: (() => {
+          const end = new Date()
+          const start = new Date()
+          end.setHours(0, 0, 0, 0)
+          start.setHours(0, 0, 0, 0)
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+          return [start, end]
+        })()
+      }, {
+        text: this.$i18n.t('forms.buttons.lastMonth'),
+        value: (() => {
+          const end = new Date()
+          const start = new Date()
+          end.setHours(0, 0, 0, 0)
+          start.setHours(0, 0, 0, 0)
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+          return [start, end]
+        })()
+      }, {
+        text: this.$i18n.t('forms.buttons.lastThreeMonth'),
+        value: (() => {
+          const end = new Date()
+          const start = new Date()
+          end.setHours(0, 0, 0, 0)
+          start.setHours(0, 0, 0, 0)
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+          return [start, end]
+        })()
+      }]
     },
     ruleAddForm() {
       return {

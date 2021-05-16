@@ -39,7 +39,7 @@
         <el-col :lg="{span:10}">
           <el-form-item :label="$t('forms.startDate')" prop="startTime">
             <el-date-picker v-model="searchForm.startTime" :disabled="modal_loading" type="daterange"
-                            :align="'right'" unlink-panels :picker-options="pickerOptions"/>
+                            :shortcuts="pickerShortcuts"/>
           </el-form-item>
         </el-col>
         <el-form-item style="float: right">
@@ -404,45 +404,38 @@ export default {
         {value: 'true', label: this.$i18n.t('forms.ended')}
       ]
     },
-    pickerOptions() {
-      return {
-        disabledDate: (date) => {
-          const now = new Date()
-          now.setHours(0, 0, 0, 0)
-          return date.getTime() > now.getTime()
-        },
-        shortcuts: [{
-          text: this.$i18n.t('forms.buttons.lastWeek'),
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            end.setHours(0, 0, 0, 0)
-            start.setHours(0, 0, 0, 0)
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: this.$i18n.t('forms.buttons.lastMonth'),
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            end.setHours(0, 0, 0, 0)
-            start.setHours(0, 0, 0, 0)
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: this.$i18n.t('forms.buttons.lastThreeMonth'),
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            end.setHours(0, 0, 0, 0)
-            start.setHours(0, 0, 0, 0)
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-            picker.$emit('pick', [start, end])
-          }
-        }]
-      }
+    pickerShortcuts() {
+      return [{
+        text: this.$i18n.t('forms.buttons.lastWeek'),
+        value: (() => {
+          const end = new Date()
+          const start = new Date()
+          end.setHours(0, 0, 0, 0)
+          start.setHours(0, 0, 0, 0)
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+          return [start, end]
+        })()
+      }, {
+        text: this.$i18n.t('forms.buttons.lastMonth'),
+        value: (() => {
+          const end = new Date()
+          const start = new Date()
+          end.setHours(0, 0, 0, 0)
+          start.setHours(0, 0, 0, 0)
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+          return [start, end]
+        })()
+      }, {
+        text: this.$i18n.t('forms.buttons.lastThreeMonth'),
+        value: (() => {
+          const end = new Date()
+          const start = new Date()
+          end.setHours(0, 0, 0, 0)
+          start.setHours(0, 0, 0, 0)
+          start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+          return [start, end]
+        })()
+      }]
     },
     viewDiagram() {
       return this.diagramData
