@@ -121,7 +121,7 @@
         sortable="custom"
         width="150"
         :label="$t('forms.requestTime')">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ dateTimeFormat(scope.row.requestTime) }}</span>
         </template>
       </el-table-column>
@@ -136,7 +136,7 @@
         sortable="custom"
         width="110"
         :label="$t('forms.responseStatus')">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span
             :style="{color:scope.row.responseStatus>=200&&scope.row.responseStatus<300 ? 'green':'red'}">{{
               scope.row.responseStatus
@@ -149,7 +149,7 @@
         :label="$t('forms.action')"
         align="center"
         width="50">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tooltip :content="$t('forms.buttons.view')" placement="top-start">
             <el-button type="text" @click="handleView(scope.row)">
               <i style="font-size: 15px" class="el-icon-search"/>

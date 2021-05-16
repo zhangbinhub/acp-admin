@@ -8,7 +8,8 @@
                    v-loading="treeLoading"
                    :default-expand-all="true" ref="orgTree" :filter-node-method="filterNode"
                    :expand-on-click-node="false">
-            <span class="config-tree-node" slot-scope="{ node, data }">
+            <template #default="{ node, data }">
+              <span class="config-tree-node">
               <span v-if="data.id!=='root'" @click="orgClick(data)">{{ node.label }}</span>
               <span v-else>{{ node.label }}</span>
               <span>
@@ -29,6 +30,7 @@
                 </el-button>
               </span>
             </span>
+            </template>
           </el-tree>
         </div>
       </el-card>

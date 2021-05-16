@@ -8,28 +8,30 @@
                    v-loading="treeLoading"
                    :default-expand-all="true" ref="roleTree" :filter-node-method="filterNode"
                    :expand-on-click-node="false">
-            <span class="config-tree-node" slot-scope="{ node, data }">
-              <span v-if="data.isApp">{{ node.label }}</span>
-              <span v-else @click="treeClick(data)">{{ node.label }}</span>
-              <span>
-                <el-button
-                  v-if="data.isApp"
-                  type="text"
-                  size="mini"
-                  icon="el-icon-plus"
-                  :loading="treeLoading"
-                  @click="append(data)">
-                </el-button>
-                <el-button
-                  v-else
-                  type="text"
-                  size="mini"
-                  icon="el-icon-minus"
-                  :loading="treeLoading"
-                  @click="remove(node, data)">
-                </el-button>
+            <template #default="{ node, data }">
+              <span class="config-tree-node">
+                <span v-if="data.isApp">{{ node.label }}</span>
+                <span v-else @click="treeClick(data)">{{ node.label }}</span>
+                <span>
+                  <el-button
+                    v-if="data.isApp"
+                    type="text"
+                    size="mini"
+                    icon="el-icon-plus"
+                    :loading="treeLoading"
+                    @click="append(data)">
+                  </el-button>
+                  <el-button
+                    v-else
+                    type="text"
+                    size="mini"
+                    icon="el-icon-minus"
+                    :loading="treeLoading"
+                    @click="remove(node, data)">
+                  </el-button>
+                </span>
               </span>
-            </span>
+            </template>
           </el-tree>
         </div>
       </el-card>

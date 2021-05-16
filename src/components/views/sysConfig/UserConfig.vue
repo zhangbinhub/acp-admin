@@ -89,13 +89,13 @@
         prop="organizationSet"
         :label="$t('forms.organization')"
         :show-overflow-tooltip="true">
-        <template slot-scope="scope">{{ orgNames(scope.row.organizationSet).join(',') }}</template>
+        <template #default="scope">{{ orgNames(scope.row.organizationSet).join(',') }}</template>
       </el-table-column>
       <el-table-column
         prop="roleSet"
         :label="$t('forms.role')"
         :show-overflow-tooltip="true">
-        <template slot-scope="scope">{{ roleNames(scope.row.roleSet) }}</template>
+        <template #default="scope">{{ roleNames(scope.row.roleSet) }}</template>
       </el-table-column>
       <el-table-column
         prop="enabled"
@@ -103,7 +103,7 @@
         sortable="custom"
         width="100"
         :label="$t('forms.enabled')">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span :style="scope.row.enabled ? 'color:green':'color:red'">{{ enabledText(scope.row.enabled) }}</span>
         </template>
       </el-table-column>
@@ -113,7 +113,7 @@
         :label="$t('forms.action')"
         align="center"
         width="120">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
             <el-button type="text" @click="handleEdit(scope.row)">
               <i style="font-size: 15px" class="el-icon-edit"/>

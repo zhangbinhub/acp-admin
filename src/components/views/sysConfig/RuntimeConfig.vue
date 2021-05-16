@@ -57,7 +57,7 @@
       <el-table-column
         prop="value"
         :label="$t('forms.value')">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-input type="text" v-model="editValue" v-if="editIndex === scope.$index"
                     @keyup.enter.native="handleSave(scope.$index)"
                     @keyup.esc.native="handleCancel"/>
@@ -67,7 +67,7 @@
       <el-table-column
         prop="configDes"
         :label="$t('forms.describe')">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-input type="text" v-model="editDes" v-if="editIndex === scope.$index"
                     @keyup.enter.native="handleSave(scope.$index)"
                     @keyup.esc.native="handleCancel"/>
@@ -80,7 +80,7 @@
         sortable="custom"
         width="100"
         :label="$t('forms.enabled')">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-switch v-if="editIndex === scope.$index" v-model="editEnabled" :disabled="modal_loading"/>
           <span v-else
                 :style="scope.row.enabled ? 'color:green':'color:red'">{{ enabledText(scope.row.enabled) }}</span>
@@ -92,7 +92,7 @@
         :label="$t('forms.action')"
         align="center"
         width="90">
-        <template slot-scope="scope">
+        <template #default="scope">
           <div v-if="editIndex === scope.$index">
             <el-tooltip :content="$t('forms.buttons.save')" placement="top-start">
               <el-button type="text" @click="handleSave(scope.$index)">

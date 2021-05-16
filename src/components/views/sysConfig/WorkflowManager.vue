@@ -67,7 +67,7 @@
         prop="startTime"
         width="150"
         :label="$t('forms.beginTime')">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ dateTimeFormat(scope.row.startTime) }}</span>
         </template>
       </el-table-column>
@@ -90,7 +90,7 @@
         prop="endTime"
         width="150"
         :label="$t('forms.finishTime')">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.endTime > 0 ? dateTimeFormat(scope.row.endTime) : '' }}</span>
         </template>
       </el-table-column>
@@ -98,13 +98,13 @@
         prop="isFinished"
         width="80"
         :label="$t('forms.flowStatus')">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ statusText(scope.row.finished) }}</span>
         </template>
       </el-table-column>
       <el-table-column
         :label="$t('forms.currentUser')">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{
               scope.row.activityUser.map((user) => {
                 return user.name + '（' + user.loginNo + '）'
@@ -118,7 +118,7 @@
         :label="$t('forms.action')"
         align="center"
         width="80">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tooltip :content="$t('forms.buttons.view')" placement="top-start">
             <el-button type="text" @click="gotoFlowView(scope.row)">
               <i style="font-size: 15px" class="el-icon-search"/>
@@ -289,14 +289,14 @@
             </el-table-column>
             <el-table-column
               :label="$t('forms.processUser')">
-              <template slot-scope="scope">
+              <template #default="scope">
                 <span>{{ scope.row.user.name + '（' + scope.row.user.loginNo + '）' }}</span>
               </template>
             </el-table-column>
             <el-table-column
               prop="pass"
               :label="$t('forms.isPass')">
-              <template slot-scope="scope">
+              <template #default="scope">
                 <span :style="{color:scope.row.pass?'green':'red'}">{{ scope.row.pass ? '通过' : '不通过' }}</span>
               </template>
             </el-table-column>
@@ -304,21 +304,21 @@
               prop="comment"
               :label="$t('forms.comment')"
               :show-overflow-tooltip="true">
-              <template slot-scope="scope">
+              <template #default="scope">
                 <span style="white-space: pre-line">{{ scope.row.comment }}</span>
               </template>
             </el-table-column>
             <el-table-column
               prop="startTime"
               :label="$t('forms.beginTime')">
-              <template slot-scope="scope">
+              <template #default="scope">
                 <span>{{ dateTimeFormat(scope.row.startTime) }}</span>
               </template>
             </el-table-column>
             <el-table-column
               prop="endTime"
               :label="$t('forms.finishTime')">
-              <template slot-scope="scope">
+              <template #default="scope">
                 <span>{{ dateTimeFormat(scope.row.endTime) }}</span>
               </template>
             </el-table-column>
