@@ -40,52 +40,59 @@
         <template #header>{{ currOrgFullPath }}</template>
         <el-form ref="editForm" size="mini" :model="editForm" :rules="ruleEditForm" label-width="80px"
                  v-loading="treeLoading" @submit.native.prevent>
-          <el-col :sm="{ span: 12 }">
-            <el-form-item :label="$t('forms.name')" prop="name">
-              <el-input ref="name" v-model="editForm.name" :disabled="treeLoading"
-                        :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                        @keyup.enter.native="doSave"/>
-            </el-form-item>
-          </el-col>
-          <el-col :sm="{ span: 12 }">
-            <el-form-item :label="$t('forms.code')" prop="code">
-              <el-input v-model="editForm.code" :disabled="treeLoading"
-                        :placeholder="$t('forms.pleaseEnter') + $t('forms.code')"
-                        @keyup.enter.native="doSave"/>
-            </el-form-item>
-          </el-col>
-          <el-col :sm="{ span: 24 }">
-            <el-form-item :label="$t('forms.parent')" prop="parentArray">
-              <el-cascader :options="cascaderData" v-model="editForm.parentArray" v-loading="treeLoading"
-                           :disabled="treeLoading" style="width: 100%"
-                           :props="{checkStrictly: true,value:'id'}"/>
-            </el-form-item>
-          </el-col>
-          <el-col :sm="{ span: 12 }">
-            <el-form-item :label="$t('forms.area')" prop="area">
-              <el-input v-model="editForm.area" :disabled="treeLoading"
-                        :placeholder="$t('forms.pleaseEnter') + $t('forms.area')"
-                        @keyup.enter.native="doSave"/>
-            </el-form-item>
-          </el-col>
-          <el-col :sm="{ span: 12 }">
-            <el-form-item :label="$t('forms.sort')" prop="sort">
-              <el-input-number v-model="editForm.sort" :disabled="treeLoading"
-                               :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" :min="0"
-                               @keyup.enter.native="doSave">
-              </el-input-number>
-            </el-form-item>
-          </el-col>
-          <el-col :sm="{ span: 24 }">
-            <el-form-item :label="$t('forms.userList')">
-              <el-transfer :data="optionalUsers" v-model="editForm.userIds" v-loading="treeLoading"
-                           :filterable="true" :props="{key:'id',label:'label'}"
-                           :titles="[$t('forms.optional'),$t('forms.selected')]"
-                           :button-texts="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
-                           @change="handleUserListChange">
-              </el-transfer>
-            </el-form-item>
-          </el-col>
+          <el-row>
+            <el-col :sm="{ span: 12 }">
+              <el-form-item :label="$t('forms.name')" prop="name">
+                <el-input ref="name" v-model="editForm.name" :disabled="treeLoading"
+                          :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
+                          @keyup.enter.native="doSave"/>
+              </el-form-item>
+            </el-col>
+            <el-col :sm="{ span: 12 }">
+              <el-form-item :label="$t('forms.code')" prop="code">
+                <el-input v-model="editForm.code" :disabled="treeLoading"
+                          :placeholder="$t('forms.pleaseEnter') + $t('forms.code')"
+                          @keyup.enter.native="doSave"/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :sm="{ span: 24 }">
+              <el-form-item :label="$t('forms.parent')" prop="parentArray">
+                <el-cascader :options="cascaderData" v-model="editForm.parentArray" :disabled="treeLoading"
+                             style="width: 100%" :props="{checkStrictly: true,value:'id'}"/>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :sm="{ span: 12 }">
+              <el-form-item :label="$t('forms.area')" prop="area">
+                <el-input v-model="editForm.area" :disabled="treeLoading"
+                          :placeholder="$t('forms.pleaseEnter') + $t('forms.area')"
+                          @keyup.enter.native="doSave"/>
+              </el-form-item>
+            </el-col>
+            <el-col :sm="{ span: 12 }">
+              <el-form-item :label="$t('forms.sort')" prop="sort">
+                <el-input-number v-model="editForm.sort" :disabled="treeLoading"
+                                 :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" :min="0"
+                                 @keyup.enter.native="doSave">
+                </el-input-number>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :sm="{ span: 24 }">
+              <el-form-item :label="$t('forms.userList')">
+                <el-transfer :data="optionalUsers" v-model="editForm.userIds" v-loading="treeLoading"
+                             :filterable="true" :props="{key:'id',label:'label'}"
+                             :titles="[$t('forms.optional'),$t('forms.selected')]"
+                             :button-texts="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
+                             @change="handleUserListChange">
+                </el-transfer>
+              </el-form-item>
+            </el-col>
+          </el-row>
           <div style="text-align: center">
             <el-button type="info" :loading="treeLoading" style="margin-right: 20px;"
                        @click="doReset">
