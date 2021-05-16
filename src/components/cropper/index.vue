@@ -1,73 +1,73 @@
 <template>
   <div class="cropper-wrapper">
     <el-card class="cropper-card">
-      <el-row>
-        <div class="img-box">
-          <img class="cropper-image" :id="imgId" alt="" style="max-width: 100%" src="">
-        </div>
-        <div class="right-con">
-          <el-row style="height: 185px;">
-            <el-col :span="24">
-              <div class="preview-box preview-lg">
-                <div class="img-preview"></div>
-              </div>
-            </el-col>
-          </el-row>
-          <el-row style="height: 170px;">
-            <div class="preview-box preview-md">
+      <div class="img-box">
+        <img class="cropper-image" :id="imgId" alt="" style="max-width: 100%" src="">
+      </div>
+      <div class="right-con">
+        <el-row style="height: 185px;">
+          <el-col :span="24">
+            <div class="preview-box preview-lg">
               <div class="img-preview"></div>
             </div>
-            <div class="preview-box preview-sm">
-              <div class="img-preview"></div>
-            </div>
-            <div class="preview-box preview-xs">
-              <div class="img-preview"></div>
-            </div>
-          </el-row>
-          <el-row style="margin-top: 33px;display: inline-block;">
-            <div style="float: left">
-              <el-upload action="image/upload" :before-upload="beforeUpload">
-                <el-button size="small" style="width: 150px;" type="primary">{{ $t('forms.buttons.upload') }}
-                </el-button>
-              </el-upload>
-            </div>
-            <div style="float: left;margin-left: 20px;">
-              <el-button v-show="insideSrc" style="width: 150px;" size="small" type="primary" @click="crop">
-                {{ cropButtonText }}
+          </el-col>
+        </el-row>
+        <el-row style="height: 170px;">
+          <div class="preview-box preview-md">
+            <div class="img-preview"></div>
+          </div>
+          <div class="preview-box preview-sm">
+            <div class="img-preview"></div>
+          </div>
+          <div class="preview-box preview-xs">
+            <div class="img-preview"></div>
+          </div>
+        </el-row>
+        <el-row style="margin-top: 33px;display: inline-block;">
+          <div style="float: left">
+            <el-upload action="image/upload" :before-upload="beforeUpload">
+              <el-button size="small" style="width: 150px;" type="primary">{{ $t('forms.buttons.upload') }}
               </el-button>
-            </div>
-          </el-row>
-        </div>
-      </el-row>
-      <el-row v-show="insideSrc" :gutter="16">
-        <div class="input-box">
-          <el-col :span="6">
-            <el-input v-model="X" @blur="reSize" @keyup.enter.native="reSize" size="small">
-              <template #prepend>X</template>
-              <template #append>px</template>
-            </el-input>
-          </el-col>
-          <el-col :span="6">
-            <el-input v-model="Y" @on-blur="reSize" @keyup.enter.native="reSize" size="small">
-              <template #prepend>Y</template>
-              <template #append>px</template>
-            </el-input>
-          </el-col>
-          <el-col :span="6">
-            <el-input v-model="width" @on-blur="reSize" @keyup.enter.native="reSize" size="small">
-              <template #prepend>{{ $t('forms.width') }}</template>
-              <template #append>px</template>
-            </el-input>
-          </el-col>
-          <el-col :span="6">
-            <el-input v-model="height" @on-blur="reSize" @keyup.enter.native="reSize" size="small">
-              <template #prepend>{{ $t('forms.height') }}</template>
-              <template #append>px</template>
-            </el-input>
-          </el-col>
-        </div>
-      </el-row>
-      <el-row v-show="insideSrc">
+            </el-upload>
+          </div>
+          <div style="float: left;margin-left: 20px;">
+            <el-button v-show="insideSrc" style="width: 150px;" size="small" type="primary" @click="crop">
+              {{ cropButtonText }}
+            </el-button>
+          </div>
+        </el-row>
+      </div>
+      <div v-show="insideSrc">
+        <el-row :gutter="16">
+          <div class="input-box">
+            <el-col :span="6">
+              <el-input v-model="X" @blur="reSize" @keyup.enter.native="reSize" size="small">
+                <template #prepend>X</template>
+                <template #append>px</template>
+              </el-input>
+            </el-col>
+            <el-col :span="6">
+              <el-input v-model="Y" @on-blur="reSize" @keyup.enter.native="reSize" size="small">
+                <template #prepend>Y</template>
+                <template #append>px</template>
+              </el-input>
+            </el-col>
+            <el-col :span="6">
+              <el-input v-model="width" @on-blur="reSize" @keyup.enter.native="reSize" size="small">
+                <template #prepend>{{ $t('forms.width') }}</template>
+                <template #append>px</template>
+              </el-input>
+            </el-col>
+            <el-col :span="6">
+              <el-input v-model="height" @on-blur="reSize" @keyup.enter.native="reSize" size="small">
+                <template #prepend>{{ $t('forms.height') }}</template>
+                <template #append>px</template>
+              </el-input>
+            </el-col>
+          </div>
+        </el-row>
+      </div>
+      <div v-show="insideSrc">
         <div class="button-box">
           <el-button-group style="margin-right: 10px">
             <el-button type="primary" @click="reset" size="small">
@@ -124,7 +124,7 @@
             <el-button type="primary" @click="aspact(NaN)" size="small">{{ $t('forms.buttons.free') }}</el-button>
           </el-button-group>
         </div>
-      </el-row>
+      </div>
     </el-card>
   </div>
 </template>
