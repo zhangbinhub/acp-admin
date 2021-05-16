@@ -129,7 +129,7 @@
           <el-input v-model="editForm.accessTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.accessTokenValiditySeconds')"
                     @keyup.enter.native="doSave('editForm')">
-            <span slot="append">{{ $t('forms.seconds') }}</span>
+            <template #append>{{ $t('forms.seconds') }}</template>
           </el-input>
           <span v-else>{{ editForm.accessTokenValiditySeconds }}
             {{ $t('forms.seconds') }}
@@ -139,7 +139,7 @@
           <el-input v-model="editForm.refreshTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.refreshTokenValiditySeconds')"
                     @keyup.enter.native="doSave('editForm')">
-            <span slot="append">{{ $t('forms.seconds') }}</span>
+            <template #append>{{ $t('forms.seconds') }}</template>
           </el-input>
           <span v-else>{{ editForm.refreshTokenValiditySeconds }}
             {{ $t('forms.seconds') }}

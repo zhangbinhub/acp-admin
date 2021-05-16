@@ -1,7 +1,7 @@
 <template>
   <el-tabs v-model="activeName">
     <el-tab-pane name="menuList">
-      <span slot="label"><i class="el-icon-s-order" style="margin-right: 5px"/>{{ $t('forms.menuList') }}</span>
+      <template #label><i class="el-icon-s-order" style="margin-right: 5px"/>{{ $t('forms.menuList') }}</template>
       <el-row :gutter="16">
         <el-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
           <el-card>
@@ -40,7 +40,7 @@
         </el-col>
         <el-col :lg="{ span: 15 }" v-show="currMenu.id&&currMenu.id!==''" style="margin-bottom: 16px;">
           <el-card>
-            <div slot="header">{{ currMenuFullPath }}</div>
+            <template #header>{{ currMenuFullPath }}</template>
             <el-form ref="menuEditForm" size="mini" :model="menuEditForm" :rules="ruleMenuEditForm" label-width="100px"
                      v-loading="treeLoading" @submit.native.prevent>
               <el-row>
@@ -124,7 +124,7 @@
       </el-row>
     </el-tab-pane>
     <el-tab-pane name="moduleFuncList">
-      <span slot="label"><i class="el-icon-s-grid" style="margin-right: 5px"/>{{ $t('forms.moduleFuncList') }}</span>
+      <template #label><i class="el-icon-s-grid" style="margin-right: 5px"/>{{ $t('forms.moduleFuncList') }}</template>
       <el-row :gutter="16">
         <el-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
           <el-card>
@@ -162,7 +162,7 @@
         </el-col>
         <el-col :lg="{ span: 15 }" v-show="currModuleFunc.id&&currModuleFunc.id!==''" style="margin-bottom: 16px;">
           <el-card>
-            <div slot="header">{{ currModuleFuncFullPath }}</div>
+            <template #header>{{ currModuleFuncFullPath }}</template>
             <el-form ref="moduleFuncEditForm" size="mini" :model="moduleFuncEditForm" :rules="ruleModuleFuncEditForm"
                      label-width="100px" v-loading="treeLoading" @submit.native.prevent>
               <el-row>
