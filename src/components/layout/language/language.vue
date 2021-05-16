@@ -7,7 +7,8 @@
       </el-link>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item v-for="item in langList" :command="item.value" :key="`lang-${item.value}`">{{ item.label }}
+          <el-dropdown-item v-for="item in langList" :command="item.value" :key="`lang-${item.value}`">
+            {{ item.label }}
           </el-dropdown-item>
         </el-dropdown-menu>
       </template>

@@ -76,7 +76,7 @@ export default {
     SET_LANG: (state, payload) => {
       state.lang.lang = payload
       Cookies.set('lang', payload, cookieProperties)
-      state.i18n.locale = payload
+      state.i18n.global.locale = payload
     },
     SET_LOGIN_NO: (state, payload) => {
       state.user.loginNo = payload
