@@ -147,57 +147,101 @@
                    :total="searchForm.totalRows">
     </el-pagination>
     <el-dialog v-model="editModal" :title="$t('forms.info')" width="600px">
-      <el-form ref="editForm" size="mini" :model="editForm" label-width="100px" :inline="true"
-               v-loading="modal_loading" @submit.native.prevent>
-        <el-form-item :label="$t('forms.remoteIp')+':'" prop="remoteIp">
-          <span>{{ editForm.remoteIp }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('forms.gatewayIp')+':'" prop="gatewayIp">
-          <span>{{ editForm.gatewayIp }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('forms.serverId')+':'" prop="serverId">
-          <span>{{ editForm.serverId }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('forms.responseStatus')+':'" prop="responseStatus">
+      <el-descriptions :column="2" size="mini" border>
+        <el-descriptions-item>
+          <template #label>
+            {{ $t('forms.remoteIp') }}
+          </template>
+          {{ editForm.remoteIp }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            {{ $t('forms.gatewayIp') }}
+          </template>
+          {{ editForm.gatewayIp }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            {{ $t('forms.serverId') }}
+          </template>
+          {{ editForm.serverId }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template #label>
+            {{ $t('forms.responseStatus') }}
+          </template>
           <span
             :style="{color:editForm.responseStatus>=200&&editForm.responseStatus<300 ? 'green':'red'}">{{
               editForm.responseStatus
             }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('forms.path')+':'" prop="path" style="width: 100%">
-          <span>{{ editForm.path }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('forms.targetUri')+':'" prop="targetUri" style="width: 100%">
-          <span>{{ editForm.targetUri }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('forms.targetPath')+':'" prop="targetPath" style="width: 100%">
-          <span>{{ editForm.targetPath }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('forms.method')+':'" prop="method" style="width: 100%">
-          <span>{{ editForm.method }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('forms.token')+':'" prop="token" style="width: 100%">
-          <span>{{ editForm.token }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('forms.clientName')+':'" prop="clientName" style="width: 100%">
-          <span>{{ editForm.clientName }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('forms.identify')+':'" prop="identify" style="width: 100%">
-          <span>{{ editForm.identify }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('forms.userName')+':'" prop="userName" style="width: 100%">
-          <span>{{ editForm.userName }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('forms.requestTime')+':'" prop="requestTime" style="width: 100%">
-          <span>{{ dateTimeMisFormat(editForm.requestTime) }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('forms.processTime')+':'" prop="processTime" style="width: 100%">
-          <span>{{ editForm.processTime }} {{ $t('forms.millisecond') }}</span>
-        </el-form-item>
-        <el-form-item :label="$t('forms.responseTime')+':'" prop="responseTime" style="width: 100%">
-          <span>{{ dateTimeMisFormat(editForm.responseTime) }}</span>
-        </el-form-item>
-      </el-form>
+        </el-descriptions-item>
+        <el-descriptions-item span="2">
+          <template #label>
+            {{ $t('forms.path') }}
+          </template>
+          {{ editForm.path }}
+        </el-descriptions-item>
+        <el-descriptions-item span="2">
+          <template #label>
+            {{ $t('forms.targetUri') }}
+          </template>
+          {{ editForm.targetUri }}
+        </el-descriptions-item>
+        <el-descriptions-item span="2">
+          <template #label>
+            {{ $t('forms.targetPath') }}
+          </template>
+          {{ editForm.targetPath }}
+        </el-descriptions-item>
+        <el-descriptions-item span="2">
+          <template #label>
+            {{ $t('forms.method') }}
+          </template>
+          {{ editForm.method }}
+        </el-descriptions-item>
+        <el-descriptions-item span="2">
+          <template #label>
+            {{ $t('forms.token') }}
+          </template>
+          {{ editForm.token }}
+        </el-descriptions-item>
+        <el-descriptions-item span="2">
+          <template #label>
+            {{ $t('forms.clientName') }}
+          </template>
+          {{ editForm.clientName }}
+        </el-descriptions-item>
+        <el-descriptions-item span="2">
+          <template #label>
+            {{ $t('forms.identify') }}
+          </template>
+          {{ editForm.identify }}
+        </el-descriptions-item>
+        <el-descriptions-item span="2">
+          <template #label>
+            {{ $t('forms.userName') }}
+          </template>
+          {{ editForm.userName }}
+        </el-descriptions-item>
+        <el-descriptions-item span="2">
+          <template #label>
+            {{ $t('forms.requestTime') }}
+          </template>
+          {{ dateTimeMisFormat(editForm.requestTime) }}
+        </el-descriptions-item>
+        <el-descriptions-item span="2">
+          <template #label>
+            {{ $t('forms.processTime') }}
+          </template>
+          {{ editForm.processTime }} {{ $t('forms.millisecond') }}
+        </el-descriptions-item>
+        <el-descriptions-item span="2">
+          <template #label>
+            {{ $t('forms.responseTime') }}
+          </template>
+          {{ dateTimeMisFormat(editForm.responseTime) }}
+        </el-descriptions-item>
+      </el-descriptions>
       <template #footer>
         <div style="text-align: center">
           <el-button type="info" :loading="modal_loading" @click="doCancel()">
