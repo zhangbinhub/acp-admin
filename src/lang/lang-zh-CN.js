@@ -213,6 +213,7 @@ const messages = Object.assign(zhLocale, {
     processFile: '流程文件',
     filterKey: '过滤关键字',
     area: '区域',
+    fold: '文件夹',
     buttons: {
       login: '登录',
       submit: '提交',
@@ -223,6 +224,7 @@ const messages = Object.assign(zhLocale, {
       delete: '删除',
       cancel: '取消',
       add: '新增',
+      newFold: '新建文件夹',
       reset: '重置',
       upload: '上传',
       view: '查看',
