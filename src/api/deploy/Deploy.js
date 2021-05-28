@@ -1,19 +1,33 @@
 import ApiComm from '@/api'
-import { doDownLoadFile } from '@/libs/tools'
-import { Base64 } from 'js-base64'
+import {doDownLoadFile} from '@/libs/tools'
+import {Base64} from 'js-base64'
 
 export default {
-  searchFile: () => {
-    return ApiComm.$http.get('/deploy/file')
+  searchFile: (path) => {
+    return ApiComm.$http.get('/deploy/file?path=' + encodeURIComponent(Base64.encode(path)))
+  },
+  createFold: (path, foldName) => {
+    return ApiComm.$http.put('/deploy/file', {
+      path: path,
+      name: foldName
+    })
   },
   uploadFileUrl: () => {
     return ApiComm.$store.state.app.appInfo.baseURL + '/deploy/file'
   },
-  deleteFile: (fileName) => {
-    return ApiComm.$http.delete('/deploy/file?fileName=' + encodeURIComponent(Base64.encode(fileName)))
+  deleteFile: (path, fileName) => {
+    return ApiComm.$http.delete('/deploy/file', {
+      data: {
+        path: path,
+        name: fileName
+      }
+    })
   },
-  downLoadFile: (fileName) => {
-    doDownLoadFile(ApiComm.$store.state.app.appInfo.baseURL + '/deploy/file-download', 'get', { fileName: Base64.encode(fileName) })
+  downLoadFile: (path, fileName) => {
+    doDownLoadFile(ApiComm.$store.state.app.appInfo.baseURL + '/deploy/file-download', 'get', {
+      path: Base64.encode(path),
+      name: Base64.encode(fileName)
+    })
   },
   create: (info) => {
     return ApiComm.$http.put('/deploy/task', info)

@@ -223,6 +223,7 @@ const messages = Object.assign(enLocale, {
       delete: 'delete',
       cancel: 'cancel',
       add: 'add',
+      newFold: 'new fold',
       reset: 'reset',
       upload: 'upload',
       view: 'view',

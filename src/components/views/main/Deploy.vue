@@ -166,19 +166,43 @@
       <el-backtop :visibility-height="10" target=".el-dialog"/>
     </el-dialog>
     <el-dialog v-model="fileModal" :title="$t('forms.info')">
-      <el-upload
-        multiple
-        :action="uploadFileUrl"
-        :headers="uploadHeaders"
-        :disabled="modal_loading"
-        :before-remove="handleBeforeRemoveFile"
-        :on-remove="handleRemoveFile"
-        :on-preview="handleDownloadFile"
-        :on-success="handleUploadSuccess"
-        :on-error="handleUploadError"
-        :file-list="fileList">
-        <el-button size="mini" type="primary">{{ $t('forms.buttons.upload') }}</el-button>
-      </el-upload>
+      <el-row>
+        <el-col :span="24">
+          <h3>{{ $t('forms.path') + ': ' + path }}</h3>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <el-button size="mini" type="info" @click="handleBackUp" :loading="modal_loading">
+            {{ $t('errorPage.buttons.back') }}
+          </el-button>
+          <el-button size="mini" type="success" @click="handleRefresh" :loading="modal_loading"
+                     style="margin-left: 10px">
+            {{ $t('forms.buttons.refresh') }}
+          </el-button>
+          <el-button size="mini" type="warning" @click="handleCreateFold" :loading="modal_loading"
+                     style="margin-left: 10px">
+            {{ $t('forms.buttons.newFold') }}
+          </el-button>
+        </el-col>
+      </el-row>
+      <el-divider/>
+      <el-scrollbar class="upload-scrollbar" :style="{height: mainHeight+'px'}">
+        <el-upload
+          multiple
+          :action="uploadFileUrl"
+          :headers="uploadHeaders"
+          :disabled="modal_loading"
+          :before-remove="handleBeforeRemoveFile"
+          :on-remove="handleRemoveFile"
+          :on-preview="handleDownloadFile"
+          :on-success="handleUploadSuccess"
+          :on-error="handleUploadError"
+          :file-list="fileList">
+          <el-button size="mini" type="primary" :loading="modal_loading">{{ $t('forms.buttons.upload') }}</el-button>
+        </el-upload>
+        <el-backtop :visibility-height="10" target=".upload-scrollbar .el-scrollbar__wrap"/>
+      </el-scrollbar>
     </el-dialog>
   </el-card>
 </template>
@@ -215,7 +239,8 @@ export default {
       searchData: [],
       selectedData: [],
       fileList: [],
-      action: 0
+      action: 0,
+      path: ''
     }
   },
   watch: {
@@ -224,6 +249,9 @@ export default {
     }
   },
   computed: {
+    mainHeight() {
+      return this.$store.state.app.mainHeight - 300
+    },
     tableHeight() {
       const minHeight = 300
       const height = this.$store.state.app.mainHeight - 80 - 46 - 42 - 4
@@ -477,18 +505,7 @@ export default {
     },
     handleOpenFileManager() {
       this.fileModal = true
-      this.modal_loading = true
-      this.$api.request.deploy.searchFile().then((res) => {
-        this.modal_loading = false
-        if (res) {
-          this.fileList = res.data.map((item) => {
-            return {name: item}
-          })
-        }
-      }).catch(() => {
-        this.fileList = []
-        this.modal_loading = false
-      })
+      this.searchFile()
     },
     handleBeforeRemoveFile(file) {
       return this.$confirm(this.$i18n.t('messages.deleteDataConfirm') + ' ' + file.name, this.$i18n.t('dialog.confirm') + '', {
@@ -497,7 +514,7 @@ export default {
     },
     handleRemoveFile(file) {
       this.modal_loading = true
-      this.$api.request.deploy.deleteFile(file.name).then((res) => {
+      this.$api.request.deploy.deleteFile(this.path, file.name).then((res) => {
         this.modal_loading = false
         if (res) {
           this.$message.success(this.$i18n.t('messages.deleteSuccess') + '')
@@ -507,13 +524,65 @@ export default {
       })
     },
     handleDownloadFile(file) {
-      this.$api.request.deploy.downLoadFile(file.name)
+      if (file.directory) {
+        if (this.path !== '') {
+          this.path += '/'
+        }
+        this.path += file.name
+        this.searchFile()
+      } else {
+        this.$api.request.deploy.downLoadFile(this.path, file.name)
+      }
     },
     handleUploadSuccess(res, file) {
-      file.name = res.message
+      file.directory = res.directory
+      file.lastModified = res.lastModified
+      file.name = res.name
+      file.size = res.size
     },
     handleUploadError(err) {
       this.$api.errorProcess({response: {data: JSON.parse(String(err).substring(6))}})
+    },
+    searchFile() {
+      this.modal_loading = true
+      this.fileList = []
+      this.$api.request.deploy.searchFile(this.path).then((res) => {
+        this.modal_loading = false
+        if (res) {
+          this.fileList = res.data
+        }
+      }).catch(() => {
+        this.fileList = []
+        this.modal_loading = false
+      })
+    },
+    handleBackUp() {
+      if (this.path !== '') {
+        if (this.path.indexOf('/') !== -1) {
+          this.path = this.path.substring(0, this.path.lastIndexOf('/'))
+        } else {
+          this.path = ''
+        }
+      }
+      this.searchFile()
+    },
+    handleRefresh() {
+      this.searchFile()
+    },
+    handleCreateFold() {
+      this.$prompt(this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.name'), this.$i18n.t('dialog.info')).then(({value}) => {
+        this.modal_loading = true
+        this.$api.request.deploy.createFold(this.path, value).then((res) => {
+          this.modal_loading = false
+          if (res) {
+            this.searchFile()
+          }
+        }).catch(() => {
+          this.modal_loading = false
+        })
+      }).catch(() => {
+        this.modal_loading = false
+      })
     }
   },
   mounted() {

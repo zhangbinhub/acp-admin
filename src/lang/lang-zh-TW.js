@@ -223,6 +223,7 @@ const messages = Object.assign(twLocale, {
       delete: '刪除',
       cancel: '取消',
       add: '新增',
+      newFold: '新建文件夾',
       reset: '重置',
       upload: '上傳',
       view: '查看',

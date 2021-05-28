@@ -7,6 +7,7 @@
 > - [Upgrade] 更新各插件写法，迁移到vue3
 > - [Upgrade] 优化日志查询界面
 > - [Upgrade] 自定义vue-count-to插件
+> - [Upgrade] 完善文件管理
 ##### v4.2.4
 > - [Upgrade] 更新依赖插件至最新稳定版本
 ##### v4.2.3
