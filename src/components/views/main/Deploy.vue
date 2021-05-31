@@ -171,22 +171,28 @@
           <h3>{{ $t('forms.path') + ': ' + path }}</h3>
         </el-col>
       </el-row>
-      <el-row>
-        <el-col :span="24">
-          <el-button size="mini" type="info" @click="handleBackUp" :loading="modal_loading">
-            {{ $t('errorPage.buttons.back') }}
+      <el-form :inline="true" @submit.native.prevent size="mini">
+        <el-form-item :label="$t('forms.filterKey')">
+          <el-input v-model="fileName" :disabled="modal_loading" clearable @keyup.enter.native="handleRefresh"/>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleReset" :loading="modal_loading"
+                     style="margin-left: 10px">
+            {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button size="mini" type="success" @click="handleRefresh" :loading="modal_loading"
+          <el-button type="success" @click="handleRefresh" :loading="modal_loading"
                      style="margin-left: 10px">
             {{ $t('forms.buttons.refresh') }}
           </el-button>
-          <el-button size="mini" type="warning" @click="handleCreateFold" :loading="modal_loading"
+          <el-button type="info" @click="handleBackUp" :loading="modal_loading">
+            {{ $t('errorPage.buttons.back') }}
+          </el-button>
+          <el-button type="warning" @click="handleCreateFold" :loading="modal_loading"
                      style="margin-left: 10px">
             {{ $t('forms.buttons.newFold') }}
           </el-button>
-        </el-col>
-      </el-row>
-      <el-divider/>
+        </el-form-item>
+      </el-form>
       <el-scrollbar class="upload-scrollbar" :style="{height: mainHeight+'px'}">
         <el-upload
           multiple
@@ -240,7 +246,8 @@ export default {
       selectedData: [],
       fileList: [],
       action: 0,
-      path: ''
+      path: '',
+      fileName: ''
     }
   },
   watch: {
@@ -546,7 +553,7 @@ export default {
     searchFile() {
       this.modal_loading = true
       this.fileList = []
-      this.$api.request.deploy.searchFile(this.path).then((res) => {
+      this.$api.request.deploy.searchFile(this.path, this.fileName).then((res) => {
         this.modal_loading = false
         if (res) {
           this.fileList = res.data
@@ -565,6 +572,9 @@ export default {
         }
       }
       this.searchFile()
+    },
+    handleReset() {
+      this.fileName = ''
     },
     handleRefresh() {
       this.searchFile()

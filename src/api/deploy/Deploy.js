@@ -3,8 +3,8 @@ import {doDownLoadFile} from '@/libs/tools'
 import {Base64} from 'js-base64'
 
 export default {
-  searchFile: (path) => {
-    return ApiComm.$http.get('/deploy/file?path=' + encodeURIComponent(Base64.encode(path)))
+  searchFile: (path, name) => {
+    return ApiComm.$http.get('/deploy/file?path=' + encodeURIComponent(Base64.encode(path)) + '&name=' + encodeURIComponent(Base64.encode(name)))
   },
   createFold: (path, foldName) => {
     return ApiComm.$http.put('/deploy/file', {
