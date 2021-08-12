@@ -143,6 +143,11 @@
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.scriptFile')"
                     @keyup.enter.native="doSave('editForm')"/>
         </el-form-item>
+        <el-form-item :label="$t('forms.paramFile')" prop="paramFile" style="width: 100%">
+          <el-input v-model="editForm.paramFile" :disabled="modal_loading"
+                    :placeholder="$t('forms.pleaseEnter') + $t('forms.paramFile')"
+                    @keyup.enter.native="doSave('editForm')"/>
+        </el-form-item>
         <el-form-item :label="$t('forms.serverIpRegex')" prop="serverIpRegex" style="width: 100%">
           <el-input v-model="editForm.serverIpRegex" :disabled="modal_loading"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.serverIpRegex')"
@@ -236,6 +241,7 @@ export default {
         id: '',
         name: '',
         scriptFile: '',
+        paramFile: '',
         serverIpRegex: '',
         remarks: ''
       },
@@ -346,6 +352,7 @@ export default {
         this.editForm.id = row.id
         this.editForm.name = row.name
         this.editForm.scriptFile = row.scriptFile
+        this.editForm.paramFile = row.paramFile
         this.editForm.serverIpRegex = row.serverIpRegex
         this.editForm.remarks = row.remarks
         this.editForm.createLoginNo = row.createLoginNo
@@ -369,6 +376,7 @@ export default {
               this.$api.request.deploy.create({
                 name: this.editForm.name,
                 scriptFile: this.editForm.scriptFile,
+                paramFile: this.editForm.paramFile,
                 serverIpRegex: this.editForm.serverIpRegex,
                 remarks: this.editForm.remarks
               }).then((res) => {
@@ -392,6 +400,7 @@ export default {
                 id: this.editForm.id,
                 name: this.editForm.name,
                 scriptFile: this.editForm.scriptFile,
+                paramFile: this.editForm.paramFile,
                 serverIpRegex: this.editForm.serverIpRegex,
                 remarks: this.editForm.remarks
               }).then((res) => {
