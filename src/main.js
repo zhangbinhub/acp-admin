@@ -45,16 +45,12 @@ app.use(router)
 // 加载 store
 app.use(store)
 
-// 加载 ElementUI ，并启用 i18n
+// 加载 i18n
 const i18n = store.state.app.i18n
 app.use(i18n)
-app.use(ElementPlus, {
-  i18n: function (path, options) {
-    let value = i18n.global.t(path, options)
-    if (value !== null && value !== undefined) return value
-    return ''
-  }
-})
+
+// 加载 ElementUI
+app.use(ElementPlus)
 
 // 加载 axios
 app.use(VueAxios, axiosInstance)
