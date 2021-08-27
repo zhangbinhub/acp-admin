@@ -1,8 +1,7 @@
 import * as Vue from 'vue'
-import App from '@/App.vue'
 import store from '@/store'
-import ElementUI from 'element-plus'
-import 'element-plus/lib/theme-chalk/index.css'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 import Nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
 import router from '@/router'
@@ -12,6 +11,7 @@ import api from '@/api'
 import '@/assets/styles/layout.less'
 import '@/assets/styles/transition.less'
 import * as echarts from 'echarts'
+import App from '@/App.vue'
 import '@/mock'
 
 Nprogress.configure({showSpinner: false})
@@ -48,7 +48,7 @@ app.use(store)
 // 加载 ElementUI ，并启用 i18n
 const i18n = store.state.app.i18n
 app.use(i18n)
-app.use(ElementUI, {
+app.use(ElementPlus, {
   i18n: function (path, options) {
     let value = i18n.global.t(path, options)
     if (value !== null && value !== undefined) return value
