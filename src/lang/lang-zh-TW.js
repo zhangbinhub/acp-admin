@@ -1,4 +1,4 @@
-import twLocale from 'element-plus/lib/locale/lang/zh-tw'
+import twLocale from 'element-plus/es/locale/lang/zh-tw'
 
 const messages = Object.assign(twLocale, {
   lang: '語言',

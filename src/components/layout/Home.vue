@@ -1,51 +1,53 @@
 <template>
-  <el-container style="height: 100%" :class="`home home-${theme}`">
-    <el-aside width="auto" :style="{overflow: 'hidden'}">
-      <side-menu :accordion="true" :active-name="fullPath" :collapsed="isCollapsed"
-                 @on-select="handleClick" :menu-list="menuList" :open-names="openedNames" :theme="theme"
-                 :class="{'menu-container':true,'collapsed':isCollapsed}">
-        <div :class="{'logo-con':true,'collapsed':isCollapsed}">
-          <img v-show="!isCollapsed" :src="mainLogo" alt=""/>
-          <img v-show="isCollapsed" :src="minLogo" alt=""/>
-        </div>
-      </side-menu>
-    </el-aside>
-    <el-container style="width: 100%">
-      <el-header style="padding: 0;height: 60px">
-        <header-bar :collapsed="isCollapsed" :full-path="fullPath" :menu-list="menuList"
-                    :mini="isMini" @on-coll-change="handleCollapsedChange">
-          <user :user-avatar="userAvatar" :customer-name="userName"/>
-          <language :lang="localLang"/>
-          <logFileButton v-if="showLogFile"/>
-          <routeLogButton v-if="showRouteLog"/>
-          <routeConfigButton v-if="showRouteConfig"/>
-          <deployButton v-if="showDeploy"/>
-          <fullscreen v-model="isFullscreen"/>
-        </header-bar>
-      </el-header>
-      <el-container>
-        <el-header style="padding: 0;height: 33px">
-          <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList"
-                    @update:modelValue="handleClick" @on-close="handleCloseTag"/>
+  <el-config-provider :locale="localLangMessage">
+    <el-container style="height: 100%" :class="`home home-${theme}`">
+      <el-aside width="auto" :style="{overflow: 'hidden'}">
+        <side-menu :accordion="true" :active-name="fullPath" :collapsed="isCollapsed"
+                   @on-select="handleClick" :menu-list="menuList" :open-names="openedNames" :theme="theme"
+                   :class="{'menu-container':true,'collapsed':isCollapsed}">
+          <div :class="{'logo-con':true,'collapsed':isCollapsed}">
+            <img v-show="!isCollapsed" :src="mainLogo" alt=""/>
+            <img v-show="isCollapsed" :src="minLogo" alt=""/>
+          </div>
+        </side-menu>
+      </el-aside>
+      <el-container style="width: 100%">
+        <el-header style="padding: 0;height: 60px">
+          <header-bar :collapsed="isCollapsed" :full-path="fullPath" :menu-list="menuList"
+                      :mini="isMini" @on-coll-change="handleCollapsedChange">
+            <user :user-avatar="userAvatar" :customer-name="userName"/>
+            <language :lang="localLang"/>
+            <logFileButton v-if="showLogFile"/>
+            <routeLogButton v-if="showRouteLog"/>
+            <routeConfigButton v-if="showRouteConfig"/>
+            <deployButton v-if="showDeploy"/>
+            <fullscreen v-model="isFullscreen"/>
+          </header-bar>
         </el-header>
-        <el-scrollbar ref="main-scrollbar" class="main-scrollbar" :style="{height:mainHeight+'px'}">
-          <el-main class="main-content">
-            <router-view v-slot="{ Component }">
-              <transition name="fade-transform" mode="out-in" :appear="true">
-                <keep-alive :include="cacheList">
-                  <component :is="Component"/>
-                </keep-alive>
-              </transition>
-            </router-view>
-          </el-main>
-          <el-backtop :visibility-height="100" target=".main-scrollbar .el-scrollbar__wrap"/>
-        </el-scrollbar>
+        <el-container>
+          <el-header style="padding: 0;height: 33px">
+            <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList"
+                      @update:modelValue="handleClick" @on-close="handleCloseTag"/>
+          </el-header>
+          <el-scrollbar ref="main-scrollbar" class="main-scrollbar" :style="{height:mainHeight+'px'}">
+            <el-main class="main-content">
+              <router-view v-slot="{ Component }">
+                <transition name="fade-transform" mode="out-in" :appear="true">
+                  <keep-alive :include="cacheList">
+                    <component :is="Component"/>
+                  </keep-alive>
+                </transition>
+              </router-view>
+            </el-main>
+            <el-backtop :visibility-height="100" target=".main-scrollbar .el-scrollbar__wrap"/>
+          </el-scrollbar>
+        </el-container>
+        <el-footer class="foot-content" style="height: 30px">
+          <small style="text-align: center;">{{ copyright }}</small>
+        </el-footer>
       </el-container>
-      <el-footer class="foot-content" style="height: 30px">
-        <small style="text-align: center;">{{ copyright }}</small>
-      </el-footer>
     </el-container>
-  </el-container>
+  </el-config-provider>
 </template>
 <script>
 import {nextTick} from 'vue'
@@ -144,6 +146,9 @@ export default {
     },
     localLang() {
       return this.$store.state.app.lang.lang
+    },
+    localLangMessage() {
+      return this.$store.state.app.lang.langMessages[this.$store.state.app.lang.lang]
     }
   },
   watch: {
