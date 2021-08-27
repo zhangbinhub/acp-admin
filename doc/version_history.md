@@ -3,6 +3,8 @@
 > - [Upgrade] 更新依赖插件至最新版本
 > - [Upgrade] 优化日志查询界面
 > - [Upgrade] 部署任务增加参数文件
+> - [Upgrade] 修改element-plus样式导入写法
+> - [Upgrade] 修改element-plus国际化写法
 ##### v5.0.0
 > - [Upgrade] 更新依赖插件至最新稳定版本
 > - [Upgrade] vue2 升级至 vue3
