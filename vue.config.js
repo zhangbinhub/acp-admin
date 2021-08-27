@@ -4,6 +4,8 @@
 // vue.config.js 配置说明
 // 官方vue.config.js 参考文档 https://cli.vuejs.org/zh/config/#css-loaderoptions
 // 这里只列一部分，具体配置参考文档
+const path = require('path');
+const resolve = (dir) => path.join(__dirname, dir);
 module.exports = {
   publicPath: '/admin', // 部署应用时的根路径(默认'/'),也可用相对路径(当使用相对路径时，router中也需要配置base为对应的路径)
   outputDir: 'dist', // 运行时生成的生产环境构建文件的目录(默认''dist''，构建之前会被清除)
@@ -43,6 +45,14 @@ module.exports = {
         }
       }
     }
+  },
+  css: {
+    extract: true
+  },
+  chainWebpack: config => {
+    config.resolve.alias
+      .set('vue-i18n', 'vue-i18n/dist/vue-i18n.cjs.js')
+      .set('@', resolve('src'))
   },
   pluginOptions: {
     // 第三方插件配置

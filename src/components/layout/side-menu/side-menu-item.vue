@@ -1,5 +1,5 @@
 <template>
-  <el-submenu :index="`${this.parentItem.id}`">
+  <el-sub-menu :index="`${this.parentItem.id}`">
     <template #title>
       <i :class="this.parentItem.iconType"/>
       <span>{{ this.parentItem.name }}</span>
@@ -11,7 +11,7 @@
         <template #title>{{ item.name }}</template>
       </el-menu-item>
     </template>
-  </el-submenu>
+  </el-sub-menu>
 </template>
 <script>
 export default {
