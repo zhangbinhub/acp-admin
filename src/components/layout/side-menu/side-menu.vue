@@ -12,7 +12,9 @@
         <template v-for="item in menuList">
           <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"/>
           <el-menu-item v-else :index="item.path">
-            <i :class="item.iconType"/>
+            <el-icon>
+              <component v-bind:is="'el-icon-'+item.iconType"></component>
+            </el-icon>
             <template #title>{{ item.name }}</template>
           </el-menu-item>
         </template>

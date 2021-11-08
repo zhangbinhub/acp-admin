@@ -131,7 +131,7 @@ export default {
       currOrgFullPath: '',
       currOrgData: {},
       currOrg: {},
-      editForm: {},
+      editForm: {sort: 0},
       optionalUsers: [],
       filterText: ''
     }

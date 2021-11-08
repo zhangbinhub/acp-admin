@@ -106,9 +106,8 @@
         width="80">
         <template #default="scope">
           <el-tooltip :content="$t('forms.buttons.view')" placement="top-start">
-            <el-button type="text" @click="gotoFlowView(scope.row)">
-              <i style="font-size: 15px" class="el-icon-search"/>
-            </el-button>
+            <el-button type="text" @click="gotoFlowView(scope.row)"
+                       icon="el-icon-search"/>
           </el-tooltip>
         </template>
       </el-table-column>
@@ -125,7 +124,10 @@
       <div>
         <el-card shadow="hover">
           <template #header>
-            <span>{{ $t('forms.basicInfo') }}</span><i class="el-icon-info" style="color: #409EFF; margin-left: 5px"/>
+            <span>{{ $t('forms.basicInfo') }}</span>
+            <el-icon color="#409EFF" style="margin-left: 5px">
+              <el-icon-info-filled/>
+            </el-icon>
           </template>
           <el-form size="mini" :model="currObj" label-width="100px" :inline="true"
                    @submit.native.prevent>
@@ -223,7 +225,9 @@
                 <el-collapse-item>
                   <template #title>
                     <span>{{ $t('forms.processParams') }}</span>
-                    <i class="el-icon-info" style="color: #409EFF; margin-left: 5px"/>
+                    <el-icon color="#409EFF" style="margin-left: 5px">
+                      <el-icon-info-filled/>
+                    </el-icon>
                   </template>
                   <el-table size="mini" :stripe="true" :data="params">
                     <el-table-column
@@ -257,7 +261,9 @@
         <el-card shadow="hover" style="margin-top: 10px">
           <template #header>
             <span>{{ $t('forms.buttons.image') }}</span>
-            <i class="el-icon-info" style="color: #409EFF; margin-left: 5px"/>
+            <el-icon color="#409EFF" style="margin-left: 5px">
+              <el-icon-info-filled/>
+            </el-icon>
           </template>
           <el-scrollbar>
             <el-image :src="viewDiagram" style="padding-bottom: 20px"/>
@@ -266,7 +272,9 @@
         <el-card shadow="hover" style="margin-top: 10px">
           <template #header>
             <span>{{ $t('forms.processActivityRecords') }}</span>
-            <i class="el-icon-info" style="color: #409EFF; margin-left: 5px"/>
+            <el-icon color="#409EFF" style="margin-left: 5px">
+              <el-icon-info-filled/>
+            </el-icon>
           </template>
           <el-table size="mini" :stripe="true" :data="processActivityList">
             <el-table-column

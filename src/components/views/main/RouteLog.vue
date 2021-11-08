@@ -131,9 +131,8 @@
         width="50">
         <template #default="scope">
           <el-tooltip :content="$t('forms.buttons.view')" placement="top-start">
-            <el-button type="text" @click="handleView(scope.row)">
-              <i style="font-size: 15px" class="el-icon-search"/>
-            </el-button>
+            <el-button type="text" @click="handleView(scope.row)"
+                       icon="el-icon-search"></el-button>
           </el-tooltip>
         </template>
       </el-table-column>

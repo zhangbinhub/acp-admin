@@ -106,17 +106,23 @@
         <template #default="scope">
           <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
             <el-button type="text" @click="handleEdit(scope.row)">
-              <i style="font-size: 15px" class="el-icon-edit"/>
+              <el-icon size="15">
+                <el-icon-edit/>
+              </el-icon>
             </el-button>
           </el-tooltip>
           <el-tooltip :content="$t('forms.buttons.delete')" placement="top-start">
             <el-button type="text" @click="handleDeleteRow(scope.row)">
-              <i style="font-size: 15px" class="el-icon-delete"/>
+              <el-icon size="15">
+                <el-icon-delete/>
+              </el-icon>
             </el-button>
           </el-tooltip>
           <el-tooltip :content="$t('forms.buttons.execute')" placement="top-start">
             <el-button type="text" @click="handleExecute(scope.row)">
-              <i style="font-size: 15px" class="el-icon-circle-check"/>
+              <el-icon size="15">
+                <el-icon-circle-check/>
+              </el-icon>
             </el-button>
           </el-tooltip>
         </template>

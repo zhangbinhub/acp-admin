@@ -71,20 +71,17 @@
         width="120">
         <template #default="scope">
           <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
-            <el-button type="text" @click="handleEdit(scope.row,1)">
-              <i style="font-size: 15px" class="el-icon-edit"/>
-            </el-button>
+            <el-button type="text" @click="handleEdit(scope.row,1)"
+                       icon="el-icon-edit"></el-button>
           </el-tooltip>
           <el-tooltip :content="$t('forms.buttons.view')" placement="top-start"
                       v-if="scope.row.secret!==$store.state.app.appInfo.appSecret">
-            <el-button type="text" @click="handleEdit(scope.row,2,scope.$index)">
-              <i style="font-size: 15px" class="el-icon-search"/>
-            </el-button>
+            <el-button type="text" @click="handleEdit(scope.row,2,scope.$index)"
+                       icon="el-icon-search"></el-button>
           </el-tooltip>
           <el-tooltip :content="$t('forms.buttons.delete')" placement="top-start" v-if="scope.row.covert">
-            <el-button type="text" @click="handleDeleteRow(scope.row)">
-              <i style="font-size: 15px" class="el-icon-delete"/>
-            </el-button>
+            <el-button type="text" @click="handleDeleteRow(scope.row)"
+                       icon="el-icon-delete"></el-button>
           </el-tooltip>
         </template>
       </el-table-column>

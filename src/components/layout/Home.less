@@ -3,12 +3,6 @@
 
 table {
   overflow: hidden !important;
-
-  .table-fixed {
-    .el-table__fixed-right {
-      height: 100% !important;
-    }
-  }
 }
 
 .logo-con {
@@ -73,7 +67,7 @@ table {
 }
 
 .el-table {
-  .query-table-header {
+  .el-table__cell.query-table-header {
     background-color: @tableQueryHeaderBgColor;
   }
 }
@@ -85,12 +79,4 @@ table {
   justify-content: space-between;
   font-size: 14px;
   padding-right: 8px;
-}
-
-.el-tree-node :nth-child(2) {
-  overflow: visible;
-}
-
-.el-checkbox, .el-transfer-panel__item {
-  display: block;
 }

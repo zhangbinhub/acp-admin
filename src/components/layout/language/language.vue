@@ -3,7 +3,6 @@
     <el-dropdown trigger="click" @command="selectLang">
       <el-link href="javascript:void(0)" :underline="false" style="font-size: 12px">
         {{ $t('lang') }}
-        <i class="el-icon-arrow-down el-icon--right"/>
       </el-link>
       <template #dropdown>
         <el-dropdown-menu>

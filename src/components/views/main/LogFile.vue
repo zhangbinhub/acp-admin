@@ -31,7 +31,9 @@
               style="text-align: center;min-width: 150px;margin-bottom: 15px;">
         <el-tooltip :content="file" placement="bottom">
           <el-button type="text" :loading="form_loading" @click="downLoadFile(file)">
-            <i class="el-icon-document" style="font-size: 50px"/>
+            <el-icon size="50">
+              <el-icon-document/>
+            </el-icon>
           </el-button>
         </el-tooltip>
         <p>{{ file }}</p>

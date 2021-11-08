@@ -1,6 +1,8 @@
 <template>
   <el-link :underline="false" href="javascript:void(0)" @click="handleChange" class="sider-trigger-link">
-    <i :class="collapsed?'el-icon-s-unfold':'el-icon-s-fold'"/>
+    <el-icon size="32">
+      <component v-bind:is="collapsed?'el-icon-expand':'el-icon-fold'"></component>
+    </el-icon>
   </el-link>
 </template>
 <script>

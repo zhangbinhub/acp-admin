@@ -1,7 +1,12 @@
 <template>
   <el-tabs v-model="activeName">
     <el-tab-pane name="menuList">
-      <template #label><i class="el-icon-s-order" style="margin-right: 5px"/>{{ $t('forms.menuList') }}</template>
+      <template #label>
+        <el-icon style="margin-right: 5px">
+          <el-icon-list/>
+        </el-icon>
+        {{ $t('forms.menuList') }}
+      </template>
       <el-row :gutter="16">
         <el-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
           <el-card>
@@ -15,7 +20,10 @@
                 <template #default="{ node, data }">
                   <span class="config-tree-node">
                     <span v-if="!data.isApp" @click="menuClick(data)">
-                      <i :class="data.iconType" style="margin-right: 5px"/>{{ node.label }}</span>
+                      <el-icon style="margin-right: 5px">
+                        <component v-bind:is="'el-icon-'+data.iconType"></component>
+                      </el-icon>
+                      {{ node.label }}</span>
                     <span v-else>{{ node.label }}</span>
                     <span>
                       <el-button
@@ -126,7 +134,12 @@
       </el-row>
     </el-tab-pane>
     <el-tab-pane name="moduleFuncList">
-      <template #label><i class="el-icon-s-grid" style="margin-right: 5px"/>{{ $t('forms.moduleFuncList') }}</template>
+      <template #label>
+        <el-icon style="margin-right: 5px">
+          <el-icon-grid/>
+        </el-icon>
+        {{ $t('forms.moduleFuncList') }}
+      </template>
       <el-row :gutter="16">
         <el-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
           <el-card>
@@ -242,7 +255,7 @@ export default {
       currMenuFullPath: '',
       currMenuData: {},
       currMenu: {},
-      menuEditForm: {},
+      menuEditForm: {sort: 0},
       currModuleFuncFullPath: '',
       currModuleFuncData: {},
       currModuleFunc: {},
@@ -577,7 +590,7 @@ export default {
       this.$api.request.auth.createMenu({
         appId: data.appId,
         name: this.$i18n.t('forms.new') + this.$i18n.t('forms.menu'),
-        iconType: 'el-icon-caret-right',
+        iconType: 'caret-right',
         path: '/',
         parentId: data.id,
         enabled: false,

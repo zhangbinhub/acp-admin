@@ -71,49 +71,75 @@
         <div class="button-box">
           <el-button-group style="margin-right: 10px">
             <el-button type="primary" @click="reset" size="small">
-              <i class="el-icon-refresh"/>
+              <el-icon>
+                <el-icon-refresh/>
+              </el-icon>
             </el-button>
             <el-button type="primary" @click="mode('move')" size="small">
-              <i class="el-icon-rank"/>
+              <el-icon>
+                <el-icon-rank/>
+              </el-icon>
             </el-button>
             <el-button type="primary" @click="mode('crop')" size="small">
-              <i class="el-icon-crop"/>
+              <el-icon>
+                <el-icon-crop/>
+              </el-icon>
             </el-button>
           </el-button-group>
           <el-button-group style="margin-right: 10px">
             <el-button type="primary" @click="shrink" size="small">
-              <i class="el-icon-zoom-out"/>
+              <el-icon>
+                <el-icon-zoom-out/>
+              </el-icon>
             </el-button>
             <el-button type="primary" @click="magnify" size="small">
-              <i class="el-icon-zoom-in"/>
+              <el-icon>
+                <el-icon-zoom-in/>
+              </el-icon>
             </el-button>
           </el-button-group>
           <el-button-group style="margin-right: 10px">
             <el-button type="primary" @click="rotate(-1)" size="small">
-              <i class="el-icon-refresh-left"/>
+              <el-icon>
+                <el-icon-refresh-left/>
+              </el-icon>
             </el-button>
             <el-button type="primary" @click="rotate(1)" size="small">
-              <i class="el-icon-refresh-right"/>
+              <el-icon>
+                <el-icon-refresh-right/>
+              </el-icon>
             </el-button>
             <el-button type="primary" @click="scale('X')" size="small">
-              <i class="el-icon-d-caret icon-leftAndRight"/>
+              <el-icon class="icon-leftAndRight">
+                <el-icon-d-caret/>
+              </el-icon>
             </el-button>
             <el-button type="primary" @click="scale('Y')" size="small">
-              <i class="el-icon-d-caret"/>
+              <el-icon>
+                <el-icon-d-caret/>
+              </el-icon>
             </el-button>
           </el-button-group>
           <el-button-group style="margin-right: 10px">
             <el-button type="primary" @click="move(0, -moveStep)" size="small">
-              <i class="el-icon-caret-top"/>
+              <el-icon>
+                <el-icon-caret-top/>
+              </el-icon>
             </el-button>
             <el-button type="primary" @click="move(-moveStep, 0)" size="small">
-              <i class="el-icon-caret-left"/>
+              <el-icon>
+                <el-icon-caret-left/>
+              </el-icon>
             </el-button>
             <el-button type="primary" @click="move(0, moveStep)" size="small">
-              <i class="el-icon-caret-bottom"/>
+              <el-icon>
+                <el-icon-caret-bottom/>
+              </el-icon>
             </el-button>
             <el-button type="primary" @click="move(moveStep, 0)" size="small">
-              <i class="el-icon-caret-right"/>
+              <el-icon>
+                <el-icon-caret-right/>
+              </el-icon>
             </el-button>
           </el-button-group>
           <el-button-group>
@@ -160,7 +186,7 @@ export default {
   },
   computed: {
     imgId() {
-      return `cropper${this._uid}`
+      return `cropper-${this._.uid}`
     }
   },
   watch: {
