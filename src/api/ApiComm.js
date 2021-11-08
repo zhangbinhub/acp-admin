@@ -321,21 +321,25 @@ const ApiComm = {
       // path
       let path = pathOrName
       if (menu) {
-        switch (menu.openType) {
-          case 0: // 内嵌模式
-            path = menu.path
-            break
-          case 1: // 打开新页面
-            window.open(menu.path)
-            return
-          default:
-            path = menu.path
+        if (menu.openType === 1) {
+          // 打开新页面
+          window.open(path)
+          return
         }
+      }
+      let routeQuery = query
+      if (pathOrName.indexOf('?') > 0) {
+        pathOrName.substring(pathOrName.indexOf('?') + 1).split('&').forEach((keyValue) => {
+          if (keyValue.indexOf('=') > 0) {
+            const map = keyValue.split('=')
+            routeQuery[map[0]] = map[1]
+          }
+        })
       }
       option = {
         path: path,
         params: params,
-        query: query
+        query: routeQuery
       }
       if (this.$router.currentRoute.value.fullPath === path) {
         return
