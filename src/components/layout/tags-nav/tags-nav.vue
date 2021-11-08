@@ -3,7 +3,9 @@
     <div class="close-con">
       <el-dropdown trigger="click" @command="handleTagsOption">
         <el-button type="text" size="mini" style="padding-top: 6px">
-          <i style="font-size: 18px" class="el-icon-error"/>
+          <el-icon size="18">
+            <el-icon-circle-close-filled/>
+          </el-icon>
         </el-button>
         <template #dropdown>
           <el-dropdown-menu>

@@ -1,13 +1,17 @@
 <template>
   <el-sub-menu :index="`${this.parentItem.id}`">
     <template #title>
-      <i :class="this.parentItem.iconType"/>
+      <el-icon>
+        <component v-bind:is="'el-icon-'+this.parentItem.iconType"></component>
+      </el-icon>
       <span>{{ this.parentItem.name }}</span>
     </template>
     <template v-for="item in this.parentItem.children">
       <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"/>
       <el-menu-item v-else :index="item.path">
-        <i :class="item.iconType"/>
+        <el-icon>
+          <component v-bind:is="'el-icon-'+item.iconType"></component>
+        </el-icon>
         <template #title>{{ item.name }}</template>
       </el-menu-item>
     </template>

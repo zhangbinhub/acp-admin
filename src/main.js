@@ -1,6 +1,7 @@
 import * as Vue from 'vue'
 import store from '@/store'
 import ElementPlus from 'element-plus'
+import * as ElementPlusIcons from '@element-plus/icons'
 import 'element-plus/dist/index.css'
 import Nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
@@ -37,6 +38,11 @@ window.onresize = function () {
   autoWidth()
   autoHeight()
 }
+
+const transElIconName = (iconName) => {
+  return 'el-icon' + iconName.replace(/[A-Z]/g, (match) => '-' + match.toLowerCase())
+}
+
 const app = Vue.createApp(App)
 
 // 加载 router
@@ -49,8 +55,11 @@ app.use(store)
 const i18n = store.state.app.i18n
 app.use(i18n)
 
-// 加载 ElementUI
+// 加载 ElementPlus、ElementPlusIcons
 app.use(ElementPlus)
+for (let iconName in ElementPlusIcons) {
+  app.component(transElIconName(iconName), ElementPlusIcons[iconName])
+}
 
 // 加载 axios
 app.use(VueAxios, axiosInstance)

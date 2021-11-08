@@ -8,7 +8,9 @@
           <el-card shadow="hover" style="margin: 0 8px">
             <el-row>
               <el-col :span="8">
-                <i class="el-icon-odometer" style="font-size: 55px;color: #67c23a"/>
+                <el-icon size="55" color="#67c23a">
+                  <el-icon-odometer/>
+                </el-icon>
               </el-col>
               <el-col :span="16">
                 <div style="color: #9ea7b4;">{{ item.appName }}</div>

@@ -30,7 +30,9 @@
             :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload">
             <img v-if="imageUrl" :src="imageUrl" class="avatar" alt=""/>
-            <i v-else class="el-icon-plus avatar-uploader-icon"/>
+            <el-icon v-else class="avatar-uploader-icon">
+              <el-icon-plus/>
+            </el-icon>
           </el-upload>
         </el-card>
       </el-col>
@@ -41,7 +43,9 @@
             list-type="picture-card"
             :on-preview="handlePictureCardPreview"
             :on-remove="handleRemove">
-            <i class="el-icon-plus"/>
+            <el-icon>
+              <el-icon-plus/>
+            </el-icon>
           </el-upload>
           <el-dialog v-model="dialogVisible">
             <img width="100%" :src="dialogImageUrl" alt="">
@@ -58,7 +62,9 @@
             list-type="picture-card"
             :auto-upload="false">
             <template #default>
-              <i class="el-icon-plus"/>
+              <el-icon>
+                <el-icon-plus/>
+              </el-icon>
             </template>
             <template #file="{file}">
               <img class="el-upload-list__item-thumbnail"
@@ -66,17 +72,19 @@
               <span class="el-upload-list__item-actions">
                 <span class="el-upload-list__item-preview"
                       @click="handlePictureCardPreview(file)">
-                  <i class="el-icon-zoom-in"/>
+                  <el-icon>
+                    <el-icon-zoom-in/>
+                  </el-icon>
                 </span>
                 <span v-if="!disabled"
                       class="el-upload-list__item-delete"
                       @click="handleDownload(file)">
-                  <i class="el-icon-download"/>
+                  <el-icon><el-icon-download/></el-icon>
                 </span>
                 <span v-if="!disabled"
                       class="el-upload-list__item-delete"
                       @click="handleRemove(file)">
-                  <i class="el-icon-delete"/>
+                  <el-icon><el-icon-delete/></el-icon>
                 </span>
               </span>
             </template>
@@ -125,7 +133,9 @@
             drag
             :action="uploadURL"
             multiple>
-            <i class="el-icon-upload"/>
+            <el-icon class="el-icon--upload">
+              <el-icon-upload-filled/>
+            </el-icon>
             <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
             <template #tip>
               <div class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -176,6 +186,10 @@
   height: 178px;
   line-height: 178px;
   text-align: center;
+}
+
+.avatar-uploader-icon svg {
+  margin-top: 74px; /* (178px - 28px) / 2 - 1px */
 }
 
 .avatar {

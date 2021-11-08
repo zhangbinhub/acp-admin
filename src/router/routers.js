@@ -59,7 +59,7 @@ export default [{
     component: () => import('@/components/views/main/PersonalInformation.vue'),
     meta: {
       title: 'pageTitle.personalInformation',
-      icon: 'el-icon-user',
+      icon: 'user',
       requireAuth: true
     }
   }, {
@@ -68,7 +68,7 @@ export default [{
     component: () => import('@/components/views/main/RouteConfig.vue'),
     meta: {
       title: 'pageTitle.routeConfig',
-      icon: 'el-icon-share',
+      icon: 'share',
       requireAuth: true
     }
   }, {
@@ -77,7 +77,7 @@ export default [{
     component: () => import('@/components/views/main/Deploy.vue'),
     meta: {
       title: 'pageTitle.deploy',
-      icon: 'el-icon-s-tools',
+      icon: 'tools',
       requireAuth: true
     }
   }, {
@@ -86,7 +86,7 @@ export default [{
     component: () => import('@/components/views/main/RouteLog.vue'),
     meta: {
       title: 'pageTitle.routeLog',
-      icon: 'el-icon-reading',
+      icon: 'reading',
       requireAuth: true
     }
   }, {
@@ -95,7 +95,7 @@ export default [{
     component: () => import('@/components/views/main/LogFile.vue'),
     meta: {
       title: 'pageTitle.logFile',
-      icon: 'el-icon-document',
+      icon: 'document',
       requireAuth: true
     }
   }, {

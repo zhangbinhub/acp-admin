@@ -2,7 +2,9 @@
   <div v-if="showFullScreenBtn" class="header-bar-button">
     <el-tooltip :content="modelValue ? $t('home.exitFullScreen') : $t('home.fullScreen')" placement="bottom">
       <el-button type="text" @click="handleChange">
-        <i style="font-size: 23px" class="el-icon-full-screen"/>
+        <el-icon size="23">
+          <el-icon-full-screen/>
+        </el-icon>
       </el-button>
     </el-tooltip>
   </div>

@@ -1,6 +1,8 @@
 ## 版本更新记录
 ##### v5.1.2
 - [Upgrade] 更新依赖插件至最新版本
+- [Upgrade] icon迁移至el-icon
+- [Fix] 修复vue-route4.0通过path跳转时，url参数不传递的问题[ApiComm.js 323~343](src/api/ApiComm.js)
 ##### v5.1.1
 > - [Upgrade] 更新依赖插件至最新版本
 ##### v5.1.0

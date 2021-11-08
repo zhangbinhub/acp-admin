@@ -32,7 +32,7 @@
           <el-scrollbar ref="main-scrollbar" class="main-scrollbar" :style="{height:mainHeight+'px'}">
             <el-main class="main-content">
               <router-view v-slot="{ Component }">
-                <transition name="fade-transform" mode="out-in" :appear="true">
+                <transition name="el-fade-in" mode="out-in" appear>
                   <keep-alive :include="cacheList">
                     <component :is="Component"/>
                   </keep-alive>

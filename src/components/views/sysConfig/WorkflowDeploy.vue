@@ -104,14 +104,12 @@
         width="90">
         <template #default="scope">
           <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
-            <el-button type="text" @click="handleEdit(scope.row)">
-              <i style="font-size: 15px" class="el-icon-edit"/>
-            </el-button>
+            <el-button type="text" @click="handleEdit(scope.row)"
+                       icon="el-icon-edit"/>
           </el-tooltip>
           <el-tooltip :content="$t('forms.buttons.delete')" placement="top-start">
-            <el-button type="text" @click="handleDeleteRow(scope.row)">
-              <i style="font-size: 15px" class="el-icon-delete"/>
-            </el-button>
+            <el-button type="text" @click="handleDeleteRow(scope.row)"
+                       icon="el-icon-delete"/>
           </el-tooltip>
         </template>
       </el-table-column>
