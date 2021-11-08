@@ -1,6 +1,6 @@
 # acp-admin
 
-###### v5.1.1 [版本更新日志](doc/version_history.md)
+###### v5.1.2 [版本更新日志](doc/version_history.md)
 
 ## 浏览器兼容性
 
