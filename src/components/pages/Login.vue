@@ -16,7 +16,7 @@
         <div>
           <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" @submit.native.prevent>
             <el-form-item>
-              <el-input type="password" style="display: none;"/>
+              <input type="password" style="display: none;"/>
             </el-form-item>
             <el-form-item prop="loginNo">
               <el-input ref="loginNo" v-model="formValidate.loginNo" type="text" :disabled="modal_loading"
