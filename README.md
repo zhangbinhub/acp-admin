@@ -14,7 +14,7 @@
 
 ## 简介
 
-> 使用vue全家桶(Vue+Vue-router+Vuex+axios)、ElementUI样式库构建的前端项目。该项目是前后端分离架构中的“前端部分” 。后端工程[V5.1.1](https://github.com/zhangbin1010/acp-admin-cloud)
+> 使用vue全家桶(Vue+Vue-router+Vuex+axios)、ElementUI样式库构建的前端项目。该项目是前后端分离架构中的“前端部分” 。后端工程[V5.1.2](https://github.com/zhangbin1010/acp-admin-cloud)
 
 > 系统仍持续完善和优化中，数据初始化及后端数据结构请参看[后端工程](https://github.com/zhangbin1010/acp-admin-cloud)
 
