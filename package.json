@@ -13,7 +13,7 @@
   "dependencies": {
     "@element-plus/icons": "0.0.11",
     "axios": "^0.24.0",
-    "core-js": "^3.19.2",
+    "core-js": "^3.19.3",
     "cropperjs": "^1.5.12",
     "echarts": "^5.2.2",
     "element-plus": "^1.2.0-beta.5",
@@ -23,7 +23,7 @@
     "mockjs": "^1.1.0",
     "moment": "^2.29.1",
     "nprogress": "^0.2.0",
-    "qs": "^6.10.1",
+    "qs": "^6.10.2",
     "vue": "^3.2.6",
     "vue-axios": "^3.4.0",
     "vue-i18n": "^9.2.0-beta.3",
