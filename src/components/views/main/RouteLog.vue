@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="100px" :inline="true" size="mini"
+    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="mini"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.remoteIp')" prop="remoteIp">
         <el-input v-model="searchForm.remoteIp" :disabled="modal_loading"

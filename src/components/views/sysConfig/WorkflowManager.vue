@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="150px" :inline="true" size="mini"
+    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="mini"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.processKey')" prop="processDefinitionKey">
         <el-input v-model="searchForm.processDefinitionKey" :disabled="modal_loading" style="width: 200px"
@@ -129,7 +129,7 @@
               <el-icon-info-filled/>
             </el-icon>
           </template>
-          <el-form size="mini" :model="currObj" label-width="100px" :inline="true"
+          <el-form size="mini" :model="currObj" label-width="auto" :inline="true"
                    @submit.native.prevent>
             <el-row :gutter="10">
               <el-col :lg="{span: 8}">
@@ -195,7 +195,7 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-form size="mini" :model="currObj" label-width="100px"
+          <el-form size="mini" :model="currObj" label-width="auto"
                    @submit.native.prevent>
             <el-row :gutter="10">
               <el-col :lg="{span: 24}">
@@ -205,7 +205,7 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-form size="mini" :model="currObj" label-width="100px"
+          <el-form size="mini" :model="currObj" label-width="auto"
                    v-if="currObj.deleteReason&&currObj.deleteReason!==''"
                    @submit.native.prevent>
             <el-row :gutter="10">

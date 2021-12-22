@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="100px" :inline="true" @submit.native.prevent
+    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" @submit.native.prevent
              size="mini">
       <el-form-item :label="$t('forms.processKey')" prop="value">
         <el-input v-model="searchForm.processKey" :disabled="modal_loading"
@@ -123,7 +123,7 @@
                    :total="searchForm.totalRows">
     </el-pagination>
     <el-dialog v-model="editModal" :title="$t('forms.buttons.add')" :close-on-click-modal="false">
-      <el-form ref="editForm" :model="editForm" label-width="100px" size="mini"
+      <el-form ref="editForm" :model="editForm" label-width="auto" size="mini"
                v-loading="modal_loading" @submit.native.prevent style="padding-right: 25px;">
         <div v-if="this.action===1">
           <el-form-item :label="$t('forms.processKey')+':'" prop="processKey">

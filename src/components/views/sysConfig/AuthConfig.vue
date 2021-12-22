@@ -51,7 +51,7 @@
         <el-col :lg="{ span: 15 }" v-show="currMenu.id&&currMenu.id!==''" style="margin-bottom: 16px;">
           <el-card>
             <template #header>{{ currMenuFullPath }}</template>
-            <el-form ref="menuEditForm" size="mini" :model="menuEditForm" :rules="ruleMenuEditForm" label-width="100px"
+            <el-form ref="menuEditForm" size="mini" :model="menuEditForm" :rules="ruleMenuEditForm" label-width="auto"
                      v-loading="treeLoading" @submit.native.prevent>
               <el-row>
                 <el-col :sm="{ span: 12 }">
@@ -181,7 +181,7 @@
           <el-card>
             <template #header>{{ currModuleFuncFullPath }}</template>
             <el-form ref="moduleFuncEditForm" size="mini" :model="moduleFuncEditForm" :rules="ruleModuleFuncEditForm"
-                     label-width="100px" v-loading="treeLoading" @submit.native.prevent>
+                     label-width="auto" v-loading="treeLoading" @submit.native.prevent>
               <el-row>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.name')" prop="name">

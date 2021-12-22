@@ -47,7 +47,7 @@
               </el-icon>
               {{ $t('forms.basicInfo') }}
             </template>
-            <el-form ref="editForm" size="mini" :model="editForm" :rules="ruleEditForm" label-width="60px"
+            <el-form ref="editForm" size="mini" :model="editForm" :rules="ruleEditForm" label-width="auto"
                      v-loading="treeLoading" @submit.native.prevent>
               <el-form-item :label="$t('forms.name')" prop="name">
                 <el-input ref="name" v-model="editForm.name" :disabled="treeLoading"

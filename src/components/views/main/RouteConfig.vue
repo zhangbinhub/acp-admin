@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="60px" :inline="true" size="mini"
+    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="mini"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.routeId')" prop="routeId">
         <el-input v-model="searchForm.routeId" :disabled="modal_loading"
@@ -104,7 +104,7 @@
                    :total="searchForm.totalRows">
     </el-pagination>
     <el-dialog v-model="editModal" :title="$t('forms.info')" :fullscreen="true">
-      <el-form ref="editForm" :model="editForm" :rules="ruleAddForm" label-width="80px" size="mini"
+      <el-form ref="editForm" :model="editForm" :rules="ruleAddForm" label-width="auto" size="mini"
                style="padding-right: 25px;" v-loading="modal_loading" @submit.native.prevent>
         <el-row>
           <el-col :lg="8">

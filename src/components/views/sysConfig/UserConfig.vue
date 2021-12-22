@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="80px" :inline="true" size="mini"
+    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="mini"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input v-model="searchForm.name" :disabled="modal_loading"
@@ -145,7 +145,7 @@
         <el-col :lg="6" class="card-col">
           <el-card>
             <template #header>{{ $t('forms.basicInfo') }}</template>
-            <el-form ref="editForm" :model="editForm" :rules="ruleEditForm" label-width="80px"
+            <el-form ref="editForm" :model="editForm" :rules="ruleEditForm" label-width="auto"
                      size="mini" v-loading="modal_loading" @submit.native.prevent>
               <el-form-item :label="$t('forms.name')" prop="name">
                 <el-input ref="name" v-model="editForm.name" @keyup.enter.native="doSave" :disabled="modal_loading"
@@ -224,7 +224,7 @@
     </el-dialog>
   </el-card>
 </template>
-<style type="less" scoped>
+<style scoped>
 .card-col {
   margin-bottom: 10px;
 }
