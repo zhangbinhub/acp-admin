@@ -16,7 +16,6 @@
   }
 
   .menu-root {
-    height: ~"calc(100% - 60px)";
     border-right: 0;
 
     & .nest-menu .el-sub-menu > .el-sub-menu__title,
@@ -30,7 +29,17 @@
   }
 
   .menu-root:not(.el-menu--collapse) {
-    width: 220px;
+    width: 100%
   }
 
+}
+
+.side-menu-wrapper.menu-container {
+  width: 220px;
+  -webkit-transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
+}
+
+.side-menu-wrapper.menu-container.collapsed {
+  width: 64px;
 }

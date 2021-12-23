@@ -1,7 +1,7 @@
 <template>
   <div class="side-menu-wrapper">
     <slot/>
-    <el-scrollbar ref="menu-scrollbar" class="menu-scrollbar">
+    <el-scrollbar ref="menu-scrollbar" class="menu-scrollbar" v-show="!isMobile">
       <el-menu class="menu-root" :collapse="collapsed" :unique-opened="accordion"
                background-color="#1f2d3d"
                text-color="rgba(255, 255, 255, 0.7)"
@@ -20,6 +20,25 @@
         </template>
       </el-menu>
     </el-scrollbar>
+    <el-menu class="menu-root" :collapse="false" :unique-opened="accordion" v-show="isMobile"
+             background-color="#1f2d3d"
+             text-color="rgba(255, 255, 255, 0.7)"
+             mode="horizontal"
+             :ellipsis="true"
+             menu-trigger="click"
+             active-text-color="#409eff"
+             :default-active="activeName"
+             @select="handleSelect">
+      <template v-for="item in menuList">
+        <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"/>
+        <el-menu-item v-else :index="item.path">
+          <el-icon>
+            <component v-bind:is="'el-icon-'+item.iconType"></component>
+          </el-icon>
+          <template #title>{{ item.name }}</template>
+        </el-menu-item>
+      </template>
+    </el-menu>
   </div>
 </template>
 <script>
@@ -41,6 +60,9 @@ export default {
       }
     },
     collapsed: {
+      type: Boolean
+    },
+    isMobile: {
       type: Boolean
     },
     theme: String,

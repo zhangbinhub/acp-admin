@@ -1,9 +1,10 @@
 <template>
   <div class="header-bar">
-    <sider-trigger :collapsed="collapsed" v-show="!mini" @on-change="handleCollpasedChange"/>
-    <custom-bread-crumb style="margin-left: 10px;" v-show="!mini"
+    <sider-trigger :collapsed="collapsed" v-show="!mini&&!isMobile" @on-change="handleCollpasedChange"/>
+    <custom-bread-crumb style="margin-left: 10px;" v-show="!mini&&!isMobile"
                         :full-path="fullPath"
                         :menu-list="menuList"/>
+    <img v-show="isMobile" :src="minLogo" alt="" style="width: 60px;margin-left: 5px;"/>
     <div class="custom-content-con">
       <slot/>
     </div>
@@ -23,10 +24,16 @@ export default {
   props: {
     collapsed: Boolean,
     mini: Boolean,
+    isMobile: Boolean,
     fullPath: String,
     menuList: {
       type: Array,
       default: () => []
+    }
+  },
+  computed: {
+    minLogo() {
+      return require('@/assets/images/logo/logo.png').default
     }
   },
   methods: {
