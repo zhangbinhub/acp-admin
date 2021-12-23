@@ -25,22 +25,8 @@ table {
   width: 44px;
 }
 
-.menu-container {
-  width: 220px;
-  -webkit-transition: width 0.3s ease-in-out;
-  transition: width 0.3s ease-in-out;
-}
-
-.menu-container.collapsed {
-  width: 64px;
-}
-
 .main-scrollbar {
   background-color: @mainBgColor;
-
-  .el-scrollbar__wrap {
-    overflow-x: hidden;
-  }
 }
 
 .el-header {
@@ -55,6 +41,7 @@ table {
 
 .main-content {
   overflow: hidden;
+  min-width: 500px;
   background-color: @mainBgColor;
 }
 
@@ -79,4 +66,8 @@ table {
   justify-content: space-between;
   font-size: 14px;
   padding-right: 8px;
+}
+
+.el-message-box {
+  max-width: ~"calc(100% - 20px)";
 }

@@ -1,8 +1,8 @@
 <template>
   <el-config-provider :locale="localLangMessage">
     <el-container style="height: 100%" :class="`home home-${theme}`">
-      <el-aside width="auto" :style="{overflow: 'hidden'}">
-        <side-menu :accordion="true" :active-name="fullPath" :collapsed="isCollapsed"
+      <el-aside width="auto" :style="{overflow: 'hidden'}" v-show="!isMobile">
+        <side-menu :accordion="true" :active-name="fullPath" :collapsed="isCollapsed" :is-mobile="isMobile"
                    @on-select="handleClick" :menu-list="menuList" :open-names="openedNames" :theme="theme"
                    :class="{'menu-container':true,'collapsed':isCollapsed}">
           <div :class="{'logo-con':true,'collapsed':isCollapsed}">
@@ -14,7 +14,7 @@
       <el-container style="width: 100%">
         <el-header style="padding: 0;height: 60px">
           <header-bar :collapsed="isCollapsed" :full-path="fullPath" :menu-list="menuList"
-                      :mini="isMini" @on-coll-change="handleCollapsedChange">
+                      :mini="isMini" :is-mobile="isMobile" @on-coll-change="handleCollapsedChange">
             <user :user-avatar="userAvatar" :customer-name="userName"/>
             <language :lang="localLang"/>
             <logFileButton v-if="showLogFile"/>
@@ -22,12 +22,17 @@
             <routeConfigButton v-if="showRouteConfig"/>
             <deployButton v-if="showDeploy"/>
             <fullscreen v-model="isFullscreen"/>
+            <home-button/>
           </header-bar>
         </el-header>
         <el-container>
-          <el-header style="padding: 0;height: 33px">
-            <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList"
+          <el-header :style="isMobile?{padding: 0}:{padding: 0,height: '33px'}">
+            <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList" v-show="!isMobile"
                       @update:modelValue="handleClick" @on-close="handleCloseTag"/>
+            <side-menu :accordion="true" :active-name="fullPath" :collapsed="isCollapsed" v-show="isMobile"
+                       :is-mobile="isMobile" @on-select="handleClick" :menu-list="menuList" :open-names="openedNames"
+                       :theme="theme">
+            </side-menu>
           </el-header>
           <el-scrollbar ref="main-scrollbar" class="main-scrollbar" :style="{height:mainHeight+'px'}">
             <el-main class="main-content">
@@ -55,6 +60,7 @@ import SideMenu from './side-menu'
 import HeaderBar from './header-bar'
 import TagsNav from './tags-nav'
 import User from './user'
+import homeButton from './home-button'
 import Fullscreen from './fullscreen'
 import Language from './language'
 import logFileButton from './log-file-button'
@@ -63,7 +69,7 @@ import routeLogButton from './route-log-button'
 import deployButton from './deploy-button'
 import './Home.less'
 import {
-  getOpenedNamesByActiveName,
+  getOpenedNamesByActiveName, isMobile,
   updateTagNavList
 } from '@/libs/tools'
 
@@ -74,6 +80,7 @@ export default {
     HeaderBar,
     Language,
     TagsNav,
+    homeButton,
     Fullscreen,
     User,
     routeConfigButton,
@@ -122,6 +129,9 @@ export default {
     },
     isMini() {
       return this.$store.state.app.isMini
+    },
+    isMobile() {
+      return isMobile()
     },
     minLogo() {
       return require('@/assets/images/logo/logo.png').default

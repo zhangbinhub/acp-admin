@@ -356,3 +356,12 @@ export const doDownLoadFile = (action, method = 'get', params = undefined) => {
   form.submit()
   form.remove()
 }
+
+/**
+ * 判断浏览器是否为手机
+ * @returns {boolean}
+ */
+export const isMobile = () => {
+  const result = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+  return !!(result && result.length > 0)
+}
