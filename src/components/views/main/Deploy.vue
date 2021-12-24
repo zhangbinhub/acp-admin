@@ -133,7 +133,7 @@
                    v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
                    v-model:page-size="searchForm.pageSize"
-                   layout="total, sizes, prev, pager, next, jumper"
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
                    :total="searchForm.totalRows">
     </el-pagination>
     <el-dialog v-model="editModal" :title="$t('forms.info')">
@@ -226,6 +226,7 @@
 <script>
 import moment from 'moment'
 import {nextTick} from "vue";
+import {isMobile} from "@/libs/tools";
 
 export default {
   name: 'deploy',
@@ -268,6 +269,9 @@ export default {
     }
   },
   computed: {
+    isMobile() {
+      return isMobile()
+    },
     mainHeight() {
       return this.$store.state.app.mainHeight - 300
     },
