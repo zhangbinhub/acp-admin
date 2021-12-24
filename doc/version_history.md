@@ -5,6 +5,7 @@
 - [Upgrade] icon迁移至el-icon
 - [Upgrade] 增加移动端布局适配
 - [Upgrade] 优化form表单label-width
+- [Upgrade] table分页适配移动端
 - [Fix] 修复vue-route4.0通过path跳转时，url参数不传递的问题[ApiComm.js 323~343](../src/api/ApiComm.js)
 ##### v5.1.1
 > - [Upgrade] 更新依赖插件至最新版本

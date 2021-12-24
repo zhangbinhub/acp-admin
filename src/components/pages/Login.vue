@@ -117,7 +117,9 @@ export default {
                 }
                 currObj.$store.commit('SET_REMEMBER', currObj.formValidate.remember)
                 let redirectPath = this.homePath
-                if (currObj.$route.params.redirect) {
+                if (currObj.$route.query.redirect) {
+                  redirectPath = currObj.$route.query.redirect
+                } else if (currObj.$route.params.redirect) {
                   redirectPath = currObj.$route.params.redirect
                 }
                 currObj.$router.replace(redirectPath)

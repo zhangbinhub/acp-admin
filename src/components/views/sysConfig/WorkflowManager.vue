@@ -117,7 +117,7 @@
                    v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
                    v-model:page-size="searchForm.pageSize"
-                   layout="total, sizes, prev, pager, next, jumper"
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
                    :total="searchForm.totalRows">
     </el-pagination>
     <el-dialog v-model="viewModal" :title="$t('forms.info')" :fullscreen="true">
@@ -351,6 +351,7 @@
 <script>
 import moment from 'moment'
 import {nextTick} from "vue";
+import {isMobile} from "@/libs/tools";
 
 export default {
   name: 'workflowManager',
@@ -383,6 +384,9 @@ export default {
     }
   },
   computed: {
+    isMobile() {
+      return isMobile()
+    },
     tableHeight() {
       const minHeight = 300
       const height = this.$store.state.app.mainHeight - 80 - 92 - 42 - 4
