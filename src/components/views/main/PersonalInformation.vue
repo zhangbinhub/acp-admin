@@ -3,10 +3,8 @@
     <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="auto"
              @submit.native.prevent>
       <el-form-item prop="avatar">
-        <el-tooltip :content="$t('forms.avatar')" placement="right">
           <el-avatar style="cursor: pointer" :src="formValidate.avatar" :size="100"
                      @click.native="openAvatarUpload"/>
-        </el-tooltip>
       </el-form-item>
       <el-form-item :label="$t('forms.loginNo')" prop="loginNo">
         <span>{{ userInfo.loginNo }}</span>

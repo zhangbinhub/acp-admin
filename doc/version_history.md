@@ -7,6 +7,7 @@
 - [Upgrade] 优化form表单label-width
 - [Upgrade] table分页适配移动端
 - [Upgrade] date-pick、menu适配移动端
+- [Upgrade] 移动端取消el-tooltip
 - [Upgrade] 修改组件size属性
 - [Fix] 修复vue-route4.0通过path跳转时，url参数不传递的问题[ApiComm.js 323~343](../src/api/ApiComm.js)
 ##### v5.1.1

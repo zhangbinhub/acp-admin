@@ -105,10 +105,8 @@
         align="center"
         width="80">
         <template #default="scope">
-          <el-tooltip :content="$t('forms.buttons.view')" placement="top-start">
-            <el-button type="text" @click="gotoFlowView(scope.row)"
-                       icon="el-icon-search"/>
-          </el-tooltip>
+          <el-button type="text" @click="gotoFlowView(scope.row)"
+                     icon="el-icon-search"/>
         </template>
       </el-table-column>
     </el-table>
@@ -328,7 +326,8 @@
       </template>
       <el-backtop :visibility-height="10" target=".el-dialog"/>
     </el-dialog>
-    <el-dialog :fullscreen="isMobile" v-model="deleteModal" :title="$t('forms.info')" :close-on-click-modal="false" append-to-body>
+    <el-dialog :fullscreen="isMobile" v-model="deleteModal" :title="$t('forms.info')" :close-on-click-modal="false"
+               append-to-body>
       <el-form v-loading="modal_loading" @submit.native.prevent>
         <el-form-item :label="$t('forms.deleteReason')" required>
           <el-input v-model="deleteReason" type="textarea" :rows="3"

@@ -114,21 +114,15 @@
         align="center"
         width="120">
         <template #default="scope">
-          <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
-            <el-button type="text" @click="handleEdit(scope.row)"
-                       icon="el-icon-edit"/>
-          </el-tooltip>
-          <el-tooltip
+          <el-button type="text" @click="handleEdit(scope.row)"
+                     icon="el-icon-edit"/>
+          <el-button
             v-if="scope.row.id !== $store.state.app.user.userInfo.id && scope.row.levels > $store.state.app.user.userInfo.levels"
-            :content="$t('forms.buttons.delete')" placement="top-start">
-            <el-button type="text" @click="handleDeleteRow(scope.row)"
-                       icon="el-icon-delete"/>
-          </el-tooltip>
-          <el-tooltip v-if="scope.row.levels > $store.state.app.user.userInfo.levels"
-                      :content="$t('forms.buttons.resetPwd')" placement="top-start">
-            <el-button type="text" @click="doResetPwd(scope.row.id)"
-                       icon="el-icon-refresh"/>
-          </el-tooltip>
+            type="text" @click="handleDeleteRow(scope.row)"
+            icon="el-icon-delete"/>
+          <el-button v-if="scope.row.levels > $store.state.app.user.userInfo.levels" type="text"
+                     @click="doResetPwd(scope.row.id)"
+                     icon="el-icon-refresh"/>
         </template>
       </el-table-column>
     </el-table>

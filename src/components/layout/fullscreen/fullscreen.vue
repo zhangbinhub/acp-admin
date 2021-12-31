@@ -1,12 +1,18 @@
 <template>
   <div v-if="showFullScreenBtn" class="header-bar-button">
-    <el-tooltip :content="modelValue ? $t('home.exitFullScreen') : $t('home.fullScreen')" placement="bottom">
+    <el-tooltip v-if="!isMobile" :content="modelValue ? $t('home.exitFullScreen') : $t('home.fullScreen')"
+                placement="bottom">
       <el-button type="text" @click="handleChange">
         <el-icon size="23">
           <el-icon-full-screen/>
         </el-icon>
       </el-button>
     </el-tooltip>
+    <el-button v-else type="text" @click="handleChange">
+      <el-icon size="23">
+        <el-icon-full-screen/>
+      </el-icon>
+    </el-button>
   </div>
 </template>
 
@@ -20,6 +26,10 @@ export default {
   },
   props: {
     modelValue: {
+      type: Boolean,
+      default: false
+    },
+    isMobile: {
       type: Boolean,
       default: false
     }

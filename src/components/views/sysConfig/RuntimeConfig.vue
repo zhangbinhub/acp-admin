@@ -94,25 +94,17 @@
         width="90">
         <template #default="scope">
           <div v-if="editIndex === scope.$index">
-            <el-tooltip :content="$t('forms.buttons.save')" placement="top-start">
-              <el-button type="text" @click="handleSave(scope.$index)"
-                         icon="el-icon-check" style="color: green">
-              </el-button>
-            </el-tooltip>
-            <el-tooltip :content="$t('forms.buttons.cancel')" placement="top-start">
-              <el-button type="text" @click="editIndex = -1"
-                         icon="el-icon-close" style="color: red"/>
-            </el-tooltip>
+            <el-button type="text" @click="handleSave(scope.$index)"
+                       icon="el-icon-check" style="color: green">
+            </el-button>
+            <el-button type="text" @click="editIndex = -1"
+                       icon="el-icon-close" style="color: red"/>
           </div>
           <div v-else>
-            <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
-              <el-button type="text" @click="handleEdit(scope.row,scope.$index)"
-                         icon="el-icon-edit"/>
-            </el-tooltip>
-            <el-tooltip :content="$t('forms.buttons.delete')" placement="top-start" v-if="scope.row.covert">
-              <el-button type="text" @click="handleDeleteRow(scope.row)"
-                         icon="el-icon-delete"/>
-            </el-tooltip>
+            <el-button type="text" @click="handleEdit(scope.row,scope.$index)"
+                       icon="el-icon-edit"/>
+            <el-button v-if="scope.row.covert" type="text" @click="handleDeleteRow(scope.row)"
+                       icon="el-icon-delete"/>
           </div>
         </template>
       </el-table-column>

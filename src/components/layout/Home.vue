@@ -17,12 +17,12 @@
                       :mini="isMini" :is-mobile="isMobile" @on-coll-change="handleCollapsedChange">
             <user :user-avatar="userAvatar" :customer-name="userName"/>
             <language :lang="localLang"/>
-            <logFileButton v-if="showLogFile"/>
-            <routeLogButton v-if="showRouteLog"/>
-            <routeConfigButton v-if="showRouteConfig"/>
-            <deployButton v-if="showDeploy"/>
-            <fullscreen v-model="isFullscreen"/>
-            <home-button/>
+            <logFileButton v-if="showLogFile" :is-mobile="isMobile"/>
+            <routeLogButton v-if="showRouteLog" :is-mobile="isMobile"/>
+            <routeConfigButton v-if="showRouteConfig" :is-mobile="isMobile"/>
+            <deployButton v-if="showDeploy" :is-mobile="isMobile"/>
+            <fullscreen v-model="isFullscreen" :is-mobile="isMobile"/>
+            <home-button :is-mobile="isMobile"/>
           </header-bar>
         </el-header>
         <el-container>
