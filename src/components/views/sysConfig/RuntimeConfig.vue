@@ -109,8 +109,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination style="margin-top: 10px;text-align: right"
-                   @size-change="handlePageSizeSearch"
+    <el-pagination @size-change="handlePageSizeSearch"
                    v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
                    v-model:page-size="searchForm.pageSize"

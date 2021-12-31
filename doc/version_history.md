@@ -10,6 +10,7 @@
 - [Upgrade] 移动端取消el-tooltip
 - [Upgrade] 移动端取消table中多余的fixed列
 - [Upgrade] 修改组件size属性
+- [Upgrade] 去除el-pagination多余样式
 - [Fix] 修复vue-route4.0通过path跳转时，url参数不传递的问题[ApiComm.js 323~343](../src/api/ApiComm.js)
 ##### v5.1.1
 > - [Upgrade] 更新依赖插件至最新版本
