@@ -94,7 +94,7 @@
         :label="$t('forms.processTime')+'('+this.$i18n.t('forms.millisecond')+')'">
       </el-table-column>
       <el-table-column
-        fixed="right"
+        :fixed="isMobile?false:'right'"
         prop="action"
         :label="$t('forms.action')"
         align="center"

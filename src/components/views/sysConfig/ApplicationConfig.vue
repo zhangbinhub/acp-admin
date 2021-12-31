@@ -64,7 +64,7 @@
         :label="$t('forms.scope')">
       </el-table-column>
       <el-table-column
-        fixed="right"
+        :fixed="isMobile?false:'right'"
         prop="action"
         :label="$t('forms.action')"
         align="center"
