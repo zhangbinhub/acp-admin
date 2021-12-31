@@ -20,5 +20,8 @@ export default {
   },
   resetPwd: (userId) => {
     return ApiComm.$http.get('/oauth/user/reset-pwd/' + userId)
+  },
+  getUserList: (loginNoOrName) => {
+    return ApiComm.$http.get('/oauth/user-list/' + loginNoOrName)
   }
 }

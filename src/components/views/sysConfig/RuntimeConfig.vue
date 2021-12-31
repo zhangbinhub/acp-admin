@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" @submit.native.prevent
-             size="mini">
+             size="small">
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input v-model="searchForm.name" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
@@ -37,7 +37,7 @@
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="mini" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
@@ -87,46 +87,37 @@
         </template>
       </el-table-column>
       <el-table-column
-        fixed="right"
+        :fixed="isMobile?false:'right'"
         prop="action"
         :label="$t('forms.action')"
         align="center"
         width="90">
         <template #default="scope">
           <div v-if="editIndex === scope.$index">
-            <el-tooltip :content="$t('forms.buttons.save')" placement="top-start">
-              <el-button type="text" @click="handleSave(scope.$index)"
-                         icon="el-icon-check" style="color: green">
-              </el-button>
-            </el-tooltip>
-            <el-tooltip :content="$t('forms.buttons.cancel')" placement="top-start">
-              <el-button type="text" @click="editIndex = -1"
-                         icon="el-icon-close" style="color: red"/>
-            </el-tooltip>
+            <el-button type="text" @click="handleSave(scope.$index)"
+                       icon="el-icon-check" style="color: green">
+            </el-button>
+            <el-button type="text" @click="editIndex = -1"
+                       icon="el-icon-close" style="color: red"/>
           </div>
           <div v-else>
-            <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
-              <el-button type="text" @click="handleEdit(scope.row,scope.$index)"
-                         icon="el-icon-edit"/>
-            </el-tooltip>
-            <el-tooltip :content="$t('forms.buttons.delete')" placement="top-start" v-if="scope.row.covert">
-              <el-button type="text" @click="handleDeleteRow(scope.row)"
-                         icon="el-icon-delete"/>
-            </el-tooltip>
+            <el-button type="text" @click="handleEdit(scope.row,scope.$index)"
+                       icon="el-icon-edit"/>
+            <el-button v-if="scope.row.covert" type="text" @click="handleDeleteRow(scope.row)"
+                       icon="el-icon-delete"/>
           </div>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination style="margin-top: 10px;text-align: right"
-                   @size-change="handlePageSizeSearch"
+    <el-pagination @size-change="handlePageSizeSearch"
                    v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
                    v-model:page-size="searchForm.pageSize"
-                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
                    :total="searchForm.totalRows">
     </el-pagination>
-    <el-dialog v-model="addModal" :title="$t('forms.buttons.add')" :close-on-click-modal="false">
-      <el-form ref="addForm" :model="addForm" :rules="ruleAddForm" label-width="auto" size="mini"
+    <el-dialog :fullscreen="isMobile" v-model="addModal" :title="$t('forms.buttons.add')" :close-on-click-modal="false">
+      <el-form ref="addForm" :model="addForm" :rules="ruleAddForm" label-width="auto" size="small"
                v-loading="modal_loading" @submit.native.prevent style="padding-right: 25px;">
         <el-form-item :label="$t('forms.name')" prop="name">
           <el-input v-model="addForm.name" :disabled="modal_loading" ref="name"

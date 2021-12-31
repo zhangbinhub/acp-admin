@@ -3,7 +3,7 @@
     <el-tab-pane name="menuList">
       <template #label>
         <el-icon style="margin-right: 5px">
-          <el-icon-list/>
+          <el-icon-menu/>
         </el-icon>
         {{ $t('forms.menuList') }}
       </template>
@@ -29,14 +29,14 @@
                       <el-button
                         v-if="!data.isApp && node.isLeaf"
                         type="text"
-                        size="mini"
+                        size="small"
                         icon="el-icon-minus"
                         :loading="treeLoading"
                         @click="removeMenu(node, data)">
                       </el-button>
                       <el-button
                         type="text"
-                        size="mini"
+                        size="small"
                         icon="el-icon-plus"
                         :loading="treeLoading"
                         @click="appendMenu(data)">
@@ -51,7 +51,7 @@
         <el-col :lg="{ span: 15 }" v-show="currMenu.id&&currMenu.id!==''" style="margin-bottom: 16px;">
           <el-card>
             <template #header>{{ currMenuFullPath }}</template>
-            <el-form ref="menuEditForm" size="mini" :model="menuEditForm" :rules="ruleMenuEditForm" label-width="auto"
+            <el-form ref="menuEditForm" size="small" :model="menuEditForm" :rules="ruleMenuEditForm" label-width="auto"
                      v-loading="treeLoading" @submit.native.prevent>
               <el-row>
                 <el-col :sm="{ span: 12 }">
@@ -158,14 +158,14 @@
                     <el-button
                       v-if="!data.isApp && node.isLeaf"
                       type="text"
-                      size="mini"
+                      size="small"
                       icon="el-icon-minus"
                       :loading="treeLoading"
                       @click="removeModuleFunc(node, data)">
                     </el-button>
                     <el-button
                       type="text"
-                      size="mini"
+                      size="small"
                       icon="el-icon-plus"
                       :loading="treeLoading"
                       @click="appendModuleFunc(data)">
@@ -180,7 +180,7 @@
         <el-col :lg="{ span: 15 }" v-show="currModuleFunc.id&&currModuleFunc.id!==''" style="margin-bottom: 16px;">
           <el-card>
             <template #header>{{ currModuleFuncFullPath }}</template>
-            <el-form ref="moduleFuncEditForm" size="mini" :model="moduleFuncEditForm" :rules="ruleModuleFuncEditForm"
+            <el-form ref="moduleFuncEditForm" size="small" :model="moduleFuncEditForm" :rules="ruleModuleFuncEditForm"
                      label-width="auto" v-loading="treeLoading" @submit.native.prevent>
               <el-row>
                 <el-col :sm="{ span: 12 }">

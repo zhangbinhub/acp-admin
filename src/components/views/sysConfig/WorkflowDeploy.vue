@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" @submit.native.prevent
-             size="mini">
+             size="small">
       <el-form-item :label="$t('forms.processKey')" prop="value">
         <el-input v-model="searchForm.processKey" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.processKey')"
@@ -34,7 +34,7 @@
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="mini" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
@@ -97,33 +97,28 @@
         </template>
       </el-table-column>
       <el-table-column
-        fixed="right"
+        :fixed="isMobile?false:'right'"
         prop="action"
         :label="$t('forms.action')"
         align="center"
         width="90">
         <template #default="scope">
-          <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
             <el-button type="text" @click="handleEdit(scope.row)"
                        icon="el-icon-edit"/>
-          </el-tooltip>
-          <el-tooltip :content="$t('forms.buttons.delete')" placement="top-start">
             <el-button type="text" @click="handleDeleteRow(scope.row)"
                        icon="el-icon-delete"/>
-          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination style="margin-top: 10px;text-align: right"
-                   @size-change="handlePageSizeSearch"
+    <el-pagination @size-change="handlePageSizeSearch"
                    v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
                    v-model:page-size="searchForm.pageSize"
-                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
                    :total="searchForm.totalRows">
     </el-pagination>
-    <el-dialog v-model="editModal" :title="$t('forms.buttons.add')" :close-on-click-modal="false">
-      <el-form ref="editForm" :model="editForm" label-width="auto" size="mini"
+    <el-dialog :fullscreen="isMobile" v-model="editModal" :title="$t('forms.buttons.add')" :close-on-click-modal="false">
+      <el-form ref="editForm" :model="editForm" label-width="auto" size="small"
                v-loading="modal_loading" @submit.native.prevent style="padding-right: 25px;">
         <div v-if="this.action===1">
           <el-form-item :label="$t('forms.processKey')+':'" prop="processKey">
@@ -147,13 +142,11 @@
                      :on-success="handleUploadSuccess"
                      :on-error="handleUploadError"
                      :auto-upload="false">
-            <template #trigger>
-              <el-button size="mini" type="primary">
-                {{ $t('forms.buttons.chooseFile') }}
-              </el-button>
-            </template>
+            <el-button size="small" type="primary">
+              {{ $t('forms.buttons.chooseFile') }}
+            </el-button>
           </el-upload>
-          <el-button v-else size="mini" type="primary" @click="handleDownLoadFile">
+          <el-button v-else size="small" type="primary" @click="handleDownLoadFile">
             {{ $t('forms.buttons.downLoadFile') }}
           </el-button>
         </el-form-item>

@@ -32,9 +32,8 @@ module.exports = {
     // https: false,
     // hotOnly: false,
     // open: true, //配置自动启动浏览器
-    overlay: {
-      warnings: true,
-      errors: true
+    client: {
+      overlay: true
     },
     proxy: {
       // 配置多个代理(配置一个 proxy: 'http://localhost:4000' )

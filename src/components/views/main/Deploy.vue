@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="mini"
+    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input v-model="searchForm.name" :disabled="modal_loading"
@@ -9,7 +9,7 @@
       </el-form-item>
       <el-form-item :label="$t('forms.execTime')" prop="startTime">
         <el-date-picker type="daterange" :disabled="modal_loading" :shortcuts="pickerShortcuts"
-                        v-model="searchForm.startTime"
+                        v-model="searchForm.startTime" :class="{mobile:isMobile}"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.execTime')"/>
       </el-form-item>
       <el-form-item style="float: right">
@@ -32,7 +32,7 @@
         </el-button>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="mini" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
@@ -98,46 +98,39 @@
         </template>
       </el-table-column>
       <el-table-column
-        fixed="right"
+        :fixed="isMobile?false:'right'"
         prop="action"
         :label="$t('forms.action')"
         align="center"
         width="120">
         <template #default="scope">
-          <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
-            <el-button type="text" @click="handleEdit(scope.row)">
-              <el-icon size="15">
-                <el-icon-edit/>
-              </el-icon>
-            </el-button>
-          </el-tooltip>
-          <el-tooltip :content="$t('forms.buttons.delete')" placement="top-start">
-            <el-button type="text" @click="handleDeleteRow(scope.row)">
-              <el-icon size="15">
-                <el-icon-delete/>
-              </el-icon>
-            </el-button>
-          </el-tooltip>
-          <el-tooltip :content="$t('forms.buttons.execute')" placement="top-start">
-            <el-button type="text" @click="handleExecute(scope.row)">
-              <el-icon size="15">
-                <el-icon-circle-check/>
-              </el-icon>
-            </el-button>
-          </el-tooltip>
+          <el-button type="text" @click="handleEdit(scope.row)">
+            <el-icon size="15">
+              <el-icon-edit/>
+            </el-icon>
+          </el-button>
+          <el-button type="text" @click="handleDeleteRow(scope.row)">
+            <el-icon size="15">
+              <el-icon-delete/>
+            </el-icon>
+          </el-button>
+          <el-button type="text" @click="handleExecute(scope.row)">
+            <el-icon size="15">
+              <el-icon-circle-check/>
+            </el-icon>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination style="margin-top: 10px;text-align: right"
-                   @size-change="handlePageSizeSearch"
+    <el-pagination @size-change="handlePageSizeSearch"
                    v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
                    v-model:page-size="searchForm.pageSize"
-                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
                    :total="searchForm.totalRows">
     </el-pagination>
-    <el-dialog v-model="editModal" :title="$t('forms.info')">
-      <el-form ref="editForm" :model="editForm" :rules="ruleAddForm" label-width="auto" size="mini"
+    <el-dialog :fullscreen="isMobile" v-model="editModal" :title="$t('forms.info')">
+      <el-form ref="editForm" :model="editForm" :rules="ruleAddForm" label-width="auto" size="small"
                v-loading="modal_loading" @submit.native.prevent>
         <el-form-item :label="$t('forms.name')" prop="name" style="width: 100%">
           <el-input v-model="editForm.name" :disabled="modal_loading" ref="name"
@@ -176,13 +169,13 @@
       </template>
       <el-backtop :visibility-height="10" target=".el-dialog"/>
     </el-dialog>
-    <el-dialog v-model="fileModal" :title="$t('forms.info')">
+    <el-dialog :fullscreen="isMobile" v-model="fileModal" :title="$t('forms.info')">
       <el-row>
         <el-col :span="24">
           <h3>{{ $t('forms.path') + ': ' + path }}</h3>
         </el-col>
       </el-row>
-      <el-form :inline="true" @submit.native.prevent size="mini">
+      <el-form :inline="true" @submit.native.prevent size="small">
         <el-form-item :label="$t('forms.filterKey')">
           <el-input v-model="fileName" :disabled="modal_loading" clearable @keyup.enter.native="handleRefresh"/>
         </el-form-item>
@@ -216,7 +209,9 @@
           :on-success="handleUploadSuccess"
           :on-error="handleUploadError"
           :file-list="fileList">
-          <el-button size="mini" type="primary" :loading="modal_loading">{{ $t('forms.buttons.upload') }}</el-button>
+          <el-button size="small" type="primary" :loading="modal_loading">
+            {{ $t('forms.buttons.upload') }}
+          </el-button>
         </el-upload>
         <el-backtop :visibility-height="10" target=".upload-scrollbar .el-scrollbar__wrap"/>
       </el-scrollbar>

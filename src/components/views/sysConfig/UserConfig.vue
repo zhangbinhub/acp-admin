@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="mini"
+    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input v-model="searchForm.name" :disabled="modal_loading"
@@ -47,7 +47,7 @@
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="mini" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')" @selection-change="handleSelect"
               @row-click="handleRowClick" @sort-change="handleSortChange" header-cell-class-name="query-table-header">
@@ -108,36 +108,29 @@
         </template>
       </el-table-column>
       <el-table-column
-        fixed="right"
+        :fixed="isMobile?false:'right'"
         prop="action"
         :label="$t('forms.action')"
         align="center"
         width="120">
         <template #default="scope">
-          <el-tooltip :content="$t('forms.buttons.edit')" placement="top-start">
-            <el-button type="text" @click="handleEdit(scope.row)"
-                       icon="el-icon-edit"/>
-          </el-tooltip>
-          <el-tooltip
+          <el-button type="text" @click="handleEdit(scope.row)"
+                     icon="el-icon-edit"/>
+          <el-button
             v-if="scope.row.id !== $store.state.app.user.userInfo.id && scope.row.levels > $store.state.app.user.userInfo.levels"
-            :content="$t('forms.buttons.delete')" placement="top-start">
-            <el-button type="text" @click="handleDeleteRow(scope.row)"
-                       icon="el-icon-delete"/>
-          </el-tooltip>
-          <el-tooltip v-if="scope.row.levels > $store.state.app.user.userInfo.levels"
-                      :content="$t('forms.buttons.resetPwd')" placement="top-start">
-            <el-button type="text" @click="doResetPwd(scope.row.id)"
-                       icon="el-icon-refresh"/>
-          </el-tooltip>
+            type="text" @click="handleDeleteRow(scope.row)"
+            icon="el-icon-delete"/>
+          <el-button v-if="scope.row.levels > $store.state.app.user.userInfo.levels" type="text"
+                     @click="doResetPwd(scope.row.id)"
+                     icon="el-icon-refresh"/>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination style="margin-top: 10px;text-align: right"
-                   @size-change="handlePageSizeSearch"
+    <el-pagination @size-change="handlePageSizeSearch"
                    v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
                    v-model:page-size="searchForm.pageSize"
-                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
                    :total="searchForm.totalRows">
     </el-pagination>
     <el-dialog v-model="editModal" :title="$t('forms.info')" :fullscreen="true">
@@ -146,7 +139,7 @@
           <el-card>
             <template #header>{{ $t('forms.basicInfo') }}</template>
             <el-form ref="editForm" :model="editForm" :rules="ruleEditForm" label-width="auto"
-                     size="mini" v-loading="modal_loading" @submit.native.prevent>
+                     size="small" v-loading="modal_loading" @submit.native.prevent>
               <el-form-item :label="$t('forms.name')" prop="name">
                 <el-input ref="name" v-model="editForm.name" @keyup.enter.native="doSave" :disabled="modal_loading"
                           :placeholder=" $t('forms.pleaseEnter') + $t('forms.name')"/>

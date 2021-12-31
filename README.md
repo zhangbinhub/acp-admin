@@ -7,7 +7,6 @@
 > 由于js-base64 3.0及以上版本不再支持IE，因此从4.2.0开始不再支持IE
 
 支持的浏览器：
-
 - Chrome latest（推荐，完美）
 - Firefox latest（完全支持）
 - Edge（完全支持）

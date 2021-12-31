@@ -26,7 +26,8 @@
         <el-row style="margin-top: 33px;display: inline-block;">
           <div style="float: left">
             <el-upload action="image/upload" :before-upload="beforeUpload">
-              <el-button size="small" style="width: 150px;" type="primary">{{ $t('forms.buttons.upload') }}
+              <el-button size="small" style="width: 150px;" type="primary">
+                {{ $t('forms.buttons.upload') }}
               </el-button>
             </el-upload>
           </div>

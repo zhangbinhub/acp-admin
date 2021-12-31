@@ -1,7 +1,7 @@
 <template>
   <div class="user-avatar-dropdown">
     <el-dropdown trigger="click" @command="handleClick">
-      <el-avatar :src="avatar" style="margin-top: 10px"/>
+      <el-avatar :src="avatar" style="margin-top: 10px" :size="40"/>
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item v-if="customerName && customerName !== ''" command="personalInformation">{{ customerName }}

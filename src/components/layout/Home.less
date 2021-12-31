@@ -41,8 +41,11 @@ table {
 
 .main-content {
   overflow: hidden;
-  min-width: 500px;
   background-color: @mainBgColor;
+}
+
+.main-content.mobile {
+  padding: 0;
 }
 
 .foot-content {
@@ -66,8 +69,4 @@ table {
   justify-content: space-between;
   font-size: 14px;
   padding-right: 8px;
-}
-
-.el-message-box {
-  max-width: ~"calc(100% - 20px)";
 }

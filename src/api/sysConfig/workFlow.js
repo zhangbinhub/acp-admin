@@ -8,16 +8,11 @@ export default {
       return ApiComm.$http.post('/workflow/instance', query)
     }
   },
+  getInstance: (processInstanceId) => {
+    return ApiComm.$http.get('/workflow/instance/' + processInstanceId)
+  },
   getInstanceActivity: (processInstanceId) => {
     return ApiComm.$http.get('/workflow/history/' + processInstanceId)
-  },
-  termination: (processInstanceId, reason) => {
-    return ApiComm.$http.delete('/workflow/instance/termination', {
-      data: {
-        processInstanceId: processInstanceId,
-        reason: reason
-      }
-    })
   },
   diagram: (processInstanceId) => {
     return ApiComm.$http.get('/workflow/diagram/' + processInstanceId + '/gif', {
@@ -28,5 +23,14 @@ export default {
         'Process403': 'false'
       }
     })
+  },
+  getTaskList(processInstanceId) {
+    return ApiComm.$http.get('/workflow/task-list/' + processInstanceId)
+  },
+  transferTask(taskId, userId) {
+    return ApiComm.$http.patch('/workflow/transfer/' + taskId + '/' + userId)
+  },
+  distributeTask(taskId, userId) {
+    return ApiComm.$http.patch('/workflow/distribute/' + taskId + '/' + userId)
   }
 }

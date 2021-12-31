@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="mini"
+    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.remoteIp')" prop="remoteIp">
         <el-input v-model="searchForm.remoteIp" :disabled="modal_loading"
@@ -42,7 +42,7 @@
       </el-form-item>
       <el-form-item :label="$t('forms.startDate')" prop="startTime">
         <el-date-picker v-model="searchForm.startTime" :disabled="modal_loading" type="daterange"
-                        :shortcuts="pickerShortcuts"/>
+                        :shortcuts="pickerShortcuts" :class="{mobile:isMobile}"/>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group style="margin-right: 20px">
@@ -55,7 +55,7 @@
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="mini" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               @selection-change="handleSelect" @sort-change="handleSortChange"
@@ -126,121 +126,73 @@
         </template>
       </el-table-column>
       <el-table-column
-        fixed="right"
+        :fixed="isMobile?false:'right'"
         prop="action"
         :label="$t('forms.action')"
         align="center"
         width="50">
         <template #default="scope">
-          <el-tooltip :content="$t('forms.buttons.view')" placement="top-start">
-            <el-button type="text" @click="handleView(scope.row)"
-                       icon="el-icon-search"></el-button>
-          </el-tooltip>
+          <el-button type="text" @click="handleView(scope.row)"
+                     icon="el-icon-search"></el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination style="margin-top: 10px;text-align: right"
-                   @size-change="handlePageSizeSearch"
+    <el-pagination @size-change="handlePageSizeSearch"
                    v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
                    v-model:page-size="searchForm.pageSize"
-                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
                    :total="searchForm.totalRows">
     </el-pagination>
-    <el-dialog v-model="editModal" :title="$t('forms.info')" width="600px">
-      <el-descriptions :column="2" size="mini" border>
-        <el-descriptions-item label-align="right">
-          <template #label>
-            {{ $t('forms.remoteIp') }}
-          </template>
-          {{ editForm.remoteIp }}
+    <el-dialog :fullscreen="isMobile" v-model="editModal" :title="$t('forms.info')" width="600px">
+      <el-descriptions :column="2" size="small" border>
+        <el-descriptions-item label-align="right" :label="$t('forms.remoteIp')">
+          <span>{{ editForm.remoteIp }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right">
-          <template #label>
-            {{ $t('forms.gatewayIp') }}
-          </template>
-          {{ editForm.gatewayIp }}
+        <el-descriptions-item label-align="right" :label="$t('forms.gatewayIp')">
+          <span>{{ editForm.gatewayIp }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right">
-          <template #label>
-            {{ $t('forms.serverId') }}
-          </template>
-          {{ editForm.serverId }}
+        <el-descriptions-item label-align="right" :label="$t('forms.serverId')">
+          <span>{{ editForm.serverId }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right">
-          <template #label>
-            {{ $t('forms.responseStatus') }}
-          </template>
+        <el-descriptions-item label-align="right" :label="$t('forms.responseStatus')">
           <span
             :style="{color:editForm.responseStatus>=200&&editForm.responseStatus<300 ? 'green':'red'}">{{
               editForm.responseStatus
             }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.path') }}
-          </template>
-          {{ editForm.path }}
+        <el-descriptions-item label-align="right" :label="$t('forms.path') " span="2">
+          <span>{{ editForm.path }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.targetUri') }}
-          </template>
-          {{ editForm.targetUri }}
+        <el-descriptions-item label-align="right" :label="$t('forms.targetUri')" span="2">
+          <span>{{ editForm.targetUri }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.targetPath') }}
-          </template>
-          {{ editForm.targetPath }}
+        <el-descriptions-item label-align="right" :label="$t('forms.targetPath')" span="2">
+          <span>{{ editForm.targetPath }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.method') }}
-          </template>
-          {{ editForm.method }}
+        <el-descriptions-item label-align="right" :label="$t('forms.method')" span="2">
+          <span>{{ editForm.method }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.token') }}
-          </template>
-          {{ editForm.token }}
+        <el-descriptions-item label-align="right" :label="$t('forms.token')" span="2">
+          <span>{{ editForm.token }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.clientName') }}
-          </template>
-          {{ editForm.clientName }}
+        <el-descriptions-item label-align="right" :label="$t('forms.clientName')" span="2">
+          <span>{{ editForm.clientName }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.identify') }}
-          </template>
-          {{ editForm.identify }}
+        <el-descriptions-item label-align="right" :label="$t('forms.identify')" span="2">
+          <span>{{ editForm.identify }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.userName') }}
-          </template>
-          {{ editForm.userName }}
+        <el-descriptions-item label-align="right" :label="$t('forms.userName')" span="2">
+          <span>{{ editForm.userName }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.requestTime') }}
-          </template>
-          {{ dateTimeMisFormat(editForm.requestTime) }}
+        <el-descriptions-item label-align="right" :label="$t('forms.requestTime')" span="2">
+          <span>{{ dateTimeMisFormat(editForm.requestTime) }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.processTime') }}
-          </template>
-          {{ editForm.processTime }} {{ $t('forms.millisecond') }}
+        <el-descriptions-item label-align="right" :label="$t('forms.processTime')" span="2">
+          <span>{{ editForm.processTime }} {{ $t('forms.millisecond') }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.responseTime') }}
-          </template>
-          {{ dateTimeMisFormat(editForm.responseTime) }}
+        <el-descriptions-item label-align="right" :label="$t('forms.responseTime')" span="2">
+          <span>{{ dateTimeMisFormat(editForm.responseTime) }}</span>
         </el-descriptions-item>
       </el-descriptions>
       <template #footer>
