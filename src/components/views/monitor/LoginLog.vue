@@ -114,98 +114,53 @@
     </el-pagination>
     <el-dialog :fullscreen="isMobile" v-model="editModal" :title="$t('forms.info')" width="600px">
       <el-descriptions :column="2" size="small" border>
-        <el-descriptions-item label-align="right">
-          <template #label>
-            {{ $t('forms.remoteIp') }}
-          </template>
-          {{ editForm.remoteIp }}
+        <el-descriptions-item label-align="right" :label="$t('forms.remoteIp')">
+          <span>{{ editForm.remoteIp }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right">
-          <template #label>
-            {{ $t('forms.gatewayIp') }}
-          </template>
-          {{ editForm.gatewayIp }}
+        <el-descriptions-item label-align="right" :label="$t('forms.gatewayIp')">
+          <span>{{ editForm.gatewayIp }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right">
-          <template #label>
-            {{ $t('forms.serverId') }}
-          </template>
-          {{ editForm.serverId }}
+        <el-descriptions-item label-align="right" :label="$t('forms.serverId')">
+          <span>{{ editForm.serverId }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right">
-          <template #label>
-            {{ $t('forms.responseStatus') }}
-          </template>
+        <el-descriptions-item label-align="right" :label="$t('forms.responseStatus')">
           <span
             :style="{color:editForm.responseStatus>=200&&editForm.responseStatus<300 ? 'green':'red'}">{{
               editForm.responseStatus
             }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.path') }}
-          </template>
-          {{ editForm.path }}
+        <el-descriptions-item label-align="right" :label="$t('forms.path') " span="2">
+          <span>{{ editForm.path }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.targetUri') }}
-          </template>
-          {{ editForm.targetUri }}
+        <el-descriptions-item label-align="right" :label="$t('forms.targetUri')" span="2">
+          <span>{{ editForm.targetUri }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.targetPath') }}
-          </template>
-          {{ editForm.targetPath }}
+        <el-descriptions-item label-align="right" :label="$t('forms.targetPath')" span="2">
+          <span>{{ editForm.targetPath }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.method') }}
-          </template>
-          {{ editForm.method }}
+        <el-descriptions-item label-align="right" :label="$t('forms.method')" span="2">
+          <span>{{ editForm.method }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.token') }}
-          </template>
-          {{ editForm.token }}
+        <el-descriptions-item label-align="right" :label="$t('forms.token')" span="2">
+          <span>{{ editForm.token }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.clientName') }}
-          </template>
-          {{ editForm.clientName }}
+        <el-descriptions-item label-align="right" :label="$t('forms.clientName')" span="2">
+          <span>{{ editForm.clientName }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.identify') }}
-          </template>
-          {{ editForm.identify }}
+        <el-descriptions-item label-align="right" :label="$t('forms.identify')" span="2">
+          <span>{{ editForm.identify }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.userName') }}
-          </template>
-          {{ editForm.userName }}
+        <el-descriptions-item label-align="right" :label="$t('forms.userName')" span="2">
+          <span>{{ editForm.userName }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.requestTime') }}
-          </template>
-          {{ dateTimeMisFormat(editForm.requestTime) }}
+        <el-descriptions-item label-align="right" :label="$t('forms.requestTime')" span="2">
+          <span>{{ dateTimeMisFormat(editForm.requestTime) }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.processTime') }}
-          </template>
-          {{ editForm.processTime }} {{ $t('forms.millisecond') }}
+        <el-descriptions-item label-align="right" :label="$t('forms.processTime')" span="2">
+          <span>{{ editForm.processTime }} {{ $t('forms.millisecond') }}</span>
         </el-descriptions-item>
-        <el-descriptions-item label-align="right" span="2">
-          <template #label>
-            {{ $t('forms.responseTime') }}
-          </template>
-          {{ dateTimeMisFormat(editForm.responseTime) }}
+        <el-descriptions-item label-align="right" :label="$t('forms.responseTime')" span="2">
+          <span>{{ dateTimeMisFormat(editForm.responseTime) }}</span>
         </el-descriptions-item>
       </el-descriptions>
       <template #footer>
