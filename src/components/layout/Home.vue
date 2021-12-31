@@ -26,7 +26,7 @@
           </header-bar>
         </el-header>
         <el-container>
-          <el-header :style="isMobile?{padding: 0}:{padding: 0,height: '33px'}">
+          <el-header :style="isMobile?{padding: 0,height: '59px'}:{padding: 0,height: '33px'}">
             <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList" v-show="!isMobile"
                       @update:modelValue="handleClick" @on-close="handleCloseTag"/>
             <side-menu :accordion="true" :active-name="fullPath" :collapsed="isCollapsed" v-show="isMobile"
@@ -35,7 +35,7 @@
             </side-menu>
           </el-header>
           <el-scrollbar ref="main-scrollbar" class="main-scrollbar" :style="{height:mainHeight+'px'}">
-            <el-main class="main-content">
+            <el-main class="main-content" :class="{mobile:isMobile}">
               <router-view v-slot="{ Component }">
                 <transition name="el-fade-in" mode="out-in" appear>
                   <keep-alive :include="cacheList">
@@ -134,10 +134,10 @@ export default {
       return isMobile()
     },
     minLogo() {
-      return require('@/assets/images/logo/logo.png').default
+      return require('@/assets/images/logo/logo.png')
     },
     mainLogo() {
-      return require('@/assets/images/logo/logo-main-' + this.$store.state.app.appInfo.theme + '.png').default
+      return require('@/assets/images/logo/logo-main-' + this.$store.state.app.appInfo.theme + '.png')
     },
     tagNavList() {
       return this.$store.state.app.tagNavList

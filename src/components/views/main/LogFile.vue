@@ -1,7 +1,7 @@
 <template>
   <el-card style="min-height: 350px;">
     <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="auto" :inline="true"
-             size="mini" @submit.native.prevent>
+             size="small" @submit.native.prevent>
       <el-form-item :label="$t('forms.startDate')" prop="startDate">
         <el-date-picker type="date" :disabled="form_loading" :disabled-date="disabledDate"
                         v-model="formValidate.startDate"
@@ -47,11 +47,6 @@ export default {
   data() {
     return {
       form_loading: false,
-      disabledDate: (date) => {
-        const now = new Date()
-        now.setHours(0, 0, 0, 0)
-        return date.getTime() >= now.getTime()
-      },
       formValidate: {
         startDate: '',
         endDate: ''
@@ -103,6 +98,11 @@ export default {
     }
   },
   methods: {
+    disabledDate: (date) => {
+      const now = new Date()
+      now.setHours(0, 0, 0, 0)
+      return date.getTime() >= now.getTime()
+    },
     handleSearch() {
       this.$refs['formValidate'].validate((valid) => {
         if (valid) {

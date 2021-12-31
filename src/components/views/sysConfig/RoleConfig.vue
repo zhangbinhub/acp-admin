@@ -16,7 +16,7 @@
                   <el-button
                     v-if="data.isApp"
                     type="text"
-                    size="mini"
+                    size="small"
                     icon="el-icon-plus"
                     :loading="treeLoading"
                     @click="append(data)">
@@ -24,7 +24,7 @@
                   <el-button
                     v-else
                     type="text"
-                    size="mini"
+                    size="small"
                     icon="el-icon-minus"
                     :loading="treeLoading"
                     @click="remove(node, data)">
@@ -47,7 +47,7 @@
               </el-icon>
               {{ $t('forms.basicInfo') }}
             </template>
-            <el-form ref="editForm" size="mini" :model="editForm" :rules="ruleEditForm" label-width="auto"
+            <el-form ref="editForm" size="small" :model="editForm" :rules="ruleEditForm" label-width="auto"
                      v-loading="treeLoading" @submit.native.prevent>
               <el-form-item :label="$t('forms.name')" prop="name">
                 <el-input ref="name" v-model="editForm.name" :disabled="treeLoading"
@@ -92,7 +92,7 @@
           <el-tab-pane name="menuList">
             <template #label>
               <el-icon style="margin-right: 5px">
-                <el-icon-list/>
+                <el-icon-menu/>
               </el-icon>
               {{ $t('forms.menuList') }}
             </template>

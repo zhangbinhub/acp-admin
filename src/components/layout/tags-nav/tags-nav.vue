@@ -2,7 +2,7 @@
   <div class="header-tabs">
     <div class="close-con">
       <el-dropdown trigger="click" @command="handleTagsOption">
-        <el-button type="text" size="mini" style="padding-top: 6px">
+        <el-button type="text" size="small" style="padding-top: 6px">
           <el-icon size="18">
             <el-icon-circle-close-filled/>
           </el-icon>

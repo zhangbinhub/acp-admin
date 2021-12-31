@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="mini"
+    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.processKey')" prop="processDefinitionKey">
         <el-input v-model="searchForm.processDefinitionKey" :disabled="modal_loading" style="width: 200px"
@@ -27,7 +27,7 @@
       </el-form-item>
       <el-form-item :label="$t('forms.startDate')" prop="startTime">
         <el-date-picker v-model="searchForm.startTime" :disabled="modal_loading" type="daterange"
-                        :shortcuts="pickerShortcuts"/>
+                        :shortcuts="pickerShortcuts" :class="{mobile:isMobile}"/>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group>
@@ -40,7 +40,7 @@
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="mini" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               header-cell-class-name="query-table-header">
@@ -117,7 +117,7 @@
                    v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
                    v-model:page-size="searchForm.pageSize"
-                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
                    :total="searchForm.totalRows">
     </el-pagination>
     <el-dialog v-model="viewModal" :title="$t('forms.info')" :fullscreen="true">
@@ -129,7 +129,7 @@
               <el-icon-info-filled/>
             </el-icon>
           </template>
-          <el-form size="mini" :model="currObj" label-width="auto" :inline="true"
+          <el-form size="small" :model="currObj" label-width="auto" :inline="true"
                    @submit.native.prevent>
             <el-row :gutter="10">
               <el-col :lg="{span: 8}">
@@ -195,7 +195,7 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-form size="mini" :model="currObj" label-width="auto"
+          <el-form size="small" :model="currObj" label-width="auto"
                    @submit.native.prevent>
             <el-row :gutter="10">
               <el-col :lg="{span: 24}">
@@ -205,7 +205,7 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-form size="mini" :model="currObj" label-width="auto"
+          <el-form size="small" :model="currObj" label-width="auto"
                    v-if="currObj.deleteReason&&currObj.deleteReason!==''"
                    @submit.native.prevent>
             <el-row :gutter="10">
@@ -229,7 +229,7 @@
                       <el-icon-info-filled/>
                     </el-icon>
                   </template>
-                  <el-table size="mini" :stripe="true" :data="params">
+                  <el-table size="small" :stripe="true" :data="params">
                     <el-table-column
                       type="index"
                       align="center"
@@ -276,7 +276,7 @@
               <el-icon-info-filled/>
             </el-icon>
           </template>
-          <el-table size="mini" :stripe="true" :data="processActivityList">
+          <el-table size="small" :stripe="true" :data="processActivityList">
             <el-table-column
               prop="activityName"
               :label="$t('forms.name')">
@@ -328,7 +328,7 @@
       </template>
       <el-backtop :visibility-height="10" target=".el-dialog"/>
     </el-dialog>
-    <el-dialog v-model="deleteModal" :title="$t('forms.info')" :close-on-click-modal="false" append-to-body>
+    <el-dialog :fullscreen="isMobile" v-model="deleteModal" :title="$t('forms.info')" :close-on-click-modal="false" append-to-body>
       <el-form v-loading="modal_loading" @submit.native.prevent>
         <el-form-item :label="$t('forms.deleteReason')" required>
           <el-input v-model="deleteReason" type="textarea" :rows="3"

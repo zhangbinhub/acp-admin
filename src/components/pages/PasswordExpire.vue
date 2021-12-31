@@ -45,7 +45,7 @@
               {{ $t('forms.buttons.submit') }}
             </el-button>
             <small style="text-align: center;display: block;margin-top: 10px;">
-              <el-link type="info" @click="gotoLogin">重新登录</el-link>
+              <el-link href="javascript:void(0)" type="info" @click="gotoLogin">重新登录</el-link>
             </small>
             <small style="text-align: center;display: block;margin-top: 10px;">{{ copyright }}</small>
           </div>

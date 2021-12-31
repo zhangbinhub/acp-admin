@@ -16,14 +16,14 @@
                 <el-button
                   v-if="data.id!=='root' && node.isLeaf"
                   type="text"
-                  size="mini"
+                  size="small"
                   icon="el-icon-minus"
                   :loading="treeLoading"
                   @click="remove(node, data)">
                 </el-button>
                 <el-button
                   type="text"
-                  size="mini"
+                  size="small"
                   icon="el-icon-plus"
                   :loading="treeLoading"
                   @click="append(data)">
@@ -38,7 +38,7 @@
     <el-col :lg="{ span: 15 }" v-show="currOrg.id&&currOrg.id!==''" style="margin-bottom: 16px;">
       <el-card>
         <template #header>{{ currOrgFullPath }}</template>
-        <el-form ref="editForm" size="mini" :model="editForm" :rules="ruleEditForm" label-width="auto"
+        <el-form ref="editForm" size="small" :model="editForm" :rules="ruleEditForm" label-width="auto"
                  v-loading="treeLoading" @submit.native.prevent>
           <el-row>
             <el-col :sm="{ span: 12 }">

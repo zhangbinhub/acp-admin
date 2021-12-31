@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="mini"
+    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.remoteIp')" prop="remoteIp">
         <el-input v-model="searchForm.remoteIp" :disabled="modal_loading"
@@ -42,7 +42,7 @@
       </el-form-item>
       <el-form-item :label="$t('forms.startDate')" prop="startTime">
         <el-date-picker v-model="searchForm.startTime" :disabled="modal_loading" type="daterange"
-                        :shortcuts="pickerShortcuts"/>
+                        :shortcuts="pickerShortcuts" :class="{mobile:isMobile}"/>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group style="margin-right: 20px">
@@ -55,7 +55,7 @@
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="mini" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               @selection-change="handleSelect" @sort-change="handleSortChange"
@@ -144,11 +144,11 @@
                    v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
                    v-model:page-size="searchForm.pageSize"
-                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
                    :total="searchForm.totalRows">
     </el-pagination>
-    <el-dialog v-model="editModal" :title="$t('forms.info')" width="600px">
-      <el-descriptions :column="2" size="mini" border>
+    <el-dialog :fullscreen="isMobile" v-model="editModal" :title="$t('forms.info')" width="600px">
+      <el-descriptions :column="2" size="small" border>
         <el-descriptions-item label-align="right">
           <template #label>
             {{ $t('forms.remoteIp') }}

@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="mini"
+    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.routeId')" prop="routeId">
         <el-input v-model="searchForm.routeId" :disabled="modal_loading"
@@ -35,7 +35,7 @@
         </el-button>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="mini" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
@@ -100,11 +100,11 @@
                    v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
                    v-model:page-size="searchForm.pageSize"
-                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
                    :total="searchForm.totalRows">
     </el-pagination>
     <el-dialog v-model="editModal" :title="$t('forms.info')" :fullscreen="true">
-      <el-form ref="editForm" :model="editForm" :rules="ruleAddForm" label-width="auto" size="mini"
+      <el-form ref="editForm" :model="editForm" :rules="ruleAddForm" label-width="auto" size="small"
                style="padding-right: 25px;" v-loading="modal_loading" @submit.native.prevent>
         <el-row>
           <el-col :lg="8">

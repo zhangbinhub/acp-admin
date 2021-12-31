@@ -4,7 +4,7 @@
              @submit.native.prevent>
       <el-form-item prop="avatar">
         <el-tooltip :content="$t('forms.avatar')" placement="right">
-          <el-avatar style="width: 100px; height: 100px; cursor: pointer" :src="formValidate.avatar"
+          <el-avatar style="cursor: pointer" :src="formValidate.avatar" :size="100"
                      @click.native="openAvatarUpload"/>
         </el-tooltip>
       </el-form-item>

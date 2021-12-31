@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" @submit.native.prevent
-             size="mini">
+             size="small">
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input v-model="searchForm.name" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
@@ -37,7 +37,7 @@
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="mini" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
@@ -122,11 +122,11 @@
                    v-model:current-page="searchForm.currPage"
                    :page-sizes="searchForm.pageSizeArray"
                    v-model:page-size="searchForm.pageSize"
-                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
                    :total="searchForm.totalRows">
     </el-pagination>
-    <el-dialog v-model="addModal" :title="$t('forms.buttons.add')" :close-on-click-modal="false">
-      <el-form ref="addForm" :model="addForm" :rules="ruleAddForm" label-width="auto" size="mini"
+    <el-dialog :fullscreen="isMobile" v-model="addModal" :title="$t('forms.buttons.add')" :close-on-click-modal="false">
+      <el-form ref="addForm" :model="addForm" :rules="ruleAddForm" label-width="auto" size="small"
                v-loading="modal_loading" @submit.native.prevent style="padding-right: 25px;">
         <el-form-item :label="$t('forms.name')" prop="name">
           <el-input v-model="addForm.name" :disabled="modal_loading" ref="name"
