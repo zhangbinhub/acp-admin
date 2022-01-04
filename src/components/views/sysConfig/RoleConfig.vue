@@ -47,28 +47,29 @@
               </el-icon>
               {{ $t('forms.basicInfo') }}
             </template>
-            <el-form ref="editForm" size="small" :model="editForm" :rules="ruleEditForm" label-width="auto"
+            <el-form ref="editForm" size="small" :model="editFormModel" :rules="ruleEditForm" label-width="auto"
                      v-loading="treeLoading" @submit.native.prevent>
               <el-form-item :label="$t('forms.name')" prop="name">
-                <el-input ref="name" v-model="editForm.name" :disabled="treeLoading"
+                <el-input ref="name" v-model="editFormModel.name" :disabled="treeLoading"
                           :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                           @keyup.enter.native="doSave"/>
               </el-form-item>
               <el-form-item :label="$t('forms.code')" prop="code">
-                <el-autocomplete v-model="editForm.code" :disabled="treeLoading" style="width: 100%"
+                <el-autocomplete v-model="editFormModel.code" :disabled="treeLoading" style="width: 100%"
                                  :fetch-suggestions="querySearch"
                                  :placeholder="$t('forms.pleaseEnter') + $t('forms.code')"
                                  @keyup.enter.native="doSave"/>
               </el-form-item>
               <el-form-item :label="$t('forms.level')" prop="levels">
-                <el-input-number v-model="editForm.levels" :disabled="treeLoading"
+                <el-input-number v-model="editFormModel.levels" :disabled="treeLoading"
                                  style="width: 100%;max-width: 150px;"
                                  :placeholder="$t('forms.pleaseEnter') + $t('forms.level')" :min="0"
                                  @keyup.enter.native="doSave">
                 </el-input-number>
               </el-form-item>
               <el-form-item :label="$t('forms.sort')" prop="sort">
-                <el-input-number v-model="editForm.sort" :disabled="treeLoading" style="width: 100%;max-width: 150px;"
+                <el-input-number v-model="editFormModel.sort" :disabled="treeLoading"
+                                 style="width: 100%;max-width: 150px;"
                                  :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" :min="0"
                                  @keyup.enter.native="doSave">
                 </el-input-number>
@@ -82,7 +83,7 @@
               </el-icon>
               {{ $t('forms.userList') }}
             </template>
-            <el-transfer :data="optionalUsers" v-model="editForm.userIds" v-loading="treeLoading"
+            <el-transfer :data="optionalUsers" v-model="editFormModel.userIds" v-loading="treeLoading"
                          :filterable="true" :props="{key:'id',label:'label'}"
                          :titles="[$t('forms.optional'),$t('forms.selected')]"
                          :button-texts="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
@@ -97,7 +98,7 @@
               {{ $t('forms.menuList') }}
             </template>
             <el-tree ref="menuTree" :data="menuData" :show-checkbox="true" node-key="id"
-                     v-loading="treeLoading" :default-expanded-keys="editForm.menuIds"/>
+                     v-loading="treeLoading" :default-expanded-keys="editFormModel.menuIds"/>
           </el-tab-pane>
           <el-tab-pane name="moduleFuncList">
             <template #label>
@@ -107,7 +108,7 @@
               {{ $t('forms.moduleFuncList') }}
             </template>
             <el-tree ref="moduleFuncTree" :data="moduleFuncData" :show-checkbox="true" node-key="id"
-                     v-loading="treeLoading" :default-expanded-keys="editForm.moduleFuncIds"/>
+                     v-loading="treeLoading" :default-expanded-keys="editFormModel.moduleFuncIds"/>
           </el-tab-pane>
         </el-tabs>
         <div style="text-align: center;margin-top: 20px;">
@@ -130,7 +131,7 @@ import {
   getTreeFullPathTitle,
   findCheckedTreeNode
 } from '@/libs/tools'
-import {nextTick} from "vue";
+import {nextTick, ref} from "vue";
 
 export default {
   name: 'roleConfig',
@@ -145,7 +146,7 @@ export default {
       currRoleFullPath: '',
       currRoleData: {},
       currRole: {},
-      editForm: {
+      editFormModel: {
         id: '',
         appId: '',
         name: '',
@@ -194,7 +195,7 @@ export default {
   },
   watch: {
     filterText(value) {
-      this.$refs.roleTree.filter(value)
+      this.roleTree.filter(value)
     }
   },
   methods: {
@@ -280,7 +281,7 @@ export default {
           })
         }
         nextTick(() => {
-          this.$refs['name'].focus()
+          this.name.focus()
         })
       }).catch(() => {
         this.tree_loading = false
@@ -318,7 +319,7 @@ export default {
     },
     clearCurrObj(currRoleId) {
       if (!currRoleId || (currRoleId && currRoleId === this.currRole.id)) {
-        this.editForm = {
+        this.editFormModel = {
           id: '',
           name: '',
           code: '',
@@ -414,60 +415,60 @@ export default {
       })
     },
     doSave() {
-      this.$refs['editForm'].validate((valid) => {
+      this.editForm.validate((valid) => {
         if (valid) {
           this.tree_loading = true
           this.$api.request.role.doUpdateRole({
-            id: this.editForm.id,
-            name: this.editForm.name,
-            code: this.editForm.code,
-            levels: this.editForm.levels,
-            sort: this.editForm.sort,
-            userIds: this.editForm.userIds,
-            menuIds: this.$refs['menuTree'].getCheckedNodes(false, true).map(item => item.id),
-            moduleFuncIds: this.$refs['moduleFuncTree'].getCheckedNodes(false, true).map(item => item.id)
+            id: this.editFormModel.id,
+            name: this.editFormModel.name,
+            code: this.editFormModel.code,
+            levels: this.editFormModel.levels,
+            sort: this.editFormModel.sort,
+            userIds: this.editFormModel.userIds,
+            menuIds: this.menuTree.getCheckedNodes(false, true).map(item => item.id),
+            moduleFuncIds: this.moduleFuncTree.getCheckedNodes(false, true).map(item => item.id)
           }).then((res) => {
             this.tree_loading = false
             if (res) {
               this.reloadUserList()
               this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
-              this.currRoleData.name = this.editForm.name
-              this.currRoleData.label = this.editForm.code !== '' ? this.editForm.name + '(' + this.editForm.code + ')' : this.editForm.name
-              this.currRoleData.code = this.editForm.code
-              this.currRoleData.levels = this.editForm.levels
-              this.currRoleData.sort = this.editForm.sort
-              this.currRoleData.userIds = this.editForm.userIds
-              this.currRoleData.menuIds = this.$refs['menuTree'].getCheckedNodes(false, true).map(item => item.id)
-              this.currRoleData.moduleFuncIds = this.$refs['moduleFuncTree'].getCheckedNodes(false, true).map(item => item.id)
+              this.currRoleData.name = this.editFormModel.name
+              this.currRoleData.label = this.editFormModel.code !== '' ? this.editFormModel.name + '(' + this.editFormModel.code + ')' : this.editFormModel.name
+              this.currRoleData.code = this.editFormModel.code
+              this.currRoleData.levels = this.editFormModel.levels
+              this.currRoleData.sort = this.editFormModel.sort
+              this.currRoleData.userIds = this.editFormModel.userIds
+              this.currRoleData.menuIds = this.menuTree.getCheckedNodes(false, true).map(item => item.id)
+              this.currRoleData.moduleFuncIds = this.moduleFuncTree.getCheckedNodes(false, true).map(item => item.id)
               this.currRole = {
-                id: this.editForm.id,
-                appId: this.editForm.appId,
-                name: this.editForm.name,
-                code: this.editForm.code,
-                levels: this.editForm.levels,
-                sort: this.editForm.sort,
-                userIds: this.editForm.userIds,
-                menuIds: this.$refs['menuTree'].getCheckedNodes(false, true).map(item => item.id),
-                moduleFuncIds: this.$refs['moduleFuncTree'].getCheckedNodes(false, true).map(item => item.id)
+                id: this.editFormModel.id,
+                appId: this.editFormModel.appId,
+                name: this.editFormModel.name,
+                code: this.editFormModel.code,
+                levels: this.editFormModel.levels,
+                sort: this.editFormModel.sort,
+                userIds: this.editFormModel.userIds,
+                menuIds: this.menuTree.getCheckedNodes(false, true).map(item => item.id),
+                moduleFuncIds: this.moduleFuncTree.getCheckedNodes(false, true).map(item => item.id)
               }
-              this.editForm.menuIds = this.currRole.menuIds
-              this.editForm.moduleFuncIds = this.currRole.moduleFuncIds
+              this.editFormModel.menuIds = this.currRole.menuIds
+              this.editFormModel.moduleFuncIds = this.currRole.moduleFuncIds
               this.reloadMenuList(() => {
                 nextTick(() => {
-                  const checkedResult = findCheckedTreeNode(this.menuData, this.editForm.menuIds)
-                  this.$refs['menuTree'].setCheckedKeys(checkedResult.checkedIdList)
+                  const checkedResult = findCheckedTreeNode(this.menuData, this.editFormModel.menuIds)
+                  this.menuTree.setCheckedKeys(checkedResult.checkedIdList)
                 })
               })
               this.reloadModuleFuncList(() => {
                 nextTick(() => {
-                  const checkedResult = findCheckedTreeNode(this.moduleFuncData, this.editForm.moduleFuncIds)
-                  this.$refs['moduleFuncTree'].setCheckedKeys(checkedResult.checkedIdList)
+                  const checkedResult = findCheckedTreeNode(this.moduleFuncData, this.editFormModel.moduleFuncIds)
+                  this.moduleFuncTree.setCheckedKeys(checkedResult.checkedIdList)
                 })
               })
               this.refreshTree(false, (() => {
                 this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)
                 nextTick(() => {
-                  this.$refs['name'].focus()
+                  this.name.focus()
                 })
               }))
             }
@@ -479,8 +480,8 @@ export default {
     },
     doReset() {
       this.reloadUserList()
-      this.$refs['editForm'].resetFields()
-      this.editForm = {
+      this.editForm.resetFields()
+      this.editFormModel = {
         id: this.currRole.id,
         appId: this.currRole.appId,
         name: this.currRole.name,
@@ -493,22 +494,22 @@ export default {
       }
       this.reloadMenuList(() => {
         nextTick(() => {
-          const checkedResult = findCheckedTreeNode(this.menuData, this.editForm.menuIds)
-          this.$refs['menuTree'].setCheckedKeys(checkedResult.checkedIdList)
-          this.$refs['name'].focus()
+          const checkedResult = findCheckedTreeNode(this.menuData, this.editFormModel.menuIds)
+          this.menuTree.setCheckedKeys(checkedResult.checkedIdList)
+          this.name.focus()
         })
       })
       this.reloadModuleFuncList(() => {
         nextTick(() => {
-          const checkedResult = findCheckedTreeNode(this.moduleFuncData, this.editForm.moduleFuncIds)
-          this.$refs['moduleFuncTree'].setCheckedKeys(checkedResult.checkedIdList)
-          this.$refs['name'].focus()
+          const checkedResult = findCheckedTreeNode(this.moduleFuncData, this.editFormModel.moduleFuncIds)
+          this.moduleFuncTree.setCheckedKeys(checkedResult.checkedIdList)
+          this.name.focus()
         })
       })
       this.currRoleFullPath = getTreeFullPathTitle(this.treeData, this.currRole.id)
     },
     handleUserListChange(newTargetKeys) {
-      this.editForm.userIds = newTargetKeys
+      this.editFormModel.userIds = newTargetKeys
     }
   },
   mounted() {
@@ -519,9 +520,17 @@ export default {
   activated() {
     if (this.currRole.id && this.currRole.id !== '') {
       nextTick(() => {
-        this.$refs['name'].focus()
+        this.name.focus()
       })
     }
+  },
+  setup() {
+    const roleTree = ref(null)
+    const editForm = ref(null)
+    const name = ref(null)
+    const menuTree = ref(null)
+    const moduleFuncTree = ref(null)
+    return {roleTree, editForm, name, menuTree, moduleFuncTree}
   }
 }
 </script>

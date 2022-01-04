@@ -1,7 +1,7 @@
 <template>
   <div class="side-menu-wrapper">
     <slot/>
-    <el-scrollbar ref="menu-scrollbar" class="menu-scrollbar" v-show="!isMobile">
+    <el-scrollbar ref="menuScrollbar" class="menu-scrollbar" v-show="!isMobile">
       <el-menu class="menu-root" :collapse="collapsed" :unique-opened="accordion"
                background-color="#1f2d3d"
                text-color="rgba(255, 255, 255, 0.7)"
@@ -42,7 +42,7 @@
   </div>
 </template>
 <script>
-import {nextTick} from 'vue'
+import {nextTick, ref} from 'vue'
 import {getOpenedNamesByActiveName} from '@/libs/tools'
 import SideMenuItem from './side-menu-item.vue'
 import './side-menu.less'
@@ -107,9 +107,13 @@ export default {
     },
     mainHeight() {
       nextTick(() => {
-        this.$refs['menu-scrollbar'].update()
+        this.menuScrollbar.update()
       })
     }
+  },
+  setup() {
+    const menuScrollbar = ref(null)
+    return {menuScrollbar}
   }
 }
 </script>

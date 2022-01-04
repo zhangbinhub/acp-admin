@@ -1,40 +1,40 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" @submit.native.prevent
+    <el-form ref="searchForm" :model="searchFormModel" label-width="auto" :inline="true" @submit.native.prevent
              size="small">
       <el-form-item :label="$t('forms.processKey')" prop="value">
-        <el-input v-model="searchForm.processKey" :disabled="modal_loading"
+        <el-input v-model="searchFormModel.processKey" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.processKey')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.name')" prop="value">
-        <el-input v-model="searchForm.name" :disabled="modal_loading"
+        <el-input v-model="searchFormModel.name" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.resourceName')" prop="resourceName">
-        <el-input v-model="searchForm.resourceName" :disabled="modal_loading"
+        <el-input v-model="searchFormModel.resourceName" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.resourceName')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group>
-          <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
+          <el-button :loading="modal_loading" @click="handleSearch" type="primary">
             {{ $t('forms.buttons.search') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
+          <el-button :loading="modal_loading" @click="handleSearchReset" type="primary">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleAdd()" type="primary">
+          <el-button :loading="modal_loading" @click="handleAdd" type="primary">
             {{ $t('forms.buttons.add') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleDeleteMore()" type="primary">
+          <el-button :loading="modal_loading" @click="handleDeleteMore" type="primary">
             {{ $t('forms.buttons.delete') }}
           </el-button>
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchFormModel.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
@@ -103,29 +103,30 @@
         align="center"
         width="90">
         <template #default="scope">
-            <el-button type="text" @click="handleEdit(scope.row)"
-                       icon="el-icon-edit"/>
-            <el-button type="text" @click="handleDeleteRow(scope.row)"
-                       icon="el-icon-delete"/>
+          <el-button type="text" @click="handleEdit(scope.row)"
+                     icon="el-icon-edit"/>
+          <el-button type="text" @click="handleDeleteRow(scope.row)"
+                     icon="el-icon-delete"/>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination @size-change="handlePageSizeSearch"
-                   v-model:current-page="searchForm.currPage"
-                   :page-sizes="searchForm.pageSizeArray"
-                   v-model:page-size="searchForm.pageSize"
+                   v-model:current-page="searchFormModel.currPage"
+                   :page-sizes="searchFormModel.pageSizeArray"
+                   v-model:page-size="searchFormModel.pageSize"
                    :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
-                   :total="searchForm.totalRows">
+                   :total="searchFormModel.totalRows">
     </el-pagination>
-    <el-dialog :fullscreen="isMobile" v-model="editModal" :title="$t('forms.buttons.add')" :close-on-click-modal="false">
-      <el-form ref="editForm" :model="editForm" label-width="auto" size="small"
+    <el-dialog :fullscreen="isMobile" v-model="editModal" :title="$t('forms.buttons.add')"
+               :close-on-click-modal="false">
+      <el-form ref="editForm" :model="editFormModel" label-width="auto" size="small"
                v-loading="modal_loading" @submit.native.prevent style="padding-right: 25px;">
         <div v-if="this.action===1">
           <el-form-item :label="$t('forms.processKey')+':'" prop="processKey">
-            <span>{{ editForm.processKey }}</span>
+            <span>{{ editFormModel.processKey }}</span>
           </el-form-item>
           <el-form-item :label="$t('forms.name')+':'" prop="name">
-            <span>{{ editForm.name }}</span>
+            <span>{{ editFormModel.name }}</span>
           </el-form-item>
         </div>
         <el-form-item :label="$t('forms.content')+':'" prop="file">
@@ -151,43 +152,43 @@
           </el-button>
         </el-form-item>
         <el-form-item :label="$t('forms.remarks')+':'" prop="remarks">
-          <el-input v-model="editForm.remarks" :disabled="modal_loading" type="textarea" :rows="3"
+          <el-input v-model="editFormModel.remarks" :disabled="modal_loading" type="textarea" :rows="3"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')"/>
         </el-form-item>
         <div v-if="action===1">
           <el-form-item :label="$t('forms.resourceName')+':'" prop="resourceName">
-            <span>{{ editForm.resourceName }}</span>
+            <span>{{ editFormModel.resourceName }}</span>
           </el-form-item>
           <el-form-item :label="$t('forms.version')+':'" prop="version">
-            <span>{{ editForm.version }}</span>
+            <span>{{ editFormModel.version }}</span>
           </el-form-item>
           <el-form-item :label="$t('forms.createTime')+':'" prop="createTime">
-            <span>{{ dateTimeFormat(editForm.createTime) }}</span>
+            <span>{{ dateTimeFormat(editFormModel.createTime) }}</span>
           </el-form-item>
           <el-form-item :label="$t('forms.modifyTime')+':'" prop="modifyTime">
-            <span>{{ dateTimeFormat(editForm.modifyTime) }}</span>
+            <span>{{ dateTimeFormat(editFormModel.modifyTime) }}</span>
           </el-form-item>
           <el-form-item :label="$t('forms.deployTime')+':'" prop="deployTime">
-            <span>{{ dateTimeFormat(editForm.deployTime) }}</span>
+            <span>{{ dateTimeFormat(editFormModel.deployTime) }}</span>
           </el-form-item>
         </div>
       </el-form>
       <template #footer>
         <div>
-          <el-button type="info" :loading="modal_loading" @click="doCancel()">
+          <el-button type="info" :loading="modal_loading" @click="doCancel">
             {{ $t('forms.buttons.cancel') }}
           </el-button>
-          <el-button type="warning" :loading="modal_loading" @click="doReset()">
+          <el-button type="warning" :loading="modal_loading" @click="doReset">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button type="primary" :loading="modal_loading" @click="handleSave('editForm')">
+          <el-button type="primary" :loading="modal_loading" @click="handleSave">
             {{ $t('forms.buttons.submit') }}
           </el-button>
           <div v-if="action===1" style="float: left">
             <el-button type="success" :loading="modal_loading" @click="handleDeploy">
               {{ $t('forms.buttons.deploy') }}
             </el-button>
-            <el-button v-if="this.editForm.deploymentId && this.editForm.deploymentId!==''" type="info"
+            <el-button v-if="this.editFormModel.deploymentId && this.editFormModel.deploymentId!==''" type="info"
                        :loading="modal_loading" icon="el-icon-search" @click="handleViewDiagram">
               {{ $t('forms.buttons.view') }}
             </el-button>
@@ -206,13 +207,13 @@
 <script>
 import moment from 'moment'
 import {copy, isMobile} from '@/libs/tools'
-import {nextTick} from "vue";
+import {nextTick, ref} from "vue";
 
 export default {
   name: 'workflowDeploy',
   data() {
     return {
-      searchForm: {
+      searchFormModel: {
         resourceName: '',
         processKey: '',
         name: '',
@@ -225,7 +226,7 @@ export default {
         pageSize: 10,
         pageSizeArray: [10, 20, 30, 40]
       },
-      editForm: {
+      editFormModel: {
         id: '',
         resourceName: '',
         processKey: '',
@@ -265,7 +266,7 @@ export default {
       }
     },
     remarks() {
-      return this.editForm.remarks
+      return this.editFormModel.remarks
     },
     tableHeight() {
       const minHeight = 300
@@ -288,12 +289,12 @@ export default {
     },
     doReset() {
       nextTick(() => {
-        this.$refs['editForm'].resetFields()
+        this.editForm.resetFields()
         if (this.action === 0) {
-          this.$refs['upload'].clearFiles()
+          this.upload.clearFiles()
         }
         this.fileList = []
-        this.editForm = copy(this.currObj)
+        this.editFormModel = copy(this.currObj)
         this.diagramData = ''
       })
     },
@@ -337,8 +338,8 @@ export default {
         this.modal_loading = false
       })
     },
-    handleSave(name) {
-      this.$refs[name].validate((valid) => {
+    handleSave() {
+      this.editForm.validate((valid) => {
         if (valid) {
           switch (this.action) {
             case 0:
@@ -351,15 +352,15 @@ export default {
                   })
                 return
               }
-              this.$refs['upload'].submit()
+              this.upload.submit()
               break
             case 1:
               this.modal_loading = true
               this.$api.request.workFlowDeploy.update({
-                id: this.editForm.id,
-                processKey: this.editForm.processKey,
-                name: this.editForm.name,
-                remarks: this.editForm.remarks
+                id: this.editFormModel.id,
+                processKey: this.editFormModel.processKey,
+                name: this.editFormModel.name,
+                remarks: this.editFormModel.remarks
               }).then((res) => {
                 this.modal_loading = false
                 if (res) {
@@ -380,7 +381,7 @@ export default {
         type: 'warning'
       }).then(() => {
         this.modal_loading = true
-        this.$api.request.workFlowDeploy.deploy(this.editForm.id).then((res) => {
+        this.$api.request.workFlowDeploy.deploy(this.editFormModel.id).then((res) => {
           this.modal_loading = false
           if (res) {
             this.$message.success(this.$i18n.t('messages.requestSuccess') + '')
@@ -399,7 +400,7 @@ export default {
     handleViewDiagram() {
       const currObj = this
       this.diagramModal = true
-      this.$api.request.workFlowDeploy.diagram(this.editForm.deploymentId).then((image) => {
+      this.$api.request.workFlowDeploy.diagram(this.editFormModel.deploymentId).then((image) => {
         if (image) {
           const dataInfo = image.data
           const contentType = dataInfo.type
@@ -416,33 +417,33 @@ export default {
       })
     },
     handlePageSizeSearch(size) {
-      this.searchForm.pageSize = size
+      this.searchFormModel.pageSize = size
       this.handleSearch()
     },
     handleSearch() {
       let searchParam = {
-        resourceName: this.searchForm.resourceName,
-        processKey: this.searchForm.processKey,
-        name: this.searchForm.name,
+        resourceName: this.searchFormModel.resourceName,
+        processKey: this.searchFormModel.processKey,
+        name: this.searchFormModel.name,
         queryParam: {
-          currPage: this.searchForm.currPage,
-          pageSize: this.searchForm.pageSize
+          currPage: this.searchFormModel.currPage,
+          pageSize: this.searchFormModel.pageSize
         }
       }
-      if (this.searchForm.orderParam.order !== 'normal') {
-        searchParam.queryParam.orderName = this.searchForm.orderParam.prop
-        searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
+      if (this.searchFormModel.orderParam.order !== 'normal') {
+        searchParam.queryParam.orderName = this.searchFormModel.orderParam.prop
+        searchParam.queryParam.orderCommand = this.searchFormModel.orderParam.order
       }
       this.modal_loading = true
       this.$api.request.workFlowDeploy.query(searchParam).then((res) => {
         this.modal_loading = false
         if (res) {
           this.selectedData = []
-          this.searchForm.totalRows = res.data.totalElements
+          this.searchFormModel.totalRows = res.data.totalElements
           this.searchData = []
           this.searchData = res.data.content
           nextTick(() => {
-            this.$refs['table'].doLayout()
+            this.upload.doLayout()
           })
         }
       }).catch(() => {
@@ -452,15 +453,15 @@ export default {
       })
     },
     handleRowClick(row) {
-      this.$refs['table'].toggleRowSelection(row)
+      this.upload.toggleRowSelection(row)
     },
     handleSortChange(param) {
-      this.searchForm.orderParam.prop = param.prop
-      this.searchForm.orderParam.order = param.order
+      this.searchFormModel.orderParam.prop = param.prop
+      this.searchFormModel.orderParam.order = param.order
       this.handleSearch()
     },
-    handleSearchReset(name) {
-      this.$refs[name].resetFields()
+    handleSearchReset() {
+      this.searchForm.resetFields()
     },
     handleSelect(selection) {
       this.selectedData = selection
@@ -515,7 +516,7 @@ export default {
       this.$api.errorProcess({response: {data: JSON.parse(String(err).substring(6))}})
     },
     handleDownLoadFile() {
-      this.$api.request.workFlowDeploy.downLoadFile(this.editForm.id)
+      this.$api.request.workFlowDeploy.downLoadFile(this.editFormModel.id)
     }
   },
   mounted() {
@@ -523,8 +524,15 @@ export default {
   },
   activated() {
     nextTick(() => {
-      this.$refs['table'].doLayout()
+      this.table.doLayout()
     })
+  },
+  setup() {
+    const searchForm = ref(null)
+    const table = ref(null)
+    const editForm = ref(null)
+    const upload = ref(null)
+    return {searchForm, table, editForm, upload}
   }
 }
 </script>

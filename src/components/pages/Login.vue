@@ -14,26 +14,26 @@
           </div>
         </template>
         <div>
-          <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" @submit.native.prevent>
+          <el-form ref="loginForm" :model="formValidate" :rules="ruleValidate" @submit.native.prevent>
             <el-form-item>
               <input type="password" style="display: none;"/>
             </el-form-item>
             <el-form-item prop="loginNo">
               <el-input ref="loginNo" v-model="formValidate.loginNo" type="text" :disabled="modal_loading"
                         :placeholder="text.usernamePlaceholder" prefix-icon="el-icon-user"
-                        @keyup.native.enter="handleSubmit('formValidate')">
+                        @keyup.native.enter="handleSubmit">
               </el-input>
             </el-form-item>
             <el-form-item prop="password">
               <el-input :disabled="modal_loading" :placeholder="text.passwordPlaceholder"
-                        @keyup.native.enter="handleSubmit('formValidate')" prefix-icon="el-icon-lock"
+                        @keyup.native.enter="handleSubmit" prefix-icon="el-icon-lock"
                         autocomplete="off" type="text" @focus="passwordFocus"
                         v-model="formValidate.password">
               </el-input>
             </el-form-item>
             <el-form-item style="margin-bottom: 0;">
               <el-checkbox v-model="formValidate.remember" :disabled="modal_loading"
-                           @keyup.native.enter="handleSubmit('formValidate')">
+                           @keyup.native.enter="handleSubmit">
                 {{ text.rememberMe }}
               </el-checkbox>
             </el-form-item>
@@ -42,7 +42,7 @@
         <template #footer>
           <div style="text-align: center">
             <el-button type="primary" :loading="modal_loading" style="width: 100%"
-                       @click="handleSubmit('formValidate')">
+                       @click="handleSubmit">
               {{ $t('forms.buttons.login') }}
             </el-button>
             <small style="text-align: center;display: block;margin-top: 10px;">{{ copyright }}</small>
@@ -54,7 +54,7 @@
 </template>
 <script>
 import '@/assets/styles/login.less'
-import {nextTick} from "vue";
+import {nextTick, ref} from "vue";
 
 export default {
   name: 'login',
@@ -98,9 +98,9 @@ export default {
     passwordFocus(event) {
       event.target.type = 'password'
     },
-    handleSubmit(name) {
+    handleSubmit() {
       const currObj = this
-      currObj.$refs[name].validate((valid) => {
+      currObj.loginForm.validate((valid) => {
         if (valid) {
           currObj.modal_loading = true
           currObj.$api.request.auth.doLogin(currObj.formValidate.loginNo, currObj.formValidate.password).then(res => {
@@ -139,8 +139,13 @@ export default {
   },
   mounted() {
     nextTick(() => {
-      this.$refs['loginNo'].focus()
+      this.loginNo.focus()
     })
+  },
+  setup() {
+    const loginForm = ref(null)
+    const loginNo = ref(null)
+    return {loginForm, loginNo}
   }
 }
 </script>

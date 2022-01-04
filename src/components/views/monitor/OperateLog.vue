@@ -46,10 +46,10 @@
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group style="margin-right: 20px">
-          <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
+          <el-button :loading="modal_loading" @click="handleSearch" type="primary">
             {{ $t('forms.buttons.search') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
+          <el-button :loading="modal_loading" @click="handleSearchReset" type="primary">
             {{ $t('forms.buttons.reset') }}
           </el-button>
         </el-button-group>
@@ -207,7 +207,7 @@
 </template>
 <script>
 import moment from 'moment'
-import {nextTick} from "vue";
+import {nextTick, ref} from "vue";
 import {isMobile} from "@/libs/tools";
 
 export default {
@@ -346,7 +346,7 @@ export default {
           this.searchForm.totalRows = res.data.totalElements
           this.searchData = res.data.content
           nextTick(() => {
-            this.$refs['table'].doLayout()
+            this.table.doLayout()
           })
         }
       }).catch(() => {
@@ -360,8 +360,8 @@ export default {
       this.searchForm.orderParam.order = param.order
       this.handleSearch()
     },
-    handleSearchReset(name) {
-      this.$refs[name].resetFields()
+    handleSearchReset() {
+      this.searchForm.resetFields()
     },
     handleSelect(selection) {
       this.selectedData = selection
@@ -374,8 +374,13 @@ export default {
   activated() {
     this.handleSearch()
     nextTick(() => {
-      this.$refs['table'].doLayout()
+      this.table.doLayout()
     })
+  },
+  setup() {
+    const searchForm = ref(null)
+    const table = ref(null)
+    return {searchForm, table}
   }
 }
 </script>
