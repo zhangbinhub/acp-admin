@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchFormModel" label-width="auto" :inline="true" @submit.native.prevent
+    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" @submit.native.prevent
              size="small">
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input v-model="searchFormModel.name" :disabled="modal_loading"
@@ -117,7 +117,7 @@
                    :total="searchFormModel.totalRows">
     </el-pagination>
     <el-dialog :fullscreen="isMobile" v-model="addModal" :title="$t('forms.buttons.add')" :close-on-click-modal="false">
-      <el-form ref="addForm" :model="addFormModel" :rules="ruleAddForm" label-width="auto" size="small"
+      <el-form ref="addForm" :model="addFormModel" :rules="ruleAddForm" label-width="undefined" size="small"
                v-loading="modal_loading" @submit.native.prevent style="padding-right: 25px;">
         <el-form-item :label="$t('forms.name')" prop="name">
           <el-input v-model="addFormModel.name" :disabled="modal_loading" ref="name"
@@ -153,7 +153,7 @@
 </template>
 <script>
 import {nextTick, ref} from "vue";
-import {isMobile} from "@/libs/tools";
+import {isMobileDevice} from "@/libs/tools";
 
 export default {
   name: 'runtimeConfig',
@@ -203,7 +203,7 @@ export default {
   },
   computed: {
     isMobile() {
-      return isMobile()
+      return isMobileDevice()
     },
     tableHeight() {
       const minHeight = 300

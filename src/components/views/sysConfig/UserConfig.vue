@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchFormModel" label-width="auto" :inline="true" size="small"
+    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input v-model="searchFormModel.name" :disabled="modal_loading"
@@ -138,7 +138,7 @@
         <el-col :lg="6" class="card-col">
           <el-card>
             <template #header>{{ $t('forms.basicInfo') }}</template>
-            <el-form ref="editForm" :model="editFormModel" :rules="ruleEditForm" label-width="auto"
+            <el-form ref="editForm" :model="editFormModel" :rules="ruleEditForm" label-width="undefined"
                      size="small" v-loading="modal_loading" @submit.native.prevent>
               <el-form-item :label="$t('forms.name')" prop="name">
                 <el-input ref="name" v-model="editFormModel.name" @keyup.enter.native="doSave" :disabled="modal_loading"
@@ -223,7 +223,7 @@
 }
 </style>
 <script>
-import {copy, processTreeNode, getTreeFullPathTitle, sortTreeNodes, isMobile} from '@/libs/tools'
+import {copy, processTreeNode, getTreeFullPathTitle, sortTreeNodes, isMobileDevice} from '@/libs/tools'
 import {nextTick, ref} from "vue";
 
 export default {
@@ -281,7 +281,7 @@ export default {
   },
   computed: {
     isMobile() {
-      return isMobile()
+      return isMobileDevice()
     },
     tableHeight() {
       const minHeight = 300

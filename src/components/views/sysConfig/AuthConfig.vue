@@ -52,7 +52,7 @@
           <el-card>
             <template #header>{{ currMenuFullPath }}</template>
             <el-form ref="menuEditForm" size="small" :model="menuEditFormModel" :rules="ruleMenuEditForm"
-                     label-width="auto"
+                     label-width="undefined"
                      v-loading="treeLoading" @submit.native.prevent>
               <el-row>
                 <el-col :sm="{ span: 12 }">
@@ -183,7 +183,7 @@
             <template #header>{{ currModuleFuncFullPath }}</template>
             <el-form ref="moduleFuncEditForm" size="small" :model="moduleFuncEditFormModel"
                      :rules="ruleModuleFuncEditForm"
-                     label-width="auto" v-loading="treeLoading" @submit.native.prevent>
+                     label-width="undefined" v-loading="treeLoading" @submit.native.prevent>
               <el-row>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.name')" prop="name">

@@ -38,7 +38,7 @@
     <el-col :lg="{ span: 15 }" v-show="currOrg.id&&currOrg.id!==''" style="margin-bottom: 16px;">
       <el-card>
         <template #header>{{ currOrgFullPath }}</template>
-        <el-form ref="editForm" size="small" :model="editFormModel" :rules="ruleEditForm" label-width="auto"
+        <el-form ref="editForm" size="small" :model="editFormModel" :rules="ruleEditForm" label-width="undefined"
                  v-loading="treeLoading" @submit.native.prevent>
           <el-row>
             <el-col :sm="{ span: 12 }">

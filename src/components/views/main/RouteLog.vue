@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchFormModel" label-width="auto" :inline="true" size="small"
+    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.remoteIp')" prop="remoteIp">
         <el-input v-model="searchFormModel.remoteIp" :disabled="modal_loading"
@@ -206,7 +206,7 @@
 <script>
 import moment from 'moment'
 import {nextTick, ref} from "vue";
-import {isMobile} from "@/libs/tools";
+import {isMobileDevice} from "@/libs/tools";
 
 export default {
   name: 'routeLog',
@@ -247,7 +247,7 @@ export default {
   },
   computed: {
     isMobile() {
-      return isMobile()
+      return isMobileDevice()
     },
     tableHeight() {
       const minHeight = 300

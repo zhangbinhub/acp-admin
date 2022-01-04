@@ -13,7 +13,7 @@ import '@/assets/styles/layout.less'
 import '@/assets/styles/transition.less'
 import * as echarts from 'echarts'
 import App from '@/App.vue'
-import {isMobile} from "@/libs/tools";
+import {isMobileDevice} from "@/libs/tools";
 import '@/mock'
 
 Nprogress.configure({showSpinner: false})
@@ -31,7 +31,7 @@ const autoWidth = () => {
 }
 const autoHeight = () => {
   let mainHeight = document.documentElement.clientHeight
-  if (isMobile()) {
+  if (isMobileDevice()) {
     mainHeight = mainHeight - 60 - 59 - 30
   } else {
     mainHeight = mainHeight - 60 - 33 - 30

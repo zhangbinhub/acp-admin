@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchFormModel" label-width="auto" :inline="true" size="small"
+    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input v-model="searchFormModel.name" :disabled="modal_loading"
@@ -130,7 +130,7 @@
                    :total="searchFormModel.totalRows">
     </el-pagination>
     <el-dialog :fullscreen="isMobile" v-model="editModal" :title="$t('forms.info')">
-      <el-form ref="editForm" :model="editFormModel" :rules="ruleAddForm" label-width="auto" size="small"
+      <el-form ref="editForm" :model="editFormModel" :rules="ruleAddForm" label-width="undefined" size="small"
                v-loading="modal_loading" @submit.native.prevent>
         <el-form-item :label="$t('forms.name')" prop="name" style="width: 100%">
           <el-input v-model="editFormModel.name" :disabled="modal_loading"
@@ -221,7 +221,7 @@
 <script>
 import moment from 'moment'
 import {nextTick, ref} from "vue";
-import {isMobile} from "@/libs/tools";
+import {isMobileDevice} from "@/libs/tools";
 
 export default {
   name: 'deploy',
@@ -265,7 +265,7 @@ export default {
   },
   computed: {
     isMobile() {
-      return isMobile()
+      return isMobileDevice()
     },
     mainHeight() {
       return this.$store.state.app.mainHeight - 300

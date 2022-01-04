@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchFormModel" label-width="auto" :inline="true" size="small"
+    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.processKey')" prop="processDefinitionKey">
         <el-input v-model="searchFormModel.processDefinitionKey" :disabled="modal_loading" style="width: 200px"
@@ -130,7 +130,7 @@
               <el-icon-info-filled/>
             </el-icon>
           </template>
-          <el-form size="small" :model="currObj" label-width="auto" :inline="true"
+          <el-form size="small" :model="currObj" label-width="undefined" :inline="true"
                    @submit.native.prevent>
             <el-row :gutter="10">
               <el-col :lg="{span: 8}">
@@ -196,7 +196,7 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-form size="small" :model="currObj" label-width="auto"
+          <el-form size="small" :model="currObj" label-width="undefined"
                    @submit.native.prevent>
             <el-row :gutter="10">
               <el-col :lg="{span: 24}">
@@ -206,7 +206,7 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-form size="small" :model="currObj" label-width="auto"
+          <el-form size="small" :model="currObj" label-width="undefined"
                    v-if="currObj.deleteReason&&currObj.deleteReason!==''"
                    @submit.native.prevent>
             <el-row :gutter="10">
@@ -380,7 +380,7 @@
       <el-backtop :visibility-height="10" target=".process-dialog"/>
     </el-dialog>
     <el-dialog custom-class="task-dialog" v-model="taskModal" :title="$t('forms.info')" :fullscreen="true">
-      <el-form size="small" :model="currTaskObj" label-width="auto" :inline="true"
+      <el-form size="small" :model="currTaskObj" label-width="undefined" :inline="true"
                @submit.native.prevent>
         <el-row :gutter="10">
           <el-col :lg="{span: 8}">
@@ -590,7 +590,7 @@
   </el-card>
 </template>
 <script>
-import {isMobile} from "@/libs/tools"
+import {isMobileDevice} from "@/libs/tools"
 import moment from 'moment'
 import {nextTick, ref} from "vue";
 
@@ -639,7 +639,7 @@ export default {
   },
   computed: {
     isMobile() {
-      return isMobile()
+      return isMobileDevice()
     },
     tableHeight() {
       const minHeight = 300

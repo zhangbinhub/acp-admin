@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchFormModel" label-width="auto" :inline="true" @submit.native.prevent
+    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" @submit.native.prevent
              size="small">
       <el-form-item :label="$t('forms.processKey')" prop="value">
         <el-input v-model="searchFormModel.processKey" :disabled="modal_loading"
@@ -119,7 +119,7 @@
     </el-pagination>
     <el-dialog :fullscreen="isMobile" v-model="editModal" :title="$t('forms.buttons.add')"
                :close-on-click-modal="false">
-      <el-form ref="editForm" :model="editFormModel" label-width="auto" size="small"
+      <el-form ref="editForm" :model="editFormModel" label-width="undefined" size="small"
                v-loading="modal_loading" @submit.native.prevent style="padding-right: 25px;">
         <div v-if="this.action===1">
           <el-form-item :label="$t('forms.processKey')+':'" prop="processKey">
@@ -206,7 +206,7 @@
 </template>
 <script>
 import moment from 'moment'
-import {copy, isMobile} from '@/libs/tools'
+import {copy, isMobileDevice} from '@/libs/tools'
 import {nextTick, ref} from "vue";
 
 export default {
@@ -252,7 +252,7 @@ export default {
   },
   computed: {
     isMobile() {
-      return isMobile()
+      return isMobileDevice()
     },
     viewDiagram() {
       return this.diagramData

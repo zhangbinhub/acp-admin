@@ -69,7 +69,7 @@ import routeLogButton from './route-log-button'
 import deployButton from './deploy-button'
 import './Home.less'
 import {
-  getOpenedNamesByActiveName, isMobile,
+  getOpenedNamesByActiveName, isMobileDevice,
   updateTagNavList
 } from '@/libs/tools'
 
@@ -131,7 +131,7 @@ export default {
       return this.$store.state.app.isMini
     },
     isMobile() {
-      return isMobile()
+      return isMobileDevice()
     },
     minLogo() {
       return require('@/assets/images/logo/logo.png')

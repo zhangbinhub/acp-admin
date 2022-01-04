@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchFormModel" label-width="auto" :inline="true" size="small"
+    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.routeId')" prop="routeId">
         <el-input v-model="searchFormModel.routeId" :disabled="modal_loading"
@@ -99,7 +99,7 @@
                    :total="searchFormModel.totalRows">
     </el-pagination>
     <el-dialog v-model="editModal" :title="$t('forms.info')" :fullscreen="true">
-      <el-form ref="editForm" :model="editFormModel" :rules="ruleAddForm" label-width="auto" size="small"
+      <el-form ref="editForm" :model="editFormModel" :rules="ruleAddForm" label-width="undefined" size="small"
                style="padding-right: 25px;" v-loading="modal_loading" @submit.native.prevent>
         <el-row>
           <el-col :lg="8">
@@ -182,7 +182,7 @@
 <script>
 import vueJsonEditor from 'vue-json-editor'
 import {nextTick, ref} from "vue";
-import {isMobile} from "@/libs/tools";
+import {isMobileDevice} from "@/libs/tools";
 
 export default {
   name: 'routeConfig',
@@ -236,7 +236,7 @@ export default {
   },
   computed: {
     isMobile() {
-      return isMobile()
+      return isMobileDevice()
     },
     tableHeight() {
       const minHeight = 300

@@ -1,24 +1,24 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="small"
+    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.remoteIp')" prop="remoteIp">
-        <el-input v-model="searchForm.remoteIp" :disabled="modal_loading"
+        <el-input v-model="searchFormModel.remoteIp" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.remoteIp')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.clientName')" prop="clientName">
-        <el-input v-model="searchForm.clientName" :disabled="modal_loading"
+        <el-input v-model="searchFormModel.clientName" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.clientName')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.userName')" prop="userName">
-        <el-input v-model="searchForm.userName" :disabled="modal_loading"
+        <el-input v-model="searchFormModel.userName" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.userName')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.infoType')" prop="history">
-        <el-select v-model="searchForm.history" :disabled="modal_loading" value=""
+        <el-select v-model="searchFormModel.history" :disabled="modal_loading" value=""
                    style="width:100px">
           <el-option v-for="item in infoTypeList" :value="item.value" :label="item.label"
                      :key="'search_select_'+item.value">
@@ -26,7 +26,7 @@
         </el-select>
       </el-form-item>
       <el-form-item :label="$t('forms.startDate')" prop="startTime">
-        <el-date-picker v-model="searchForm.startTime" :disabled="modal_loading" type="daterange"
+        <el-date-picker v-model="searchFormModel.startTime" :disabled="modal_loading" type="daterange"
                         :shortcuts="pickerShortcuts" :class="{mobile:isMobile}"/>
       </el-form-item>
       <el-form-item style="float: right">
@@ -40,7 +40,7 @@
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchFormModel.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               @selection-change="handleSelect" @sort-change="handleSortChange"
@@ -106,11 +106,11 @@
       </el-table-column>
     </el-table>
     <el-pagination @size-change="handlePageSizeSearch"
-                   v-model:current-page="searchForm.currPage"
-                   :page-sizes="searchForm.pageSizeArray"
-                   v-model:page-size="searchForm.pageSize"
+                   v-model:current-page="searchFormModel.currPage"
+                   :page-sizes="searchFormModel.pageSizeArray"
+                   v-model:page-size="searchFormModel.pageSize"
                    :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
-                   :total="searchForm.totalRows">
+                   :total="searchFormModel.totalRows">
     </el-pagination>
     <el-dialog :fullscreen="isMobile" v-model="editModal" :title="$t('forms.info')" width="600px">
       <el-descriptions :column="2" size="small" border>
@@ -176,7 +176,7 @@
 <script>
 import moment from 'moment'
 import {nextTick, ref} from "vue";
-import {isMobile} from "@/libs/tools";
+import {isMobileDevice} from "@/libs/tools";
 
 export default {
   name: 'loginLog',
@@ -189,7 +189,7 @@ export default {
           return date.getTime() > now.getTime()
         }
       },
-      searchForm: {
+      searchFormModel: {
         remoteIp: '',
         clientName: '',
         userName: '',
@@ -213,7 +213,7 @@ export default {
   },
   computed: {
     isMobile() {
-      return isMobile()
+      return isMobileDevice()
     },
     tableHeight() {
       const minHeight = 300
@@ -280,34 +280,34 @@ export default {
       this.editModal = false
     },
     handlePageSizeSearch(size) {
-      this.searchForm.pageSize = size
+      this.searchFormModel.pageSize = size
       this.handleSearch()
     },
     handleSearch() {
       let searchParam = {
-        remoteIp: this.searchForm.remoteIp,
-        path: this.searchForm.path,
-        serverId: this.searchForm.serverId,
-        clientName: this.searchForm.clientName,
-        userName: this.searchForm.userName,
-        history: this.searchForm.history === 'true',
-        startTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[0].getTime() : null,
-        endTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[1].getTime() : null,
+        remoteIp: this.searchFormModel.remoteIp,
+        path: this.searchFormModel.path,
+        serverId: this.searchFormModel.serverId,
+        clientName: this.searchFormModel.clientName,
+        userName: this.searchFormModel.userName,
+        history: this.searchFormModel.history === 'true',
+        startTime: this.searchFormModel.startTime && this.searchFormModel.startTime.length === 2 ? this.searchFormModel.startTime[0].getTime() : null,
+        endTime: this.searchFormModel.startTime && this.searchFormModel.startTime.length === 2 ? this.searchFormModel.startTime[1].getTime() : null,
         queryParam: {
-          currPage: this.searchForm.currPage,
-          pageSize: this.searchForm.pageSize
+          currPage: this.searchFormModel.currPage,
+          pageSize: this.searchFormModel.pageSize
         }
       }
-      if (this.searchForm.orderParam.order !== 'normal') {
-        searchParam.queryParam.orderName = this.searchForm.orderParam.prop
-        searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
+      if (this.searchFormModel.orderParam.order !== 'normal') {
+        searchParam.queryParam.orderName = this.searchFormModel.orderParam.prop
+        searchParam.queryParam.orderCommand = this.searchFormModel.orderParam.order
       }
       this.modal_loading = true
       this.$api.request.log.queryLoginLog(searchParam).then((res) => {
         this.modal_loading = false
         if (res) {
           this.selectedData = []
-          this.searchForm.totalRows = res.data.totalElements
+          this.searchFormModel.totalRows = res.data.totalElements
           this.searchData = res.data.content
           nextTick(() => {
             this.table.doLayout()
@@ -320,12 +320,12 @@ export default {
       })
     },
     handleSortChange(param) {
-      this.searchForm.orderParam.prop = param.prop
-      this.searchForm.orderParam.order = param.order
+      this.searchFormModel.orderParam.prop = param.prop
+      this.searchFormModel.orderParam.order = param.order
       this.handleSearch()
     },
     handleSearchReset() {
-      this.searchForm.resetFields()
+      this.searchFormModel.resetFields()
     },
     handleSelect(selection) {
       this.selectedData = selection

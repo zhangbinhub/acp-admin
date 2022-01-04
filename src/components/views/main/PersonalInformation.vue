@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="infoForm" :model="formValidate" :rules="ruleValidate" label-width="auto"
+    <el-form ref="infoForm" :model="formValidate" :rules="ruleValidate" label-width="undefined"
              @submit.native.prevent>
       <el-form-item prop="avatar">
         <el-avatar style="cursor: pointer" :src="formValidate.avatar" :size="100"
