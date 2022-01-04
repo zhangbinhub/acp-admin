@@ -1,24 +1,24 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="small"
+    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.processKey')" prop="processDefinitionKey">
-        <el-input v-model="searchForm.processDefinitionKey" :disabled="modal_loading" style="width: 200px"
+        <el-input v-model="searchFormModel.processDefinitionKey" :disabled="modal_loading" style="width: 200px"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.processKey')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.processInstanceId')" prop="processInstanceId">
-        <el-input v-model="searchForm.processInstanceId" :disabled="modal_loading" style="width: 200px"
+        <el-input v-model="searchFormModel.processInstanceId" :disabled="modal_loading" style="width: 200px"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.processInstanceId')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.processBusinessKey')" prop="processBusinessKey">
-        <el-input v-model="searchForm.processBusinessKey" :disabled="modal_loading" style="width: 200px"
+        <el-input v-model="searchFormModel.processBusinessKey" :disabled="modal_loading" style="width: 200px"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.processBusinessKey')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.flowStatus')" prop="history">
-        <el-select v-model="searchForm.history" :disabled="modal_loading" value=""
+        <el-select v-model="searchFormModel.history" :disabled="modal_loading" value=""
                    style="width:100px">
           <el-option v-for="item in infoTypeList" :value="item.value" :label="item.label"
                      :key="'search_select_'+item.value">
@@ -26,21 +26,22 @@
         </el-select>
       </el-form-item>
       <el-form-item :label="$t('forms.startDate')" prop="startTime">
-        <el-date-picker v-model="searchForm.startTime" :disabled="modal_loading" type="daterange"
-                        :shortcuts="pickerShortcuts" :class="{mobile:isMobile}"/>
+        <el-date-picker v-model="searchFormModel.startTime" :disabled="modal_loading" type="daterange"
+                        :disabled-date="disabledDate" :shortcuts="pickerOptions"
+                        :class="{mobile:isMobile}"/>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group>
-          <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
+          <el-button :loading="modal_loading" @click="handleSearch" type="primary">
             {{ $t('forms.buttons.search') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
+          <el-button :loading="modal_loading" @click="handleSearchReset" type="primary">
             {{ $t('forms.buttons.reset') }}
           </el-button>
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchFormModel.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               header-cell-class-name="query-table-header">
@@ -105,19 +106,22 @@
         align="center"
         width="80">
         <template #default="scope">
-          <el-button type="text" @click="gotoFlowView(scope.row)"
-                     icon="el-icon-search"/>
+          <el-button type="text" @click="gotoFlowView(scope.row)">
+            <el-icon size="15">
+              <el-icon-search/>
+            </el-icon>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-pagination @size-change="handlePageSizeSearch"
-                   v-model:current-page="searchForm.currPage"
-                   :page-sizes="searchForm.pageSizeArray"
-                   v-model:page-size="searchForm.pageSize"
+                   v-model:current-page="searchFormModel.currPage"
+                   :page-sizes="searchFormModel.pageSizeArray"
+                   v-model:page-size="searchFormModel.pageSize"
                    :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
-                   :total="searchForm.totalRows">
+                   :total="searchFormModel.totalRows">
     </el-pagination>
-    <el-dialog v-model="viewModal" :title="$t('forms.info')" :fullscreen="true">
+    <el-dialog custom-class="process-dialog" v-model="viewModal" :title="$t('forms.info')" :fullscreen="true">
       <div>
         <el-card shadow="hover">
           <template #header>
@@ -126,7 +130,7 @@
               <el-icon-info-filled/>
             </el-icon>
           </template>
-          <el-form size="small" :model="currObj" label-width="auto" :inline="true"
+          <el-form size="small" :model="currObj" label-width="undefined" :inline="true"
                    @submit.native.prevent>
             <el-row :gutter="10">
               <el-col :lg="{span: 8}">
@@ -192,7 +196,7 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-form size="small" :model="currObj" label-width="auto"
+          <el-form size="small" :model="currObj" label-width="undefined"
                    @submit.native.prevent>
             <el-row :gutter="10">
               <el-col :lg="{span: 24}">
@@ -202,7 +206,7 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-form size="small" :model="currObj" label-width="auto"
+          <el-form size="small" :model="currObj" label-width="undefined"
                    v-if="currObj.deleteReason&&currObj.deleteReason!==''"
                    @submit.native.prevent>
             <el-row :gutter="10">
@@ -234,20 +238,15 @@
                     </el-table-column>
                     <el-table-column
                       prop="name"
-                      width="300"
-                      :label="$t('forms.name')"
-                      :show-overflow-tooltip="true">
+                      :label="$t('forms.name')">
                     </el-table-column>
                     <el-table-column
                       prop="type"
-                      width="200"
-                      :label="$t('forms.type')"
-                      :show-overflow-tooltip="true">
+                      :label="$t('forms.type')">
                     </el-table-column>
                     <el-table-column
                       prop="value"
-                      :label="$t('forms.value')"
-                      :show-overflow-tooltip="true">
+                      :label="$t('forms.value')">
                     </el-table-column>
                   </el-table>
                 </el-collapse-item>
@@ -315,30 +314,274 @@
             </el-table-column>
           </el-table>
         </el-card>
+        <el-card shadow="hover" style="margin-top: 10px">
+          <template #header>
+            <span>流程任务</span>
+            <el-icon color="#409EFF" style="margin-left: 5px">
+              <el-icon-info-filled/>
+            </el-icon>
+          </template>
+          <el-table size="small" :stripe="true" :data="processTaskList">
+            <el-table-column
+              prop="name"
+              :label="'任务名称'">
+            </el-table-column>
+            <el-table-column
+              prop="unClaimed"
+              :label="'是否被认领'">
+              <template #default="scope">
+                <span>{{ scope.row.unClaimed ? '否' : '是' }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="delegated"
+              :label="'任务是否已委派'">
+              <template #default="scope">
+                <span>{{ scope.row.delegated ? '是' : '否' }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              :label="$t('forms.processUser')">
+              <template #default="scope">
+                <span>{{ scope.row.user.name ? scope.row.user.name + '（' + scope.row.user.loginNo + '）' : '' }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="createTime"
+              :label="'创建时间'">
+              <template #default="scope">
+                <span>{{ dateTimeFormat(scope.row.createTime) }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="claimTime"
+              :label="'领取时间'">
+              <template #default="scope">
+                <span>{{ dateTimeFormat(scope.row.claimTime) }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              :fixed="isMobile?false:'right'"
+              prop="action"
+              :label="$t('forms.action')"
+              align="center"
+              width="80">
+              <template #default="scope">
+                <el-button type="text" @click="gotoTaskView(scope.row)">
+                  <el-icon size="15">
+                    <el-icon-search/>
+                  </el-icon>
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-card>
       </div>
+      <el-backtop :visibility-height="10" target=".process-dialog"/>
+    </el-dialog>
+    <el-dialog custom-class="task-dialog" v-model="taskModal" :title="$t('forms.info')" :fullscreen="true">
+      <el-form size="small" :model="currTaskObj" label-width="undefined" :inline="true"
+               @submit.native.prevent>
+        <el-row :gutter="10">
+          <el-col :lg="{span: 8}">
+            <el-form-item :label="'任务ID:'" prop="taskId">
+              <span>{{ currTaskObj.taskId }}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :lg="{span: 8}">
+            <el-form-item :label="'任务名称:'" prop="businessKey">
+              <span>{{ currTaskObj.name }}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :lg="{span: 8}">
+            <el-form-item :label="'任务定义键:'" prop="taskDefinitionKey">
+              <span>{{ currTaskObj.taskDefinitionKey }}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="10">
+          <el-col :lg="{span: 8}">
+            <el-form-item :label="'父任务id:'" prop="parentTaskId">
+              <span>{{ currTaskObj.parentTaskId }}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :lg="{span: 8}">
+            <el-form-item :label="'执行实例id:'" prop="executionId">
+              <span>{{ currTaskObj.executionId }}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :lg="{span: 8}">
+            <el-form-item :label="'是否被认领:'" prop="unClaimed">
+              <span>{{ currTaskObj.unClaimed ? '否' : '是' }}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :lg="{span: 8}">
+            <el-form-item :label="'是否已委派:'" prop="delegated">
+              <span>{{ currTaskObj.delegated ? '是' : '否' }}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :lg="{span: 8}">
+            <el-form-item :label="'任务拥有者:'" prop="taskOwnerUser">
+              <span>{{
+                  currTaskObj.taskOwnerUser.id ? currTaskObj.taskOwnerUser.name + '（' + currTaskObj.taskOwnerUser.loginNo + '）' : ''
+                }}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :lg="{span: 8}">
+            <el-form-item :label="$t('forms.currentUser')+':'" prop="user">
+              <span>{{
+                  currTaskObj.user && currTaskObj.user.id ? currTaskObj.user.name + '（' + currTaskObj.user.loginNo + '）' : ''
+                }}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :lg="{span: 8}">
+            <el-form-item :label="'创建时间:'" prop="createTime">
+              <span>{{ dateTimeFormat(currTaskObj.createTime) }}</span>
+            </el-form-item>
+          </el-col>
+          <el-col :lg="{span: 8}">
+            <el-form-item :label="'领取时间:'" prop="claimTime">
+              <span>{{ dateTimeFormat(currTaskObj.claimTime) }}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <el-row>
+        <el-col :lg="{span:24}">
+          <el-collapse>
+            <el-collapse-item>
+              <template #title>
+                <span>待办人列表</span>
+                <el-icon color="#409EFF" style="margin-left: 5px">
+                  <el-icon-info-filled/>
+                </el-icon>
+              </template>
+              <el-table size="small" :stripe="true"
+                        :data="currTaskObj.pendingUserList">
+                <el-table-column
+                  type="index"
+                  align="center"
+                  width="50">
+                </el-table-column>
+                <el-table-column
+                  prop="id"
+                  :label="'用户ID'">
+                </el-table-column>
+                <el-table-column
+                  prop="name"
+                  :label="'用户姓名'">
+                </el-table-column>
+                <el-table-column
+                  prop="loginNo"
+                  :label="'登录账号'">
+                </el-table-column>
+              </el-table>
+            </el-collapse-item>
+          </el-collapse>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :lg="{span:24}">
+          <el-collapse>
+            <el-collapse-item>
+              <template #title>
+                <span>自定义参数</span>
+                <el-icon color="#409EFF" style="margin-left: 5px">
+                  <el-icon-info-filled/>
+                </el-icon>
+              </template>
+              <el-table size="small" :stripe="true"
+                        :data="taskLocalParams">
+                <el-table-column
+                  type="index"
+                  align="center"
+                  width="50">
+                </el-table-column>
+                <el-table-column
+                  prop="name"
+                  :label="$t('forms.name')">
+                </el-table-column>
+                <el-table-column
+                  prop="type"
+                  :label="$t('forms.type')">
+                </el-table-column>
+                <el-table-column
+                  prop="value"
+                  :label="$t('forms.value')">
+                </el-table-column>
+              </el-table>
+            </el-collapse-item>
+          </el-collapse>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :lg="{span:24}">
+          <el-collapse>
+            <el-collapse-item>
+              <template #title>
+                <span>自定义属性</span>
+                <el-icon color="#409EFF" style="margin-left: 5px">
+                  <el-icon-info-filled/>
+                </el-icon>
+              </template>
+              <el-table size="small" :stripe="true"
+                        :data="taskProperties">
+                <el-table-column
+                  type="index"
+                  align="center"
+                  width="50">
+                </el-table-column>
+                <el-table-column
+                  prop="name"
+                  :label="$t('forms.name')">
+                </el-table-column>
+                <el-table-column
+                  prop="type"
+                  :label="$t('forms.type')">
+                </el-table-column>
+                <el-table-column
+                  prop="value"
+                  :label="$t('forms.value')">
+                </el-table-column>
+              </el-table>
+            </el-collapse-item>
+          </el-collapse>
+        </el-col>
+      </el-row>
       <template #footer>
-        <div v-if="!currObj.finished" style="text-align: left">
-          <el-button type="danger" :loading="modal_loading" @click="termination()">
-            {{ $t('forms.buttons.delete') }}
+        <div style="text-align: left">
+          <el-button type="primary" :loading="modal_loading" v-if="currTaskObj.unClaimed" @click="processTask(1)">
+            分配任务
+          </el-button>
+          <el-button type="primary" :loading="modal_loading" v-else @click="processTask(2)">
+            任务转办
           </el-button>
         </div>
       </template>
-      <el-backtop :visibility-height="10" target=".el-dialog"/>
+      <el-backtop :visibility-height="10" target=".task-dialog"/>
     </el-dialog>
-    <el-dialog :fullscreen="isMobile" v-model="deleteModal" :title="$t('forms.info')" :close-on-click-modal="false"
-               append-to-body>
-      <el-form v-loading="modal_loading" @submit.native.prevent>
-        <el-form-item :label="$t('forms.deleteReason')" required>
-          <el-input v-model="deleteReason" type="textarea" :rows="3"
-                    :placeholder="$t('forms.pleaseEnter')+$t('forms.deleteReason')"/>
+    <el-dialog :fullscreen="isMobile" v-model="selectUserModal" :title="'任务处理'" :close-on-click-modal="false">
+      <el-form ref="editForm" v-loading="modal_loading" :model="editFormModel" @submit.native.prevent>
+        <el-form-item label="选择用户" required prop="selectUserResult">
+          <el-select v-model="editFormModel.selectUserResult" filterable
+                     remote clearable value-key="id" placeholder="请输入用户姓名或工号"
+                     :loading="modal_loading" :remote-method="remoteSelectUser" style="width: 100%">
+            <el-option v-for="item in userOptions"
+                       :key="'select_user_'+item.id"
+                       :label="item.name+'('+item.loginNo+')'"
+                       :value="item"/>
+          </el-select>
         </el-form-item>
       </el-form>
       <template #footer>
         <div style="text-align: center">
-          <el-button type="info" :loading="modal_loading" @click="doCancel()">
+          <el-button type="info" :loading="modal_loading" @click="doCancel">
             {{ $t('forms.buttons.cancel') }}
           </el-button>
-          <el-button type="primary" :loading="modal_loading" @click="doTermination()">
+          <el-button type="warning" :loading="modal_loading" @click="doReset">
+            {{ $t('forms.buttons.reset') }}
+          </el-button>
+          <el-button type="primary" :loading="modal_loading" @click="doProcessTask">
             {{ $t('forms.buttons.submit') }}
           </el-button>
         </div>
@@ -347,15 +590,15 @@
   </el-card>
 </template>
 <script>
+import {isMobileDevice} from "@/libs/tools"
 import moment from 'moment'
-import {nextTick} from "vue";
-import {isMobile} from "@/libs/tools";
+import {nextTick, ref} from "vue";
 
 export default {
   name: 'workflowManager',
   data() {
     return {
-      searchForm: {
+      searchFormModel: {
         processDefinitionKey: '',
         processInstanceId: '',
         processBusinessKey: '',
@@ -371,19 +614,32 @@ export default {
         pageSizeArray: [10, 20, 30, 40]
       },
       modal_loading: false,
-      deleteModal: false,
       viewModal: false,
+      taskModal: false,
+      selectUserModal: false,
+      processType: 1,
       currObj: {},
+      currTaskObj: {
+        user: {},
+        taskOwnerUser: {},
+        localParams: {}
+      },
       diagramData: '',
-      deleteReason: '',
       processActivityList: [],
+      processTaskList: [],
       searchData: [],
-      params: []
+      params: [],
+      taskLocalParams: [],
+      taskProperties: [],
+      userOptions: [],
+      editFormModel: {
+        selectUserResult: ''
+      }
     }
   },
   computed: {
     isMobile() {
-      return isMobile()
+      return isMobileDevice()
     },
     tableHeight() {
       const minHeight = 300
@@ -400,7 +656,7 @@ export default {
         {value: 'true', label: this.$i18n.t('forms.ended')}
       ]
     },
-    pickerShortcuts() {
+    pickerOptions() {
       return [{
         text: this.$i18n.t('forms.buttons.lastWeek'),
         value: (() => {
@@ -441,13 +697,23 @@ export default {
     'searchForm.currPage'() {
       this.handleSearch()
     },
-    currObj(processInstance) {
-      this.doInitData(processInstance.processInstanceId)
+    'currObj.processInstanceId'(processInstanceId) {
+      this.doInitData(processInstanceId)
+    },
+    viewModal(isShow) {
+      if (!isShow) {
+        this.handleSearch()
+      }
     }
   },
   methods: {
     dateTimeFormat(time) {
       return time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : ''
+    },
+    disabledDate(date) {
+      const now = new Date()
+      now.setHours(0, 0, 0, 0)
+      return date.getTime() > now.getTime()
     },
     statusText(isFinished) {
       return this.infoTypeList.filter((item) => {
@@ -455,47 +721,47 @@ export default {
       })[0].label
     },
     handlePageSizeSearch(size) {
-      this.searchForm.pageSize = size
+      this.searchFormModel.pageSize = size
       this.handleSearch()
     },
     handleSortChange(param) {
-      this.searchForm.orderParam.prop = param.prop
-      this.searchForm.orderParam.order = param.order
+      this.searchFormModel.orderParam.prop = param.prop
+      this.searchFormModel.orderParam.order = param.order
       this.handleSearch()
     },
-    handleSearchReset(name) {
-      this.$refs[name].resetFields()
+    handleSearchReset() {
+      this.searchForm.resetFields()
     },
     handleSearch() {
       let searchParam = {
         processDefinitionKeys: [],
         processInstanceIds: [],
-        processBusinessKey: this.searchForm.processBusinessKey,
-        startTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[0].getTime() : null,
-        endTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[1].getTime() + (24 * 60 * 60 * 1000) : null,
+        processBusinessKey: this.searchFormModel.processBusinessKey,
+        startTime: this.searchFormModel.startTime && this.searchFormModel.startTime.length === 2 ? this.searchFormModel.startTime[0].getTime() : null,
+        endTime: this.searchFormModel.startTime && this.searchFormModel.startTime.length === 2 ? this.searchFormModel.startTime[1].getTime() + (24 * 60 * 60 * 1000) : null,
         queryParam: {
-          currPage: this.searchForm.currPage,
-          pageSize: this.searchForm.pageSize
+          currPage: this.searchFormModel.currPage,
+          pageSize: this.searchFormModel.pageSize
         }
       }
-      if (this.searchForm.processDefinitionKey && this.searchForm.processDefinitionKey !== '') {
-        searchParam.processDefinitionKeys.push(this.searchForm.processDefinitionKey)
+      if (this.searchFormModel.processDefinitionKey && this.searchFormModel.processDefinitionKey !== '') {
+        searchParam.processDefinitionKeys.push(this.searchFormModel.processDefinitionKey)
       }
-      if (this.searchForm.processInstanceId && this.searchForm.processInstanceId !== '') {
-        searchParam.processInstanceIds.push(this.searchForm.processInstanceId)
+      if (this.searchFormModel.processInstanceId && this.searchFormModel.processInstanceId !== '') {
+        searchParam.processInstanceIds.push(this.searchFormModel.processInstanceId)
       }
-      if (this.searchForm.orderParam.order !== 'normal') {
-        searchParam.queryParam.orderName = this.searchForm.orderParam.prop
-        searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
+      if (this.searchFormModel.orderParam.order !== 'normal') {
+        searchParam.queryParam.orderName = this.searchFormModel.orderParam.prop
+        searchParam.queryParam.orderCommand = this.searchFormModel.orderParam.order
       }
       this.modal_loading = true
-      this.$api.request.workFlow.queryInstance(this.searchForm.history === 'true', searchParam).then((res) => {
+      this.$api.request.workFlow.queryInstance(this.searchFormModel.history === 'true', searchParam).then((res) => {
         this.modal_loading = false
         if (res) {
-          this.searchForm.totalRows = res.data.totalElements
+          this.searchFormModel.totalRows = res.data.totalElements
           this.searchData = res.data.content
           nextTick(() => {
-            this.$refs['table'].doLayout()
+            this.table.doLayout()
           })
         }
       }).catch(() => {
@@ -507,7 +773,37 @@ export default {
       this.viewModal = true
       this.currObj = processInstance
     },
+    gotoTaskView(processTask) {
+      this.taskModal = true
+      this.currTaskObj = processTask
+      this.taskLocalParams = []
+      Object.keys(this.currTaskObj.localParams).forEach((item) => {
+        const value = this.currTaskObj.localParams[item]
+        this.taskLocalParams.push({
+          name: item,
+          type: typeof value,
+          value: String(value)
+        })
+      })
+      this.taskProperties = []
+      Object.keys(this.currTaskObj.properties).forEach((item) => {
+        const value = this.currTaskObj.properties[item]
+        this.taskProperties.push({
+          name: item,
+          type: typeof value,
+          value: String(value)
+        })
+      })
+    },
     doInitData(processInstanceId) {
+      // 获取流程实例
+      this.$api.request.workFlow.getInstance(processInstanceId).then((res) => {
+        if (res) {
+          this.currObj = res.data
+        }
+      }).catch(() => {
+        this.$api.errorProcess('更新流程实例失败！')
+      })
       // 获取流程图
       const currObj = this
       this.$api.request.workFlow.diagram(processInstanceId).then((image) => {
@@ -542,35 +838,83 @@ export default {
           value: String(value)
         })
       })
+      // 获取流程任务列表
+      this.$api.request.workFlow.getTaskList(processInstanceId).then((res) => {
+        if (res) {
+          this.processTaskList = res.data
+        }
+      }).catch(() => {
+        this.processTaskList = []
+      })
     },
-    doCancel() {
-      this.deleteModal = false
+    processTask(processType) {
+      this.selectUserModal = true
+      this.processType = processType
     },
-    termination() {
-      this.deleteModal = true
-    },
-    doTermination() {
-      if (!this.deleteReason && this.deleteReason === '') {
-        this.$message.error(this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.deleteReason'))
+    doProcessTask() {
+      if (!this.editFormModel.selectUserResult || !this.editFormModel.selectUserResult.id) {
+        this.$alert('请选择用户！', this.$i18n.t('messages.validateFailed'), {
+          type: 'error',
+          callback: () => {
+          }
+        })
         return
       }
-      this.$confirm(this.$i18n.t('messages.deleteDataConfirm'), this.$i18n.t('dialog.confirm'), {
-        type: 'warning'
-      }).then(() => {
-        this.modal_loading = true
-        this.$api.request.workFlow.termination(this.currObj.processInstanceId, this.deleteReason).then((res) => {
-          this.modal_loading = false
+      switch (this.processType) {
+        case 1:
+          this.$confirm('确认分配任务？', this.$i18n.t('dialog.confirm') + '', {
+            type: 'warning'
+          }).then(() => {
+            this.modal_loading = true
+            this.$api.request.workFlow.distributeTask(this.currTaskObj.taskId, this.editFormModel.selectUserResult.id).then((res) => {
+              this.modal_loading = false
+              if (res) {
+                this.$message.success(this.$i18n.t('messages.requestSuccess') + '')
+                this.selectUserModal = false
+                this.taskModal = false
+                this.doInitData(this.currObj.processInstanceId)
+              }
+            }).catch(() => {
+              this.modal_loading = false
+            })
+          }).catch(() => {
+          })
+          break
+        case 2:
+          this.$confirm('确认转办任务？', this.$i18n.t('dialog.confirm') + '', {
+            type: 'warning'
+          }).then(() => {
+            this.modal_loading = true
+            this.$api.request.workFlow.transferTask(this.currTaskObj.taskId, this.editFormModel.selectUserResult.id).then((res) => {
+              this.modal_loading = false
+              if (res) {
+                this.$message.success(this.$i18n.t('messages.requestSuccess') + '')
+                this.selectUserModal = false
+                this.taskModal = false
+                this.doInitData(this.currObj.processInstanceId)
+              }
+            }).catch(() => {
+              this.modal_loading = false
+            })
+          }).catch(() => {
+          })
+          break
+      }
+    },
+    remoteSelectUser(query) {
+      if (query && query !== '') {
+        this.$api.request.user.getUserList(query).then((res) => {
           if (res) {
-            this.$message.success(this.$i18n.t('messages.requestSuccess') + '')
-            this.deleteModal = false
-            this.viewModal = false
-            this.handleSearch()
+            this.userOptions = res.data
           }
-        }).catch(() => {
-          this.modal_loading = false
         })
-      }).catch(() => {
-      })
+      }
+    },
+    doCancel() {
+      this.selectUserModal = false
+    },
+    doReset() {
+      this.editForm.resetFields()
     }
   },
   mounted() {
@@ -578,8 +922,14 @@ export default {
   },
   activated() {
     nextTick(() => {
-      this.$refs['table'].doLayout()
+      this.table.doLayout()
     })
+  },
+  setup() {
+    const searchForm = ref(null)
+    const table = ref(null)
+    const editForm = ref(null)
+    return {searchForm, table, editForm}
   }
 }
 </script>

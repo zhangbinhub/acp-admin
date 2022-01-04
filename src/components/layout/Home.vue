@@ -34,7 +34,7 @@
                        :theme="theme">
             </side-menu>
           </el-header>
-          <el-scrollbar ref="main-scrollbar" class="main-scrollbar" :style="{height:mainHeight+'px'}">
+          <el-scrollbar ref="mainScrollbar" class="main-scrollbar" :style="{height:mainHeight+'px'}">
             <el-main class="main-content" :class="{mobile:isMobile}">
               <router-view v-slot="{ Component }">
                 <transition name="el-fade-in" mode="out-in" appear>
@@ -55,7 +55,7 @@
   </el-config-provider>
 </template>
 <script>
-import {nextTick} from 'vue'
+import {nextTick, ref} from 'vue'
 import SideMenu from './side-menu'
 import HeaderBar from './header-bar'
 import TagsNav from './tags-nav'
@@ -69,7 +69,7 @@ import routeLogButton from './route-log-button'
 import deployButton from './deploy-button'
 import './Home.less'
 import {
-  getOpenedNamesByActiveName, isMobile,
+  getOpenedNamesByActiveName, isMobileDevice,
   updateTagNavList
 } from '@/libs/tools'
 
@@ -131,7 +131,7 @@ export default {
       return this.$store.state.app.isMini
     },
     isMobile() {
-      return isMobile()
+      return isMobileDevice()
     },
     minLogo() {
       return require('@/assets/images/logo/logo.png')
@@ -167,7 +167,7 @@ export default {
     },
     mainHeight() {
       nextTick(() => {
-        this.$refs['main-scrollbar'].update()
+        this.mainScrollbar.update()
       })
     }
   },
@@ -256,6 +256,10 @@ export default {
     handleClick(obj) {
       this.$api.turnToPage(obj)
     }
+  },
+  setup() {
+    const mainScrollbar = ref(null)
+    return {mainScrollbar}
   }
 }
 </script>

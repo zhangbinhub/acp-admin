@@ -1,19 +1,19 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" @submit.native.prevent
+    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" @submit.native.prevent
              size="small">
       <el-form-item :label="$t('forms.name')" prop="name">
-        <el-input v-model="searchForm.name" :disabled="modal_loading"
+        <el-input v-model="searchFormModel.name" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.value')" prop="value">
-        <el-input v-model="searchForm.value" :disabled="modal_loading"
+        <el-input v-model="searchFormModel.value" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.status')" prop="enabled">
-        <el-select v-model="searchForm.enabled" :clearable="true" :disabled="modal_loading" value=""
+        <el-select v-model="searchFormModel.enabled" :clearable="true" :disabled="modal_loading" value=""
                    style="width:200px">
           <el-option v-for="item in enabledList" :value="item.value" :label="item.label"
                      :key="'search_select_'+item.value">
@@ -22,22 +22,22 @@
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group>
-          <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
+          <el-button :loading="modal_loading" @click="handleSearch" type="primary">
             {{ $t('forms.buttons.search') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
+          <el-button :loading="modal_loading" @click="handleSearchReset" type="primary">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleAdd()" type="primary">
+          <el-button :loading="modal_loading" @click="handleAdd" type="primary">
             {{ $t('forms.buttons.add') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleDeleteMore()" type="primary">
+          <el-button :loading="modal_loading" @click="handleDeleteMore" type="primary">
             {{ $t('forms.buttons.delete') }}
           </el-button>
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchFormModel.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
@@ -110,40 +110,40 @@
       </el-table-column>
     </el-table>
     <el-pagination @size-change="handlePageSizeSearch"
-                   v-model:current-page="searchForm.currPage"
-                   :page-sizes="searchForm.pageSizeArray"
-                   v-model:page-size="searchForm.pageSize"
+                   v-model:current-page="searchFormModel.currPage"
+                   :page-sizes="searchFormModel.pageSizeArray"
+                   v-model:page-size="searchFormModel.pageSize"
                    :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
-                   :total="searchForm.totalRows">
+                   :total="searchFormModel.totalRows">
     </el-pagination>
     <el-dialog :fullscreen="isMobile" v-model="addModal" :title="$t('forms.buttons.add')" :close-on-click-modal="false">
-      <el-form ref="addForm" :model="addForm" :rules="ruleAddForm" label-width="auto" size="small"
+      <el-form ref="addForm" :model="addFormModel" :rules="ruleAddForm" label-width="undefined" size="small"
                v-loading="modal_loading" @submit.native.prevent style="padding-right: 25px;">
         <el-form-item :label="$t('forms.name')" prop="name">
-          <el-input v-model="addForm.name" :disabled="modal_loading" ref="name"
+          <el-input v-model="addFormModel.name" :disabled="modal_loading" ref="name"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                    @keyup.enter.native="doAdd('addForm')"/>
+                    @keyup.enter.native="doAdd"/>
         </el-form-item>
         <el-form-item :label="$t('forms.value')" prop="value">
-          <el-input v-model="addForm.value" :disabled="modal_loading"
+          <el-input v-model="addFormModel.value" :disabled="modal_loading"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.value')"
-                    @keyup.enter.native="doAdd('addForm')"/>
+                    @keyup.enter.native="doAdd"/>
         </el-form-item>
         <el-form-item :label="$t('forms.describe')" prop="describe">
-          <el-input v-model="addForm.describe" :disabled="modal_loading"
+          <el-input v-model="addFormModel.describe" :disabled="modal_loading"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.describe')"
-                    @keyup.enter.native="doAdd('addForm')"/>
+                    @keyup.enter.native="doAdd"/>
         </el-form-item>
         <el-form-item :label="$t('forms.enabled')" prop="enabled">
-          <el-switch v-model="addForm.enabled" :disabled="modal_loading"/>
+          <el-switch v-model="addFormModel.enabled" :disabled="modal_loading"/>
         </el-form-item>
       </el-form>
       <template #footer>
         <div>
-          <el-button type="info" :loading="modal_loading" @click="doCancel()">
+          <el-button type="info" :loading="modal_loading" @click="doCancel">
             {{ $t('forms.buttons.cancel') }}
           </el-button>
-          <el-button type="primary" :loading="modal_loading" @click="doAdd('addForm')">
+          <el-button type="primary" :loading="modal_loading" @click="doAdd">
             {{ $t('forms.buttons.submit') }}
           </el-button>
         </div>
@@ -152,14 +152,14 @@
   </el-card>
 </template>
 <script>
-import {nextTick} from "vue";
-import {isMobile} from "@/libs/tools";
+import {nextTick, ref} from "vue";
+import {isMobileDevice} from "@/libs/tools";
 
 export default {
   name: 'runtimeConfig',
   data() {
     return {
-      searchForm: {
+      searchFormModel: {
         name: '',
         value: '',
         enabled: '',
@@ -172,7 +172,7 @@ export default {
         pageSize: 10,
         pageSizeArray: [10, 20, 30, 40]
       },
-      addForm: {
+      addFormModel: {
         name: '',
         value: '',
         describe: '',
@@ -193,7 +193,7 @@ export default {
     addModal(value) {
       if (value) {
         nextTick(() => {
-          this.$refs['name'].focus()
+          this.name.focus()
         })
       }
     },
@@ -203,7 +203,7 @@ export default {
   },
   computed: {
     isMobile() {
-      return isMobile()
+      return isMobileDevice()
     },
     tableHeight() {
       const minHeight = 300
@@ -244,21 +244,21 @@ export default {
     handleAdd() {
       this.addModal = true
       nextTick(() => {
-        this.$refs['addForm'].resetFields()
+        this.addForm.resetFields()
       })
     },
     doCancel() {
       this.addModal = false
     },
-    doAdd(name) {
-      this.$refs[name].validate((valid) => {
+    doAdd() {
+      this.addForm.validate((valid) => {
         if (valid) {
           this.modal_loading = true
           this.$api.request.runtime.create({
-            name: this.addForm.name,
-            value: this.addForm.value,
-            configDes: this.addForm.describe,
-            enabled: this.addForm.enabled
+            name: this.addFormModel.name,
+            value: this.addFormModel.value,
+            configDes: this.addFormModel.describe,
+            enabled: this.addFormModel.enabled
           }).then((res) => {
             this.modal_loading = false
             if (res) {
@@ -306,29 +306,29 @@ export default {
       })
     },
     handlePageSizeSearch(size) {
-      this.searchForm.pageSize = size
+      this.searchFormModel.pageSize = size
       this.handleSearch()
     },
     handleSearch() {
       let searchParam = {
-        name: this.searchForm.name,
-        value: this.searchForm.value,
-        enabled: this.searchForm.enabled,
+        name: this.searchFormModel.name,
+        value: this.searchFormModel.value,
+        enabled: this.searchFormModel.enabled,
         queryParam: {
-          currPage: this.searchForm.currPage,
-          pageSize: this.searchForm.pageSize
+          currPage: this.searchFormModel.currPage,
+          pageSize: this.searchFormModel.pageSize
         }
       }
-      if (this.searchForm.orderParam.order !== 'normal') {
-        searchParam.queryParam.orderName = this.searchForm.orderParam.prop
-        searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
+      if (this.searchFormModel.orderParam.order !== 'normal') {
+        searchParam.queryParam.orderName = this.searchFormModel.orderParam.prop
+        searchParam.queryParam.orderCommand = this.searchFormModel.orderParam.order
       }
       this.modal_loading = true
       this.$api.request.runtime.query(searchParam).then((res) => {
         this.modal_loading = false
         if (res) {
           this.selectedData = []
-          this.searchForm.totalRows = res.data.totalElements
+          this.searchFormModel.totalRows = res.data.totalElements
           this.searchData = res.data.content.map(item => {
             if (!item.covert) {
               item._disabled = true
@@ -336,7 +336,7 @@ export default {
             return item
           })
           nextTick(() => {
-            this.$refs['table'].doLayout()
+            this.table.doLayout()
           })
         }
       }).catch(() => {
@@ -347,16 +347,16 @@ export default {
     },
     handleRowClick(row) {
       if (!row._disabled) {
-        this.$refs['table'].toggleRowSelection(row)
+        this.table.toggleRowSelection(row)
       }
     },
     handleSortChange(param) {
-      this.searchForm.orderParam.prop = param.prop
-      this.searchForm.orderParam.order = param.order
+      this.searchFormModel.orderParam.prop = param.prop
+      this.searchFormModel.orderParam.order = param.order
       this.handleSearch()
     },
-    handleSearchReset(name) {
-      this.$refs[name].resetFields()
+    handleSearchReset() {
+      this.searchForm.resetFields()
     },
     handleSelect(selection) {
       this.selectedData = selection
@@ -409,8 +409,15 @@ export default {
   },
   activated() {
     nextTick(() => {
-      this.$refs['table'].doLayout()
+      this.table.doLayout()
     })
+  },
+  setup() {
+    const searchForm = ref(null)
+    const addForm = ref(null)
+    const table = ref(null)
+    const name = ref(null)
+    return {searchForm, addForm, table, name}
   }
 }
 </script>

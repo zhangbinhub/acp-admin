@@ -1,38 +1,38 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="small"
+    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.name')" prop="name">
-        <el-input v-model="searchForm.name" :disabled="modal_loading"
+        <el-input v-model="searchFormModel.name" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.execTime')" prop="startTime">
         <el-date-picker type="daterange" :disabled="modal_loading" :shortcuts="pickerShortcuts"
-                        v-model="searchForm.startTime" :class="{mobile:isMobile}"
+                        v-model="searchFormModel.startTime" :class="{mobile:isMobile}"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.execTime')"/>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group style="margin-right: 20px">
-          <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
+          <el-button :loading="modal_loading" @click="handleSearch" type="primary">
             {{ $t('forms.buttons.search') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
+          <el-button :loading="modal_loading" @click="handleSearchReset" type="primary">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleAdd()" type="primary">
+          <el-button :loading="modal_loading" @click="handleAdd" type="primary">
             {{ $t('forms.buttons.add') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleDeleteMore()" type="primary">
+          <el-button :loading="modal_loading" @click="handleDeleteMore" type="primary">
             {{ $t('forms.buttons.delete') }}
           </el-button>
         </el-button-group>
-        <el-button :loading="modal_loading" @click="handleOpenFileManager()" type="warning">
+        <el-button :loading="modal_loading" @click="handleOpenFileManager" type="warning">
           {{ $t('forms.buttons.fileManager') }}
         </el-button>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchFormModel.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
@@ -123,37 +123,37 @@
       </el-table-column>
     </el-table>
     <el-pagination @size-change="handlePageSizeSearch"
-                   v-model:current-page="searchForm.currPage"
-                   :page-sizes="searchForm.pageSizeArray"
-                   v-model:page-size="searchForm.pageSize"
+                   v-model:current-page="searchFormModel.currPage"
+                   :page-sizes="searchFormModel.pageSizeArray"
+                   v-model:page-size="searchFormModel.pageSize"
                    :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
-                   :total="searchForm.totalRows">
+                   :total="searchFormModel.totalRows">
     </el-pagination>
     <el-dialog :fullscreen="isMobile" v-model="editModal" :title="$t('forms.info')">
-      <el-form ref="editForm" :model="editForm" :rules="ruleAddForm" label-width="auto" size="small"
+      <el-form ref="editForm" :model="editFormModel" :rules="ruleAddForm" label-width="undefined" size="small"
                v-loading="modal_loading" @submit.native.prevent>
         <el-form-item :label="$t('forms.name')" prop="name" style="width: 100%">
-          <el-input v-model="editForm.name" :disabled="modal_loading" ref="name"
+          <el-input v-model="editFormModel.name" :disabled="modal_loading"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                    @keyup.enter.native="doSave('editForm')"/>
+                    @keyup.enter.native="doSave"/>
         </el-form-item>
         <el-form-item :label="$t('forms.scriptFile')" prop="scriptFile" style="width: 100%">
-          <el-input v-model="editForm.scriptFile" :disabled="modal_loading"
+          <el-input v-model="editFormModel.scriptFile" :disabled="modal_loading"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.scriptFile')"
-                    @keyup.enter.native="doSave('editForm')"/>
+                    @keyup.enter.native="doSave"/>
         </el-form-item>
         <el-form-item :label="$t('forms.paramFile')" prop="paramFile" style="width: 100%">
-          <el-input v-model="editForm.paramFile" :disabled="modal_loading"
+          <el-input v-model="editFormModel.paramFile" :disabled="modal_loading"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.paramFile')"
-                    @keyup.enter.native="doSave('editForm')"/>
+                    @keyup.enter.native="doSave"/>
         </el-form-item>
         <el-form-item :label="$t('forms.serverIpRegex')" prop="serverIpRegex" style="width: 100%">
-          <el-input v-model="editForm.serverIpRegex" :disabled="modal_loading"
+          <el-input v-model="editFormModel.serverIpRegex" :disabled="modal_loading"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.serverIpRegex')"
-                    @keyup.enter.native="doSave('editForm')"/>
+                    @keyup.enter.native="doSave"/>
         </el-form-item>
         <el-form-item :label="$t('forms.remarks')" prop="remarks" style="width: 100%;">
-          <el-input v-model="editForm.remarks" :disabled="modal_loading" type="textarea" :rows="5"
+          <el-input v-model="editFormModel.remarks" :disabled="modal_loading" type="textarea" :rows="5"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')"/>
         </el-form-item>
       </el-form>
@@ -162,7 +162,7 @@
           <el-button type="default" :loading="modal_loading" @click="doCancel()">
             {{ $t('forms.buttons.cancel') }}
           </el-button>
-          <el-button type="primary" :loading="modal_loading" @click="doSave('editForm')">
+          <el-button type="primary" :loading="modal_loading" @click="doSave">
             {{ $t('forms.buttons.submit') }}
           </el-button>
         </div>
@@ -220,14 +220,14 @@
 </template>
 <script>
 import moment from 'moment'
-import {nextTick} from "vue";
-import {isMobile} from "@/libs/tools";
+import {nextTick, ref} from "vue";
+import {isMobileDevice} from "@/libs/tools";
 
 export default {
   name: 'deploy',
   data() {
     return {
-      searchForm: {
+      searchFormModel: {
         name: '',
         startTime: [],
         orderParam: {
@@ -239,7 +239,7 @@ export default {
         pageSize: 10,
         pageSizeArray: [10, 20, 30, 40]
       },
-      editForm: {
+      editFormModel: {
         id: '',
         name: '',
         scriptFile: '',
@@ -265,7 +265,7 @@ export default {
   },
   computed: {
     isMobile() {
-      return isMobile()
+      return isMobileDevice()
     },
     mainHeight() {
       return this.$store.state.app.mainHeight - 300
@@ -346,44 +346,44 @@ export default {
     handleAdd() {
       this.editModal = true
       nextTick(() => {
-        this.$refs['editForm'].resetFields()
+        this.editForm.resetFields()
         this.action = 0
       })
     },
     handleEdit(row) {
       this.editModal = true
       nextTick(() => {
-        this.$refs['editForm'].resetFields()
-        this.editForm.id = row.id
-        this.editForm.name = row.name
-        this.editForm.scriptFile = row.scriptFile
-        this.editForm.paramFile = row.paramFile
-        this.editForm.serverIpRegex = row.serverIpRegex
-        this.editForm.remarks = row.remarks
-        this.editForm.createLoginNo = row.createLoginNo
-        this.editForm.createUserName = row.createUserName
-        this.editForm.createTime = row.createTime
-        this.editForm.execLoginNo = row.execLoginNo
-        this.editForm.execUserName = row.execUserName
-        this.editForm.execTime = row.execTime
+        this.editForm.resetFields()
+        this.editFormModel.id = row.id
+        this.editFormModel.name = row.name
+        this.editFormModel.scriptFile = row.scriptFile
+        this.editFormModel.paramFile = row.paramFile
+        this.editFormModel.serverIpRegex = row.serverIpRegex
+        this.editFormModel.remarks = row.remarks
+        this.editFormModel.createLoginNo = row.createLoginNo
+        this.editFormModel.createUserName = row.createUserName
+        this.editFormModel.createTime = row.createTime
+        this.editFormModel.execLoginNo = row.execLoginNo
+        this.editFormModel.execUserName = row.execUserName
+        this.editFormModel.execTime = row.execTime
         this.action = 1
       })
     },
     doCancel() {
       this.editModal = false
     },
-    doSave(name) {
+    doSave() {
       switch (this.action) {
         case 0:
-          this.$refs[name].validate((valid) => {
+          this.editForm.validate((valid) => {
             if (valid) {
               this.modal_loading = true
               this.$api.request.deploy.create({
-                name: this.editForm.name,
-                scriptFile: this.editForm.scriptFile,
-                paramFile: this.editForm.paramFile,
-                serverIpRegex: this.editForm.serverIpRegex,
-                remarks: this.editForm.remarks
+                name: this.editFormModel.name,
+                scriptFile: this.editFormModel.scriptFile,
+                paramFile: this.editFormModel.paramFile,
+                serverIpRegex: this.editFormModel.serverIpRegex,
+                remarks: this.editFormModel.remarks
               }).then((res) => {
                 this.modal_loading = false
                 if (res) {
@@ -398,16 +398,16 @@ export default {
           })
           break
         case 1:
-          this.$refs[name].validate((valid) => {
+          this.editForm.validate((valid) => {
             if (valid) {
               this.modal_loading = true
               this.$api.request.deploy.update({
-                id: this.editForm.id,
-                name: this.editForm.name,
-                scriptFile: this.editForm.scriptFile,
-                paramFile: this.editForm.paramFile,
-                serverIpRegex: this.editForm.serverIpRegex,
-                remarks: this.editForm.remarks
+                id: this.editFormModel.id,
+                name: this.editFormModel.name,
+                scriptFile: this.editFormModel.scriptFile,
+                paramFile: this.editFormModel.paramFile,
+                serverIpRegex: this.editFormModel.serverIpRegex,
+                remarks: this.editFormModel.remarks
               }).then((res) => {
                 this.modal_loading = false
                 if (res) {
@@ -436,32 +436,32 @@ export default {
       })
     },
     handlePageSizeSearch(size) {
-      this.searchForm.pageSize = size
+      this.searchFormModel.pageSize = size
       this.handleSearch()
     },
     handleSearch() {
       let searchParam = {
-        name: this.searchForm.name,
-        startTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[0].getTime() : null,
-        endTime: this.searchForm.startTime && this.searchForm.startTime.length === 2 ? this.searchForm.startTime[1].getTime() : null,
+        name: this.searchFormModel.name,
+        startTime: this.searchFormModel.startTime && this.searchFormModel.startTime.length === 2 ? this.searchFormModel.startTime[0].getTime() : null,
+        endTime: this.searchFormModel.startTime && this.searchFormModel.startTime.length === 2 ? this.searchFormModel.startTime[1].getTime() : null,
         queryParam: {
-          currPage: this.searchForm.currPage,
-          pageSize: this.searchForm.pageSize
+          currPage: this.searchFormModel.currPage,
+          pageSize: this.searchFormModel.pageSize
         }
       }
-      if (this.searchForm.orderParam.order !== 'normal') {
-        searchParam.queryParam.orderName = this.searchForm.orderParam.prop
-        searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
+      if (this.searchFormModel.orderParam.order !== 'normal') {
+        searchParam.queryParam.orderName = this.searchFormModel.orderParam.prop
+        searchParam.queryParam.orderCommand = this.searchFormModel.orderParam.order
       }
       this.modal_loading = true
       this.$api.request.deploy.query(searchParam).then((res) => {
         this.modal_loading = false
         if (res) {
           this.selectedData = []
-          this.searchForm.totalRows = res.data.totalElements
+          this.searchFormModel.totalRows = res.data.totalElements
           this.searchData = res.data.content
           nextTick(() => {
-            this.$refs['table'].doLayout()
+            this.table.doLayout()
           })
         }
       }).catch(() => {
@@ -471,15 +471,15 @@ export default {
       })
     },
     handleRowClick(row) {
-      this.$refs['table'].toggleRowSelection(row)
+      this.table.toggleRowSelection(row)
     },
     handleSortChange(param) {
-      this.searchForm.orderParam.prop = param.prop
-      this.searchForm.orderParam.order = param.order
+      this.searchFormModel.orderParam.prop = param.prop
+      this.searchFormModel.orderParam.order = param.order
       this.handleSearch()
     },
-    handleSearchReset(name) {
-      this.$refs[name].resetFields()
+    handleSearchReset() {
+      this.searchForm.resetFields()
     },
     handleSelect(selection) {
       this.selectedData = selection
@@ -614,8 +614,14 @@ export default {
   },
   activated() {
     nextTick(() => {
-      this.$refs['table'].doLayout()
+      this.table.doLayout()
     })
+  },
+  setup() {
+    const searchForm = ref(null)
+    const editForm = ref(null)
+    const table = ref(null)
+    return {searchForm, editForm, table}
   }
 }
 </script>

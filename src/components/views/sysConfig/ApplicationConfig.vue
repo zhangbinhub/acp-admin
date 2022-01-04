@@ -1,30 +1,30 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="small"
+    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.name')" prop="appName">
-        <el-input v-model="searchForm.appName" :disabled="modal_loading"
+        <el-input v-model="searchFormModel.appName" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group>
-          <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
+          <el-button :loading="modal_loading" @click="handleSearch" type="primary">
             {{ $t('forms.buttons.search') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
+          <el-button :loading="modal_loading" @click="handleSearchReset" type="primary">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleAdd()" type="primary">
+          <el-button :loading="modal_loading" @click="handleAdd" type="primary">
             {{ $t('forms.buttons.add') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleDeleteMore()" type="primary">
+          <el-button :loading="modal_loading" @click="handleDeleteMore" type="primary">
             {{ $t('forms.buttons.delete') }}
           </el-button>
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchFormModel.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')" @selection-change="handleSelect"
               @row-click="handleRowClick" @sort-change="handleSortChange" header-cell-class-name="query-table-header">
@@ -81,72 +81,73 @@
       </el-table-column>
     </el-table>
     <el-pagination @size-change="handlePageSizeSearch"
-                   v-model:current-page="searchForm.currPage"
-                   :page-sizes="searchForm.pageSizeArray"
-                   v-model:page-size="searchForm.pageSize"
+                   v-model:current-page="searchFormModel.currPage"
+                   :page-sizes="searchFormModel.pageSizeArray"
+                   v-model:page-size="searchFormModel.pageSize"
                    :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
-                   :total="searchForm.totalRows">
+                   :total="searchFormModel.totalRows">
     </el-pagination>
     <el-dialog :fullscreen="isMobile" v-model="editModal" :title="$t('forms.info')" :close-on-click-modal="false">
-      <el-form ref="editForm" :model="editForm" :rules="ruleEditForm" label-width="auto" style="padding-right: 25px;"
+      <el-form ref="editForm" :model="editFormModel" :rules="ruleEditForm" label-width="undefined"
+               style="padding-right: 25px;"
                size="small" v-loading="modal_loading" @submit.native.prevent>
         <el-form-item :label="'appId:'" prop="id" v-if="action===2">
-          <span style="color: green">{{ editForm.id }}</span>
+          <span style="color: green">{{ editFormModel.id }}</span>
         </el-form-item>
         <el-form-item :label="'secret:'" prop="secret" v-if="action===2">
-          <span style="color: red">{{ editForm.secret }}</span>
+          <span style="color: red">{{ editFormModel.secret }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.name')+':'" prop="appName">
-          <el-input ref="appName" v-model="editForm.appName" :disabled="modal_loading" v-if="action!==2"
+          <el-input ref="appName" v-model="editFormModel.appName" :disabled="modal_loading" v-if="action!==2"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
-                    @keyup.enter.native="doSave('editForm')"/>
-          <span v-else>{{ editForm.appName }}</span>
+                    @keyup.enter.native="doSave"/>
+          <span v-else>{{ editFormModel.appName }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.identify')+':'" prop="identify">
-          <el-input v-model="editForm.identify" :disabled="modal_loading" v-if="action!==2"
+          <el-input v-model="editFormModel.identify" :disabled="modal_loading" v-if="action!==2"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.identify')"
-                    @keyup.enter.native="doSave('editForm')"/>
-          <span v-else>{{ editForm.identify }}</span>
+                    @keyup.enter.native="doSave"/>
+          <span v-else>{{ editFormModel.identify }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.scope')+':'" prop="scope"
-                      v-if="editForm.secret!==$store.state.app.appInfo.appSecret">
-          <el-input v-model="editForm.scope" :disabled="modal_loading" v-if="action!==2"
+                      v-if="editFormModel.secret!==$store.state.app.appInfo.appSecret">
+          <el-input v-model="editFormModel.scope" :disabled="modal_loading" v-if="action!==2"
                     type="textarea" :rows="2"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.scope')"/>
-          <span v-else>{{ editForm.scope }}</span>
+          <span v-else>{{ editFormModel.scope }}</span>
         </el-form-item>
         <el-form-item :label="$t('forms.accessTokenValiditySeconds')+':'" prop="accessTokenValiditySeconds">
-          <el-input v-model="editForm.accessTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
+          <el-input v-model="editFormModel.accessTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.accessTokenValiditySeconds')"
-                    @keyup.enter.native="doSave('editForm')">
+                    @keyup.enter.native="doSave">
             <template #append>{{ $t('forms.seconds') }}</template>
           </el-input>
-          <span v-else>{{ editForm.accessTokenValiditySeconds }}
+          <span v-else>{{ editFormModel.accessTokenValiditySeconds }}
             {{ $t('forms.seconds') }}
           </span>
         </el-form-item>
         <el-form-item :label="$t('forms.refreshTokenValiditySeconds')+':'" prop="refreshTokenValiditySeconds">
-          <el-input v-model="editForm.refreshTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
+          <el-input v-model="editFormModel.refreshTokenValiditySeconds" :disabled="modal_loading" v-if="action!==2"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.refreshTokenValiditySeconds')"
-                    @keyup.enter.native="doSave('editForm')">
+                    @keyup.enter.native="doSave">
             <template #append>{{ $t('forms.seconds') }}</template>
           </el-input>
-          <span v-else>{{ editForm.refreshTokenValiditySeconds }}
+          <span v-else>{{ editFormModel.refreshTokenValiditySeconds }}
             {{ $t('forms.seconds') }}
           </span>
         </el-form-item>
       </el-form>
       <template #footer>
         <div>
-          <el-button type="info" :loading="modal_loading" @click="doCancel()">
+          <el-button type="info" :loading="modal_loading" @click="doCancel">
             {{ $t('forms.buttons.cancel') }}
           </el-button>
           <el-button v-if="action===0||action===1" type="primary" :loading="modal_loading"
-                     @click="doSave('editForm')">
+                     @click="doSave">
             {{ $t('forms.buttons.submit') }}
           </el-button>
           <el-button v-else type="primary" :loading="modal_loading"
-                     @click="doSave('editForm')">
+                     @click="doSave">
             {{ $t('forms.buttons.updateSecret') }}
           </el-button>
         </div>
@@ -155,14 +156,14 @@
   </el-card>
 </template>
 <script>
-import {nextTick} from "vue";
-import {isMobile} from "@/libs/tools";
+import {nextTick, ref} from "vue";
+import {isMobileDevice} from "@/libs/tools";
 
 export default {
   name: 'appConfig',
   data() {
     return {
-      searchForm: {
+      searchFormModel: {
         appName: '',
         orderParam: {
           prop: 'identify',
@@ -173,7 +174,7 @@ export default {
         pageSize: 10,
         pageSizeArray: [10, 20, 30, 40]
       },
-      editForm: {
+      editFormModel: {
         id: '',
         appName: '',
         scope: '',
@@ -195,7 +196,7 @@ export default {
       if (value) {
         nextTick(() => {
           if (this.action !== 2) {
-            this.$refs['appName'].focus()
+            this.appName.focus()
           }
         })
       }
@@ -206,7 +207,7 @@ export default {
   },
   computed: {
     isMobile() {
-      return isMobile()
+      return isMobileDevice()
     },
     tableHeight() {
       const minHeight = 300
@@ -254,33 +255,33 @@ export default {
     handleAdd() {
       this.editModal = true
       nextTick(() => {
-        this.$refs['editForm'].resetFields()
-        this.editForm.id = ''
-        this.editForm.appName = ''
-        this.editForm.scope = ''
-        this.editForm.identify = ''
-        this.editForm.accessTokenValiditySeconds = ''
-        this.editForm.refreshTokenValiditySeconds = ''
-        this.editForm.secret = ''
-        this.editForm.index = -1
+        this.editForm.resetFields()
+        this.editFormModel.id = ''
+        this.editFormModel.appName = ''
+        this.editFormModel.scope = ''
+        this.editFormModel.identify = ''
+        this.editFormModel.accessTokenValiditySeconds = ''
+        this.editFormModel.refreshTokenValiditySeconds = ''
+        this.editFormModel.secret = ''
+        this.editFormModel.index = -1
         this.action = 0
       })
     },
     doCancel() {
       this.editModal = false
     },
-    doSave(name) {
+    doSave() {
       switch (this.action) {
         case 0: // 新增
-          this.$refs[name].validate((valid) => {
+          this.editForm.validate((valid) => {
             if (valid) {
               this.modal_loading = true
               this.$api.request.app.create({
-                appName: this.editForm.appName,
-                scope: this.editForm.scope,
-                identify: this.editForm.identify,
-                accessTokenValiditySeconds: Number(this.editForm.accessTokenValiditySeconds),
-                refreshTokenValiditySeconds: Number(this.editForm.refreshTokenValiditySeconds)
+                appName: this.editFormModel.appName,
+                scope: this.editFormModel.scope,
+                identify: this.editFormModel.identify,
+                accessTokenValiditySeconds: Number(this.editFormModel.accessTokenValiditySeconds),
+                refreshTokenValiditySeconds: Number(this.editFormModel.refreshTokenValiditySeconds)
               }).then((res) => {
                 this.modal_loading = false
                 if (res) {
@@ -295,16 +296,16 @@ export default {
           })
           break
         case 1: // 更新
-          this.$refs[name].validate((valid) => {
+          this.editForm.validate((valid) => {
             if (valid) {
               this.modal_loading = true
               this.$api.request.app.update({
-                id: this.editForm.id,
-                appName: this.editForm.appName,
-                scope: this.editForm.scope,
-                identify: this.editForm.identify,
-                accessTokenValiditySeconds: Number(this.editForm.accessTokenValiditySeconds),
-                refreshTokenValiditySeconds: Number(this.editForm.refreshTokenValiditySeconds)
+                id: this.editFormModel.id,
+                appName: this.editFormModel.appName,
+                scope: this.editFormModel.scope,
+                identify: this.editFormModel.identify,
+                accessTokenValiditySeconds: Number(this.editFormModel.accessTokenValiditySeconds),
+                refreshTokenValiditySeconds: Number(this.editFormModel.refreshTokenValiditySeconds)
               }).then((res) => {
                 this.modal_loading = false
                 if (res) {
@@ -320,11 +321,11 @@ export default {
           break
         case 2:
           this.modal_loading = true
-          this.$api.request.app.getNewSecret(this.editForm.id).then((res) => {
+          this.$api.request.app.getNewSecret(this.editFormModel.id).then((res) => {
             this.modal_loading = false
             this.$message.success(this.$i18n.t('messages.updateSuccess') + '')
-            this.editForm.secret = res.data.secret
-            this.searchData[this.editForm.index].secret = res.data.secret
+            this.editFormModel.secret = res.data.secret
+            this.searchData[this.editFormModel.index].secret = res.data.secret
           }).catch(() => {
             this.modal_loading = false
           })
@@ -344,27 +345,27 @@ export default {
       })
     },
     handlePageSizeSearch(size) {
-      this.searchForm.pageSize = size
+      this.searchFormModel.pageSize = size
       this.handleSearch()
     },
     handleSearch() {
       let searchParam = {
-        appName: this.searchForm.appName,
+        appName: this.searchFormModel.appName,
         queryParam: {
-          currPage: this.searchForm.currPage,
-          pageSize: this.searchForm.pageSize
+          currPage: this.searchFormModel.currPage,
+          pageSize: this.searchFormModel.pageSize
         }
       }
-      if (this.searchForm.orderParam.order !== 'normal') {
-        searchParam.queryParam.orderName = this.searchForm.orderParam.prop
-        searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
+      if (this.searchFormModel.orderParam.order !== 'normal') {
+        searchParam.queryParam.orderName = this.searchFormModel.orderParam.prop
+        searchParam.queryParam.orderCommand = this.searchFormModel.orderParam.order
       }
       this.modal_loading = true
       this.$api.request.app.query(searchParam).then((res) => {
         this.modal_loading = false
         if (res) {
           this.selectedData = []
-          this.searchForm.totalRows = res.data.totalElements
+          this.searchFormModel.totalRows = res.data.totalElements
           this.searchData = res.data.content.map(item => {
             if (!item.covert) {
               item._disabled = true
@@ -372,7 +373,7 @@ export default {
             return item
           })
           nextTick(() => {
-            this.$refs['table'].doLayout()
+            this.table.doLayout()
           })
         }
       }).catch(() => {
@@ -382,17 +383,17 @@ export default {
       })
     },
     handleSortChange(param) {
-      this.searchForm.orderParam.prop = param.prop
-      this.searchForm.orderParam.order = param.order
+      this.searchFormModel.orderParam.prop = param.prop
+      this.searchFormModel.orderParam.order = param.order
       this.handleSearch()
     },
     handleRowClick(row) {
       if (!row._disabled) {
-        this.$refs['table'].toggleRowSelection(row)
+        this.table.toggleRowSelection(row)
       }
     },
-    handleSearchReset(name) {
-      this.$refs[name].resetFields()
+    handleSearchReset() {
+      this.searchForm.resetFields()
     },
     handleSelect(selection) {
       this.selectedData = selection
@@ -432,15 +433,15 @@ export default {
     handleEdit(row, action, index) {
       this.editModal = true
       nextTick(() => {
-        this.$refs['editForm'].resetFields()
-        this.editForm.id = row.id
-        this.editForm.appName = row.appName
-        this.editForm.accessTokenValiditySeconds = row.accessTokenValiditySeconds + ''
-        this.editForm.refreshTokenValiditySeconds = row.refreshTokenValiditySeconds + ''
-        this.editForm.secret = row.secret
-        this.editForm.scope = row.scope
-        this.editForm.identify = row.identify
-        this.editForm.index = index
+        this.editForm.resetFields()
+        this.editFormModel.id = row.id
+        this.editFormModel.appName = row.appName
+        this.editFormModel.accessTokenValiditySeconds = row.accessTokenValiditySeconds + ''
+        this.editFormModel.refreshTokenValiditySeconds = row.refreshTokenValiditySeconds + ''
+        this.editFormModel.secret = row.secret
+        this.editFormModel.scope = row.scope
+        this.editFormModel.identify = row.identify
+        this.editFormModel.index = index
         this.action = action
       })
     }
@@ -450,8 +451,15 @@ export default {
   },
   activated() {
     nextTick(() => {
-      this.$refs['table'].doLayout()
+      this.table.doLayout()
     })
+  },
+  setup() {
+    const searchForm = ref(null)
+    const editForm = ref(null)
+    const table = ref(null)
+    const appName = ref(null)
+    return {searchForm, editForm, table, appName}
   }
 }
 </script>

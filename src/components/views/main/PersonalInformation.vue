@@ -1,22 +1,22 @@
 <template>
   <el-card>
-    <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="auto"
+    <el-form ref="infoForm" :model="formValidate" :rules="ruleValidate" label-width="undefined"
              @submit.native.prevent>
       <el-form-item prop="avatar">
-          <el-avatar style="cursor: pointer" :src="formValidate.avatar" :size="100"
-                     @click.native="openAvatarUpload"/>
+        <el-avatar style="cursor: pointer" :src="formValidate.avatar" :size="100"
+                   @click.native="openAvatarUpload"/>
       </el-form-item>
       <el-form-item :label="$t('forms.loginNo')" prop="loginNo">
         <span>{{ userInfo.loginNo }}</span>
       </el-form-item>
       <el-form-item :label="$t('forms.name')" prop="name">
-        <el-input ref="name" type="text" v-model="formValidate.name" @keyup.enter.native="handleSubmit('formValidate')"
+        <el-input ref="name" type="text" v-model="formValidate.name" @keyup.enter.native="handleSubmit"
                   :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"/>
       </el-form-item>
       <el-form-item :label="$t('forms.mobile')" prop="mobile">
-        <el-input ref="mobile" type="text" v-model="formValidate.mobile"
-                  @keyup.enter.native="handleSubmit('formValidate')"
+        <el-input type="text" v-model="formValidate.mobile"
+                  @keyup.enter.native="handleSubmit"
                   :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"/>
       </el-form-item>
@@ -24,27 +24,27 @@
         <el-switch v-model="updatePassword" :disabled="modal_loading"/>
       </el-form-item>
       <el-form-item v-show="updatePassword" :label="$t('forms.old')+$t('forms.password')" prop="oldPassword">
-        <el-input v-model="formValidate.oldPassword" @keyup.enter.native="handleSubmit('formValidate')"
+        <el-input v-model="formValidate.oldPassword" @keyup.enter.native="handleSubmit"
                   autocomplete="off" type="text" @focus.native="this.type='password'" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.old')+$t('forms.password')"/>
       </el-form-item>
       <el-form-item v-show="updatePassword" :label="$t('forms.new')+$t('forms.password')" prop="password">
         <el-input v-model="formValidate.password" :show-password="true"
                   autocomplete="off" type="text" @focus.native="this.type='password'" :disabled="modal_loading"
-                  @keyup.enter.native="handleSubmit('formValidate')"
+                  @keyup.enter.native="handleSubmit"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"/>
       </el-form-item>
       <el-form-item v-show="updatePassword" :label="$t('forms.confirmPassword')" prop="repeatPassword">
         <el-input v-model="formValidate.repeatPassword" :show-password="true"
                   autocomplete="off" type="text" @focus.native="this.type='password'"
-                  :disabled="modal_loading" @keyup.enter.native="handleSubmit('formValidate')"
+                  :disabled="modal_loading" @keyup.enter.native="handleSubmit"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"/>
       </el-form-item>
       <el-form-item>
-        <el-button type="default" @click="handleReset('formValidate')" :loading="modal_loading">
+        <el-button type="default" @click="handleReset" :loading="modal_loading">
           {{ $t('forms.buttons.reset') }}
         </el-button>
-        <el-button type="primary" @click="handleSubmit('formValidate')" :loading="modal_loading"
+        <el-button type="primary" @click="handleSubmit" :loading="modal_loading"
                    style="margin-left: 10px">
           {{ $t('forms.buttons.submit') }}
         </el-button>
@@ -60,7 +60,7 @@
 import avatarImg from '@/assets/images/avatar/avatar.jpg'
 import Cropper from '@/components/cropper'
 import 'cropperjs/dist/cropper.min.css'
-import {nextTick} from "vue";
+import {nextTick, ref} from "vue";
 
 export default {
   name: 'personalInformation',
@@ -189,8 +189,8 @@ export default {
       this.avatarUpload = false
       this.formValidate.avatar = data
     },
-    handleSubmit(name) {
-      this.$refs[name].validate((valid) => {
+    handleSubmit() {
+      this.infoForm.validate((valid) => {
         if (valid) {
           this.modal_loading = true
           const userParam = {
@@ -226,7 +226,7 @@ export default {
       })
     },
     handleReset(name) {
-      this.$refs[name].resetFields()
+      this.infoForm.resetFields()
       this.resetFieldsValue(this.userInfo)
     },
     resetFieldsValue(userInfo) {
@@ -241,7 +241,7 @@ export default {
   },
   activated() {
     nextTick(() => {
-      this.$refs['name'].focus()
+      this.name.focus()
     })
     // 获取运行配置参数
     this.$api.request.runtime.getConfig(this.$store.state.app.appInfo.passwordComplexityPolicy).then((res) => {
@@ -251,6 +251,11 @@ export default {
         this.passwordComplexityPolicy = 0
       }
     })
+  },
+  setup() {
+    const infoForm = ref(null)
+    const name = ref(null)
+    return {infoForm, name}
   }
 }
 </script>

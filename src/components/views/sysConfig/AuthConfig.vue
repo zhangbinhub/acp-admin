@@ -51,19 +51,20 @@
         <el-col :lg="{ span: 15 }" v-show="currMenu.id&&currMenu.id!==''" style="margin-bottom: 16px;">
           <el-card>
             <template #header>{{ currMenuFullPath }}</template>
-            <el-form ref="menuEditForm" size="small" :model="menuEditForm" :rules="ruleMenuEditForm" label-width="auto"
+            <el-form ref="menuEditForm" size="small" :model="menuEditFormModel" :rules="ruleMenuEditForm"
+                     label-width="undefined"
                      v-loading="treeLoading" @submit.native.prevent>
               <el-row>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.name')" prop="name">
-                    <el-input v-model="menuEditForm.name" :disabled="treeLoading" ref="menuName"
+                    <el-input v-model="menuEditFormModel.name" :disabled="treeLoading" ref="menuName"
                               :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                               @keyup.enter.native="doSaveMenu"/>
                   </el-form-item>
                 </el-col>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.iconType')" prop="iconType">
-                    <el-input v-model="menuEditForm.iconType" :disabled="treeLoading"
+                    <el-input v-model="menuEditFormModel.iconType" :disabled="treeLoading"
                               :placeholder="$t('forms.pleaseEnter') + $t('forms.iconType')"
                               @keyup.enter.native="doSaveMenu"/>
                   </el-form-item>
@@ -72,14 +73,14 @@
               <el-row>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.parent')" prop="menuParentArray">
-                    <el-cascader :options="menuCascaderData" v-model="menuEditForm.menuParentArray"
+                    <el-cascader :options="menuCascaderData" v-model="menuEditFormModel.menuParentArray"
                                  :disabled="treeLoading" style="width: 100%"
                                  :props="{checkStrictly: true,value:'id'}"/>
                   </el-form-item>
                 </el-col>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.path')" prop="path">
-                    <el-input v-model="menuEditForm.path" :disabled="treeLoading"
+                    <el-input v-model="menuEditFormModel.path" :disabled="treeLoading"
                               :placeholder="$t('forms.pleaseEnter') + $t('forms.path')"
                               @keyup.enter.native="doSaveMenu"/>
                   </el-form-item>
@@ -88,7 +89,7 @@
               <el-row>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.openType')" prop="openType">
-                    <el-select v-model="menuEditForm.openType" :disabled="treeLoading" value="">
+                    <el-select v-model="menuEditFormModel.openType" :disabled="treeLoading" value="">
                       <el-option v-for="item in openType" :value="item.value" :label="item.label"
                                  :key="'openType-'+item.value"/>
                     </el-select>
@@ -96,7 +97,7 @@
                 </el-col>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.sort')" prop="sort">
-                    <el-input-number v-model="menuEditForm.sort" :disabled="treeLoading" :min="0"
+                    <el-input-number v-model="menuEditFormModel.sort" :disabled="treeLoading" :min="0"
                                      style="width: 100%;max-width: 150px;"
                                      :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')"
                                      @keyup.enter.native="doSaveMenu">
@@ -107,12 +108,12 @@
               <el-row>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.enabled')" prop="enabled" :required="true">
-                    <el-switch v-model="menuEditForm.enabled" :disabled="treeLoading"/>
+                    <el-switch v-model="menuEditFormModel.enabled" :disabled="treeLoading"/>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-form-item :label="$t('forms.roleList')">
-                <el-transfer :data="optionalMenuRoles" v-model="menuEditForm.roleIds" v-loading="treeLoading"
+                <el-transfer :data="optionalMenuRoles" v-model="menuEditFormModel.roleIds" v-loading="treeLoading"
                              :filterable="true" :props="{key:'id',label:'label'}"
                              :titles="[$t('forms.optional'),$t('forms.selected')]"
                              :button-texts="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
@@ -180,19 +181,20 @@
         <el-col :lg="{ span: 15 }" v-show="currModuleFunc.id&&currModuleFunc.id!==''" style="margin-bottom: 16px;">
           <el-card>
             <template #header>{{ currModuleFuncFullPath }}</template>
-            <el-form ref="moduleFuncEditForm" size="small" :model="moduleFuncEditForm" :rules="ruleModuleFuncEditForm"
-                     label-width="auto" v-loading="treeLoading" @submit.native.prevent>
+            <el-form ref="moduleFuncEditForm" size="small" :model="moduleFuncEditFormModel"
+                     :rules="ruleModuleFuncEditForm"
+                     label-width="undefined" v-loading="treeLoading" @submit.native.prevent>
               <el-row>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.name')" prop="name">
-                    <el-input v-model="moduleFuncEditForm.name" :disabled="treeLoading" ref="moduleFuncName"
+                    <el-input v-model="moduleFuncEditFormModel.name" :disabled="treeLoading" ref="moduleFuncName"
                               :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                               @keyup.enter.native="doSaveModuleFunc"/>
                   </el-form-item>
                 </el-col>
                 <el-col :sm="{ span: 12 }">
                   <el-form-item :label="$t('forms.code')" prop="code">
-                    <el-autocomplete v-model="moduleFuncEditForm.code" :disabled="treeLoading" style="width: 100%"
+                    <el-autocomplete v-model="moduleFuncEditFormModel.code" :disabled="treeLoading" style="width: 100%"
                                      :fetch-suggestions="querySearch"
                                      :placeholder="$t('forms.pleaseEnter') + $t('forms.code')"
                                      @keyup.enter.native="doSaveModuleFunc"/>
@@ -203,14 +205,14 @@
                 <el-col :sm="{ span: 24 }">
                   <el-form-item :label="$t('forms.parent')" prop="moduleFuncParentArray">
                     <el-cascader :options="moduleFuncCascaderData"
-                                 v-model="moduleFuncEditForm.moduleFuncParentArray"
+                                 v-model="moduleFuncEditFormModel.moduleFuncParentArray"
                                  :disabled="treeLoading" style="width: 100%"
                                  :props="{checkStrictly: true,value:'id'}"/>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-form-item :label="$t('forms.roleList')">
-                <el-transfer :data="optionalModuleFuncRoles" v-model="moduleFuncEditForm.roleIds"
+                <el-transfer :data="optionalModuleFuncRoles" v-model="moduleFuncEditFormModel.roleIds"
                              v-loading="treeLoading" :filterable="true" :props="{key:'id',label:'label'}"
                              :titles="[$t('forms.optional'),$t('forms.selected')]"
                              :button-texts="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
@@ -241,7 +243,7 @@ import {
   getTreeFullPathArray,
   filterTreeNode
 } from '@/libs/tools'
-import {nextTick} from "vue";
+import {nextTick, ref} from "vue";
 
 export default {
   name: 'authConfig',
@@ -255,11 +257,11 @@ export default {
       currMenuFullPath: '',
       currMenuData: {},
       currMenu: {},
-      menuEditForm: {sort: 0},
+      menuEditFormModel: {sort: 0},
       currModuleFuncFullPath: '',
       currModuleFuncData: {},
       currModuleFunc: {},
-      moduleFuncEditForm: {},
+      moduleFuncEditFormModel: {},
       optionalMenuRoles: [],
       optionalModuleFuncRoles: [],
       menuTreeFilterText: '',
@@ -281,33 +283,33 @@ export default {
     },
     menuCascaderData() {
       const menuTree = copy(this.menuTreeData)
-      if (!this.menuEditForm.appId && this.menuEditForm.appId !== '') {
+      if (!this.menuEditFormModel.appId && this.menuEditFormModel.appId !== '') {
         for (let i = 0; i < menuTree.length; i++) {
-          if (menuTree[i].id !== this.menuEditForm.appId) {
+          if (menuTree[i].id !== this.menuEditFormModel.appId) {
             menuTree.splice(i, 1)
             break
           }
         }
       }
-      return filterTreeNode(menuTree, [this.menuEditForm.id])
+      return filterTreeNode(menuTree, [this.menuEditFormModel.id])
     },
     moduleFuncCascaderData() {
       const moduleFuncTree = copy(this.moduleFuncTreeData)
-      if (!this.moduleFuncEditForm.appId && this.moduleFuncEditForm.appId !== '') {
+      if (!this.moduleFuncEditFormModel.appId && this.moduleFuncEditFormModel.appId !== '') {
         for (let i = 0; i < moduleFuncTree.length; i++) {
-          if (moduleFuncTree[i].id !== this.moduleFuncEditForm.appId) {
+          if (moduleFuncTree[i].id !== this.moduleFuncEditFormModel.appId) {
             moduleFuncTree.splice(i, 1)
             break
           }
         }
       }
-      return filterTreeNode(moduleFuncTree, [this.moduleFuncEditForm.id])
+      return filterTreeNode(moduleFuncTree, [this.moduleFuncEditFormModel.id])
     },
     menuParentArray() {
-      return this.menuEditForm.menuParentArray
+      return this.menuEditFormModel.menuParentArray
     },
     moduleFuncParentArray() {
-      return this.moduleFuncEditForm.moduleFuncParentArray
+      return this.moduleFuncEditFormModel.moduleFuncParentArray
     },
     ruleMenuEditForm() {
       return {
@@ -365,23 +367,23 @@ export default {
   },
   watch: {
     menuTreeFilterText(value) {
-      this.$refs.menuTree.filter(value)
+      this.menuTree.filter(value)
     },
     moduleFuncTreeFilterText(value) {
-      this.$refs.moduleFuncTree.filter(value)
+      this.moduleFuncTree.filter(value)
     },
     menuParentArray(selectedArray) {
       if (selectedArray.length > 0) {
-        this.menuEditForm.parentId = selectedArray[selectedArray.length - 1]
+        this.menuEditFormModel.parentId = selectedArray[selectedArray.length - 1]
       } else {
-        this.menuEditForm.parentId = ''
+        this.menuEditFormModel.parentId = ''
       }
     },
     moduleFuncParentArray(selectedArray) {
       if (selectedArray.length > 0) {
-        this.moduleFuncEditForm.parentId = selectedArray[selectedArray.length - 1]
+        this.moduleFuncEditFormModel.parentId = selectedArray[selectedArray.length - 1]
       } else {
-        this.moduleFuncEditForm.parentId = ''
+        this.moduleFuncEditFormModel.parentId = ''
       }
     }
   },
@@ -425,7 +427,7 @@ export default {
           })
         }
         nextTick(() => {
-          this.$refs.menuName.focus()
+          this.menuName.focus()
         })
       }).catch(() => {
         this.tree_loading = false
@@ -442,7 +444,7 @@ export default {
           })
         }
         nextTick(() => {
-          this.$refs.moduleFuncName.focus()
+          this.moduleFuncName.focus()
         })
       }).catch(() => {
         this.tree_loading = false
@@ -535,7 +537,7 @@ export default {
     },
     clearMenuCurrObj(currMenuId) {
       if (!currMenuId || (currMenuId && currMenuId === this.currMenu.id)) {
-        this.menuEditForm = {
+        this.menuEditFormModel = {
           id: '',
           appId: '',
           name: '',
@@ -565,7 +567,7 @@ export default {
     },
     clearModuleFuncCurrObj(currModuleFuncId) {
       if (!currModuleFuncId || (currModuleFuncId && currModuleFuncId === this.currModuleFunc.id)) {
-        this.moduleFuncEditForm = {
+        this.moduleFuncEditFormModel = {
           id: '',
           appId: '',
           name: '',
@@ -742,50 +744,50 @@ export default {
       })
     },
     doSaveMenu() {
-      this.$refs['menuEditForm'].validate((valid) => {
+      this.menuEditForm.validate((valid) => {
         if (valid) {
           this.tree_loading = true
           this.$api.request.auth.doUpdateMenu({
-            id: this.menuEditForm.id,
-            appId: this.menuEditForm.appId,
-            name: this.menuEditForm.name,
-            iconType: this.menuEditForm.iconType,
-            path: this.menuEditForm.path,
-            parentId: this.menuEditForm.parentId,
-            enabled: this.menuEditForm.enabled,
-            openType: this.menuEditForm.openType,
-            sort: this.menuEditForm.sort,
-            roleIds: this.menuEditForm.roleIds
+            id: this.menuEditFormModel.id,
+            appId: this.menuEditFormModel.appId,
+            name: this.menuEditFormModel.name,
+            iconType: this.menuEditFormModel.iconType,
+            path: this.menuEditFormModel.path,
+            parentId: this.menuEditFormModel.parentId,
+            enabled: this.menuEditFormModel.enabled,
+            openType: this.menuEditFormModel.openType,
+            sort: this.menuEditFormModel.sort,
+            roleIds: this.menuEditFormModel.roleIds
           }).then((res) => {
             this.tree_loading = false
             if (res) {
               this.reloadMenuRoleList()
               this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
-              this.currMenuData.name = this.menuEditForm.name
-              this.currMenuData.label = this.menuEditForm.name
-              this.currMenuData.iconType = this.menuEditForm.iconType
-              this.currMenuData.path = this.menuEditForm.path
-              this.currMenuData.parentId = this.menuEditForm.parentId
-              this.currMenuData.enabled = this.menuEditForm.enabled
-              this.currMenuData.openType = this.menuEditForm.openType
-              this.currMenuData.sort = this.menuEditForm.sort
-              this.currMenuData.roleIds = this.menuEditForm.roleIds
+              this.currMenuData.name = this.menuEditFormModel.name
+              this.currMenuData.label = this.menuEditFormModel.name
+              this.currMenuData.iconType = this.menuEditFormModel.iconType
+              this.currMenuData.path = this.menuEditFormModel.path
+              this.currMenuData.parentId = this.menuEditFormModel.parentId
+              this.currMenuData.enabled = this.menuEditFormModel.enabled
+              this.currMenuData.openType = this.menuEditFormModel.openType
+              this.currMenuData.sort = this.menuEditFormModel.sort
+              this.currMenuData.roleIds = this.menuEditFormModel.roleIds
               this.currMenu = {
-                id: this.menuEditForm.id,
-                appId: this.menuEditForm.appId,
-                name: this.menuEditForm.name,
-                iconType: this.menuEditForm.iconType,
-                path: this.menuEditForm.path,
-                parentId: this.menuEditForm.parentId,
-                enabled: this.menuEditForm.enabled,
-                openType: this.menuEditForm.openType,
-                sort: this.menuEditForm.sort,
-                roleIds: this.menuEditForm.roleIds
+                id: this.menuEditFormModel.id,
+                appId: this.menuEditFormModel.appId,
+                name: this.menuEditFormModel.name,
+                iconType: this.menuEditFormModel.iconType,
+                path: this.menuEditFormModel.path,
+                parentId: this.menuEditFormModel.parentId,
+                enabled: this.menuEditFormModel.enabled,
+                openType: this.menuEditFormModel.openType,
+                sort: this.menuEditFormModel.sort,
+                roleIds: this.menuEditFormModel.roleIds
               }
               this.refreshMenuTree(false, (() => {
                 this.currMenuFullPath = getTreeFullPathTitle(this.menuTreeData, this.currMenu.id)
                 nextTick(() => {
-                  this.$refs.menuName.focus()
+                  this.menuName.focus()
                 })
               }))
             }
@@ -796,38 +798,38 @@ export default {
       })
     },
     doSaveModuleFunc() {
-      this.$refs['moduleFuncEditForm'].validate((valid) => {
+      this.moduleFuncEditForm.validate((valid) => {
         if (valid) {
           this.tree_loading = true
           this.$api.request.auth.doUpdateModuleFunc({
-            id: this.moduleFuncEditForm.id,
-            appId: this.moduleFuncEditForm.appId,
-            name: this.moduleFuncEditForm.name,
-            code: this.moduleFuncEditForm.code,
-            parentId: this.moduleFuncEditForm.parentId,
-            roleIds: this.moduleFuncEditForm.roleIds
+            id: this.moduleFuncEditFormModel.id,
+            appId: this.moduleFuncEditFormModel.appId,
+            name: this.moduleFuncEditFormModel.name,
+            code: this.moduleFuncEditFormModel.code,
+            parentId: this.moduleFuncEditFormModel.parentId,
+            roleIds: this.moduleFuncEditFormModel.roleIds
           }).then((res) => {
             this.tree_loading = false
             if (res) {
               this.reloadModuleFuncRoleList()
               this.$message.success(this.$i18n.t('messages.saveSuccess') + '')
-              this.currModuleFuncData.name = this.moduleFuncEditForm.name
-              this.currModuleFuncData.label = this.moduleFuncEditForm.code !== '' ? this.moduleFuncEditForm.name + '(' + this.moduleFuncEditForm.code + ')' : this.moduleFuncEditForm.name
-              this.currModuleFuncData.code = this.moduleFuncEditForm.code
-              this.currModuleFuncData.parentId = this.moduleFuncEditForm.parentId
-              this.currModuleFuncData.roleIds = this.moduleFuncEditForm.roleIds
+              this.currModuleFuncData.name = this.moduleFuncEditFormModel.name
+              this.currModuleFuncData.label = this.moduleFuncEditFormModel.code !== '' ? this.moduleFuncEditFormModel.name + '(' + this.moduleFuncEditFormModel.code + ')' : this.moduleFuncEditFormModel.name
+              this.currModuleFuncData.code = this.moduleFuncEditFormModel.code
+              this.currModuleFuncData.parentId = this.moduleFuncEditFormModel.parentId
+              this.currModuleFuncData.roleIds = this.moduleFuncEditFormModel.roleIds
               this.currModuleFunc = {
-                id: this.moduleFuncEditForm.id,
-                appId: this.moduleFuncEditForm.appId,
-                name: this.moduleFuncEditForm.name,
-                code: this.moduleFuncEditForm.code,
-                parentId: this.moduleFuncEditForm.parentId,
-                roleIds: this.moduleFuncEditForm.roleIds
+                id: this.moduleFuncEditFormModel.id,
+                appId: this.moduleFuncEditFormModel.appId,
+                name: this.moduleFuncEditFormModel.name,
+                code: this.moduleFuncEditFormModel.code,
+                parentId: this.moduleFuncEditFormModel.parentId,
+                roleIds: this.moduleFuncEditFormModel.roleIds
               }
               this.refreshModuleFuncTree(false, (() => {
                 this.currModuleFuncFullPath = getTreeFullPathTitle(this.moduleFuncTreeData, this.currModuleFunc.id)
                 nextTick(() => {
-                  this.$refs.moduleFuncName.focus()
+                  this.moduleFuncName.focus()
                 })
               }))
             }
@@ -838,8 +840,8 @@ export default {
       })
     },
     doResetMenu() {
-      this.$refs['menuEditForm'].resetFields()
-      this.menuEditForm = {
+      this.menuEditForm.resetFields()
+      this.menuEditFormModel = {
         id: this.currMenu.id,
         appId: this.currMenu.appId,
         name: this.currMenu.name,
@@ -856,8 +858,8 @@ export default {
       this.currMenuFullPath = getTreeFullPathTitle(this.menuTreeData, this.currMenu.id)
     },
     doResetModuleFunc() {
-      this.$refs['moduleFuncEditForm'].resetFields()
-      this.moduleFuncEditForm = {
+      this.moduleFuncEditForm.resetFields()
+      this.moduleFuncEditFormModel = {
         id: this.currModuleFunc.id,
         appId: this.currModuleFunc.appId,
         name: this.currModuleFunc.name,
@@ -870,16 +872,25 @@ export default {
       this.currModuleFuncFullPath = getTreeFullPathTitle(this.moduleFuncTreeData, this.currModuleFunc.id)
     },
     handleMenuRoleListChange(newTargetKeys) {
-      this.menuEditForm.roleIds = newTargetKeys
+      this.menuEditFormModel.roleIds = newTargetKeys
     },
     handleModuleFuncRoleListChange(newTargetKeys) {
-      this.moduleFuncEditForm.roleIds = newTargetKeys
+      this.moduleFuncEditFormModel.roleIds = newTargetKeys
     }
   },
   mounted() {
     this.refreshMenuTree()
     this.refreshModuleFuncTree()
     this.refreshModuleFuncCodeList()
+  },
+  setup() {
+    const menuName = ref(null)
+    const menuTree = ref(null)
+    const menuEditForm = ref(null)
+    const moduleFuncName = ref(null)
+    const moduleFuncTree = ref(null)
+    const moduleFuncEditForm = ref(null)
+    return {menuName, menuTree, menuEditForm, moduleFuncName, moduleFuncTree, moduleFuncEditForm}
   }
 }
 </script>

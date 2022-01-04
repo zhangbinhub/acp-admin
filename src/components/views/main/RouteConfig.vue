@@ -1,14 +1,14 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchForm" label-width="auto" :inline="true" size="small"
+    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.routeId')" prop="routeId">
-        <el-input v-model="searchForm.routeId" :disabled="modal_loading"
+        <el-input v-model="searchFormModel.routeId" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.routeId')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.status')" prop="enabled">
-        <el-select v-model="searchForm.enabled" :clearable="true" :disabled="modal_loading" value=""
+        <el-select v-model="searchFormModel.enabled" :clearable="true" :disabled="modal_loading" value=""
                    style="width:100px">
           <el-option v-for="item in enabledList" :value="item.value" :label="item.label"
                      :key="'search_select_'+item.value">
@@ -17,25 +17,25 @@
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group style="margin-right: 20px">
-          <el-button :loading="modal_loading" @click="handleSearch()" type="primary">
+          <el-button :loading="modal_loading" @click="handleSearch" type="primary">
             {{ $t('forms.buttons.search') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleSearchReset('searchForm')" type="primary">
+          <el-button :loading="modal_loading" @click="handleSearchReset" type="primary">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleAdd()" type="primary">
+          <el-button :loading="modal_loading" @click="handleAdd" type="primary">
             {{ $t('forms.buttons.add') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleDeleteMore()" type="primary">
+          <el-button :loading="modal_loading" @click="handleDeleteMore" type="primary">
             {{ $t('forms.buttons.delete') }}
           </el-button>
         </el-button-group>
-        <el-button :loading="modal_loading" @click="handleRefresh()" type="success">
+        <el-button :loading="modal_loading" @click="handleRefresh" type="success">
           {{ $t('forms.buttons.refreshRoute') }}
         </el-button>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchForm.orderParam"
+    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchFormModel.orderParam"
               :data="searchData"
               v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
               @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
@@ -92,49 +92,49 @@
       </el-table-column>
     </el-table>
     <el-pagination @size-change="handlePageSizeSearch"
-                   v-model:current-page="searchForm.currPage"
-                   :page-sizes="searchForm.pageSizeArray"
-                   v-model:page-size="searchForm.pageSize"
+                   v-model:current-page="searchFormModel.currPage"
+                   :page-sizes="searchFormModel.pageSizeArray"
+                   v-model:page-size="searchFormModel.pageSize"
                    :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
-                   :total="searchForm.totalRows">
+                   :total="searchFormModel.totalRows">
     </el-pagination>
     <el-dialog v-model="editModal" :title="$t('forms.info')" :fullscreen="true">
-      <el-form ref="editForm" :model="editForm" :rules="ruleAddForm" label-width="auto" size="small"
+      <el-form ref="editForm" :model="editFormModel" :rules="ruleAddForm" label-width="undefined" size="small"
                style="padding-right: 25px;" v-loading="modal_loading" @submit.native.prevent>
         <el-row>
           <el-col :lg="8">
             <el-form-item :label="$t('forms.routeId')" prop="routeId" style="width: 100%">
-              <el-input v-model="editForm.routeId" :disabled="modal_loading" ref="routeId"
+              <el-input v-model="editFormModel.routeId" :disabled="modal_loading" ref="routeId"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.routeId')"
-                        @keyup.enter.native="doSave('editForm')"/>
+                        @keyup.enter.native="doSave"/>
             </el-form-item>
           </el-col>
           <el-col :lg="8">
             <el-form-item :label="$t('forms.uri')" prop="uri" style="width: 100%">
-              <el-input v-model="editForm.uri" :disabled="modal_loading"
+              <el-input v-model="editFormModel.uri" :disabled="modal_loading"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.uri')"
-                        @keyup.enter.native="doSave('editForm')"/>
+                        @keyup.enter.native="doSave"/>
             </el-form-item>
           </el-col>
           <el-col :lg="8">
             <el-form-item :label="$t('forms.sort')" prop="orderNum">
-              <el-input-number v-model="editForm.orderNum" :disabled="modal_loading"
+              <el-input-number v-model="editFormModel.orderNum" :disabled="modal_loading"
                                style="width: 100%;max-width: 160px;"
                                :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" :min="0"
-                               @keyup.enter.native="doSave('editForm')"/>
+                               @keyup.enter.native="doSave"/>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :lg="8">
             <el-form-item :label="$t('forms.enabled')" prop="enabled">
-              <el-switch v-model="editForm.enabled" :disabled="modal_loading">
+              <el-switch v-model="editFormModel.enabled" :disabled="modal_loading">
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :lg="16">
             <el-form-item :label="$t('forms.remarks')" prop="remarks" style="width: 100%;">
-              <el-input v-model="editForm.remarks" :disabled="modal_loading" type="textarea" :rows="3"
+              <el-input v-model="editFormModel.remarks" :disabled="modal_loading" type="textarea" :rows="3"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')"/>
             </el-form-item>
           </el-col>
@@ -142,14 +142,14 @@
         <el-row>
           <el-col :lg="12">
             <el-form-item :label="$t('forms.predicates')" prop="predicates" style="width: 100%">
-              <vueJsonEditor v-model="editForm.predicates" :lang="jsonEditorLang" :showBtns="false"
+              <vueJsonEditor v-model="editFormModel.predicates" :lang="jsonEditorLang" :showBtns="false"
                              :modes="jsonEditModes" :expandedOnStart="true"
                              :mode="'text'"/>
             </el-form-item>
           </el-col>
           <el-col :lg="12">
             <el-form-item :label="$t('forms.filters')" prop="filters" style="width: 100%">
-              <vueJsonEditor v-model="editForm.filters" :lang="jsonEditorLang" :showBtns="false"
+              <vueJsonEditor v-model="editFormModel.filters" :lang="jsonEditorLang" :showBtns="false"
                              :modes="jsonEditModes" :expandedOnStart="true"
                              :mode="'text'"/>
             </el-form-item>
@@ -158,7 +158,7 @@
         <el-row>
           <el-col :lg="24">
             <el-form-item :label="$t('forms.metadata')" prop="metadata" style="width: 100%">
-              <vueJsonEditor v-model="editForm.metadata" :lang="jsonEditorLang" :showBtns="false"
+              <vueJsonEditor v-model="editFormModel.metadata" :lang="jsonEditorLang" :showBtns="false"
                              :modes="jsonEditModes" :expandedOnStart="true"
                              :mode="'text'"/>
             </el-form-item>
@@ -170,7 +170,7 @@
           <el-button type="default" :loading="modal_loading" @click="doCancel()">
             {{ $t('forms.buttons.cancel') }}
           </el-button>
-          <el-button type="primary" :loading="modal_loading" @click="doSave('editForm')">
+          <el-button type="primary" :loading="modal_loading" @click="doSave">
             {{ $t('forms.buttons.submit') }}
           </el-button>
         </div>
@@ -181,8 +181,8 @@
 </template>
 <script>
 import vueJsonEditor from 'vue-json-editor'
-import {nextTick} from "vue";
-import {isMobile} from "@/libs/tools";
+import {nextTick, ref} from "vue";
+import {isMobileDevice} from "@/libs/tools";
 
 export default {
   name: 'routeConfig',
@@ -192,7 +192,7 @@ export default {
   data() {
     return {
       jsonEditModes: ['tree', 'text'],
-      searchForm: {
+      searchFormModel: {
         routeId: '',
         enabled: '',
         orderParam: {
@@ -204,7 +204,7 @@ export default {
         pageSize: 10,
         pageSizeArray: [10, 20, 30, 40]
       },
-      editForm: {
+      editFormModel: {
         id: '',
         routeId: '',
         uri: '',
@@ -226,7 +226,7 @@ export default {
     editModal(value) {
       if (value) {
         nextTick(() => {
-          this.$refs['routeId'].focus()
+          this.routeId.focus()
         })
       }
     },
@@ -236,7 +236,7 @@ export default {
   },
   computed: {
     isMobile() {
-      return isMobile()
+      return isMobileDevice()
     },
     tableHeight() {
       const minHeight = 300
@@ -308,45 +308,45 @@ export default {
     handleAdd() {
       this.editModal = true
       nextTick(() => {
-        this.$refs['editForm'].resetFields()
+        this.editForm.resetFields()
         this.action = 0
       })
     },
     handleEdit(row) {
       this.editModal = true
       nextTick(() => {
-        this.$refs['editForm'].resetFields()
-        this.editForm.id = row.id
-        this.editForm.routeId = row.routeId
-        this.editForm.uri = row.uri
-        this.editForm.predicates = row.predicates ? JSON.parse(row.predicates) : []
-        this.editForm.filters = row.filters ? JSON.parse(row.filters) : []
-        this.editForm.metadata = row.metadata ? JSON.parse(row.metadata) : {}
-        this.editForm.orderNum = row.orderNum
-        this.editForm.enabled = !!row.enabled
-        this.editForm.remarks = row.remarks
+        this.editForm.resetFields()
+        this.editFormModel.id = row.id
+        this.editFormModel.routeId = row.routeId
+        this.editFormModel.uri = row.uri
+        this.editFormModel.predicates = row.predicates ? JSON.parse(row.predicates) : []
+        this.editFormModel.filters = row.filters ? JSON.parse(row.filters) : []
+        this.editFormModel.metadata = row.metadata ? JSON.parse(row.metadata) : {}
+        this.editFormModel.orderNum = row.orderNum
+        this.editFormModel.enabled = !!row.enabled
+        this.editFormModel.remarks = row.remarks
         this.action = 1
       })
     },
     doCancel() {
       this.editModal = false
     },
-    doSave(name) {
-      if (!(this.editForm.predicates instanceof Array)) {
+    doSave() {
+      if (!(this.editFormModel.predicates instanceof Array)) {
         this.$notify.error({
           title: this.$i18n.t('messages.validateFailed') + '',
           message: this.$i18n.t('forms.predicates') + this.$i18n.t('forms.incorrect')
         })
         return
       }
-      if (!(this.editForm.filters instanceof Array)) {
+      if (!(this.editFormModel.filters instanceof Array)) {
         this.$notify.error({
           title: this.$i18n.t('messages.validateFailed') + '',
           message: this.$i18n.t('forms.filters') + this.$i18n.t('forms.incorrect')
         })
         return
       }
-      if (this.editForm.metadata instanceof Array) {
+      if (this.editFormModel.metadata instanceof Array) {
         this.$notify.error({
           title: this.$i18n.t('messages.validateFailed') + '',
           message: this.$i18n.t('forms.metadata') + this.$i18n.t('forms.incorrect')
@@ -355,18 +355,18 @@ export default {
       }
       switch (this.action) {
         case 0:
-          this.$refs[name].validate((valid) => {
+          this.editForm.validate((valid) => {
             if (valid) {
               this.modal_loading = true
               this.$api.request.route.create({
-                routeId: this.editForm.routeId,
-                uri: this.editForm.uri,
-                orderNum: this.editForm.orderNum,
-                predicates: JSON.stringify(this.editForm.predicates),
-                filters: JSON.stringify(this.editForm.filters),
-                metadata: JSON.stringify(this.editForm.metadata),
-                enabled: this.editForm.enabled,
-                remarks: this.editForm.remarks
+                routeId: this.editFormModel.routeId,
+                uri: this.editFormModel.uri,
+                orderNum: this.editFormModel.orderNum,
+                predicates: JSON.stringify(this.editFormModel.predicates),
+                filters: JSON.stringify(this.editFormModel.filters),
+                metadata: JSON.stringify(this.editFormModel.metadata),
+                enabled: this.editFormModel.enabled,
+                remarks: this.editFormModel.remarks
               }).then((res) => {
                 this.modal_loading = false
                 if (res) {
@@ -381,19 +381,19 @@ export default {
           })
           break
         case 1:
-          this.$refs[name].validate((valid) => {
+          this.editForm.validate((valid) => {
             if (valid) {
               this.modal_loading = true
               this.$api.request.route.update({
-                id: this.editForm.id,
-                routeId: this.editForm.routeId,
-                uri: this.editForm.uri,
-                orderNum: this.editForm.orderNum,
-                predicates: JSON.stringify(this.editForm.predicates),
-                filters: JSON.stringify(this.editForm.filters),
-                metadata: JSON.stringify(this.editForm.metadata),
-                enabled: this.editForm.enabled,
-                remarks: this.editForm.remarks
+                id: this.editFormModel.id,
+                routeId: this.editFormModel.routeId,
+                uri: this.editFormModel.uri,
+                orderNum: this.editFormModel.orderNum,
+                predicates: JSON.stringify(this.editFormModel.predicates),
+                filters: JSON.stringify(this.editFormModel.filters),
+                metadata: JSON.stringify(this.editFormModel.metadata),
+                enabled: this.editFormModel.enabled,
+                remarks: this.editFormModel.remarks
               }).then((res) => {
                 this.modal_loading = false
                 if (res) {
@@ -422,28 +422,28 @@ export default {
       })
     },
     handlePageSizeSearch(size) {
-      this.searchForm.pageSize = size
+      this.searchFormModel.pageSize = size
       this.handleSearch()
     },
     handleSearch() {
       let searchParam = {
-        routeId: this.searchForm.routeId,
-        enabled: this.searchForm.enabled,
+        routeId: this.searchFormModel.routeId,
+        enabled: this.searchFormModel.enabled,
         queryParam: {
-          currPage: this.searchForm.currPage,
-          pageSize: this.searchForm.pageSize
+          currPage: this.searchFormModel.currPage,
+          pageSize: this.searchFormModel.pageSize
         }
       }
-      if (this.searchForm.orderParam.order !== 'normal') {
-        searchParam.queryParam.orderName = this.searchForm.orderParam.prop
-        searchParam.queryParam.orderCommand = this.searchForm.orderParam.order
+      if (this.searchFormModel.orderParam.order !== 'normal') {
+        searchParam.queryParam.orderName = this.searchFormModel.orderParam.prop
+        searchParam.queryParam.orderCommand = this.searchFormModel.orderParam.order
       }
       this.modal_loading = true
       this.$api.request.route.query(searchParam).then((res) => {
         this.modal_loading = false
         if (res) {
           this.selectedData = []
-          this.searchForm.totalRows = res.data.totalElements
+          this.searchFormModel.totalRows = res.data.totalElements
           this.searchData = res.data.content.map(item => {
             if (item.enabled) {
               item._disabled = true
@@ -451,7 +451,7 @@ export default {
             return item
           })
           nextTick(() => {
-            this.$refs['table'].doLayout()
+            this.table.doLayout()
           })
         }
       }).catch(() => {
@@ -462,16 +462,16 @@ export default {
     },
     handleRowClick(row) {
       if (!row._disabled) {
-        this.$refs['table'].toggleRowSelection(row)
+        this.table.toggleRowSelection(row)
       }
     },
     handleSortChange(param) {
-      this.searchForm.orderParam.prop = param.prop
-      this.searchForm.orderParam.order = param.order
+      this.searchFormModel.orderParam.prop = param.prop
+      this.searchFormModel.orderParam.order = param.order
       this.handleSearch()
     },
-    handleSearchReset(name) {
-      this.$refs[name].resetFields()
+    handleSearchReset() {
+      this.searchForm.resetFields()
     },
     handleSelect(selection) {
       this.selectedData = selection
@@ -531,8 +531,15 @@ export default {
   },
   activated() {
     nextTick(() => {
-      this.$refs['table'].doLayout()
+      this.table.doLayout()
     })
+  },
+  setup() {
+    const searchForm = ref(null)
+    const table = ref(null)
+    const editForm = ref(null)
+    const routeId = ref(null)
+    return {searchForm, table, editForm, routeId}
   }
 }
 </script>

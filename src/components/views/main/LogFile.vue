@@ -1,6 +1,6 @@
 <template>
   <el-card style="min-height: 350px;">
-    <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="auto" :inline="true"
+    <el-form ref="searchForm" :model="formValidate" :rules="ruleValidate" label-width="undefined" :inline="true"
              size="small" @submit.native.prevent>
       <el-form-item :label="$t('forms.startDate')" prop="startDate">
         <el-date-picker type="date" :disabled="form_loading" :disabled-date="disabledDate"
@@ -40,6 +40,8 @@
   </el-card>
 </template>
 <script>
+import {ref} from "vue";
+
 export default {
   name: 'logFile',
   data() {
@@ -102,7 +104,7 @@ export default {
       return date.getTime() >= now.getTime()
     },
     handleSearch() {
-      this.$refs['formValidate'].validate((valid) => {
+      this.searchForm.validate((valid) => {
         if (valid) {
           this.form_loading = true
           this.$api.request.log.searchFile(this.formValidate.startDate.getTime(), this.formValidate.endDate.getTime()).then((res) => {
@@ -117,11 +119,14 @@ export default {
       })
     },
     handleSearchReset() {
-      this.$refs['formValidate'].resetFields()
+      this.searchForm.resetFields()
     },
     downLoadFile(file) {
       this.$api.request.log.downLoadFile(file)
     }
+  }, setup() {
+    const searchForm = ref(null)
+    return {searchForm}
   }
 }
 </script>

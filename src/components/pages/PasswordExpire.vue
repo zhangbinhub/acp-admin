@@ -11,27 +11,27 @@
           </div>
         </template>
         <div>
-          <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" @submit.native.prevent>
+          <el-form ref="passwordForm" :model="formValidate" :rules="ruleValidate" @submit.native.prevent>
             <el-form-item>
               <input type="password" style="display: none;"/>
             </el-form-item>
             <el-form-item prop="oldPassword">
               <el-input :disabled="modal_loading" :placeholder="text.oldPasswordPlaceholder"
-                        @keyup.native.enter="handleSubmit('formValidate')" prefix-icon="el-icon-lock"
+                        @keyup.native.enter="handleSubmit" prefix-icon="el-icon-lock"
                         autocomplete="off" type="text" @focus="passwordFocus"
                         v-model="formValidate.oldPassword">
               </el-input>
             </el-form-item>
             <el-form-item prop="password">
               <el-input :disabled="modal_loading" :placeholder="text.passwordPlaceholder"
-                        @keyup.native.enter="handleSubmit('formValidate')" prefix-icon="el-icon-lock"
+                        @keyup.native.enter="handleSubmit" prefix-icon="el-icon-lock"
                         autocomplete="off" type="text" @focus="passwordFocus"
                         v-model="formValidate.password">
               </el-input>
             </el-form-item>
             <el-form-item prop="repeatPassword">
               <el-input :disabled="modal_loading" :placeholder="text.repeatPasswordPlaceholder"
-                        @keyup.native.enter="handleSubmit('formValidate')" prefix-icon="el-icon-lock"
+                        @keyup.native.enter="handleSubmit" prefix-icon="el-icon-lock"
                         autocomplete="off" type="text" @focus="passwordFocus"
                         v-model="formValidate.repeatPassword">
               </el-input>
@@ -41,7 +41,7 @@
         <template #footer>
           <div style="text-align: center">
             <el-button type="primary" :loading="modal_loading" style="width: 100%"
-                       @click="handleSubmit('formValidate')">
+                       @click="handleSubmit">
               {{ $t('forms.buttons.submit') }}
             </el-button>
             <small style="text-align: center;display: block;margin-top: 10px;">
@@ -56,6 +56,7 @@
 </template>
 <script>
 import '@/assets/styles/login.less'
+import {ref} from "vue";
 
 export default {
   name: 'passwordExpire',
@@ -140,9 +141,9 @@ export default {
     passwordFocus(event) {
       event.target.type = 'password'
     },
-    handleSubmit(name) {
+    handleSubmit() {
       const currObj = this
-      currObj.$refs[name].validate((valid) => {
+      currObj.passwordForm.validate((valid) => {
         if (valid) {
           currObj.modal_loading = true
           currObj.$api.request.auth.updateUserInfo(Object.assign({
@@ -188,6 +189,10 @@ export default {
         this.passwordComplexityPolicy = 0
       }
     })
+  },
+  setup() {
+    const passwordForm = ref(null)
+    return {passwordForm}
   }
 }
 </script>
