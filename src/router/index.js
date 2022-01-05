@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import routes from './routers'
 import store from '@/store'
 import NProgress from 'nprogress'
+import {buildRouteParams, getRouteParams} from "@/libs/tools";
 
 const router = createRouter({
   history: createWebHistory(store.state.app.appInfo.routeBase),
@@ -14,37 +15,31 @@ const router = createRouter({
     }
   }
 })
-router.beforeEach((to, from) => {
+router.beforeEach((to, from, next) => {
   NProgress.start()
   if (to.matched.length === 0) {
-    router.replace({
+    next({
       name: 'E404',
-      params: {redirect: from.fullPath}
+      params: buildRouteParams({redirect: from.fullPath})
     })
   } else {
-    if (to.name === 'E404' && !to.params.redirect) {
-      router.replace({
-        name: 'E404',
-        params: {redirect: from.fullPath}
+    if (to.meta.requireAuth && !store.state.app.user.token) {
+      store.commit('LOGIN_OUT')
+      store.commit('SET_TAG_NAV_LIST', [])
+      next({
+        name: 'login'
       })
     } else {
-      if (to.meta.requireAuth) {
-        if (!store.state.app.user.token) {
-          store.commit('LOGIN_OUT')
-          store.commit('SET_TAG_NAV_LIST', [])
-          router.replace({
-            name: 'login'
-          })
-        }
-      }
+      next()
     }
   }
 })
 router.afterEach(to => {
   NProgress.done()
+  const params = getRouteParams(to)
   let pageTitle = ''
-  if (to.params.pageName) {
-    pageTitle = ' - ' + to.params.pageName
+  if (params.pageName) {
+    pageTitle = ' - ' + params.pageName
   } else if (to.meta.title) {
     pageTitle = ' - ' + store.state.app.i18n.global.t(to.meta.title)
   }

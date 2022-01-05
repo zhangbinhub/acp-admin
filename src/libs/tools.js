@@ -152,10 +152,36 @@ export const updateTagNavList = (tagNavList, menuList, route) => {
       meta: route.meta,
       routeName: route.name,
       routeQuery: route.query || {},
-      routeParams: route.params || {}
+      routeParams: getRouteParams(route)
     })
     return tagNavList
   }
+}
+
+/**
+ * 构建路由参数对象，用于路由处理
+ * @param params 原始对象
+ * @returns {{value: string}|{}}
+ */
+export const buildRouteParams = (params) => {
+  if (params && Object.keys(params).length > 0) {
+    return {value: JSON.stringify(params)}
+  } else {
+    return {}
+  }
+}
+
+/**
+ * 获取路由参数原始对象
+ * @param route 路由对象
+ * @returns params 原始对象
+ */
+export const getRouteParams = (route) => {
+  let params = {}
+  if (route.params && route.params.value && typeof route.params.value === 'string') {
+    params = JSON.parse(route.params.value)
+  }
+  return params
 }
 
 /**
@@ -361,7 +387,7 @@ export const doDownLoadFile = (action, method = 'get', params = undefined) => {
  * 判断浏览器是否为手机
  * @returns {boolean}
  */
-export const isMobile = () => {
+export const isMobileDevice = () => {
   const result = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
   return !!(result && result.length > 0)
 }

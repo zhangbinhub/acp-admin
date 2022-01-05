@@ -55,6 +55,7 @@
 <script>
 import '@/assets/styles/login.less'
 import {nextTick, ref} from "vue";
+import {getRouteParams} from "@/libs/tools";
 
 export default {
   name: 'login',
@@ -116,11 +117,12 @@ export default {
                   currObj.$store.commit('SET_LOGIN_NO', '')
                 }
                 currObj.$store.commit('SET_REMEMBER', currObj.formValidate.remember)
-                let redirectPath = this.homePath
+                const params = getRouteParams(currObj.$route)
+                let redirectPath = currObj.homePath
                 if (currObj.$route.query.redirect) {
                   redirectPath = currObj.$route.query.redirect
-                } else if (currObj.$route.params.redirect) {
-                  redirectPath = currObj.$route.params.redirect
+                } else if (params.redirect) {
+                  redirectPath = params.redirect
                 }
                 currObj.$router.replace(redirectPath)
               } else {

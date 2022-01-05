@@ -1,6 +1,6 @@
 import {
   findMenuByPath,
-  deepEqual
+  deepEqual, buildRouteParams
 } from '@/libs/tools'
 
 const ApiComm = {
@@ -338,7 +338,6 @@ const ApiComm = {
       }
       option = {
         path: path,
-        params: params,
         query: routeQuery
       }
       if (this.$router.currentRoute.value.fullPath === path) {
@@ -348,7 +347,7 @@ const ApiComm = {
       // name
       option = {
         name: pathOrName,
-        params: params,
+        params: buildRouteParams(params),
         query: query
       }
       if (this.$router.currentRoute.value.name === pathOrName) {
