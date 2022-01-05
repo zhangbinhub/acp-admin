@@ -35,7 +35,7 @@
 
 <script>
 import {nextTick} from 'vue'
-import {copy} from '@/libs/tools'
+import {copy, getRouteParams} from '@/libs/tools'
 import './tags-nav.less'
 
 export default {
@@ -148,7 +148,7 @@ export default {
           newTagNavList.forEach((item) => {
             if (item.path === to.fullPath) {
               item.routeQuery = to.query
-              item.routeParams = to.params
+              item.routeParams = getRouteParams(to)
             }
           })
           this.$store.commit('SET_TAG_NAV_LIST', newTagNavList)

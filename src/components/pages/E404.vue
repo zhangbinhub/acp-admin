@@ -17,141 +17,144 @@
     </svg>
     <div class="message-box">
       <h1>404</h1>
-      <p>{{$t('errorPage.message404')}}</p>
-      <p>{{$t('errorPage.description404')}}</p>
+      <p>{{ $t('errorPage.message404') }}</p>
+      <p>{{ $t('errorPage.description404') }}</p>
       <div class="buttons-con">
         <div class="action-link-wrap">
-          <a @click="goBack">{{$t('errorPage.buttons.back')}}</a>
-          <a @click="goHome">{{$t('errorPage.buttons.home')}}</a>
-          <a @click="goLogin">{{$t('errorPage.buttons.login')}}</a>
+          <a @click="goBack">{{ $t('errorPage.buttons.back') }}</a>
+          <a @click="goHome">{{ $t('errorPage.buttons.home') }}</a>
+          <a @click="goLogin">{{ $t('errorPage.buttons.login') }}</a>
         </div>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
-  .e404 {
-    background-color: #404040;
-    width: 100%;
-    height: 100%;
-  }
+.e404 {
+  background-color: #404040;
+  width: 100%;
+  height: 100%;
+}
 
+svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -250px;
+  margin-left: -400px;
+}
+
+.message-box {
+  height: 200px;
+  width: 380px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -100px;
+  margin-left: 50px;
+  color: #FFF;
+  font-weight: 300;
+}
+
+.message-box h1 {
+  font-size: 60px;
+  line-height: 46px;
+  margin-bottom: 40px;
+  color: #fff;
+  text-shadow: 0 0 80px #ffffff, 0 0 30px #008000, 0 0 6px #0000ff;
+}
+
+.buttons-con .action-link-wrap {
+  margin-top: 40px;
+}
+
+.buttons-con .action-link-wrap a {
+  background: #fff;
+  padding: 8px 25px;
+  border-radius: 2px;
+  color: #404040;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all 0.3s linear;
+  cursor: pointer;
+  text-decoration: none;
+  margin-right: 10px
+}
+
+.buttons-con .action-link-wrap a:hover {
+  background: #ddd;
+  color: #404040;
+}
+
+#Polygon-1,
+#Polygon-2,
+#Polygon-3,
+#Polygon-4,
+#Polygon-4,
+#Polygon-5 {
+  animation: float 1s infinite ease-in-out alternate;
+}
+
+#Polygon-2 {
+  animation-delay: .2s;
+}
+
+#Polygon-3 {
+  animation-delay: .4s;
+}
+
+#Polygon-4 {
+  animation-delay: .6s;
+}
+
+#Polygon-5 {
+  animation-delay: .8s;
+}
+
+@keyframes float {
+  100% {
+    transform: translateY(20px);
+  }
+}
+
+@media (max-width: 450px) {
   svg {
     position: absolute;
     top: 50%;
     left: 50%;
     margin-top: -250px;
-    margin-left: -400px;
+    margin-left: -190px;
   }
 
   .message-box {
-    height: 200px;
-    width: 380px;
-    position: absolute;
     top: 50%;
     left: 50%;
     margin-top: -100px;
-    margin-left: 50px;
-    color: #FFF;
-    font-weight: 300;
+    margin-left: -190px;
+    text-align: center;
   }
-
-  .message-box h1 {
-    font-size: 60px;
-    line-height: 46px;
-    margin-bottom: 40px;
-    color: #fff;
-    text-shadow: 0 0 80px #ffffff, 0 0 30px #008000, 0 0 6px #0000ff;
-  }
-
-  .buttons-con .action-link-wrap {
-    margin-top: 40px;
-  }
-
-  .buttons-con .action-link-wrap a {
-    background: #fff;
-    padding: 8px 25px;
-    border-radius: 2px;
-    color: #404040;
-    font-weight: bold;
-    font-size: 14px;
-    transition: all 0.3s linear;
-    cursor: pointer;
-    text-decoration: none;
-    margin-right: 10px
-  }
-
-  .buttons-con .action-link-wrap a:hover {
-    background: #ddd;
-    color: #404040;
-  }
-
-  #Polygon-1,
-  #Polygon-2,
-  #Polygon-3,
-  #Polygon-4,
-  #Polygon-4,
-  #Polygon-5 {
-    animation: float 1s infinite ease-in-out alternate;
-  }
-
-  #Polygon-2 {
-    animation-delay: .2s;
-  }
-
-  #Polygon-3 {
-    animation-delay: .4s;
-  }
-
-  #Polygon-4 {
-    animation-delay: .6s;
-  }
-
-  #Polygon-5 {
-    animation-delay: .8s;
-  }
-
-  @keyframes float {
-    100% {
-      transform: translateY(20px);
-    }
-  }
-
-  @media (max-width: 450px) {
-    svg {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-top: -250px;
-      margin-left: -190px;
-    }
-
-    .message-box {
-      top: 50%;
-      left: 50%;
-      margin-top: -100px;
-      margin-left: -190px;
-      text-align: center;
-    }
-  }
+}
 </style>
 <script>
-  export default {
-    name: 'E404',
-    methods: {
-      goBack () {
-        if (this.$route.params.redirect) {
-          this.$router.replace(this.$route.params.redirect)
-        } else {
-          this.goHome()
-        }
-      },
-      goHome () {
-        this.$api.redirectHome()
-      },
-      goLogin () {
-        this.$api.redirectLogin()
+import {getRouteParams} from "@/libs/tools";
+
+export default {
+  name: 'E404',
+  methods: {
+    goBack() {
+      const params = getRouteParams(this.$route)
+      if (params.redirect) {
+        this.$router.replace(params.redirect)
+      } else {
+        this.goHome()
       }
+    },
+    goHome() {
+      this.$api.redirectHome()
+    },
+    goLogin() {
+      this.$api.redirectLogin()
     }
   }
+}
 </script>
