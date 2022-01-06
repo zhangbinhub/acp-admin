@@ -3,23 +3,22 @@
     <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.processKey')" prop="processDefinitionKey">
-        <el-input v-model="searchFormModel.processDefinitionKey" :disabled="modal_loading" style="width: 200px"
+        <el-input v-model="searchFormModel.processDefinitionKey" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.processKey')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.processInstanceId')" prop="processInstanceId">
-        <el-input v-model="searchFormModel.processInstanceId" :disabled="modal_loading" style="width: 200px"
+        <el-input v-model="searchFormModel.processInstanceId" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.processInstanceId')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.processBusinessKey')" prop="processBusinessKey">
-        <el-input v-model="searchFormModel.processBusinessKey" :disabled="modal_loading" style="width: 200px"
+        <el-input v-model="searchFormModel.processBusinessKey" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.processBusinessKey')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.flowStatus')" prop="history">
-        <el-select v-model="searchFormModel.history" :disabled="modal_loading" value=""
-                   style="width:100px">
+        <el-select v-model="searchFormModel.history" :disabled="modal_loading" value="">
           <el-option v-for="item in infoTypeList" :value="item.value" :label="item.label"
                      :key="'search_select_'+item.value">
           </el-option>
