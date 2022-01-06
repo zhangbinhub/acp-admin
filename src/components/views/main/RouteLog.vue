@@ -298,7 +298,7 @@ export default {
     }
   },
   watch: {
-    'searchForm.currPage'() {
+    'searchFormModel.currPage'() {
       this.handleSearch()
     }
   },

@@ -13,7 +13,7 @@
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.status')" prop="enabled">
-        <el-select v-model="searchFormModel.enabled" :clearable="true" :disabled="modal_loading" value="">
+        <el-select v-model="searchFormModel.enabled" :disabled="modal_loading" value="">
           <el-option v-for="item in enabledList" :value="item.value" :label="item.label"
                      :key="'search_select_'+item.value">
           </el-option>
@@ -161,7 +161,7 @@ export default {
       searchFormModel: {
         name: '',
         value: '',
-        enabled: '',
+        enabled: undefined,
         orderParam: {
           prop: 'name',
           order: 'ascending'
@@ -196,7 +196,7 @@ export default {
         })
       }
     },
-    'searchForm.currPage'() {
+    'searchFormModel.currPage'() {
       this.handleSearch()
     }
   },

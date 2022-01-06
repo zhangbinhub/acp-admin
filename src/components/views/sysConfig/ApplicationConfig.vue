@@ -201,7 +201,7 @@ export default {
         })
       }
     },
-    'searchForm.currPage'() {
+    'searchFormModel.currPage'() {
       this.handleSearch()
     }
   },

@@ -563,7 +563,7 @@
       <el-form ref="editForm" v-loading="modal_loading" :model="editFormModel" @submit.native.prevent>
         <el-form-item label="选择用户" required prop="selectUserResult">
           <el-select v-model="editFormModel.selectUserResult" filterable
-                     remote clearable value-key="id" placeholder="请输入用户姓名或工号"
+                     remote value-key="id" placeholder="请输入用户姓名或工号"
                      :loading="modal_loading" :remote-method="remoteSelectUser" style="width: 100%">
             <el-option v-for="item in userOptions"
                        :key="'select_user_'+item.id"
@@ -693,7 +693,7 @@ export default {
     }
   },
   watch: {
-    'searchForm.currPage'() {
+    'searchFormModel.currPage'() {
       this.handleSearch()
     },
     'currObj.processInstanceId'(processInstanceId) {
