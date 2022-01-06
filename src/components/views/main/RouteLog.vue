@@ -38,8 +38,7 @@
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.infoType')" prop="history">
-        <el-select v-model="searchFormModel.history" :disabled="modal_loading" value=""
-                   style="width:100px">
+        <el-select v-model="searchFormModel.history" :disabled="modal_loading" value="">
           <el-option v-for="item in infoTypeList" :value="item.value" :label="item.label"
                      :key="'search_select_'+item.value">
           </el-option>
