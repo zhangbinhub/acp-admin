@@ -8,7 +8,7 @@
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.status')" prop="enabled">
-        <el-select v-model="searchFormModel.enabled" :clearable="true" :disabled="modal_loading" value="">
+        <el-select v-model="searchFormModel.enabled" :disabled="modal_loading" value="">
           <el-option v-for="item in enabledList" :value="item.value" :label="item.label"
                      :key="'search_select_'+item.value">
           </el-option>
@@ -193,7 +193,7 @@ export default {
       jsonEditModes: ['tree', 'text'],
       searchFormModel: {
         routeId: '',
-        enabled: '',
+        enabled: undefined,
         orderParam: {
           prop: 'routeId',
           order: 'ascending'
@@ -229,7 +229,7 @@ export default {
         })
       }
     },
-    'searchForm.currPage'() {
+    'searchFormModel.currPage'() {
       this.handleSearch()
     }
   },
