@@ -12,6 +12,9 @@
 - [Upgrade] 修改组件size属性
 - [Upgrade] 去除el-pagination多余样式
 - [Upgrade] tools中新增路由参数打包解包方法
+- [Upgrade] 修改vue.config.js部署路径使用相对路径
+- [Upgrade] 修改appInfo.js中routeBase使用相对路径
+- [Upgrade] 修改路由组件，使用HashHistory
 - [Fix] 修复vue-route4.0通过path跳转时，url参数不传递的问题[ApiComm.js 323~343](../src/api/ApiComm.js)
 ##### v5.1.1
 > - [Upgrade] 更新依赖插件至最新版本
