@@ -9,7 +9,7 @@
       </el-form-item>
       <el-form-item :label="$t('forms.execTime')" prop="startTime">
         <el-date-picker type="daterange" :disabled="modal_loading" :shortcuts="pickerShortcuts"
-                        v-model="searchFormModel.startTime" :class="{mobile:isMobile}"
+                        v-model="searchFormModel.startTime"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.execTime')"/>
       </el-form-item>
       <el-form-item style="float: right">

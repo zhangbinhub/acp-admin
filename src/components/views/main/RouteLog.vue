@@ -46,7 +46,7 @@
       </el-form-item>
       <el-form-item :label="$t('forms.startDate')" prop="startTime">
         <el-date-picker v-model="searchFormModel.startTime" :disabled="modal_loading" type="daterange"
-                        :shortcuts="pickerShortcuts" :class="{mobile:isMobile}"/>
+                        :shortcuts="pickerShortcuts"/>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group style="margin-right: 20px">
