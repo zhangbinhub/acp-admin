@@ -687,11 +687,12 @@ export default {
   setup() {
     const searchForm = ref(null)
     const table = ref(null)
+    const editForm = ref(null)
     const name = ref(null)
     const orgTree = ref(null)
     const orgMngTree = ref(null)
     const roleTree = ref(null)
-    return {searchForm, table, name, orgTree, orgMngTree, roleTree}
+    return {searchForm, table, editForm, name, orgTree, orgMngTree, roleTree}
   }
 }
 </script>

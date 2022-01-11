@@ -1,7 +1,7 @@
 <template>
   <div class="header-tabs">
     <div class="close-con">
-      <el-dropdown trigger="click" @command="handleTagsOption">
+      <el-dropdown trigger="click" @command="handleTagsOption" popper-class="dropdown-menu-content">
         <el-button type="text" size="small" style="padding-top: 6px">
           <el-icon size="18">
             <el-icon-circle-close-filled/>

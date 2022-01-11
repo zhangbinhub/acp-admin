@@ -1,6 +1,6 @@
 <template>
   <div class="user-avatar-dropdown">
-    <el-dropdown trigger="click" @command="handleClick">
+    <el-dropdown trigger="click" @command="handleClick" popper-class="dropdown-menu-content">
       <el-avatar :src="avatar" style="margin-top: 10px" :size="40"/>
       <template #dropdown>
         <el-dropdown-menu>
