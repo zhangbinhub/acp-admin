@@ -141,25 +141,25 @@
         <el-row>
           <el-col :lg="12">
             <el-form-item :label="$t('forms.predicates')" prop="predicates" style="width: 100%">
-              <vueJsonEditor v-model="editFormModel.predicates" :lang="jsonEditorLang" :showBtns="false"
-                             :modes="jsonEditModes" :expandedOnStart="true"
-                             :mode="'text'"/>
+              <vueJsonEditor v-model:value="editFormModel.predicates" :lang="jsonEditorLang" :showBtns="false"
+                             :modes="jsonEditModes" :expandedOnStart="true" style="width: 100%"
+                             :mode="'text'" @json-change="function(json){editFormModel.predicates=json}"/>
             </el-form-item>
           </el-col>
           <el-col :lg="12">
             <el-form-item :label="$t('forms.filters')" prop="filters" style="width: 100%">
-              <vueJsonEditor v-model="editFormModel.filters" :lang="jsonEditorLang" :showBtns="false"
-                             :modes="jsonEditModes" :expandedOnStart="true"
-                             :mode="'text'"/>
+              <vueJsonEditor v-model:value="editFormModel.filters" :lang="jsonEditorLang" :showBtns="false"
+                             :modes="jsonEditModes" :expandedOnStart="true" style="width: 100%"
+                             :mode="'text'" @json-change="function(json){editFormModel.filters=json}"/>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :lg="24">
             <el-form-item :label="$t('forms.metadata')" prop="metadata" style="width: 100%">
-              <vueJsonEditor v-model="editFormModel.metadata" :lang="jsonEditorLang" :showBtns="false"
-                             :modes="jsonEditModes" :expandedOnStart="true"
-                             :mode="'text'"/>
+              <vueJsonEditor v-model:value="editFormModel.metadata" :lang="jsonEditorLang" :showBtns="false"
+                             :modes="jsonEditModes" :expandedOnStart="true" style="width: 100%"
+                             :mode="'text'" @json-change="function(json){editFormModel.metadata=json}"/>
             </el-form-item>
           </el-col>
         </el-row>

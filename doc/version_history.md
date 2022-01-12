@@ -1,3 +1,4 @@
+
 ## 版本更新记录
 ##### v5.1.2
 - [Upgrade] 更新依赖插件至最新版本
@@ -15,6 +16,7 @@
 - [Upgrade] 修改vue.config.js部署路径使用相对路径
 - [Upgrade] 修改appInfo.js中routeBase使用相对路径
 - [Upgrade] 修改路由组件，使用HashHistory
+- [Upgrade] 修改vue-json-edit用法，使之兼容vue3
 - [Fix] 修复vue-route4.0通过path跳转时，url参数不传递的问题[ApiComm.js 323~343](../src/api/ApiComm.js)
 ##### v5.1.1
 > - [Upgrade] 更新依赖插件至最新版本
