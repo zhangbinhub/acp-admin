@@ -36,6 +36,7 @@
 </template>
 <script>
 import countTo from '@/plugins/vue-count-to'
+import {nextTick} from "vue";
 
 export default {
   name: 'index',
@@ -66,12 +67,18 @@ export default {
       this.$api.request.log.getLoginInfo().then(res => {
         if (res.data) {
           this.loginInfo = res.data
-          this.initLoginChart()
+          nextTick(() => {
+            this.initLoginChart()
+          })
         }
       })
     },
     initLoginChart() {
-      let loginChart = this.$echarts.init(document.getElementById('loginChart'))
+      let loginChart = this.$echarts.getInstanceByDom(document.getElementById('loginChart'))
+      if (loginChart && loginChart.dispose) {
+        loginChart.dispose()
+      }
+      loginChart = this.$echarts.init(document.getElementById('loginChart'))
       let xAxisData = []
       let appNames = []
       let series = []
