@@ -29,6 +29,7 @@
       </el-row>
     </el-card>
     <el-card v-show="showLoginChart" shadow="always" style="margin-top: 16px;">
+      <template #header>{{ $t('forms.loginStatistics') }}</template>
       <div id="loginChart" :style="{height: '300px'}"></div>
     </el-card>
   </div>
@@ -96,9 +97,6 @@ export default {
       }
       xAxisData.sort()
       loginChart.setOption({
-        title: {
-          text: this.$i18n.t('forms.loginStatistics')
-        },
         tooltip: {
           trigger: 'axis',
           axisPointer: {

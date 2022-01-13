@@ -12,21 +12,16 @@
         </side-menu>
       </el-aside>
       <el-container style="width: 100%">
-        <el-header style="padding: 0;height: 60px">
+        <el-header style="padding: 0;">
           <header-bar :collapsed="isCollapsed" :full-path="fullPath" :menu-list="menuList"
                       :mini="isMini" :is-mobile="isMobile" @on-coll-change="handleCollapsedChange">
             <user :user-avatar="userAvatar" :customer-name="userName"/>
-            <language :lang="localLang"/>
-            <logFileButton v-if="showLogFile" :is-mobile="isMobile" v-show="!isMobile||isFullscreen"/>
-            <routeLogButton v-if="showRouteLog" :is-mobile="isMobile"/>
-            <routeConfigButton v-if="showRouteConfig" :is-mobile="isMobile" v-show="!isMobile||isFullscreen"/>
-            <deployButton v-if="showDeploy" :is-mobile="isMobile" v-show="!isMobile||isFullscreen"/>
             <fullscreen v-model="isFullscreen" :is-mobile="isMobile"/>
             <home-button :is-mobile="isMobile"/>
           </header-bar>
         </el-header>
         <el-container>
-          <el-header :style="isMobile?{padding: 0,height: '59px'}:{padding: 0,height: '33px'}">
+          <el-header style="padding: 0;height: auto;">
             <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList" v-show="!isMobile"
                       @update:modelValue="handleClick" @on-close="handleCloseTag"/>
             <side-menu :accordion="true" :active-name="fullPath" :collapsed="isCollapsed" v-show="isMobile"
@@ -62,11 +57,6 @@ import TagsNav from './tags-nav'
 import User from './user'
 import homeButton from './home-button'
 import Fullscreen from './fullscreen'
-import Language from './language'
-import logFileButton from './log-file-button'
-import routeConfigButton from './route-config-button'
-import routeLogButton from './route-log-button'
-import deployButton from './deploy-button'
 import './Home.less'
 import {
   getOpenedNamesByActiveName, isMobileDevice,
@@ -78,15 +68,10 @@ export default {
   components: {
     SideMenu,
     HeaderBar,
-    Language,
     TagsNav,
     homeButton,
     Fullscreen,
-    User,
-    routeConfigButton,
-    logFileButton,
-    routeLogButton,
-    deployButton
+    User
   },
   data() {
     return {
@@ -105,18 +90,6 @@ export default {
   computed: {
     mainHeight() {
       return this.$store.state.app.mainHeight
-    },
-    showDeploy() {
-      return this.$store.state.app.user.userInfo.levels <= 0
-    },
-    showRouteConfig() {
-      return this.$store.state.app.user.userInfo.levels <= 0
-    },
-    showRouteLog() {
-      return this.$store.state.app.user.userInfo.levels <= 0
-    },
-    showLogFile() {
-      return this.$store.state.app.user.userInfo.levels <= 0
     },
     theme() {
       return this.$store.state.app.appInfo.theme
@@ -153,9 +126,6 @@ export default {
     },
     menuList() {
       return this.$store.state.app.user.menuList
-    },
-    localLang() {
-      return this.$store.state.app.lang.lang
     },
     localLangMessage() {
       return this.$store.state.app.lang.langMessages[this.$store.state.app.lang.lang]
