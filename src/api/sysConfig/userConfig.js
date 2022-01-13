@@ -22,6 +22,6 @@ export default {
     return ApiComm.$http.get('/oauth/user/reset-pwd/' + userId)
   },
   getUserList: (loginNoOrName) => {
-    return ApiComm.$http.get('/oauth/user-list/' + loginNoOrName)
+    return ApiComm.$http.get('/oauth/user-list-by-code-or-name?loginNoOrName=' + loginNoOrName)
   }
 }
