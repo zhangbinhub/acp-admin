@@ -17,6 +17,7 @@
 - [Upgrade] 修改路由组件，使用HashHistory
 - [Upgrade] 修改vue-json-edit用法，使之兼容vue3
 - [Upgrade] 调整顶部按钮和logo位置，适配移动端
+- [Upgrade] 优化菜单组件
 - [Fix] 修复vue-route4.0通过path跳转时，url参数不传递的问题[ApiComm.js 323~343](../src/api/ApiComm.js)
 ##### v5.1.1
 > - [Upgrade] 更新依赖插件至最新版本
