@@ -9,6 +9,9 @@
       <el-form-item :label="$t('forms.loginNo')" prop="loginNo">
         <span>{{ userInfo.loginNo }}</span>
       </el-form-item>
+      <el-form-item :label="$t('lang')" prop="lang">
+        <el-select-v2 v-model="currLang" :options="langList" @change="selectLang"/>
+      </el-form-item>
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input ref="name" type="text" v-model="formValidate.name" @keyup.enter.native="handleSubmit"
                   :disabled="modal_loading"
@@ -92,6 +95,12 @@ export default {
     }
   },
   computed: {
+    langList() {
+      return this.$store.state.app.lang.langList
+    },
+    currLang() {
+      return this.$store.state.app.lang.lang
+    },
     ruleValidate() {
       return {
         name: [
@@ -182,6 +191,9 @@ export default {
     }
   },
   methods: {
+    selectLang(name) {
+      this.$store.commit('SET_LANG', name)
+    },
     openAvatarUpload() {
       this.avatarUpload = true
     },

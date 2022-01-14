@@ -8,9 +8,14 @@
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.execTime')" prop="startTime">
-        <el-date-picker type="daterange" :disabled="modal_loading" :shortcuts="pickerShortcuts"
-                        v-model="searchFormModel.startTime" :class="{mobile:isMobile}"
+        <el-date-picker v-if="!isMobile" type="daterange" :disabled="modal_loading" :shortcuts="pickerShortcuts"
+                        v-model="searchFormModel.startTime"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.execTime')"/>
+        <div v-else>
+          <el-date-picker v-model="searchFormModel.startTime[0]" :disabled="modal_loading" type="date"/>
+          至
+          <el-date-picker v-model="searchFormModel.startTime[1]" :disabled="modal_loading" type="date"/>
+        </div>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group style="margin-right: 20px">

@@ -10,8 +10,9 @@
                :default-openeds="openedNames"
                @select="handleSelect">
         <template v-for="item in menuList">
-          <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"/>
-          <el-menu-item v-else :index="item.path">
+          <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"
+                          :key="item.id+'_parent'"/>
+          <el-menu-item v-else :index="item.path" :key="item.id">
             <el-icon>
               <component v-bind:is="'el-icon-'+item.iconType"></component>
             </el-icon>
@@ -24,14 +25,14 @@
              background-color="#1f2d3d"
              text-color="rgba(255, 255, 255, 0.7)"
              mode="horizontal"
-             :ellipsis="true"
              menu-trigger="click"
              active-text-color="#409eff"
              :default-active="activeName"
              @select="handleSelect">
       <template v-for="item in menuList">
-        <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"/>
-        <el-menu-item v-else :index="item.path">
+        <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"
+                        :key="item.id+'_parent'"/>
+        <el-menu-item v-else :index="item.path" :key="item.id">
           <el-icon>
             <component v-bind:is="'el-icon-'+item.iconType"></component>
           </el-icon>
