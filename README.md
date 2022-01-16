@@ -23,7 +23,7 @@
 - [Vue CLI 5](https://cli.vuejs.org/zh/)
 - [Element-plus](https://element-plus.gitee.io/#/zh-CN)
 - [echarts](https://www.echartsjs.com/index.html)
-- [cropperjs](https://github.com/fengyuanchen/cropperjs)
+- [cropperJs](https://github.com/fengyuanchen/cropperjs)
 
 ## 技术栈
 
@@ -35,7 +35,7 @@
 - vue-router
 - axios
 - echarts
-- cropperjs
+- cropperJs
 - mockjs
 - js-sha256
 - js-base64
@@ -48,17 +48,17 @@
 
 #### 说明
 
-> - 前后端交互 HttpStatus Code 说明
->
->     | HttpStatus | 描述 |
->     | --- | --- |
->     | 200 | 请求成功 |
->     | 201 | 资源创建成功 |
->     | 400 | 业务错误 |
->     | 401 | token（登录）失效 |
->     | 403 | 权限不足 |
->     | 404 | 找不到资源 |
->     | 500 | 系统异常 |
+- 前后端交互 HttpStatus Code 说明
+
+| HttpStatus | 描述          |
+|------------|-------------|
+| 200        | 请求成功        |
+| 201        | 资源创建成功      |
+| 400        | 业务错误        |
+| 401        | token（登录）失效 |
+| 403        | 权限不足        |
+| 404        | 找不到资源       |
+| 500        | 系统异常        |
 
 ## 部署运行
 
@@ -72,16 +72,7 @@
 node -v
 ```
 
-##### （二）安装淘宝 npm 镜像
-
-安装 cnpm ，之后使用 cnpm 代替 npm
-
-``` bash
-npm install -g cnpm --registry=https://registry.npm.taobao.org
-```
-
-或直接配置
-
+##### （二）设置淘宝 npm 镜像
 ```bash
 npm config set registry https://registry.npm.taobao.org
 ```
@@ -130,42 +121,39 @@ npm install
 [配置参考](https://cli.vuejs.org/zh/config/#css-loaderoptions)
 
 2、项目配置文件
-> - 持久化组件：vuex
-> - 路径：src/store
-> - 入口：[src/store/index.js](src/store/index.js)
-> - 系统信息配置文件：[src/store/config/appInfo.js](src/store/config/appInfo.js)
+
+- 持久化组件：vuex
+- 路径：src/store
+- 入口：[src/store/index.js](src/store/index.js)
+- 系统信息配置文件：[src/store/config/appInfo.js](src/store/config/appInfo.js)
 
 ##### （四）静态资源
 
-> - 路径：src/assets
+- 路径：src/assets
 
 ##### （五）Router
 
-> - 组件：vue-router
-> - 路径：src/router
-> - 入口：[src/router/index.js](src/router/index.js)
-> - 路由配置及说明：[src/router/routers.js](src/router/routers.js)
+- 组件：vue-router
+- 路径：src/router
+- 入口：[src/router/index.js](src/router/index.js)
+- 路由配置及说明：[src/router/routers.js](src/router/routers.js)
 
 ##### （六）http 请求
 
-> - 组件：axios、vue-axios
-> - 入口及全局配置：[src/plugins/plugin-axios.js](src/plugins/axios/plugin-axios.js)
-> - 请求 api
-    >
-
+- 组件：axios、vue-axios
+- 入口及全局配置：[src/plugins/plugin-axios.js](src/plugins/axios/plugin-axios.js)
+- 请求 api
 - 路径：src/api
-
-> - 入口：[src/api/index.js](src/api/index.js)
-    >
+- 入口：[src/api/index.js](src/api/index.js)
 - api 编写：新增或修改文件，在[src/api/ApiLists.js](src/api/ApiLists.js)中引入并配置
 
 ##### （七）页面布局
 
-> - 独立页面路径：src/components/pages
-> - 布局框架：src/components/layout
-> - 框架内页面：src/components/views
-> - 测试页面：src/components/test
-> - src/components 下其他路径存放自定义组件
+- 独立页面路径：src/components/pages
+- 布局框架：src/components/layout
+- 框架内页面：src/components/views
+- 测试页面：src/components/test
+- src/components 下其他路径存放自定义组件
 
 ## 四、界面展示
 
@@ -213,8 +201,8 @@ npm install
 - 登录日志
   ![images](doc/images/pages/loginLog.png)
 - demo
-    - 文件上传
-      ![images](doc/images/pages/upload.png)
+  - 文件上传
+    ![images](doc/images/pages/upload.png)
 
 ### Customize configuration
 
