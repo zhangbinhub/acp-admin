@@ -5,26 +5,27 @@
   width: 100%;
   height: 100%;
   position: relative;
+  background-color: @headerBarBgColor !important;
 
   .custom-content-con {
     float: right;
-    height: @headerBerHeight;
+    height: @headerBarHeight;
     padding-right: 20px;
-    line-height: @headerBerHeight;
+    line-height: @headerBarHeight;
 
     & > * {
       float: right;
     }
 
     & > div {
-      height: @headerBerHeight;
+      height: @headerBarHeight;
     }
 
     .header-bar-button {
       margin-right: 12px;
 
       & > button {
-        height: @headerBerHeight;
+        height: @headerBarHeight;
       }
     }
   }

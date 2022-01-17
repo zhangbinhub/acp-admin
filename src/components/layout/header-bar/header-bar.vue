@@ -4,7 +4,7 @@
     <custom-bread-crumb style="margin-left: 10px;" v-show="!mini&&!isMobile"
                         :full-path="fullPath"
                         :menu-list="menuList"/>
-    <img v-show="isMobile" :src="minLogo" alt="" style="height: 60px;margin-left: 5px;"/>
+    <img v-show="isMobile" :src="mainLogo" alt="" style="height: 60px;margin-left: 5px;"/>
     <div class="custom-content-con">
       <slot/>
     </div>
@@ -32,8 +32,8 @@ export default {
     }
   },
   computed: {
-    minLogo() {
-      return require('@/assets/images/logo/logo-main-light.png')
+    mainLogo() {
+      return require('@/assets/images/logo/logo-main-' + this.$store.state.app.appInfo.theme + '.png')
     }
   },
   methods: {
