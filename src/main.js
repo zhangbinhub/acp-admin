@@ -34,7 +34,7 @@ const autoHeight = () => {
   if (isMobileDevice()) {
     mainHeight = mainHeight - 60 - 59 - 30
   } else {
-    mainHeight = mainHeight - 60 - 33 - 30
+    mainHeight = mainHeight - 60 - 32 - 30
   }
   store.commit('MAIN_HEIGHT', mainHeight)
 }

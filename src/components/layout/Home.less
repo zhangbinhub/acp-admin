@@ -1,28 +1,30 @@
 //全局变量
 @import "../../assets/styles/variable";
 
-.logo-con {
-  height: 40px;
-  padding: 10px;
-  width: 200px;
-  position: absolute;
-  -webkit-transition: width 0.3s ease-in-out;
-  transition: width 0.3s ease-in-out;
+.home {
+  height: 100%;
 
-  img {
-    height: 44px;
-    width: auto;
-    display: block;
-    margin: 0 auto;
+  .el-header {
+    padding: 0;
   }
-}
 
-.logo-con.collapsed {
-  width: 44px;
+  .home-content {
+    height: ~"calc(100vh - 60px)";
+
+    .el-header {
+      height: auto;
+    }
+  }
+
+  .el-aside {
+    width: auto;
+    overflow: hidden;
+  }
 }
 
 .main-scrollbar {
   background-color: @mainBgColor;
+  height: ~"calc(100vh - 60px - 32px - 30px)";
 }
 
 .el-header {
@@ -40,15 +42,20 @@
   background-color: @mainBgColor;
 }
 
-.main-content.mobile {
+.mobile .main-content {
   padding: 0;
 
   .el-date-editor--daterange {
     width: 100%;
   }
+
+  .main-scrollbar {
+    height: ~"calc(100vh - 60px - 59px - 30px)";
+  }
 }
 
 .foot-content {
+  height: 30px;
   font-size: 10px;
   color: @footerFontColor;
   padding-top: 8px;

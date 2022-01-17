@@ -1,36 +1,29 @@
 <template>
   <el-config-provider :locale="localLangMessage">
-    <el-container style="height: 100%" :class="`home home-${theme}`">
-      <el-aside width="auto" :style="{overflow: 'hidden'}" v-show="!isMobile">
-        <side-menu :accordion="true" :active-name="fullPath" :collapsed="isCollapsed" :is-mobile="isMobile"
-                   @on-select="handleClick" :menu-list="menuList" :open-names="openedNames" :theme="theme"
-                   :class="{'menu-container':true,'collapsed':isCollapsed}">
-          <div :class="{'logo-con':true,'collapsed':isCollapsed}">
-            <img v-show="!isCollapsed" :src="mainLogo" alt=""/>
-            <img v-show="isCollapsed" :src="minLogo" alt=""/>
-          </div>
-        </side-menu>
-      </el-aside>
-      <el-container style="width: 100%">
-        <el-header style="padding: 0;">
-          <header-bar :collapsed="isCollapsed" :full-path="fullPath" :menu-list="menuList"
-                      :mini="isMini" :is-mobile="isMobile" @on-coll-change="handleCollapsedChange">
-            <user :user-avatar="userAvatar" :customer-name="userName"/>
-            <fullscreen v-model="isFullscreen" :is-mobile="isMobile"/>
-            <home-button :is-mobile="isMobile"/>
-          </header-bar>
-        </el-header>
-        <el-container>
-          <el-header style="padding: 0;height: auto;">
+    <el-container :class="`home home-${theme}`">
+      <el-header>
+        <header-bar :full-path="fullPath" :menu-list="menuList" :mini="isMini" :is-mobile="isMobile">
+          <user :user-avatar="userAvatar" :customer-name="userName"/>
+          <fullscreen v-model="isFullscreen" :is-mobile="isMobile"/>
+          <home-button :is-mobile="isMobile"/>
+        </header-bar>
+      </el-header>
+      <el-container class="home-content">
+        <el-aside v-show="!isMobile">
+          <side-menu :accordion="true" :active-name="fullPath" :collapsed="isCollapsed" :is-mobile="isMobile"
+                     @on-select="handleClick" :menu-list="menuList" :open-names="openedNames"
+                     :theme="theme" :class="{'menu-container':true,'collapsed':isCollapsed}"/>
+        </el-aside>
+        <el-container :class="{mobile:isMobile}">
+          <el-header>
             <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList" v-show="!isMobile"
                       @update:modelValue="handleClick" @on-close="handleCloseTag"/>
             <side-menu :accordion="true" :active-name="fullPath" :collapsed="isCollapsed" v-show="isMobile"
                        :is-mobile="isMobile" @on-select="handleClick" :menu-list="menuList" :open-names="openedNames"
-                       :theme="theme">
-            </side-menu>
+                       :theme="theme"/>
           </el-header>
-          <el-scrollbar ref="mainScrollbar" class="main-scrollbar" :style="{height:mainHeight+'px'}">
-            <el-main class="main-content" :class="{mobile:isMobile}">
+          <el-scrollbar ref="mainScrollbar" class="main-scrollbar">
+            <el-main class="main-content">
               <router-view v-slot="{ Component }">
                 <transition name="el-fade-in" mode="out-in" appear>
                   <keep-alive :include="cacheList">
@@ -41,10 +34,10 @@
             </el-main>
             <el-backtop :visibility-height="100" target=".main-scrollbar .el-scrollbar__wrap"/>
           </el-scrollbar>
+          <el-footer class="foot-content">
+            <small style="text-align: center;">{{ copyright }}</small>
+          </el-footer>
         </el-container>
-        <el-footer class="foot-content" style="height: 30px">
-          <small style="text-align: center;">{{ copyright }}</small>
-        </el-footer>
       </el-container>
     </el-container>
   </el-config-provider>
@@ -88,9 +81,6 @@ export default {
     this.initStoreData()
   },
   computed: {
-    mainHeight() {
-      return this.$store.state.app.mainHeight
-    },
     theme() {
       return this.$store.state.app.appInfo.theme
     },
@@ -105,12 +95,6 @@ export default {
     },
     isMobile() {
       return isMobileDevice()
-    },
-    minLogo() {
-      return require('@/assets/images/logo/logo.png')
-    },
-    mainLogo() {
-      return require('@/assets/images/logo/logo-main-' + this.$store.state.app.appInfo.theme + '.png')
     },
     tagNavList() {
       return this.$store.state.app.tagNavList
@@ -194,13 +178,6 @@ export default {
         if (newTagNavList && newTagNavList.length > 0) {
           this.$store.commit('SET_TAG_NAV_LIST', newTagNavList)
         }
-      }
-    },
-    handleCollapsedChange(state) {
-      if (state) {
-        this.$store.commit('CLOSE_SLIDEBAR')
-      } else {
-        this.$store.commit('OPEN_SLIDEBAR')
       }
     },
     handleCloseTag(tagList, type, nextPath, pageName) {

@@ -19,6 +19,7 @@
 - [Upgrade] 调整顶部按钮和logo位置，适配移动端
 - [Upgrade] 优化菜单组件写法
 - [Upgrade] 优化顶部标题栏样式
+- [Upgrade] 调整主界面布局
 - [Upgrade] 更新文档
 - [Fix] 修复vue-route4.0通过path跳转时，url参数不传递的问题[ApiComm.js 323~343](../src/api/ApiComm.js)
 
