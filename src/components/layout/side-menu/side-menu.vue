@@ -1,26 +1,32 @@
 <template>
   <div class="side-menu-wrapper">
-    <slot/>
-    <el-scrollbar ref="menuScrollbar" class="menu-scrollbar" v-show="!isMobile">
-      <el-menu class="menu-root" :collapse="collapsed" :unique-opened="accordion"
-               background-color="#1f2d3d"
-               text-color="rgba(255, 255, 255, 0.7)"
-               active-text-color="#409eff"
-               :default-active="activeName"
-               :default-openeds="openedNames"
-               @select="handleSelect">
-        <template v-for="item in menuList">
-          <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"
-                          :key="item.id+'_parent'"/>
-          <el-menu-item v-else :index="item.path" :key="item.id">
-            <el-icon>
-              <component v-bind:is="'el-icon-'+item.iconType"></component>
-            </el-icon>
-            <template #title>{{ item.name }}</template>
-          </el-menu-item>
-        </template>
-      </el-menu>
-    </el-scrollbar>
+    <el-container class="side-menu-content" v-show="!isMobile">
+      <el-main>
+        <el-scrollbar ref="menuScrollbar" class="menu-scrollbar">
+          <el-menu class="menu-root" :collapse="collapsed" :unique-opened="accordion"
+                   background-color="#1f2d3d"
+                   text-color="rgba(255, 255, 255, 0.7)"
+                   active-text-color="#409eff"
+                   :default-active="activeName"
+                   :default-openeds="openedNames"
+                   @select="handleSelect">
+            <template v-for="item in menuList">
+              <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"
+                              :key="item.id+'_parent'"/>
+              <el-menu-item v-else :index="item.path" :key="item.id">
+                <el-icon>
+                  <component v-bind:is="'el-icon-'+item.iconType"></component>
+                </el-icon>
+                <template #title>{{ item.name }}</template>
+              </el-menu-item>
+            </template>
+          </el-menu>
+        </el-scrollbar>
+      </el-main>
+      <el-footer>
+        <sider-trigger :collapsed="collapsed" v-show="!isMobile" @on-change="handleMenuFold"/>
+      </el-footer>
+    </el-container>
     <el-menu class="menu-root" :collapse="false" :unique-opened="accordion" v-show="isMobile"
              background-color="#1f2d3d"
              text-color="rgba(255, 255, 255, 0.7)"
@@ -43,7 +49,8 @@
   </div>
 </template>
 <script>
-import {nextTick, ref} from 'vue'
+import siderTrigger from './sider-trigger'
+import {ref} from 'vue'
 import {getOpenedNamesByActiveName} from '@/libs/tools'
 import SideMenuItem from './side-menu-item.vue'
 import './side-menu.less'
@@ -51,6 +58,7 @@ import './side-menu.less'
 export default {
   name: 'SideMenu',
   components: {
+    siderTrigger,
     SideMenuItem
   },
   props: {
@@ -85,11 +93,13 @@ export default {
   methods: {
     handleSelect(path) {
       this.$emit('on-select', path)
-    }
-  },
-  computed: {
-    mainHeight() {
-      return this.$store.state.app.mainHeight
+    },
+    handleMenuFold(state) {
+      if (state) {
+        this.$store.commit('CLOSE_SLIDEBAR')
+      } else {
+        this.$store.commit('OPEN_SLIDEBAR')
+      }
     }
   },
   watch: {
@@ -105,11 +115,6 @@ export default {
     },
     openNames(newNames) {
       this.openedNames = newNames
-    },
-    mainHeight() {
-      nextTick(() => {
-        this.menuScrollbar.update()
-      })
     }
   },
   setup() {

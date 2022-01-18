@@ -6,9 +6,19 @@
   height: 100%;
   background-color: @menuBgColor !important;
 
+  .side-menu-content {
+    height: ~"calc(100vh - 60px)";
+
+    .el-main {
+      padding: 0;
+    }
+
+    .el-footer {
+      height: 30px;
+    }
+  }
+
   .menu-scrollbar {
-    height: ~"calc(100% - 60px)";
-    top: 60px;
 
     .el-scrollbar__wrap {
       overflow-x: hidden;
