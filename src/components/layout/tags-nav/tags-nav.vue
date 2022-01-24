@@ -3,7 +3,7 @@
     <div class="close-con">
       <el-dropdown trigger="click" @command="handleTagsOption" popper-class="dropdown-menu-content">
         <el-button type="text" size="small" style="padding-top: 6px">
-          <el-icon size="18">
+          <el-icon size="18px">
             <el-icon-circle-close-filled/>
           </el-icon>
         </el-button>

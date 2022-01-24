@@ -111,7 +111,7 @@
               </el-icon>
             </el-button>
             <el-button type="primary" @click="scale('X')" size="small">
-              <el-icon class="icon-leftAndRight">
+              <el-icon>
                 <el-icon-d-caret/>
               </el-icon>
             </el-button>

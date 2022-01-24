@@ -30,7 +30,7 @@
       <el-col :span="3" v-for="(file,index) in logFileList" :key="index"
               style="text-align: center;min-width: 150px;margin-bottom: 15px;">
         <el-button type="text" :loading="form_loading" @click="downLoadFile(file)">
-          <el-icon size="50">
+          <el-icon size="50px">
             <el-icon-document/>
           </el-icon>
         </el-button>

@@ -3,13 +3,13 @@
     <el-tooltip v-if="!isMobile" :content="modelValue ? $t('home.exitFullScreen') : $t('home.fullScreen')"
                 placement="bottom">
       <el-button type="text" @click="handleChange">
-        <el-icon size="23">
+        <el-icon size="23px">
           <el-icon-full-screen/>
         </el-icon>
       </el-button>
     </el-tooltip>
     <el-button v-else type="text" @click="handleChange">
-      <el-icon size="23">
+      <el-icon size="23px">
         <el-icon-full-screen/>
       </el-icon>
     </el-button>

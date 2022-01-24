@@ -110,17 +110,17 @@
         width="120">
         <template #default="scope">
           <el-button type="text" @click="handleEdit(scope.row)">
-            <el-icon size="15">
+            <el-icon size="15px">
               <el-icon-edit/>
             </el-icon>
           </el-button>
           <el-button type="text" @click="handleDeleteRow(scope.row)">
-            <el-icon size="15">
+            <el-icon size="15px">
               <el-icon-delete/>
             </el-icon>
           </el-button>
           <el-button type="text" @click="handleExecute(scope.row)">
-            <el-icon size="15">
+            <el-icon size="15px">
               <el-icon-circle-check/>
             </el-icon>
           </el-button>
