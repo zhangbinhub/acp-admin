@@ -16,7 +16,7 @@
 - [Upgrade] 修改appInfo.js中routeBase使用相对路径
 - [Upgrade] 修改路由组件，使用HashHistory
 - [Upgrade] 修改vue-json-edit用法，使之兼容vue3
-- [Upgrade] 调整顶部按钮和logo位置，适配移动端
+- [Upgrade] 调整顶部按钮和logo位置和大小，适配移动端
 - [Upgrade] 优化菜单组件写法
 - [Upgrade] 优化顶部标题栏样式
 - [Upgrade] 调整主界面布局
