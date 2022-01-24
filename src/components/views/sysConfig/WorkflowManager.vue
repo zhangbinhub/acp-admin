@@ -112,7 +112,7 @@
         width="80">
         <template #default="scope">
           <el-button type="text" @click="gotoFlowView(scope.row)">
-            <el-icon size="15">
+            <el-icon size="15px">
               <el-icon-search/>
             </el-icon>
           </el-button>
@@ -373,7 +373,7 @@
               width="80">
               <template #default="scope">
                 <el-button type="text" @click="gotoTaskView(scope.row)">
-                  <el-icon size="15">
+                  <el-icon size="15px">
                     <el-icon-search/>
                   </el-icon>
                 </el-button>
