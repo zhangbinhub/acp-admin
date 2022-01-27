@@ -4,8 +4,6 @@
       <el-header>
         <header-bar :full-path="fullPath" :menu-list="menuList" :mini="isMini" :is-mobile="isMobile">
           <user :user-avatar="userAvatar" :customer-name="userName"/>
-          <fullscreen v-model="isFullscreen" :is-mobile="isMobile"/>
-          <home-button :is-mobile="isMobile"/>
         </header-bar>
       </el-header>
       <el-container class="home-content">
@@ -48,8 +46,6 @@ import SideMenu from './side-menu'
 import HeaderBar from './header-bar'
 import TagsNav from './tags-nav'
 import User from './user'
-import homeButton from './home-button'
-import Fullscreen from './fullscreen'
 import './Home.less'
 import {
   getOpenedNamesByActiveName, isMobileDevice,
@@ -62,15 +58,12 @@ export default {
     SideMenu,
     HeaderBar,
     TagsNav,
-    homeButton,
-    Fullscreen,
     User
   },
   data() {
     return {
       copyright: this.$store.state.app.appInfo.copyright,
       openedNames: [],
-      isFullscreen: false,
       homePath: this.$store.state.app.appInfo.homePath
     }
   },

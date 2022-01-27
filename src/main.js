@@ -1,7 +1,7 @@
 import * as Vue from 'vue'
 import store from '@/store'
 import ElementPlus from 'element-plus'
-import * as ElementPlusIcons from '@element-plus/icons'
+import * as ElementPlusIcons from '@element-plus/icons-vue'
 import 'element-plus/dist/index.css'
 import Nprogress from 'nprogress'
 import 'nprogress/nprogress.css'
