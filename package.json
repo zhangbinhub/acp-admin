@@ -44,7 +44,7 @@
   },
   "browserslist": [
     "> 1%",
-    "Chrome > 60",
+    "Chrome > 70",
     "last 2 versions",
     "not ie 8-11",
     "not ie_mob 8-11",
