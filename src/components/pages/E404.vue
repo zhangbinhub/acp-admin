@@ -17,13 +17,13 @@
     </svg>
     <div class="message-box">
       <h1>404</h1>
-      <p>{{ $t('errorPage.message404') }}</p>
-      <p>{{ $t('errorPage.description404') }}</p>
+      <p>{{ text.message }}</p>
+      <p>{{ text.description }}</p>
       <div class="buttons-con">
         <div class="action-link-wrap">
-          <a @click="goBack">{{ $t('errorPage.buttons.back') }}</a>
-          <a @click="goHome">{{ $t('errorPage.buttons.home') }}</a>
-          <a @click="goLogin">{{ $t('errorPage.buttons.login') }}</a>
+          <a @click="goBack">{{ text.backButton }}</a>
+          <a @click="goHome">{{ text.homeButton }}</a>
+          <a @click="goLogin">{{ text.loginButton }}</a>
         </div>
       </div>
     </div>
@@ -140,6 +140,17 @@ import {getRouteParams} from "@/libs/tools";
 
 export default {
   name: 'E404',
+  data() {
+    return {
+      text: {
+        message: this.$i18n.t('errorPage.message404'),
+        description: this.$i18n.t('errorPage.description404'),
+        backButton: this.$i18n.t('errorPage.buttons.back'),
+        homeButton: this.$i18n.t('errorPage.buttons.home'),
+        loginButton: this.$i18n.t('errorPage.buttons.login')
+      }
+    }
+  },
   methods: {
     goBack() {
       const params = getRouteParams(this.$route)
