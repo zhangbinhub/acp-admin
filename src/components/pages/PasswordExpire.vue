@@ -6,7 +6,7 @@
         <template #title>
           <div style="text-align: center">
             <h1>
-              <span>{{ $t('pageTitle.passwordExpire') }}</span>
+              <span>{{ text.passwordExpire }}</span>
             </h1>
           </div>
         </template>
@@ -42,7 +42,7 @@
           <div style="text-align: center">
             <el-button type="primary" :loading="modal_loading" style="width: 100%"
                        @click="handleSubmit">
-              {{ $t('forms.buttons.submit') }}
+              {{ text.submitButton }}
             </el-button>
             <small style="text-align: center;display: block;margin-top: 10px;">
               <el-link href="javascript:void(0)" type="info" @click="gotoLogin">重新登录</el-link>
@@ -69,7 +69,9 @@ export default {
       text: {
         oldPasswordPlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.old') + this.$i18n.t('forms.password'),
         passwordPlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.new') + this.$i18n.t('forms.password'),
-        repeatPasswordPlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.confirmPassword')
+        repeatPasswordPlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.confirmPassword'),
+        passwordExpire: this.$i18n.t('pageTitle.passwordExpire'),
+        submitButton: this.$i18n.t('forms.buttons.submit')
       },
       submitModal: true,
       modal_loading: false,

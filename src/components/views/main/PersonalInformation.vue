@@ -72,6 +72,7 @@ export default {
   },
   data() {
     return {
+      currLang: this.$store.state.app.lang.lang,
       formValidate: {
         avatar: avatarImg,
         name: '',
@@ -97,9 +98,6 @@ export default {
   computed: {
     langList() {
       return this.$store.state.app.lang.langList
-    },
-    currLang() {
-      return this.$store.state.app.lang.lang
     },
     ruleValidate() {
       return {

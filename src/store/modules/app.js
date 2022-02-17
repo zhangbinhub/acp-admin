@@ -27,6 +27,7 @@ export default {
     tagNavList: Cookies.get('tagNavList') ? JSON.parse(Cookies.get('tagNavList')) : [],
     isMini: false,
     i18n: createI18n({
+      globalInjection: true,
       locale: lang,
       messages: langInfo.messages
     }),

@@ -17,15 +17,15 @@
     </svg>
     <div class="message-box">
       <h1>500</h1>
-      <p>{{ $t('errorPage.message500') }}</p>
+      <p>{{ text.message }}</p>
       <div class="content">
         <p>{{ msg }}</p>
       </div>
       <div class="buttons-con">
         <div class="action-link-wrap">
-          <a @click="goBack">{{ $t('errorPage.buttons.back') }}</a>
-          <a @click="goHome">{{ $t('errorPage.buttons.home') }}</a>
-          <a @click="goLogin">{{ $t('errorPage.buttons.login') }}</a>
+          <a @click="goBack">{{ text.backButton }}</a>
+          <a @click="goHome">{{ text.homeButton }}</a>
+          <a @click="goLogin">{{ text.loginButton }}</a>
         </div>
       </div>
     </div>
@@ -141,6 +141,16 @@ import {getRouteParams} from "@/libs/tools";
 
 export default {
   name: 'E500',
+  data() {
+    return {
+      text: {
+        message: this.$i18n.t('errorPage.message500'),
+        backButton: this.$i18n.t('errorPage.buttons.back'),
+        homeButton: this.$i18n.t('errorPage.buttons.home'),
+        loginButton: this.$i18n.t('errorPage.buttons.login')
+      }
+    }
+  },
   computed: {
     msg() {
       const params = getRouteParams(this.$route)

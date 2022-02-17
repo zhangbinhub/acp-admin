@@ -43,7 +43,7 @@
           <div style="text-align: center">
             <el-button type="primary" :loading="modal_loading" style="width: 100%"
                        @click="handleSubmit">
-              {{ $t('forms.buttons.login') }}
+              {{ text.loginButton }}
             </el-button>
             <small style="text-align: center;display: block;margin-top: 10px;">{{ copyright }}</small>
           </div>
@@ -68,7 +68,8 @@ export default {
       text: {
         usernamePlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.loginNo'),
         passwordPlaceholder: this.$i18n.t('forms.pleaseEnter') + this.$i18n.t('forms.password'),
-        rememberMe: this.$i18n.t('forms.rememberMe')
+        rememberMe: this.$i18n.t('forms.rememberMe'),
+        loginButton: this.$i18n.t('forms.buttons.login')
       },
       loginModal: true,
       modal_loading: false,
