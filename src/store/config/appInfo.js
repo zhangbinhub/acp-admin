@@ -7,7 +7,7 @@ export default {
   routeBase: './',
   homePath: '/index',
   cookieExpires: 1, // day
-  baseURL: '/v1/api', // back server url
+  baseURL: './v1/api', // back server url
   timeOut: 60000,
   passwordComplexityPolicy: 'PASSWORD_COMPLEXITY_POLICY',
 

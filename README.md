@@ -155,7 +155,39 @@ npm install
 - 测试页面：src/components/test
 - src/components 下其他路径存放自定义组件
 
-## 四、界面展示
+## 四、部署
+
+##### （一）编译打包
+
+- 工程根目录下运行
+
+```
+npm run build
+```
+
+- 执行成功后工程根目录下会出现dist文件夹，将dist文件夹中的所有文件复制到nginx的html下即可
+- 如果部署在nginx里html的根目录，访问url为 http://nginxHost:port
+- 如果部署在nginx里html的子目录（如platform/admin），访问url为 http://nginxHost:port/platform/admin
+
+##### （二）nginx配置
+
+假如工程部署在nginx中，需要修改nginx.conf，增加后端接口的反向代理
+
+- 代理后端 gateway
+
+```
+location ~ ^.*/v1/api/(.*)$ {
+  set $delimeter "";
+  if ( $args != "" ) {
+    set $delimeter "?";
+  }
+  proxy_pass http://host:port/$1${delimeter}$args;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_read_timeout 3600s;
+}
+```
+
+## 五、界面展示
 
 - 登录
   ![images](doc/images/pages/login.png)
