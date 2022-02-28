@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" size="small"
+    <el-form ref="searchForm" :inline="true" :model="searchFormModel" label-width="undefined" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input v-model="searchFormModel.name" :disabled="modal_loading"
@@ -8,9 +8,9 @@
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.execTime')" prop="startTime">
-        <el-date-picker v-if="!isMobile" type="daterange" :disabled="modal_loading" :shortcuts="pickerShortcuts"
-                        v-model="searchFormModel.startTime"
-                        :placeholder="$t('forms.pleaseEnter') + $t('forms.execTime')"/>
+        <el-date-picker v-if="!isMobile" v-model="searchFormModel.startTime" :disabled="modal_loading" :placeholder="$t('forms.pleaseEnter') + $t('forms.execTime')"
+                        :shortcuts="pickerShortcuts"
+                        type="daterange"/>
         <div v-else>
           <el-date-picker v-model="searchFormModel.startTime[0]" :disabled="modal_loading" type="date"/>
           至
@@ -19,84 +19,84 @@
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group style="margin-right: 20px">
-          <el-button :loading="modal_loading" @click="handleSearch" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleSearch">
             {{ $t('forms.buttons.search') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleSearchReset" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleSearchReset">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleAdd" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleAdd">
             {{ $t('forms.buttons.add') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleDeleteMore" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleDeleteMore">
             {{ $t('forms.buttons.delete') }}
           </el-button>
         </el-button-group>
-        <el-button :loading="modal_loading" @click="handleOpenFileManager" type="warning">
+        <el-button :loading="modal_loading" type="warning" @click="handleOpenFileManager">
           {{ $t('forms.buttons.fileManager') }}
         </el-button>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchFormModel.orderParam"
-              :data="searchData"
-              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
-              @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
-              header-cell-class-name="query-table-header">
+    <el-table ref="table" v-loading="modal_loading" :data="searchData" :default-sort="searchFormModel.orderParam" :empty-text="$t('messages.tableNoData')"
+              :height="tableHeight"
+              border header-cell-class-name="query-table-header"
+              size="small" @row-click="handleRowClick" @selection-change="handleSelect"
+              @sort-change="handleSortChange">
       <el-table-column
-        type="selection"
-        fixed="left"
         align="center"
+        fixed="left"
+        type="selection"
         width="40">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.name')"
         prop="name"
-        sortable="custom"
-        :label="$t('forms.name')">
+        sortable="custom">
       </el-table-column>
       <el-table-column
-        prop="scriptFile"
         :label="$t('forms.scriptFile')"
-        :show-overflow-tooltip="true">
+        :show-overflow-tooltip="true"
+        prop="scriptFile">
       </el-table-column>
       <el-table-column
-        prop="serverIpRegex"
         :label="$t('forms.serverIpRegex')"
-        :show-overflow-tooltip="true">
+        :show-overflow-tooltip="true"
+        prop="serverIpRegex">
       </el-table-column>
       <el-table-column
-        prop="remarks"
         :label="$t('forms.remarks')"
-        :show-overflow-tooltip="true">
+        :show-overflow-tooltip="true"
+        prop="remarks">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.createUserName')"
+        align="center"
         prop="createUserName"
         sortable="custom"
-        align="center"
-        :label="$t('forms.createUserName')"
         width="100">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.createTime')"
+        align="center"
         prop="createTime"
         sortable="custom"
-        align="center"
-        :label="$t('forms.createTime')"
         width="150">
         <template #default="scope">
           <span>{{ dateTimeFormat(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column
+        :label="$t('forms.execUserName')"
+        align="center"
         prop="execUserName"
         sortable="custom"
-        align="center"
-        :label="$t('forms.execUserName')"
         width="100">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.execTime')"
+        align="center"
         prop="execTime"
         sortable="custom"
-        align="center"
-        :label="$t('forms.execTime')"
         width="150">
         <template #default="scope">
           <span>{{ dateTimeFormat(scope.row.execTime) }}</span>
@@ -104,9 +104,9 @@
       </el-table-column>
       <el-table-column
         :fixed="isMobile?false:'right'"
-        prop="action"
         :label="$t('forms.action')"
         align="center"
+        prop="action"
         width="120">
         <template #default="scope">
           <el-button type="text" @click="handleEdit(scope.row)">
@@ -127,16 +127,16 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination @size-change="handlePageSizeSearch"
-                   v-model:current-page="searchFormModel.currPage"
-                   :page-sizes="searchFormModel.pageSizeArray"
+    <el-pagination v-model:current-page="searchFormModel.currPage"
                    v-model:page-size="searchFormModel.pageSize"
-                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
-                   :total="searchFormModel.totalRows">
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
+                   :page-sizes="searchFormModel.pageSizeArray"
+                   :small="isMobile" :total="searchFormModel.totalRows"
+                   @size-change="handlePageSizeSearch">
     </el-pagination>
-    <el-dialog :fullscreen="isMobile" v-model="editModal" :title="$t('forms.info')">
-      <el-form ref="editForm" :model="editFormModel" :rules="ruleAddForm" label-width="undefined" size="small"
-               v-loading="modal_loading" @submit.native.prevent>
+    <el-dialog v-model="editModal" :fullscreen="isMobile" :title="$t('forms.info')">
+      <el-form ref="editForm" v-loading="modal_loading" :model="editFormModel" :rules="ruleAddForm" label-width="undefined"
+               size="small" @submit.native.prevent>
         <el-form-item :label="$t('forms.name')" prop="name" style="width: 100%">
           <el-input v-model="editFormModel.name" :disabled="modal_loading"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
@@ -158,63 +158,63 @@
                     @keyup.enter.native="doSave"/>
         </el-form-item>
         <el-form-item :label="$t('forms.remarks')" prop="remarks" style="width: 100%;">
-          <el-input v-model="editFormModel.remarks" :disabled="modal_loading" type="textarea" :rows="5"
-                    :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')"/>
+          <el-input v-model="editFormModel.remarks" :disabled="modal_loading" :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')" :rows="5"
+                    type="textarea"/>
         </el-form-item>
       </el-form>
       <template #footer>
         <div style="text-align: center">
-          <el-button type="default" :loading="modal_loading" @click="doCancel()">
+          <el-button :loading="modal_loading" type="default" @click="doCancel()">
             {{ $t('forms.buttons.cancel') }}
           </el-button>
-          <el-button type="primary" :loading="modal_loading" @click="doSave">
+          <el-button :loading="modal_loading" type="primary" @click="doSave">
             {{ $t('forms.buttons.submit') }}
           </el-button>
         </div>
       </template>
       <el-backtop :visibility-height="10" target=".el-dialog"/>
     </el-dialog>
-    <el-dialog :fullscreen="isMobile" v-model="fileModal" :title="$t('forms.info')">
+    <el-dialog v-model="fileModal" :fullscreen="isMobile" :title="$t('forms.info')">
       <el-row>
         <el-col :span="24">
           <h3>{{ $t('forms.path') + ': ' + path }}</h3>
         </el-col>
       </el-row>
-      <el-form :inline="true" @submit.native.prevent size="small">
+      <el-form :inline="true" size="small" @submit.native.prevent>
         <el-form-item :label="$t('forms.filterKey')">
           <el-input v-model="fileName" :disabled="modal_loading" clearable @keyup.enter.native="handleRefresh"/>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="handleReset" :loading="modal_loading"
-                     style="margin-left: 10px">
+          <el-button :loading="modal_loading" style="margin-left: 10px" type="primary"
+                     @click="handleReset">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button type="success" @click="handleRefresh" :loading="modal_loading"
-                     style="margin-left: 10px">
+          <el-button :loading="modal_loading" style="margin-left: 10px" type="success"
+                     @click="handleRefresh">
             {{ $t('forms.buttons.refresh') }}
           </el-button>
-          <el-button type="info" @click="handleBackUp" :loading="modal_loading">
+          <el-button :loading="modal_loading" type="info" @click="handleBackUp">
             {{ $t('errorPage.buttons.back') }}
           </el-button>
-          <el-button type="warning" @click="handleCreateFold" :loading="modal_loading"
-                     style="margin-left: 10px">
+          <el-button :loading="modal_loading" style="margin-left: 10px" type="warning"
+                     @click="handleCreateFold">
             {{ $t('forms.buttons.newFold') }}
           </el-button>
         </el-form-item>
       </el-form>
-      <el-scrollbar class="upload-scrollbar" :style="{height: mainHeight+'px'}">
+      <el-scrollbar :style="{height: mainHeight+'px'}" class="upload-scrollbar">
         <el-upload
-          multiple
           :action="uploadFileUrl"
-          :headers="uploadHeaders"
-          :disabled="modal_loading"
           :before-remove="handleBeforeRemoveFile"
-          :on-remove="handleRemoveFile"
-          :on-preview="handleDownloadFile"
-          :on-success="handleUploadSuccess"
+          :disabled="modal_loading"
+          :file-list="fileList"
+          :headers="uploadHeaders"
           :on-error="handleUploadError"
-          :file-list="fileList">
-          <el-button size="small" type="primary" :loading="modal_loading">
+          :on-preview="handleDownloadFile"
+          :on-remove="handleRemoveFile"
+          :on-success="handleUploadSuccess"
+          multiple>
+          <el-button :loading="modal_loading" size="small" type="primary">
             {{ $t('forms.buttons.upload') }}
           </el-button>
         </el-upload>

@@ -1,6 +1,6 @@
 <template>
   <div class="header-bar">
-    <img class="header-bar-logo" :src="mainLogo" alt=""/>
+    <img :src="mainLogo" alt="" class="header-bar-logo"/>
     <custom-bread-crumb v-show="!mini&&!isMobile" :full-path="fullPath" :menu-list="menuList"/>
     <div class="custom-content-con">
       <slot/>

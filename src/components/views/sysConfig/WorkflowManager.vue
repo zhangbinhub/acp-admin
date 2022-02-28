@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" size="small"
+    <el-form ref="searchForm" :inline="true" :model="searchFormModel" label-width="undefined" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.processKey')" prop="processDefinitionKey">
         <el-input v-model="searchFormModel.processDefinitionKey" :disabled="modal_loading"
@@ -19,77 +19,77 @@
       </el-form-item>
       <el-form-item :label="$t('forms.flowStatus')" prop="history">
         <el-select v-model="searchFormModel.history" :disabled="modal_loading" value="">
-          <el-option v-for="item in infoTypeList" :value="item.value" :label="item.label"
-                     :key="'search_select_'+item.value">
+          <el-option v-for="item in infoTypeList" :key="'search_select_'+item.value" :label="item.label"
+                     :value="item.value">
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item :label="$t('forms.startDate')" prop="startTime">
-        <el-date-picker v-if="!isMobile" v-model="searchFormModel.startTime" :disabled="modal_loading" type="daterange"
-                        :disabled-date="disabledDate" :shortcuts="pickerOptions"/>
+        <el-date-picker v-if="!isMobile" v-model="searchFormModel.startTime" :disabled="modal_loading" :disabled-date="disabledDate"
+                        :shortcuts="pickerOptions" type="daterange"/>
         <div v-else>
-          <el-date-picker v-model="searchFormModel.startTime[0]" :disabled="modal_loading" type="date"
-                          :disabled-date="disabledDate"/>
+          <el-date-picker v-model="searchFormModel.startTime[0]" :disabled="modal_loading" :disabled-date="disabledDate"
+                          type="date"/>
           至
-          <el-date-picker v-model="searchFormModel.startTime[1]" :disabled="modal_loading" type="date"
-                          :disabled-date="disabledDate"/>
+          <el-date-picker v-model="searchFormModel.startTime[1]" :disabled="modal_loading" :disabled-date="disabledDate"
+                          type="date"/>
         </div>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group>
-          <el-button :loading="modal_loading" @click="handleSearch" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleSearch">
             {{ $t('forms.buttons.search') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleSearchReset" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleSearchReset">
             {{ $t('forms.buttons.reset') }}
           </el-button>
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchFormModel.orderParam"
-              :data="searchData"
-              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
-              header-cell-class-name="query-table-header">
+    <el-table ref="table" v-loading="modal_loading" :data="searchData" :default-sort="searchFormModel.orderParam" :empty-text="$t('messages.tableNoData')"
+              :height="tableHeight"
+              border header-cell-class-name="query-table-header"
+              size="small">
       <el-table-column
-        prop="businessKey"
         :label="$t('forms.processBusinessKey')"
-        :show-overflow-tooltip="true">
+        :show-overflow-tooltip="true"
+        prop="businessKey">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.beginTime')"
         prop="startTime"
-        width="150"
-        :label="$t('forms.beginTime')">
+        width="150">
         <template #default="scope">
           <span>{{ dateTimeFormat(scope.row.startTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column
-        prop="flowName"
         :label="$t('forms.flowName')"
-        :show-overflow-tooltip="true">
+        :show-overflow-tooltip="true"
+        prop="flowName">
       </el-table-column>
       <el-table-column
-        prop="title"
         :label="$t('forms.title')"
-        :show-overflow-tooltip="true">
+        :show-overflow-tooltip="true"
+        prop="title">
       </el-table-column>
       <el-table-column
-        prop="description"
         :label="$t('forms.description')"
-        :show-overflow-tooltip="true">
+        :show-overflow-tooltip="true"
+        prop="description">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.finishTime')"
         prop="endTime"
-        width="150"
-        :label="$t('forms.finishTime')">
+        width="150">
         <template #default="scope">
           <span>{{ scope.row.endTime > 0 ? dateTimeFormat(scope.row.endTime) : '' }}</span>
         </template>
       </el-table-column>
       <el-table-column
+        :label="$t('forms.flowStatus')"
         prop="isFinished"
-        width="80"
-        :label="$t('forms.flowStatus')">
+        width="80">
         <template #default="scope">
           <span>{{ statusText(scope.row.finished) }}</span>
         </template>
@@ -106,9 +106,9 @@
       </el-table-column>
       <el-table-column
         :fixed="isMobile?false:'right'"
-        prop="action"
         :label="$t('forms.action')"
         align="center"
+        prop="action"
         width="80">
         <template #default="scope">
           <el-button type="text" @click="gotoFlowView(scope.row)">
@@ -119,14 +119,14 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination @size-change="handlePageSizeSearch"
-                   v-model:current-page="searchFormModel.currPage"
-                   :page-sizes="searchFormModel.pageSizeArray"
+    <el-pagination v-model:current-page="searchFormModel.currPage"
                    v-model:page-size="searchFormModel.pageSize"
-                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
-                   :total="searchFormModel.totalRows">
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
+                   :page-sizes="searchFormModel.pageSizeArray"
+                   :small="isMobile" :total="searchFormModel.totalRows"
+                   @size-change="handlePageSizeSearch">
     </el-pagination>
-    <el-dialog custom-class="process-dialog" v-model="viewModal" :title="$t('forms.info')" :fullscreen="true">
+    <el-dialog v-model="viewModal" :fullscreen="true" :title="$t('forms.info')" custom-class="process-dialog">
       <div>
         <el-card shadow="hover">
           <template #header>
@@ -135,7 +135,7 @@
               <el-icon-info-filled/>
             </el-icon>
           </template>
-          <el-form size="small" :model="currObj" label-width="undefined" :inline="true"
+          <el-form :inline="true" :model="currObj" label-width="undefined" size="small"
                    @submit.native.prevent>
             <el-row :gutter="10">
               <el-col :lg="{span: 8}">
@@ -201,18 +201,18 @@
               </el-col>
             </el-row>
           </el-form>
-          <el-form size="small" :model="currObj" label-width="undefined"
+          <el-form :model="currObj" label-width="undefined" size="small"
                    @submit.native.prevent>
             <el-row :gutter="10">
               <el-col :lg="{span: 24}">
                 <el-form-item :label="$t('forms.description')+':'" prop="description">
-                  <el-input v-model="currObj.description" type="textarea" :rows="3" readonly/>
+                  <el-input v-model="currObj.description" :rows="3" readonly type="textarea"/>
                 </el-form-item>
               </el-col>
             </el-row>
           </el-form>
-          <el-form size="small" :model="currObj" label-width="undefined"
-                   v-if="currObj.deleteReason&&currObj.deleteReason!==''"
+          <el-form v-if="currObj.deleteReason&&currObj.deleteReason!==''" :model="currObj" label-width="undefined"
+                   size="small"
                    @submit.native.prevent>
             <el-row :gutter="10">
               <el-col :lg="{span: 24}">
@@ -220,7 +220,7 @@
                   <template #label>
                     <span style="color: red">{{ $t('forms.deleteReason') + ':' }}</span>
                   </template>
-                  <el-input v-model="currObj.deleteReason" type="textarea" :rows="3" readonly/>
+                  <el-input v-model="currObj.deleteReason" :rows="3" readonly type="textarea"/>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -235,23 +235,23 @@
                       <el-icon-info-filled/>
                     </el-icon>
                   </template>
-                  <el-table size="small" :stripe="true" :data="params">
+                  <el-table :data="params" :stripe="true" size="small">
                     <el-table-column
-                      type="index"
                       align="center"
+                      type="index"
                       width="50">
                     </el-table-column>
                     <el-table-column
-                      prop="name"
-                      :label="$t('forms.name')">
+                      :label="$t('forms.name')"
+                      prop="name">
                     </el-table-column>
                     <el-table-column
-                      prop="type"
-                      :label="$t('forms.type')">
+                      :label="$t('forms.type')"
+                      prop="type">
                     </el-table-column>
                     <el-table-column
-                      prop="value"
-                      :label="$t('forms.value')">
+                      :label="$t('forms.value')"
+                      prop="value">
                     </el-table-column>
                   </el-table>
                 </el-collapse-item>
@@ -277,10 +277,10 @@
               <el-icon-info-filled/>
             </el-icon>
           </template>
-          <el-table size="small" :stripe="true" :data="processActivityList">
+          <el-table :data="processActivityList" :stripe="true" size="small">
             <el-table-column
-              prop="activityName"
-              :label="$t('forms.name')">
+              :label="$t('forms.name')"
+              prop="activityName">
             </el-table-column>
             <el-table-column
               :label="$t('forms.processUser')">
@@ -289,30 +289,30 @@
               </template>
             </el-table-column>
             <el-table-column
-              prop="pass"
-              :label="$t('forms.isPass')">
+              :label="$t('forms.isPass')"
+              prop="pass">
               <template #default="scope">
                 <span :style="{color:scope.row.pass?'green':'red'}">{{ scope.row.pass ? '通过' : '不通过' }}</span>
               </template>
             </el-table-column>
             <el-table-column
-              prop="comment"
               :label="$t('forms.comment')"
-              :show-overflow-tooltip="true">
+              :show-overflow-tooltip="true"
+              prop="comment">
               <template #default="scope">
                 <span style="white-space: pre-line">{{ scope.row.comment }}</span>
               </template>
             </el-table-column>
             <el-table-column
-              prop="startTime"
-              :label="$t('forms.beginTime')">
+              :label="$t('forms.beginTime')"
+              prop="startTime">
               <template #default="scope">
                 <span>{{ dateTimeFormat(scope.row.startTime) }}</span>
               </template>
             </el-table-column>
             <el-table-column
-              prop="endTime"
-              :label="$t('forms.finishTime')">
+              :label="$t('forms.finishTime')"
+              prop="endTime">
               <template #default="scope">
                 <span>{{ dateTimeFormat(scope.row.endTime) }}</span>
               </template>
@@ -326,21 +326,21 @@
               <el-icon-info-filled/>
             </el-icon>
           </template>
-          <el-table size="small" :stripe="true" :data="processTaskList">
+          <el-table :data="processTaskList" :stripe="true" size="small">
             <el-table-column
-              prop="name"
-              :label="'任务名称'">
+              :label="'任务名称'"
+              prop="name">
             </el-table-column>
             <el-table-column
-              prop="unClaimed"
-              :label="'是否被认领'">
+              :label="'是否被认领'"
+              prop="unClaimed">
               <template #default="scope">
                 <span>{{ scope.row.unClaimed ? '否' : '是' }}</span>
               </template>
             </el-table-column>
             <el-table-column
-              prop="delegated"
-              :label="'任务是否已委派'">
+              :label="'任务是否已委派'"
+              prop="delegated">
               <template #default="scope">
                 <span>{{ scope.row.delegated ? '是' : '否' }}</span>
               </template>
@@ -352,24 +352,24 @@
               </template>
             </el-table-column>
             <el-table-column
-              prop="createTime"
-              :label="'创建时间'">
+              :label="'创建时间'"
+              prop="createTime">
               <template #default="scope">
                 <span>{{ dateTimeFormat(scope.row.createTime) }}</span>
               </template>
             </el-table-column>
             <el-table-column
-              prop="claimTime"
-              :label="'领取时间'">
+              :label="'领取时间'"
+              prop="claimTime">
               <template #default="scope">
                 <span>{{ dateTimeFormat(scope.row.claimTime) }}</span>
               </template>
             </el-table-column>
             <el-table-column
               :fixed="isMobile?false:'right'"
-              prop="action"
               :label="$t('forms.action')"
               align="center"
+              prop="action"
               width="80">
               <template #default="scope">
                 <el-button type="text" @click="gotoTaskView(scope.row)">
@@ -384,8 +384,8 @@
       </div>
       <el-backtop :visibility-height="10" target=".process-dialog"/>
     </el-dialog>
-    <el-dialog custom-class="task-dialog" v-model="taskModal" :title="$t('forms.info')" :fullscreen="true">
-      <el-form size="small" :model="currTaskObj" label-width="undefined" :inline="true"
+    <el-dialog v-model="taskModal" :fullscreen="true" :title="$t('forms.info')" custom-class="task-dialog">
+      <el-form :inline="true" :model="currTaskObj" label-width="undefined" size="small"
                @submit.native.prevent>
         <el-row :gutter="10">
           <el-col :lg="{span: 8}">
@@ -461,24 +461,24 @@
                   <el-icon-info-filled/>
                 </el-icon>
               </template>
-              <el-table size="small" :stripe="true"
-                        :data="currTaskObj.pendingUserList">
+              <el-table :data="currTaskObj.pendingUserList" :stripe="true"
+                        size="small">
                 <el-table-column
-                  type="index"
                   align="center"
+                  type="index"
                   width="50">
                 </el-table-column>
                 <el-table-column
-                  prop="id"
-                  :label="'用户ID'">
+                  :label="'用户ID'"
+                  prop="id">
                 </el-table-column>
                 <el-table-column
-                  prop="name"
-                  :label="'用户姓名'">
+                  :label="'用户姓名'"
+                  prop="name">
                 </el-table-column>
                 <el-table-column
-                  prop="loginNo"
-                  :label="'登录账号'">
+                  :label="'登录账号'"
+                  prop="loginNo">
                 </el-table-column>
               </el-table>
             </el-collapse-item>
@@ -495,24 +495,24 @@
                   <el-icon-info-filled/>
                 </el-icon>
               </template>
-              <el-table size="small" :stripe="true"
-                        :data="taskLocalParams">
+              <el-table :data="taskLocalParams" :stripe="true"
+                        size="small">
                 <el-table-column
-                  type="index"
                   align="center"
+                  type="index"
                   width="50">
                 </el-table-column>
                 <el-table-column
-                  prop="name"
-                  :label="$t('forms.name')">
+                  :label="$t('forms.name')"
+                  prop="name">
                 </el-table-column>
                 <el-table-column
-                  prop="type"
-                  :label="$t('forms.type')">
+                  :label="$t('forms.type')"
+                  prop="type">
                 </el-table-column>
                 <el-table-column
-                  prop="value"
-                  :label="$t('forms.value')">
+                  :label="$t('forms.value')"
+                  prop="value">
                 </el-table-column>
               </el-table>
             </el-collapse-item>
@@ -529,24 +529,24 @@
                   <el-icon-info-filled/>
                 </el-icon>
               </template>
-              <el-table size="small" :stripe="true"
-                        :data="taskProperties">
+              <el-table :data="taskProperties" :stripe="true"
+                        size="small">
                 <el-table-column
-                  type="index"
                   align="center"
+                  type="index"
                   width="50">
                 </el-table-column>
                 <el-table-column
-                  prop="name"
-                  :label="$t('forms.name')">
+                  :label="$t('forms.name')"
+                  prop="name">
                 </el-table-column>
                 <el-table-column
-                  prop="type"
-                  :label="$t('forms.type')">
+                  :label="$t('forms.type')"
+                  prop="type">
                 </el-table-column>
                 <el-table-column
-                  prop="value"
-                  :label="$t('forms.value')">
+                  :label="$t('forms.value')"
+                  prop="value">
                 </el-table-column>
               </el-table>
             </el-collapse-item>
@@ -555,22 +555,22 @@
       </el-row>
       <template #footer>
         <div style="text-align: left">
-          <el-button type="primary" :loading="modal_loading" v-if="currTaskObj.unClaimed" @click="processTask(1)">
+          <el-button v-if="currTaskObj.unClaimed" :loading="modal_loading" type="primary" @click="processTask(1)">
             分配任务
           </el-button>
-          <el-button type="primary" :loading="modal_loading" v-else @click="processTask(2)">
+          <el-button v-else :loading="modal_loading" type="primary" @click="processTask(2)">
             任务转办
           </el-button>
         </div>
       </template>
       <el-backtop :visibility-height="10" target=".task-dialog"/>
     </el-dialog>
-    <el-dialog :fullscreen="isMobile" v-model="selectUserModal" :title="'任务处理'" :close-on-click-modal="false">
+    <el-dialog v-model="selectUserModal" :close-on-click-modal="false" :fullscreen="isMobile" :title="'任务处理'">
       <el-form ref="editForm" v-loading="modal_loading" :model="editFormModel" @submit.native.prevent>
-        <el-form-item label="选择用户" required prop="selectUserResult">
-          <el-select v-model="editFormModel.selectUserResult" filterable
-                     remote value-key="id" placeholder="请输入用户姓名或工号"
-                     :loading="modal_loading" :remote-method="remoteSelectUser" style="width: 100%">
+        <el-form-item label="选择用户" prop="selectUserResult" required>
+          <el-select v-model="editFormModel.selectUserResult" :loading="modal_loading"
+                     :remote-method="remoteSelectUser" filterable placeholder="请输入用户姓名或工号"
+                     remote style="width: 100%" value-key="id">
             <el-option v-for="item in userOptions"
                        :key="'select_user_'+item.id"
                        :label="item.name+'('+item.loginNo+')'"
@@ -580,13 +580,13 @@
       </el-form>
       <template #footer>
         <div style="text-align: center">
-          <el-button type="info" :loading="modal_loading" @click="doCancel">
+          <el-button :loading="modal_loading" type="info" @click="doCancel">
             {{ $t('forms.buttons.cancel') }}
           </el-button>
-          <el-button type="warning" :loading="modal_loading" @click="doReset">
+          <el-button :loading="modal_loading" type="warning" @click="doReset">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button type="primary" :loading="modal_loading" @click="doProcessTask">
+          <el-button :loading="modal_loading" type="primary" @click="doProcessTask">
             {{ $t('forms.buttons.submit') }}
           </el-button>
         </div>

@@ -1,7 +1,7 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" @submit.native.prevent
-             size="small">
+    <el-form ref="searchForm" :inline="true" :model="searchFormModel" label-width="undefined" size="small"
+             @submit.native.prevent>
       <el-form-item :label="$t('forms.processKey')" prop="value">
         <el-input v-model="searchFormModel.processKey" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.processKey')"
@@ -19,108 +19,108 @@
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group>
-          <el-button :loading="modal_loading" @click="handleSearch" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleSearch">
             {{ $t('forms.buttons.search') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleSearchReset" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleSearchReset">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleAdd" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleAdd">
             {{ $t('forms.buttons.add') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleDeleteMore" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleDeleteMore">
             {{ $t('forms.buttons.delete') }}
           </el-button>
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchFormModel.orderParam"
-              :data="searchData"
-              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
-              @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
-              header-cell-class-name="query-table-header">
+    <el-table ref="table" v-loading="modal_loading" :data="searchData" :default-sort="searchFormModel.orderParam" :empty-text="$t('messages.tableNoData')"
+              :height="tableHeight"
+              border header-cell-class-name="query-table-header"
+              size="small" @row-click="handleRowClick" @selection-change="handleSelect"
+              @sort-change="handleSortChange">
       <el-table-column
-        type="selection"
-        fixed="left"
         align="center"
+        fixed="left"
+        type="selection"
         width="40">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.processKey')"
         prop="processKey"
-        sortable="custom"
-        :label="$t('forms.processKey')">
+        sortable="custom">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.name')"
         prop="name"
-        sortable="custom"
-        :label="$t('forms.name')">
+        sortable="custom">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.version')"
         prop="version"
         sortable="custom"
-        width="80"
-        :label="$t('forms.version')">
+        width="80">
       </el-table-column>
       <el-table-column
-        prop="resourceName"
-        :label="$t('forms.resourceName')">
+        :label="$t('forms.resourceName')"
+        prop="resourceName">
       </el-table-column>
       <el-table-column
-        prop="remarks"
-        :label="$t('forms.remarks')">
+        :label="$t('forms.remarks')"
+        prop="remarks">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.createTime')"
         prop="createTime"
         sortable="custom"
-        width="140"
-        :label="$t('forms.createTime')">
+        width="140">
         <template #default="scope">
           <span>{{ dateTimeFormat(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column
+        :label="$t('forms.modifyTime')"
         prop="modifyTime"
         sortable="custom"
-        width="140"
-        :label="$t('forms.modifyTime')">
+        width="140">
         <template #default="scope">
           <span>{{ dateTimeFormat(scope.row.modifyTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column
+        :label="$t('forms.deployTime')"
         prop="deployTime"
         sortable="custom"
-        width="140"
-        :label="$t('forms.deployTime')">
+        width="140">
         <template #default="scope">
           <span>{{ dateTimeFormat(scope.row.deployTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column
         :fixed="isMobile?false:'right'"
-        prop="action"
         :label="$t('forms.action')"
         align="center"
+        prop="action"
         width="90">
         <template #default="scope">
-          <el-button type="text" @click="handleEdit(scope.row)"
-                     icon="el-icon-edit"/>
-          <el-button type="text" @click="handleDeleteRow(scope.row)"
-                     icon="el-icon-delete"/>
+          <el-button icon="el-icon-edit" type="text"
+                     @click="handleEdit(scope.row)"/>
+          <el-button icon="el-icon-delete" type="text"
+                     @click="handleDeleteRow(scope.row)"/>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination @size-change="handlePageSizeSearch"
-                   v-model:current-page="searchFormModel.currPage"
-                   :page-sizes="searchFormModel.pageSizeArray"
+    <el-pagination v-model:current-page="searchFormModel.currPage"
                    v-model:page-size="searchFormModel.pageSize"
-                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
-                   :total="searchFormModel.totalRows">
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
+                   :page-sizes="searchFormModel.pageSizeArray"
+                   :small="isMobile" :total="searchFormModel.totalRows"
+                   @size-change="handlePageSizeSearch">
     </el-pagination>
-    <el-dialog :fullscreen="isMobile" v-model="editModal" :title="$t('forms.buttons.add')"
-               :close-on-click-modal="false">
-      <el-form ref="editForm" :model="editFormModel" label-width="undefined" size="small"
-               v-loading="modal_loading" @submit.native.prevent style="padding-right: 25px;">
+    <el-dialog v-model="editModal" :close-on-click-modal="false" :fullscreen="isMobile"
+               :title="$t('forms.buttons.add')">
+      <el-form ref="editForm" v-loading="modal_loading" :model="editFormModel" label-width="undefined"
+               size="small" style="padding-right: 25px;" @submit.native.prevent>
         <div v-if="this.action===1">
           <el-form-item :label="$t('forms.processKey')+':'" prop="processKey">
             <span>{{ editFormModel.processKey }}</span>
@@ -132,17 +132,17 @@
         <el-form-item :label="$t('forms.content')+':'" prop="file">
           <el-upload v-if="action===0"
                      ref="upload"
-                     :name="'file'"
-                     :limit="1"
                      :action="uploadURL"
-                     :headers="uploadHeaders"
-                     :data="{remarks:remarks}"
-                     :on-change="handleChangeUpload"
-                     :on-remove="handleChangeUpload"
+                     :auto-upload="false"
                      :before-upload="handleBeforeUpload"
-                     :on-success="handleUploadSuccess"
+                     :data="{remarks:remarks}"
+                     :headers="uploadHeaders"
+                     :limit="1"
+                     :name="'file'"
+                     :on-change="handleChangeUpload"
                      :on-error="handleUploadError"
-                     :auto-upload="false">
+                     :on-remove="handleChangeUpload"
+                     :on-success="handleUploadSuccess">
             <el-button size="small" type="primary">
               {{ $t('forms.buttons.chooseFile') }}
             </el-button>
@@ -152,8 +152,8 @@
           </el-button>
         </el-form-item>
         <el-form-item :label="$t('forms.remarks')+':'" prop="remarks">
-          <el-input v-model="editFormModel.remarks" :disabled="modal_loading" type="textarea" :rows="3"
-                    :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')"/>
+          <el-input v-model="editFormModel.remarks" :disabled="modal_loading" :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')" :rows="3"
+                    type="textarea"/>
         </el-form-item>
         <div v-if="action===1">
           <el-form-item :label="$t('forms.resourceName')+':'" prop="resourceName">
@@ -175,21 +175,21 @@
       </el-form>
       <template #footer>
         <div>
-          <el-button type="info" :loading="modal_loading" @click="doCancel">
+          <el-button :loading="modal_loading" type="info" @click="doCancel">
             {{ $t('forms.buttons.cancel') }}
           </el-button>
-          <el-button type="warning" :loading="modal_loading" @click="doReset">
+          <el-button :loading="modal_loading" type="warning" @click="doReset">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button type="primary" :loading="modal_loading" @click="handleSave">
+          <el-button :loading="modal_loading" type="primary" @click="handleSave">
             {{ $t('forms.buttons.submit') }}
           </el-button>
           <div v-if="action===1" style="float: left">
-            <el-button type="success" :loading="modal_loading" @click="handleDeploy">
+            <el-button :loading="modal_loading" type="success" @click="handleDeploy">
               {{ $t('forms.buttons.deploy') }}
             </el-button>
-            <el-button v-if="this.editFormModel.deploymentId && this.editFormModel.deploymentId!==''" type="info"
-                       :loading="modal_loading" icon="el-icon-search" @click="handleViewDiagram">
+            <el-button v-if="this.editFormModel.deploymentId && this.editFormModel.deploymentId!==''" :loading="modal_loading"
+                       icon="el-icon-search" type="info" @click="handleViewDiagram">
               {{ $t('forms.buttons.view') }}
             </el-button>
           </div>

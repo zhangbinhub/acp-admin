@@ -1,7 +1,7 @@
 <template>
   <div class="user-avatar-dropdown">
-    <el-dropdown trigger="click" @command="handleClick" popper-class="dropdown-menu-content">
-      <el-avatar :src="avatar" style="margin-top: 10px" :size="40"/>
+    <el-dropdown popper-class="dropdown-menu-content" trigger="click" @command="handleClick">
+      <el-avatar :size="40" :src="avatar" style="margin-top: 10px"/>
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item v-if="customerName && customerName !== ''" command="personalInformation">
@@ -16,7 +16,7 @@
             </el-icon>
             {{ $t('home.personalInformation') }}
           </el-dropdown-item>
-          <el-dropdown-item command="home" :divided="true">
+          <el-dropdown-item :divided="true" command="home">
             <el-icon>
               <el-icon-home-filled/>
             </el-icon>
@@ -28,7 +28,7 @@
             </el-icon>
             {{ isFullscreen() ? $t('home.exitFullScreen') : $t('home.fullScreen') }}
           </el-dropdown-item>
-          <el-dropdown-item v-if="isSupper" command="logFile" :divided="true">
+          <el-dropdown-item v-if="isSupper" :divided="true" command="logFile">
             <el-icon>
               <el-icon-document/>
             </el-icon>
@@ -52,7 +52,7 @@
             </el-icon>
             {{ $t('pageTitle.deploy') }}
           </el-dropdown-item>
-          <el-dropdown-item command="logout" :divided="true">
+          <el-dropdown-item :divided="true" command="logout">
             <el-icon>
               <el-icon-delete-filled/>
             </el-icon>

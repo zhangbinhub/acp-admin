@@ -1,8 +1,8 @@
 <template>
   <div class="login">
     <div class="bg">
-      <el-dialog custom-class="login-dialog" v-model="loginModal" width="300px"
-                 :modal="false" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
+      <el-dialog v-model="loginModal" :close-on-click-modal="false" :close-on-press-escape="false"
+                 :modal="false" :show-close="false" custom-class="login-dialog" width="300px">
         <template #title>
           <div style="text-align: center">
             <h1>
@@ -16,19 +16,19 @@
         <div>
           <el-form ref="loginForm" :model="formValidate" :rules="ruleValidate" @submit.native.prevent>
             <el-form-item>
-              <input type="password" style="display: none;"/>
+              <input style="display: none;" type="password"/>
             </el-form-item>
             <el-form-item prop="loginNo">
-              <el-input ref="loginNo" v-model="formValidate.loginNo" type="text" :disabled="modal_loading"
-                        :placeholder="text.usernamePlaceholder" prefix-icon="el-icon-user"
+              <el-input ref="loginNo" v-model="formValidate.loginNo" :disabled="modal_loading" :placeholder="text.usernamePlaceholder"
+                        prefix-icon="el-icon-user" type="text"
                         @keyup.native.enter="handleSubmit">
               </el-input>
             </el-form-item>
             <el-form-item prop="password">
-              <el-input :disabled="modal_loading" :placeholder="text.passwordPlaceholder"
-                        @keyup.native.enter="handleSubmit" prefix-icon="el-icon-lock"
-                        autocomplete="off" type="text" @focus="passwordFocus"
-                        v-model="formValidate.password">
+              <el-input v-model="formValidate.password" :disabled="modal_loading"
+                        :placeholder="text.passwordPlaceholder" autocomplete="off"
+                        prefix-icon="el-icon-lock" type="text" @focus="passwordFocus"
+                        @keyup.native.enter="handleSubmit">
               </el-input>
             </el-form-item>
             <el-form-item style="margin-bottom: 0;">
@@ -41,7 +41,7 @@
         </div>
         <template #footer>
           <div style="text-align: center">
-            <el-button type="primary" :loading="modal_loading" style="width: 100%"
+            <el-button :loading="modal_loading" style="width: 100%" type="primary"
                        @click="handleSubmit">
               {{ text.loginButton }}
             </el-button>

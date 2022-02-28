@@ -249,7 +249,7 @@ export const queryRouteLog = () => {
       'userName': 'ZhangBin'
     }],
     'pageable': {
-      'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
+      'sort': {'sorted': true, 'unsorted': false, 'empty': false},
       'offset': 0,
       'pageNumber': 0,
       'pageSize': 10,
@@ -261,7 +261,7 @@ export const queryRouteLog = () => {
     'totalElements': 409,
     'size': 10,
     'number': 0,
-    'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
+    'sort': {'sorted': true, 'unsorted': false, 'empty': false},
     'numberOfElements': 10,
     'first': true,
     'empty': false
@@ -501,7 +501,7 @@ export const queryOperateLog = () => {
       'userName': 'ZhangBin'
     }],
     'pageable': {
-      'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
+      'sort': {'sorted': true, 'unsorted': false, 'empty': false},
       'offset': 0,
       'pageNumber': 0,
       'pageSize': 10,
@@ -513,7 +513,7 @@ export const queryOperateLog = () => {
     'totalElements': 400,
     'size': 10,
     'number': 0,
-    'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
+    'sort': {'sorted': true, 'unsorted': false, 'empty': false},
     'numberOfElements': 10,
     'first': true,
     'empty': false
@@ -592,7 +592,7 @@ export const queryLoginLog = () => {
       'loginDate': '2019-09-14'
     }],
     'pageable': {
-      'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
+      'sort': {'sorted': true, 'unsorted': false, 'empty': false},
       'offset': 0,
       'pageNumber': 0,
       'pageSize': 10,
@@ -604,7 +604,7 @@ export const queryLoginLog = () => {
     'totalElements': 3,
     'size': 10,
     'number': 0,
-    'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
+    'sort': {'sorted': true, 'unsorted': false, 'empty': false},
     'numberOfElements': 3,
     'first': true,
     'empty': false

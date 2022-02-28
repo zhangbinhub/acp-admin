@@ -3,25 +3,25 @@
     <el-card shadow="always">
       <template #header>{{ $t('forms.numberOfOnlineUsers') }}</template>
       <el-row :gutter="8" style="margin-top: -8px">
-        <el-col :lg='{span:6}' v-for="(item,index) in onlineMessage" :key="index"
+        <el-col v-for="(item,index) in onlineMessage" :key="index" :lg='{span:6}'
                 style="padding: 0;margin-top: 8px">
           <el-card shadow="hover" style="margin: 0 8px">
             <el-row>
               <el-col :span="8">
-                <el-icon size="55px" color="#67c23a">
+                <el-icon color="#67c23a" size="55px">
                   <el-icon-odometer/>
                 </el-icon>
               </el-col>
               <el-col :span="16">
                 <div style="color: #9ea7b4;">{{ item.appName }}</div>
-                <count-to style="font-size: 30px;color: #409EFF"
-                          :start-val="0"
-                          :end-val="item.count"
+                <count-to :autoplay="true"
                           :duration="2000"
-                          :separator="','"
+                          :end-val="item.count"
                           :prefix="''"
+                          :separator="','"
+                          :start-val="0"
                           :suffix="''"
-                          :autoplay="true"/>
+                          style="font-size: 30px;color: #409EFF"/>
               </el-col>
             </el-row>
           </el-card>

@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" size="small"
+    <el-form ref="searchForm" :inline="true" :model="searchFormModel" label-width="undefined" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.routeId')" prop="routeId">
         <el-input v-model="searchFormModel.routeId" :disabled="modal_loading"
@@ -9,68 +9,68 @@
       </el-form-item>
       <el-form-item :label="$t('forms.status')" prop="enabled">
         <el-select v-model="searchFormModel.enabled" :disabled="modal_loading" value="">
-          <el-option v-for="item in enabledList" :value="item.value" :label="item.label"
-                     :key="'search_select_'+item.value">
+          <el-option v-for="item in enabledList" :key="'search_select_'+item.value" :label="item.label"
+                     :value="item.value">
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group style="margin-right: 20px">
-          <el-button :loading="modal_loading" @click="handleSearch" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleSearch">
             {{ $t('forms.buttons.search') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleSearchReset" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleSearchReset">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleAdd" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleAdd">
             {{ $t('forms.buttons.add') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleDeleteMore" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleDeleteMore">
             {{ $t('forms.buttons.delete') }}
           </el-button>
         </el-button-group>
-        <el-button :loading="modal_loading" @click="handleRefresh" type="success">
+        <el-button :loading="modal_loading" type="success" @click="handleRefresh">
           {{ $t('forms.buttons.refreshRoute') }}
         </el-button>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchFormModel.orderParam"
-              :data="searchData"
-              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
-              @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
-              header-cell-class-name="query-table-header">
+    <el-table ref="table" v-loading="modal_loading" :data="searchData" :default-sort="searchFormModel.orderParam" :empty-text="$t('messages.tableNoData')"
+              :height="tableHeight"
+              border header-cell-class-name="query-table-header"
+              size="small" @row-click="handleRowClick" @selection-change="handleSelect"
+              @sort-change="handleSortChange">
       <el-table-column
-        type="selection"
-        fixed="left"
-        align="center"
         :selectable="selectableFun"
+        align="center"
+        fixed="left"
+        type="selection"
         width="40">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.routeId')"
         prop="routeId"
-        sortable="custom"
-        :label="$t('forms.routeId')">
+        sortable="custom">
       </el-table-column>
       <el-table-column
-        prop="uri"
-        :label="$t('forms.uri')">
+        :label="$t('forms.uri')"
+        prop="uri">
       </el-table-column>
       <el-table-column
-        prop="remarks"
-        :label="$t('forms.remarks')">
+        :label="$t('forms.remarks')"
+        prop="remarks">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.sort')"
+        align="center"
         prop="orderNum"
         sortable="custom"
-        align="center"
-        :label="$t('forms.sort')"
         width="80">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.enabled')"
+        align="center"
         prop="enabled"
         sortable="custom"
-        align="center"
-        :label="$t('forms.enabled')"
         width="100">
         <template #default="scope">
           <span :style="scope.row.enabled ? 'color:green':'color:red'">{{ enabledText(scope.row.enabled) }}</span>
@@ -78,32 +78,32 @@
       </el-table-column>
       <el-table-column
         :fixed="isMobile?false:'right'"
-        prop="action"
         :label="$t('forms.action')"
         align="center"
+        prop="action"
         width="90">
         <template #default="scope">
-          <el-button type="text" size="small" @click="handleEdit(scope.row)"
-                     icon="el-icon-edit"></el-button>
-          <el-button type="text" size="small" @click="handleDeleteRow(scope.row)"
-                     icon="el-icon-delete"></el-button>
+          <el-button icon="el-icon-edit" size="small" type="text"
+                     @click="handleEdit(scope.row)"></el-button>
+          <el-button icon="el-icon-delete" size="small" type="text"
+                     @click="handleDeleteRow(scope.row)"></el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination @size-change="handlePageSizeSearch"
-                   v-model:current-page="searchFormModel.currPage"
-                   :page-sizes="searchFormModel.pageSizeArray"
+    <el-pagination v-model:current-page="searchFormModel.currPage"
                    v-model:page-size="searchFormModel.pageSize"
-                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
-                   :total="searchFormModel.totalRows">
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
+                   :page-sizes="searchFormModel.pageSizeArray"
+                   :small="isMobile" :total="searchFormModel.totalRows"
+                   @size-change="handlePageSizeSearch">
     </el-pagination>
-    <el-dialog v-model="editModal" :title="$t('forms.info')" :fullscreen="true">
-      <el-form ref="editForm" :model="editFormModel" :rules="ruleAddForm" label-width="undefined" size="small"
-               style="padding-right: 25px;" v-loading="modal_loading" @submit.native.prevent>
+    <el-dialog v-model="editModal" :fullscreen="true" :title="$t('forms.info')">
+      <el-form ref="editForm" v-loading="modal_loading" :model="editFormModel" :rules="ruleAddForm" label-width="undefined"
+               size="small" style="padding-right: 25px;" @submit.native.prevent>
         <el-row>
           <el-col :lg="8">
             <el-form-item :label="$t('forms.routeId')" prop="routeId" style="width: 100%">
-              <el-input v-model="editFormModel.routeId" :disabled="modal_loading" ref="routeId"
+              <el-input ref="routeId" v-model="editFormModel.routeId" :disabled="modal_loading"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.routeId')"
                         @keyup.enter.native="doSave"/>
             </el-form-item>
@@ -118,8 +118,8 @@
           <el-col :lg="8">
             <el-form-item :label="$t('forms.sort')" prop="orderNum">
               <el-input-number v-model="editFormModel.orderNum" :disabled="modal_loading"
-                               style="width: 100%;max-width: 160px;"
-                               :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" :min="0"
+                               :min="0"
+                               :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" style="width: 100%;max-width: 160px;"
                                @keyup.enter.native="doSave"/>
             </el-form-item>
           </el-col>
@@ -133,43 +133,43 @@
           </el-col>
           <el-col :lg="16">
             <el-form-item :label="$t('forms.remarks')" prop="remarks" style="width: 100%;">
-              <el-input v-model="editFormModel.remarks" :disabled="modal_loading" type="textarea" :rows="3"
-                        :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')"/>
+              <el-input v-model="editFormModel.remarks" :disabled="modal_loading" :placeholder="$t('forms.pleaseEnter') + $t('forms.remarks')" :rows="3"
+                        type="textarea"/>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :lg="12">
             <el-form-item :label="$t('forms.predicates')" prop="predicates" style="width: 100%">
-              <vueJsonEditor v-model:value="editFormModel.predicates" :lang="jsonEditorLang" :showBtns="false"
-                             :modes="jsonEditModes" :expandedOnStart="true" style="width: 100%"
-                             :mode="'text'" @json-change="function(json){editFormModel.predicates=json}"/>
+              <vueJsonEditor v-model:value="editFormModel.predicates" :expandedOnStart="true" :lang="jsonEditorLang"
+                             :mode="'text'" :modes="jsonEditModes" :showBtns="false"
+                             style="width: 100%" @json-change="function(json){editFormModel.predicates=json}"/>
             </el-form-item>
           </el-col>
           <el-col :lg="12">
             <el-form-item :label="$t('forms.filters')" prop="filters" style="width: 100%">
-              <vueJsonEditor v-model:value="editFormModel.filters" :lang="jsonEditorLang" :showBtns="false"
-                             :modes="jsonEditModes" :expandedOnStart="true" style="width: 100%"
-                             :mode="'text'" @json-change="function(json){editFormModel.filters=json}"/>
+              <vueJsonEditor v-model:value="editFormModel.filters" :expandedOnStart="true" :lang="jsonEditorLang"
+                             :mode="'text'" :modes="jsonEditModes" :showBtns="false"
+                             style="width: 100%" @json-change="function(json){editFormModel.filters=json}"/>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :lg="24">
             <el-form-item :label="$t('forms.metadata')" prop="metadata" style="width: 100%">
-              <vueJsonEditor v-model:value="editFormModel.metadata" :lang="jsonEditorLang" :showBtns="false"
-                             :modes="jsonEditModes" :expandedOnStart="true" style="width: 100%"
-                             :mode="'text'" @json-change="function(json){editFormModel.metadata=json}"/>
+              <vueJsonEditor v-model:value="editFormModel.metadata" :expandedOnStart="true" :lang="jsonEditorLang"
+                             :mode="'text'" :modes="jsonEditModes" :showBtns="false"
+                             style="width: 100%" @json-change="function(json){editFormModel.metadata=json}"/>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <template #footer>
         <div style="text-align: center">
-          <el-button type="default" :loading="modal_loading" @click="doCancel()">
+          <el-button :loading="modal_loading" type="default" @click="doCancel()">
             {{ $t('forms.buttons.cancel') }}
           </el-button>
-          <el-button type="primary" :loading="modal_loading" @click="doSave">
+          <el-button :loading="modal_loading" type="primary" @click="doSave">
             {{ $t('forms.buttons.submit') }}
           </el-button>
         </div>

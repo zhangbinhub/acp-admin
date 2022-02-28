@@ -1,7 +1,7 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" @submit.native.prevent
-             size="small">
+    <el-form ref="searchForm" :inline="true" :model="searchFormModel" label-width="undefined" size="small"
+             @submit.native.prevent>
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input v-model="searchFormModel.name" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
@@ -14,71 +14,71 @@
       </el-form-item>
       <el-form-item :label="$t('forms.status')" prop="enabled">
         <el-select v-model="searchFormModel.enabled" :disabled="modal_loading" value="">
-          <el-option v-for="item in enabledList" :value="item.value" :label="item.label"
-                     :key="'search_select_'+item.value">
+          <el-option v-for="item in enabledList" :key="'search_select_'+item.value" :label="item.label"
+                     :value="item.value">
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group>
-          <el-button :loading="modal_loading" @click="handleSearch" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleSearch">
             {{ $t('forms.buttons.search') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleSearchReset" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleSearchReset">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleAdd" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleAdd">
             {{ $t('forms.buttons.add') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleDeleteMore" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleDeleteMore">
             {{ $t('forms.buttons.delete') }}
           </el-button>
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchFormModel.orderParam"
-              :data="searchData"
-              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')"
-              @row-click="handleRowClick" @selection-change="handleSelect" @sort-change="handleSortChange"
-              header-cell-class-name="query-table-header">
+    <el-table ref="table" v-loading="modal_loading" :data="searchData" :default-sort="searchFormModel.orderParam" :empty-text="$t('messages.tableNoData')"
+              :height="tableHeight"
+              border header-cell-class-name="query-table-header"
+              size="small" @row-click="handleRowClick" @selection-change="handleSelect"
+              @sort-change="handleSortChange">
       <el-table-column
-        type="selection"
-        fixed="left"
-        align="center"
         :selectable="selectableFun"
+        align="center"
+        fixed="left"
+        type="selection"
         width="40">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.name')"
         prop="name"
-        sortable="custom"
-        :label="$t('forms.name')">
+        sortable="custom">
       </el-table-column>
       <el-table-column
-        prop="value"
-        :label="$t('forms.value')">
+        :label="$t('forms.value')"
+        prop="value">
         <template #default="scope">
-          <el-input type="text" v-model="editValue" v-if="editIndex === scope.$index"
+          <el-input v-if="editIndex === scope.$index" v-model="editValue" type="text"
                     @keyup.enter.native="handleSave(scope.$index)"
                     @keyup.esc.native="handleCancel"/>
           <span v-else>{{ scope.row.value }}</span>
         </template>
       </el-table-column>
       <el-table-column
-        prop="configDes"
-        :label="$t('forms.describe')">
+        :label="$t('forms.describe')"
+        prop="configDes">
         <template #default="scope">
-          <el-input type="text" v-model="editDes" v-if="editIndex === scope.$index"
+          <el-input v-if="editIndex === scope.$index" v-model="editDes" type="text"
                     @keyup.enter.native="handleSave(scope.$index)"
                     @keyup.esc.native="handleCancel"/>
           <span v-else>{{ scope.row.configDes }}</span>
         </template>
       </el-table-column>
       <el-table-column
-        prop="enabled"
+        :label="$t('forms.enabled')"
         align="center"
+        prop="enabled"
         sortable="custom"
-        width="100"
-        :label="$t('forms.enabled')">
+        width="100">
         <template #default="scope">
           <el-switch v-if="editIndex === scope.$index" v-model="editEnabled" :disabled="modal_loading"/>
           <span v-else
@@ -87,39 +87,39 @@
       </el-table-column>
       <el-table-column
         :fixed="isMobile?false:'right'"
-        prop="action"
         :label="$t('forms.action')"
         align="center"
+        prop="action"
         width="90">
         <template #default="scope">
           <div v-if="editIndex === scope.$index">
-            <el-button type="text" @click="handleSave(scope.$index)"
-                       icon="el-icon-check" style="color: green">
+            <el-button icon="el-icon-check" style="color: green"
+                       type="text" @click="handleSave(scope.$index)">
             </el-button>
-            <el-button type="text" @click="editIndex = -1"
-                       icon="el-icon-close" style="color: red"/>
+            <el-button icon="el-icon-close" style="color: red"
+                       type="text" @click="editIndex = -1"/>
           </div>
           <div v-else>
-            <el-button type="text" @click="handleEdit(scope.row,scope.$index)"
-                       icon="el-icon-edit"/>
-            <el-button v-if="scope.row.covert" type="text" @click="handleDeleteRow(scope.row)"
-                       icon="el-icon-delete"/>
+            <el-button icon="el-icon-edit" type="text"
+                       @click="handleEdit(scope.row,scope.$index)"/>
+            <el-button v-if="scope.row.covert" icon="el-icon-delete" type="text"
+                       @click="handleDeleteRow(scope.row)"/>
           </div>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination @size-change="handlePageSizeSearch"
-                   v-model:current-page="searchFormModel.currPage"
-                   :page-sizes="searchFormModel.pageSizeArray"
+    <el-pagination v-model:current-page="searchFormModel.currPage"
                    v-model:page-size="searchFormModel.pageSize"
-                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
-                   :total="searchFormModel.totalRows">
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
+                   :page-sizes="searchFormModel.pageSizeArray"
+                   :small="isMobile" :total="searchFormModel.totalRows"
+                   @size-change="handlePageSizeSearch">
     </el-pagination>
-    <el-dialog :fullscreen="isMobile" v-model="addModal" :title="$t('forms.buttons.add')" :close-on-click-modal="false">
-      <el-form ref="addForm" :model="addFormModel" :rules="ruleAddForm" label-width="undefined" size="small"
-               v-loading="modal_loading" @submit.native.prevent style="padding-right: 25px;">
+    <el-dialog v-model="addModal" :close-on-click-modal="false" :fullscreen="isMobile" :title="$t('forms.buttons.add')">
+      <el-form ref="addForm" v-loading="modal_loading" :model="addFormModel" :rules="ruleAddForm" label-width="undefined"
+               size="small" style="padding-right: 25px;" @submit.native.prevent>
         <el-form-item :label="$t('forms.name')" prop="name">
-          <el-input v-model="addFormModel.name" :disabled="modal_loading" ref="name"
+          <el-input ref="name" v-model="addFormModel.name" :disabled="modal_loading"
                     :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                     @keyup.enter.native="doAdd"/>
         </el-form-item>
@@ -139,10 +139,10 @@
       </el-form>
       <template #footer>
         <div>
-          <el-button type="info" :loading="modal_loading" @click="doCancel">
+          <el-button :loading="modal_loading" type="info" @click="doCancel">
             {{ $t('forms.buttons.cancel') }}
           </el-button>
-          <el-button type="primary" :loading="modal_loading" @click="doAdd">
+          <el-button :loading="modal_loading" type="primary" @click="doAdd">
             {{ $t('forms.buttons.submit') }}
           </el-button>
         </div>

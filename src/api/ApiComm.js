@@ -1,7 +1,4 @@
-import {
-  findMenuByPath,
-  deepEqual, buildRouteParams
-} from '@/libs/tools'
+import {buildRouteParams, deepEqual, findMenuByPath} from '@/libs/tools'
 
 const ApiComm = {
   $confirm: undefined,

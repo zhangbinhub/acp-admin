@@ -24,7 +24,7 @@ export const queryRuntime = () => {
       'covert': true
     }],
     'pageable': {
-      'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
+      'sort': {'sorted': true, 'unsorted': false, 'empty': false},
       'offset': 0,
       'pageNumber': 0,
       'pageSize': 10,
@@ -36,7 +36,7 @@ export const queryRuntime = () => {
     'totalElements': 1,
     'size': 10,
     'number': 0,
-    'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
+    'sort': {'sorted': true, 'unsorted': false, 'empty': false},
     'numberOfElements': 1,
     'first': true,
     'empty': false

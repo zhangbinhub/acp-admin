@@ -1,8 +1,8 @@
 <template>
   <div class="login">
     <div class="bg">
-      <el-dialog custom-class="login-dialog" v-model="submitModal" width="300px"
-                 :modal="false" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="false">
+      <el-dialog v-model="submitModal" :close-on-click-modal="false" :close-on-press-escape="false"
+                 :modal="false" :show-close="false" custom-class="login-dialog" width="300px">
         <template #title>
           <div style="text-align: center">
             <h1>
@@ -13,34 +13,34 @@
         <div>
           <el-form ref="passwordForm" :model="formValidate" :rules="ruleValidate" @submit.native.prevent>
             <el-form-item>
-              <input type="password" style="display: none;"/>
+              <input style="display: none;" type="password"/>
             </el-form-item>
             <el-form-item prop="oldPassword">
-              <el-input :disabled="modal_loading" :placeholder="text.oldPasswordPlaceholder"
-                        @keyup.native.enter="handleSubmit" prefix-icon="el-icon-lock"
-                        autocomplete="off" type="text" @focus="passwordFocus"
-                        v-model="formValidate.oldPassword">
+              <el-input v-model="formValidate.oldPassword" :disabled="modal_loading"
+                        :placeholder="text.oldPasswordPlaceholder" autocomplete="off"
+                        prefix-icon="el-icon-lock" type="text" @focus="passwordFocus"
+                        @keyup.native.enter="handleSubmit">
               </el-input>
             </el-form-item>
             <el-form-item prop="password">
-              <el-input :disabled="modal_loading" :placeholder="text.passwordPlaceholder"
-                        @keyup.native.enter="handleSubmit" prefix-icon="el-icon-lock"
-                        autocomplete="off" type="text" @focus="passwordFocus"
-                        v-model="formValidate.password">
+              <el-input v-model="formValidate.password" :disabled="modal_loading"
+                        :placeholder="text.passwordPlaceholder" autocomplete="off"
+                        prefix-icon="el-icon-lock" type="text" @focus="passwordFocus"
+                        @keyup.native.enter="handleSubmit">
               </el-input>
             </el-form-item>
             <el-form-item prop="repeatPassword">
-              <el-input :disabled="modal_loading" :placeholder="text.repeatPasswordPlaceholder"
-                        @keyup.native.enter="handleSubmit" prefix-icon="el-icon-lock"
-                        autocomplete="off" type="text" @focus="passwordFocus"
-                        v-model="formValidate.repeatPassword">
+              <el-input v-model="formValidate.repeatPassword" :disabled="modal_loading"
+                        :placeholder="text.repeatPasswordPlaceholder" autocomplete="off"
+                        prefix-icon="el-icon-lock" type="text" @focus="passwordFocus"
+                        @keyup.native.enter="handleSubmit">
               </el-input>
             </el-form-item>
           </el-form>
         </div>
         <template #footer>
           <div style="text-align: center">
-            <el-button type="primary" :loading="modal_loading" style="width: 100%"
+            <el-button :loading="modal_loading" style="width: 100%" type="primary"
                        @click="handleSubmit">
               {{ text.submitButton }}
             </el-button>

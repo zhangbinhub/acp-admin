@@ -2,28 +2,28 @@
   <el-config-provider :locale="localLangMessage">
     <el-container :class="`home home-${theme}`">
       <el-header>
-        <header-bar :full-path="fullPath" :menu-list="menuList" :mini="isMini" :is-mobile="isMobile">
-          <user :user-avatar="userAvatar" :customer-name="userName"/>
+        <header-bar :full-path="fullPath" :is-mobile="isMobile" :menu-list="menuList" :mini="isMini">
+          <user :customer-name="userName" :user-avatar="userAvatar"/>
         </header-bar>
       </el-header>
       <el-container class="home-content">
         <el-aside v-show="!isMobile">
-          <side-menu :accordion="true" :active-name="fullPath" :collapsed="isCollapsed" :is-mobile="isMobile"
-                     @on-select="handleClick" :menu-list="menuList" :open-names="openedNames"
-                     :theme="theme" :class="{'menu-container':true,'collapsed':isCollapsed}"/>
+          <side-menu :accordion="true" :active-name="fullPath" :class="{'menu-container':true,'collapsed':isCollapsed}" :collapsed="isCollapsed"
+                     :is-mobile="isMobile" :menu-list="menuList" :open-names="openedNames"
+                     :theme="theme" @on-select="handleClick"/>
         </el-aside>
         <el-container :class="{mobile:isMobile}">
           <el-header>
-            <tags-nav :full-path="fullPath" :menu-list="menuList" :list="tagNavList" v-show="!isMobile"
+            <tags-nav v-show="!isMobile" :full-path="fullPath" :list="tagNavList" :menu-list="menuList"
                       @update:modelValue="handleClick" @on-close="handleCloseTag"/>
-            <side-menu :accordion="true" :active-name="fullPath" :collapsed="isCollapsed" v-show="isMobile"
-                       :is-mobile="isMobile" @on-select="handleClick" :menu-list="menuList" :open-names="openedNames"
-                       :theme="theme"/>
+            <side-menu v-show="isMobile" :accordion="true" :active-name="fullPath" :collapsed="isCollapsed"
+                       :is-mobile="isMobile" :menu-list="menuList" :open-names="openedNames" :theme="theme"
+                       @on-select="handleClick"/>
           </el-header>
           <el-scrollbar ref="mainScrollbar" class="main-scrollbar">
             <el-main class="main-content">
               <router-view v-slot="{ Component }">
-                <transition name="el-fade-in" mode="out-in" appear>
+                <transition appear mode="out-in" name="el-fade-in">
                   <keep-alive :include="cacheList">
                     <component :is="Component"/>
                   </keep-alive>
@@ -47,10 +47,7 @@ import HeaderBar from './header-bar'
 import TagsNav from './tags-nav'
 import User from './user'
 import './Home.less'
-import {
-  getOpenedNamesByActiveName, isMobileDevice,
-  updateTagNavList
-} from '@/libs/tools'
+import {getOpenedNamesByActiveName, isMobileDevice, updateTagNavList} from '@/libs/tools'
 
 export default {
   name: 'home',

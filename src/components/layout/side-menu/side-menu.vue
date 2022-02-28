@@ -1,19 +1,19 @@
 <template>
   <div class="side-menu-wrapper">
-    <el-container class="side-menu-content" v-show="!isMobile">
+    <el-container v-show="!isMobile" class="side-menu-content">
       <el-main>
         <el-scrollbar ref="menuScrollbar" class="menu-scrollbar">
-          <el-menu class="menu-root" :collapse="collapsed" :unique-opened="accordion"
-                   background-color="#1f2d3d"
-                   text-color="rgba(255, 255, 255, 0.7)"
+          <el-menu :collapse="collapsed" :default-active="activeName" :default-openeds="openedNames"
+                   :unique-opened="accordion"
                    active-text-color="#409eff"
-                   :default-active="activeName"
-                   :default-openeds="openedNames"
+                   background-color="#1f2d3d"
+                   class="menu-root"
+                   text-color="rgba(255, 255, 255, 0.7)"
                    @select="handleSelect">
             <template v-for="item in menuList">
-              <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"
-                              :key="item.id+'_parent'"/>
-              <el-menu-item v-else :index="item.path" :key="item.id">
+              <side-menu-item v-if="item.children && item.children.length > 0" :key="item.id+'_parent'"
+                              :parent-item="item"/>
+              <el-menu-item v-else :key="item.id" :index="item.path">
                 <el-icon>
                   <component v-bind:is="'el-icon-'+item.iconType"></component>
                 </el-icon>
@@ -24,21 +24,21 @@
         </el-scrollbar>
       </el-main>
       <el-footer>
-        <sider-trigger :collapsed="collapsed" v-show="!isMobile" @on-change="handleMenuFold"/>
+        <sider-trigger v-show="!isMobile" :collapsed="collapsed" @on-change="handleMenuFold"/>
       </el-footer>
     </el-container>
-    <el-menu class="menu-root" :collapse="false" :unique-opened="accordion" v-show="isMobile"
-             background-color="#1f2d3d"
-             text-color="rgba(255, 255, 255, 0.7)"
-             mode="horizontal"
-             menu-trigger="click"
+    <el-menu v-show="isMobile" :collapse="false" :default-active="activeName" :unique-opened="accordion"
              active-text-color="#409eff"
-             :default-active="activeName"
+             background-color="#1f2d3d"
+             class="menu-root"
+             menu-trigger="click"
+             mode="horizontal"
+             text-color="rgba(255, 255, 255, 0.7)"
              @select="handleSelect">
       <template v-for="item in menuList">
-        <side-menu-item v-if="item.children && item.children.length > 0" :parent-item="item"
-                        :key="item.id+'_parent'"/>
-        <el-menu-item v-else :index="item.path" :key="item.id">
+        <side-menu-item v-if="item.children && item.children.length > 0" :key="item.id+'_parent'"
+                        :parent-item="item"/>
+        <el-menu-item v-else :key="item.id" :index="item.path">
           <el-icon>
             <component v-bind:is="'el-icon-'+item.iconType"></component>
           </el-icon>

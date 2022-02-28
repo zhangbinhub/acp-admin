@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <el-form ref="searchForm" :model="searchFormModel" label-width="undefined" :inline="true" size="small"
+    <el-form ref="searchForm" :inline="true" :model="searchFormModel" label-width="undefined" size="small"
              @submit.native.prevent>
       <el-form-item :label="$t('forms.name')" prop="name">
         <el-input v-model="searchFormModel.name" :disabled="modal_loading"
@@ -23,148 +23,148 @@
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
       <el-form-item :label="$t('forms.status')" prop="enabled">
-        <el-select v-model="searchFormModel.enabled" :disabled="modal_loading" value=""
-                   style="width: 162px">
-          <el-option v-for="item in enabledList" :value="item.value" :label="item.label"
-                     :key="'search_select_'+item.value">
+        <el-select v-model="searchFormModel.enabled" :disabled="modal_loading" style="width: 162px"
+                   value="">
+          <el-option v-for="item in enabledList" :key="'search_select_'+item.value" :label="item.label"
+                     :value="item.value">
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item style="float: right">
         <el-button-group>
-          <el-button :loading="modal_loading" @click="handleSearch" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleSearch">
             {{ $t('forms.buttons.search') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleSearchReset" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleSearchReset">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleAdd" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleAdd">
             {{ $t('forms.buttons.add') }}
           </el-button>
-          <el-button :loading="modal_loading" @click="handleDeleteMore" type="primary">
+          <el-button :loading="modal_loading" type="primary" @click="handleDeleteMore">
             {{ $t('forms.buttons.delete') }}
           </el-button>
         </el-button-group>
       </el-form-item>
     </el-form>
-    <el-table ref="table" border :height="tableHeight" size="small" :default-sort="searchFormModel.orderParam"
-              :data="searchData"
-              v-loading="modal_loading" :empty-text="$t('messages.tableNoData')" @selection-change="handleSelect"
-              @row-click="handleRowClick" @sort-change="handleSortChange" header-cell-class-name="query-table-header">
+    <el-table ref="table" v-loading="modal_loading" :data="searchData" :default-sort="searchFormModel.orderParam" :empty-text="$t('messages.tableNoData')"
+              :height="tableHeight"
+              border header-cell-class-name="query-table-header" size="small"
+              @selection-change="handleSelect" @row-click="handleRowClick" @sort-change="handleSortChange">
       <el-table-column
-        type="selection"
-        fixed="left"
-        align="center"
         :selectable="selectableFun"
+        align="center"
+        fixed="left"
+        type="selection"
         width="40">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.sort')"
+        align="center"
         prop="sort"
-        align="center"
         sortable="custom"
-        width="70"
-        :label="$t('forms.sort')">
+        width="70">
       </el-table-column>
       <el-table-column
-        prop="name"
-        :label="$t('forms.name')">
+        :label="$t('forms.name')"
+        prop="name">
       </el-table-column>
       <el-table-column
-        prop="loginNo"
-        :label="$t('forms.loginNo')">
+        :label="$t('forms.loginNo')"
+        prop="loginNo">
       </el-table-column>
       <el-table-column
+        :label="$t('forms.mobile')"
         prop="mobile"
-        width="150"
-        :label="$t('forms.mobile')">
+        width="150">
       </el-table-column>
       <el-table-column
-        prop="levels"
+        :label="$t('forms.level')"
         align="center"
+        prop="levels"
         sortable="custom"
-        width="70"
-        :label="$t('forms.level')">
+        width="70">
       </el-table-column>
       <el-table-column
-        prop="organizationSet"
         :label="$t('forms.organization')"
-        :show-overflow-tooltip="true">
+        :show-overflow-tooltip="true"
+        prop="organizationSet">
         <template #default="scope">{{ orgNames(scope.row.organizationSet).join(',') }}</template>
       </el-table-column>
       <el-table-column
-        prop="roleSet"
         :label="$t('forms.role')"
-        :show-overflow-tooltip="true">
+        :show-overflow-tooltip="true"
+        prop="roleSet">
         <template #default="scope">{{ roleNames(scope.row.roleSet) }}</template>
       </el-table-column>
       <el-table-column
-        prop="enabled"
+        :label="$t('forms.enabled')"
         align="center"
+        prop="enabled"
         sortable="custom"
-        width="100"
-        :label="$t('forms.enabled')">
+        width="100">
         <template #default="scope">
           <span :style="scope.row.enabled ? 'color:green':'color:red'">{{ enabledText(scope.row.enabled) }}</span>
         </template>
       </el-table-column>
       <el-table-column
         :fixed="isMobile?false:'right'"
-        prop="action"
         :label="$t('forms.action')"
         align="center"
+        prop="action"
         width="120">
         <template #default="scope">
-          <el-button type="text" @click="handleEdit(scope.row)"
-                     icon="el-icon-edit"/>
+          <el-button icon="el-icon-edit" type="text"
+                     @click="handleEdit(scope.row)"/>
           <el-button
             v-if="scope.row.id !== $store.state.app.user.userInfo.id && scope.row.levels > $store.state.app.user.userInfo.levels"
-            type="text" @click="handleDeleteRow(scope.row)"
-            icon="el-icon-delete"/>
-          <el-button v-if="scope.row.levels > $store.state.app.user.userInfo.levels" type="text"
-                     @click="doResetPwd(scope.row.id)"
-                     icon="el-icon-refresh"/>
+            icon="el-icon-delete" type="text"
+            @click="handleDeleteRow(scope.row)"/>
+          <el-button v-if="scope.row.levels > $store.state.app.user.userInfo.levels" icon="el-icon-refresh"
+                     type="text"
+                     @click="doResetPwd(scope.row.id)"/>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination @size-change="handlePageSizeSearch"
-                   v-model:current-page="searchFormModel.currPage"
-                   :page-sizes="searchFormModel.pageSizeArray"
+    <el-pagination v-model:current-page="searchFormModel.currPage"
                    v-model:page-size="searchFormModel.pageSize"
-                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'" :small="isMobile"
-                   :total="searchFormModel.totalRows">
+                   :layout="isMobile?'prev, pager, next':'total, sizes, prev, pager, next, jumper'"
+                   :page-sizes="searchFormModel.pageSizeArray"
+                   :small="isMobile" :total="searchFormModel.totalRows"
+                   @size-change="handlePageSizeSearch">
     </el-pagination>
-    <el-dialog v-model="editModal" :title="$t('forms.info')" :fullscreen="true">
+    <el-dialog v-model="editModal" :fullscreen="true" :title="$t('forms.info')">
       <el-row :gutter="10">
         <el-col :lg="6" class="card-col">
           <el-card>
             <template #header>{{ $t('forms.basicInfo') }}</template>
-            <el-form ref="editForm" :model="editFormModel" :rules="ruleEditForm" label-width="undefined"
-                     size="small" v-loading="modal_loading" @submit.native.prevent>
+            <el-form ref="editForm" v-loading="modal_loading" :model="editFormModel" :rules="ruleEditForm"
+                     label-width="undefined" size="small" @submit.native.prevent>
               <el-form-item :label="$t('forms.name')" prop="name">
-                <el-input ref="name" v-model="editFormModel.name" @keyup.enter.native="doSave" :disabled="modal_loading"
-                          :placeholder=" $t('forms.pleaseEnter') + $t('forms.name')"/>
+                <el-input ref="name" v-model="editFormModel.name" :disabled="modal_loading" :placeholder=" $t('forms.pleaseEnter') + $t('forms.name')"
+                          @keyup.enter.native="doSave"/>
               </el-form-item>
               <el-form-item :label="$t('forms.loginNo')" prop="loginNo">
-                <el-input v-model="editFormModel.loginNo" @keyup.enter.native="doSave" :disabled="modal_loading"
-                          :placeholder=" $t('forms.pleaseEnter') + $t('forms.loginNo')"/>
+                <el-input v-model="editFormModel.loginNo" :disabled="modal_loading" :placeholder=" $t('forms.pleaseEnter') + $t('forms.loginNo')"
+                          @keyup.enter.native="doSave"/>
               </el-form-item>
               <el-form-item :label="$t('forms.mobile')" prop="mobile">
-                <el-input v-model="editFormModel.mobile" @keyup.enter.native="doSave" :disabled="modal_loading"
-                          :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"/>
+                <el-input v-model="editFormModel.mobile" :disabled="modal_loading" :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"
+                          @keyup.enter.native="doSave"/>
               </el-form-item>
               <el-form-item :label="$t('forms.level')" prop="levels">
                 <el-input-number v-model="editFormModel.levels" :disabled="modal_loading"
-                                 :placeholder="$t('forms.pleaseEnter') + $t('forms.level')" :min="0"
+                                 :min="0" :placeholder="$t('forms.pleaseEnter') + $t('forms.level')"
                                  @keyup.enter.native="doSave">
                 </el-input-number>
               </el-form-item>
               <el-form-item :label="$t('forms.sort')" prop="sort">
                 <el-input-number v-model="editFormModel.sort" :disabled="modal_loading"
-                                 :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" :min="1"
+                                 :min="1" :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')"
                                  @keyup.enter.native="doSave">
                 </el-input-number>
               </el-form-item>
-              <el-form-item :label="$t('forms.enabled')" prop="enabled" :required="true">
+              <el-form-item :label="$t('forms.enabled')" :required="true" prop="enabled">
                 <el-switch v-model="editFormModel.enabled" :disabled="modal_loading"/>
               </el-form-item>
             </el-form>
@@ -174,9 +174,9 @@
           <el-card>
             <template #header>{{ $t('forms.orgList') }}</template>
             <div style="overflow-x: auto;overflow-y: hidden">
-              <el-tree ref="orgTree" :data="orgTreeDataS1" node-key="id" v-loading="modal_loading"
-                       :show-checkbox="true" :check-strictly="true"
-                       :default-expanded-keys="currObj.orgIds"/>
+              <el-tree ref="orgTree" v-loading="modal_loading" :check-strictly="true" :data="orgTreeDataS1"
+                       :default-expanded-keys="currObj.orgIds" :show-checkbox="true"
+                       node-key="id"/>
             </div>
           </el-card>
         </el-col>
@@ -184,9 +184,9 @@
           <el-card>
             <template #header>{{ $t('forms.orgMngList') }}</template>
             <div style="overflow-x: auto;overflow-y: hidden">
-              <el-tree ref="orgMngTree" :data="orgTreeDataS2" node-key="id" v-loading="modal_loading"
-                       :show-checkbox="true" :check-strictly="true"
-                       :default-expanded-keys="currObj.orgMngIds"/>
+              <el-tree ref="orgMngTree" v-loading="modal_loading" :check-strictly="true" :data="orgTreeDataS2"
+                       :default-expanded-keys="currObj.orgMngIds" :show-checkbox="true"
+                       node-key="id"/>
             </div>
           </el-card>
         </el-col>
@@ -194,21 +194,21 @@
           <el-card>
             <template #header>{{ $t('forms.roleList') }}</template>
             <div style="overflow-x: auto;overflow-y: hidden">
-              <el-tree ref="roleTree" :data="roleTreeData" node-key="id" v-loading="modal_loading"
-                       :default-expand-all="true" :show-checkbox="true" :check-strictly="true"/>
+              <el-tree ref="roleTree" v-loading="modal_loading" :check-strictly="true" :data="roleTreeData"
+                       :default-expand-all="true" :show-checkbox="true" node-key="id"/>
             </div>
           </el-card>
         </el-col>
       </el-row>
       <template #footer>
         <div style="text-align: center">
-          <el-button type="info" :loading="modal_loading" @click="doCancel()">
+          <el-button :loading="modal_loading" type="info" @click="doCancel()">
             {{ $t('forms.buttons.cancel') }}
           </el-button>
-          <el-button type="warning" :loading="modal_loading" @click="doReset()">
+          <el-button :loading="modal_loading" type="warning" @click="doReset()">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button type="primary" :loading="modal_loading" @click="doSave()">
+          <el-button :loading="modal_loading" type="primary" @click="doSave()">
             {{ $t('forms.buttons.submit') }}
           </el-button>
         </div>
@@ -223,7 +223,7 @@
 }
 </style>
 <script>
-import {copy, processTreeNode, getTreeFullPathTitle, sortTreeNodes, isMobileDevice} from '@/libs/tools'
+import {copy, getTreeFullPathTitle, isMobileDevice, processTreeNode, sortTreeNodes} from '@/libs/tools'
 import {nextTick, ref} from "vue";
 
 export default {
