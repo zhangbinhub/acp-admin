@@ -28,7 +28,7 @@ export const queryRoute = () => {
       'remarks': '日志服务接口'
     }],
     'pageable': {
-      'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
+      'sort': {'sorted': true, 'unsorted': false, 'empty': false},
       'offset': 0,
       'pageNumber': 0,
       'pageSize': 10,
@@ -40,7 +40,7 @@ export const queryRoute = () => {
     'last': true,
     'size': 10,
     'number': 0,
-    'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
+    'sort': {'sorted': true, 'unsorted': false, 'empty': false},
     'numberOfElements': 1,
     'first': true,
     'empty': false

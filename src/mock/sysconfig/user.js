@@ -80,7 +80,7 @@ export const getUserList = () => {
       }]
     }],
     'pageable': {
-      'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
+      'sort': {'sorted': true, 'unsorted': false, 'empty': false},
       'offset': 0,
       'pageSize': 10,
       'pageNumber': 0,
@@ -92,7 +92,7 @@ export const getUserList = () => {
     'totalElements': 2,
     'size': 10,
     'number': 0,
-    'sort': { 'sorted': true, 'unsorted': false, 'empty': false },
+    'sort': {'sorted': true, 'unsorted': false, 'empty': false},
     'numberOfElements': 2,
     'first': true,
     'empty': false

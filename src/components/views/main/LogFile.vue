@@ -1,25 +1,25 @@
 <template>
   <el-card style="min-height: 350px;">
-    <el-form ref="searchForm" :model="formValidate" :rules="ruleValidate" label-width="undefined" :inline="true"
+    <el-form ref="searchForm" :inline="true" :model="formValidate" :rules="ruleValidate" label-width="undefined"
              size="small" @submit.native.prevent>
       <el-form-item :label="$t('forms.startDate')" prop="startDate">
-        <el-date-picker type="date" :disabled="form_loading" :disabled-date="disabledDate"
-                        v-model="formValidate.startDate"
+        <el-date-picker v-model="formValidate.startDate" :disabled="form_loading" :disabled-date="disabledDate"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.startDate')"
-                        style="width: 162px"/>
+                        style="width: 162px"
+                        type="date"/>
       </el-form-item>
       <el-form-item :label="$t('forms.endDate')" prop="endDate">
-        <el-date-picker type="date" :disabled="form_loading" :disabled-date="disabledDate"
-                        v-model="formValidate.endDate"
+        <el-date-picker v-model="formValidate.endDate" :disabled="form_loading" :disabled-date="disabledDate"
                         :placeholder="$t('forms.pleaseEnter') + $t('forms.endDate')"
-                        style="width: 162px"/>
+                        style="width: 162px"
+                        type="date"/>
       </el-form-item>
       <el-form-item>
         <el-button-group>
-          <el-button :loading="form_loading" @click="handleSearch()" type="primary">
+          <el-button :loading="form_loading" type="primary" @click="handleSearch()">
             {{ $t('forms.buttons.search') }}
           </el-button>
-          <el-button :loading="form_loading" @click="handleSearchReset()" type="primary">
+          <el-button :loading="form_loading" type="primary" @click="handleSearchReset()">
             {{ $t('forms.buttons.reset') }}
           </el-button>
         </el-button-group>
@@ -27,9 +27,9 @@
     </el-form>
     <el-divider/>
     <el-row>
-      <el-col :span="3" v-for="(file,index) in logFileList" :key="index"
+      <el-col v-for="(file,index) in logFileList" :key="index" :span="3"
               style="text-align: center;min-width: 150px;margin-bottom: 15px;">
-        <el-button type="text" :loading="form_loading" @click="downLoadFile(file)">
+        <el-button :loading="form_loading" type="text" @click="downLoadFile(file)">
           <el-icon size="50px">
             <el-icon-document/>
           </el-icon>

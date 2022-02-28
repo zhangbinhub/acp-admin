@@ -1,8 +1,8 @@
 <template>
   <div class="header-tabs">
     <div class="close-con">
-      <el-dropdown trigger="click" @command="handleTagsOption" popper-class="dropdown-menu-content">
-        <el-button type="text" size="small" style="padding-top: 6px">
+      <el-dropdown popper-class="dropdown-menu-content" trigger="click" @command="handleTagsOption">
+        <el-button size="small" style="padding-top: 6px" type="text">
           <el-icon size="18px">
             <el-icon-circle-close-filled/>
           </el-icon>
@@ -15,19 +15,19 @@
         </template>
       </el-dropdown>
     </div>
-    <el-tabs type="card" ref="header-tabs" v-model="currPath"
-             :before-leave="handleBeforeLeave"
+    <el-tabs ref="header-tabs" v-model="currPath" :before-leave="handleBeforeLeave"
+             type="card"
              @tab-remove="handleClose"
              @tab-click="handleClick">
       <el-tab-pane
         v-for="(item,index) in tagList"
         :key="item.path+'-'+index"
-        :label="showTitleInside(item)"
-        :name="item.path"
+        :closable="!item.isHome"
         :data-route-name="item.routeName"
-        :data-route-query="JSON.stringify(item.routeQuery)"
         :data-route-params="JSON.stringify(item.routeParams)"
-        :closable="!item.isHome">
+        :data-route-query="JSON.stringify(item.routeQuery)"
+        :label="showTitleInside(item)"
+        :name="item.path">
       </el-tab-pane>
     </el-tabs>
   </div>

@@ -4,16 +4,16 @@
       <el-col :lg="{span:8}">
         <el-card>
           <el-upload
-            class="upload-demo"
             :action="uploadURL"
-            :on-preview="handlePreview"
-            :on-remove="handleRemove"
             :before-remove="beforeRemove"
-            multiple
+            :file-list="fileList"
             :limit="3"
             :on-exceed="handleExceed"
+            :on-preview="handlePreview"
+            :on-remove="handleRemove"
             :on-success="handleFirstSuccess"
-            :file-list="fileList">
+            class="upload-demo"
+            multiple>
             <el-button size="small" type="primary">点击上传</el-button>
             <template #tip>
               <div class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -24,12 +24,12 @@
       <el-col :lg="{span:8}">
         <el-card :header="'用户头像上传'">
           <el-upload
-            class="avatar-uploader"
             :action="uploadURL"
-            :show-file-list="false"
+            :before-upload="beforeAvatarUpload"
             :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar" alt=""/>
+            :show-file-list="false"
+            class="avatar-uploader">
+            <img v-if="imageUrl" :src="imageUrl" alt="" class="avatar"/>
             <el-icon v-else class="avatar-uploader-icon">
               <el-icon-plus/>
             </el-icon>
@@ -40,15 +40,15 @@
         <el-card :header="'照片墙'">
           <el-upload
             :action="uploadURL"
-            list-type="picture-card"
             :on-preview="handlePictureCardPreview"
-            :on-remove="handleRemove">
+            :on-remove="handleRemove"
+            list-type="picture-card">
             <el-icon>
               <el-icon-plus/>
             </el-icon>
           </el-upload>
           <el-dialog v-model="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt="">
+            <img :src="dialogImageUrl" alt="" width="100%">
           </el-dialog>
         </el-card>
       </el-col>
@@ -59,16 +59,16 @@
         <el-card :header="'文件缩略图'">
           <el-upload
             :action="uploadURL"
-            list-type="picture-card"
-            :auto-upload="false">
+            :auto-upload="false"
+            list-type="picture-card">
             <template #default>
               <el-icon>
                 <el-icon-plus/>
               </el-icon>
             </template>
             <template #file="{file}">
-              <img class="el-upload-list__item-thumbnail"
-                   :src="file.url" alt=""/>
+              <img :src="file.url"
+                   alt="" class="el-upload-list__item-thumbnail"/>
               <span class="el-upload-list__item-actions">
                 <span class="el-upload-list__item-preview"
                       @click="handlePictureCardPreview(file)">
@@ -90,18 +90,18 @@
             </template>
           </el-upload>
           <el-dialog v-model="dialogVisible">
-            <img width="100%" :src="dialogImageUrl" alt="">
+            <img :src="dialogImageUrl" alt="" width="100%">
           </el-dialog>
         </el-card>
       </el-col>
       <el-col :lg="{span:8}">
         <el-card :header="'图片列表缩略图'">
           <el-upload
-            class="upload-demo"
             :action="uploadURL"
+            :file-list="fileList"
             :on-preview="handlePreview"
             :on-remove="handleRemove"
-            :file-list="fileList"
+            class="upload-demo"
             list-type="picture">
             <el-button size="small" type="primary">点击上传</el-button>
             <template #tip>
@@ -113,10 +113,10 @@
       <el-col :lg="{span:8}">
         <el-card :header="'上传文件列表控制'">
           <el-upload
-            class="upload-demo"
             :action="uploadURL"
+            :file-list="fileList"
             :on-change="handleChange"
-            :file-list="fileList">
+            class="upload-demo">
             <el-button size="small" type="primary">点击上传</el-button>
             <template #tip>
               <div class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
@@ -129,9 +129,9 @@
       <el-col :lg="{span:8}">
         <el-card :header="'拖拽上传'">
           <el-upload
+            :action="uploadURL"
             class="upload-demo"
             drag
-            :action="uploadURL"
             multiple>
             <el-icon class="el-icon--upload">
               <el-icon-upload-filled/>
@@ -146,17 +146,17 @@
       <el-col :lg="{span:8}">
         <el-card :header="'手动上传'">
           <el-upload
-            class="upload-demo"
             ref="upload"
             :action="uploadURL"
+            :auto-upload="false"
+            :file-list="fileList"
             :on-preview="handlePreview"
             :on-remove="handleRemove"
-            :file-list="fileList"
-            :auto-upload="false">
+            class="upload-demo">
             <template #trigger>
               <el-button size="small" type="primary">选取文件</el-button>
             </template>
-            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+            <el-button size="small" style="margin-left: 10px;" type="success" @click="submitUpload">上传到服务器</el-button>
             <template #tip>
               <div class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
             </template>

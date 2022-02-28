@@ -16,7 +16,7 @@ export const queryApp = () => {
       'covert': true
     }],
     'pageable': {
-      'sort': { 'unsorted': false, 'sorted': true, 'empty': false },
+      'sort': {'unsorted': false, 'sorted': true, 'empty': false},
       'offset': 0,
       'pageSize': 10,
       'pageNumber': 0,
@@ -28,7 +28,7 @@ export const queryApp = () => {
     'last': true,
     'size': 10,
     'number': 0,
-    'sort': { 'unsorted': false, 'sorted': true, 'empty': false },
+    'sort': {'unsorted': false, 'sorted': true, 'empty': false},
     'numberOfElements': 3,
     'first': true,
     'empty': false

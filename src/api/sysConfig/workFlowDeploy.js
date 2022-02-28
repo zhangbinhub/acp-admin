@@ -1,5 +1,5 @@
 import ApiComm from '../ApiComm'
-import { doDownLoadFile } from '@/libs/tools'
+import {doDownLoadFile} from '@/libs/tools'
 
 export default {
   downLoadFile: (id) => {

@@ -3,11 +3,11 @@
     <el-col :lg="{ span: 9 }" style="min-width: 300px;margin-bottom: 16px;">
       <el-card>
         <div style="overflow-x: auto;overflow-y: hidden">
-          <el-input v-model="filterText" clearable :placeholder="$t('forms.pleaseEnter') + $t('forms.filterKey')"/>
-          <el-tree style="margin-right: 16px;min-height: 100px;margin-top: 10px;" :data="treeData"
-                   v-loading="treeLoading"
-                   :default-expand-all="true" ref="roleTree" :filter-node-method="filterNode"
-                   :expand-on-click-node="false">
+          <el-input v-model="filterText" :placeholder="$t('forms.pleaseEnter') + $t('forms.filterKey')" clearable/>
+          <el-tree ref="roleTree" v-loading="treeLoading"
+                   :data="treeData"
+                   :default-expand-all="true" :expand-on-click-node="false" :filter-node-method="filterNode"
+                   style="margin-right: 16px;min-height: 100px;margin-top: 10px;">
             <template #default="{ node, data }">
               <span class="config-tree-node">
                 <span v-if="data.isApp">{{ node.label }}</span>
@@ -15,18 +15,18 @@
                 <span>
                   <el-button
                     v-if="data.isApp"
-                    type="text"
-                    size="small"
-                    icon="el-icon-plus"
                     :loading="treeLoading"
+                    icon="el-icon-plus"
+                    size="small"
+                    type="text"
                     @click="append(data)">
                   </el-button>
                   <el-button
                     v-else
-                    type="text"
-                    size="small"
-                    icon="el-icon-minus"
                     :loading="treeLoading"
+                    icon="el-icon-minus"
+                    size="small"
+                    type="text"
                     @click="remove(node, data)">
                   </el-button>
                 </span>
@@ -36,7 +36,7 @@
         </div>
       </el-card>
     </el-col>
-    <el-col :lg="{ span: 15 }" v-show="currRole.id&&currRole.id!==''" style="margin-bottom: 16px;">
+    <el-col v-show="currRole.id&&currRole.id!==''" :lg="{ span: 15 }" style="margin-bottom: 16px;">
       <el-card>
         <template #header>{{ currRoleFullPath }}</template>
         <el-tabs v-model="activeName">
@@ -47,30 +47,30 @@
               </el-icon>
               {{ $t('forms.basicInfo') }}
             </template>
-            <el-form ref="editForm" size="small" :model="editFormModel" :rules="ruleEditForm" label-width="undefined"
-                     v-loading="treeLoading" @submit.native.prevent>
+            <el-form ref="editForm" v-loading="treeLoading" :model="editFormModel" :rules="ruleEditForm" label-width="undefined"
+                     size="small" @submit.native.prevent>
               <el-form-item :label="$t('forms.name')" prop="name">
                 <el-input ref="name" v-model="editFormModel.name" :disabled="treeLoading"
                           :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
                           @keyup.enter.native="doSave"/>
               </el-form-item>
               <el-form-item :label="$t('forms.code')" prop="code">
-                <el-autocomplete v-model="editFormModel.code" :disabled="treeLoading" style="width: 100%"
-                                 :fetch-suggestions="querySearch"
+                <el-autocomplete v-model="editFormModel.code" :disabled="treeLoading" :fetch-suggestions="querySearch"
                                  :placeholder="$t('forms.pleaseEnter') + $t('forms.code')"
+                                 style="width: 100%"
                                  @keyup.enter.native="doSave"/>
               </el-form-item>
               <el-form-item :label="$t('forms.level')" prop="levels">
                 <el-input-number v-model="editFormModel.levels" :disabled="treeLoading"
-                                 style="width: 100%;max-width: 150px;"
-                                 :placeholder="$t('forms.pleaseEnter') + $t('forms.level')" :min="0"
+                                 :min="0"
+                                 :placeholder="$t('forms.pleaseEnter') + $t('forms.level')" style="width: 100%;max-width: 150px;"
                                  @keyup.enter.native="doSave">
                 </el-input-number>
               </el-form-item>
               <el-form-item :label="$t('forms.sort')" prop="sort">
                 <el-input-number v-model="editFormModel.sort" :disabled="treeLoading"
-                                 style="width: 100%;max-width: 150px;"
-                                 :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" :min="0"
+                                 :min="0"
+                                 :placeholder="$t('forms.pleaseEnter') + $t('forms.sort')" style="width: 100%;max-width: 150px;"
                                  @keyup.enter.native="doSave">
                 </el-input-number>
               </el-form-item>
@@ -83,10 +83,10 @@
               </el-icon>
               {{ $t('forms.userList') }}
             </template>
-            <el-transfer :data="optionalUsers" v-model="editFormModel.userIds" v-loading="treeLoading"
-                         :filterable="true" :props="{key:'id',label:'label'}"
+            <el-transfer v-model="editFormModel.userIds" v-loading="treeLoading" :button-texts="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
+                         :data="optionalUsers" :filterable="true"
+                         :props="{key:'id',label:'label'}"
                          :titles="[$t('forms.optional'),$t('forms.selected')]"
-                         :button-texts="[$t('forms.buttons.cancel'),$t('forms.buttons.select')]"
                          @change="handleUserListChange">
             </el-transfer>
           </el-tab-pane>
@@ -97,8 +97,8 @@
               </el-icon>
               {{ $t('forms.menuList') }}
             </template>
-            <el-tree ref="menuTree" :data="menuData" :show-checkbox="true" node-key="id"
-                     v-loading="treeLoading" :default-expanded-keys="editFormModel.menuIds"/>
+            <el-tree ref="menuTree" v-loading="treeLoading" :data="menuData" :default-expanded-keys="editFormModel.menuIds"
+                     :show-checkbox="true" node-key="id"/>
           </el-tab-pane>
           <el-tab-pane name="moduleFuncList">
             <template #label>
@@ -107,16 +107,16 @@
               </el-icon>
               {{ $t('forms.moduleFuncList') }}
             </template>
-            <el-tree ref="moduleFuncTree" :data="moduleFuncData" :show-checkbox="true" node-key="id"
-                     v-loading="treeLoading" :default-expanded-keys="editFormModel.moduleFuncIds"/>
+            <el-tree ref="moduleFuncTree" v-loading="treeLoading" :data="moduleFuncData" :default-expanded-keys="editFormModel.moduleFuncIds"
+                     :show-checkbox="true" node-key="id"/>
           </el-tab-pane>
         </el-tabs>
         <div style="text-align: center;margin-top: 20px;">
-          <el-button type="info" :loading="treeLoading" style="margin-right: 20px;"
+          <el-button :loading="treeLoading" style="margin-right: 20px;" type="info"
                      @click="doReset">
             {{ $t('forms.buttons.reset') }}
           </el-button>
-          <el-button type="primary" :loading="treeLoading" @click="doSave">
+          <el-button :loading="treeLoading" type="primary" @click="doSave">
             {{ $t('forms.buttons.submit') }}
           </el-button>
         </div>
@@ -125,12 +125,7 @@
   </el-row>
 </template>
 <script>
-import {
-  sortTreeNodes,
-  processTreeNode,
-  getTreeFullPathTitle,
-  findCheckedTreeNode
-} from '@/libs/tools'
+import {findCheckedTreeNode, getTreeFullPathTitle, processTreeNode, sortTreeNodes} from '@/libs/tools'
 import {nextTick, ref} from "vue";
 
 export default {

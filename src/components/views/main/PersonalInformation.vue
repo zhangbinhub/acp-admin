@@ -3,7 +3,7 @@
     <el-form ref="infoForm" :model="formValidate" :rules="ruleValidate" label-width="undefined"
              @submit.native.prevent>
       <el-form-item prop="avatar">
-        <el-avatar style="cursor: pointer" :src="formValidate.avatar" :size="100"
+        <el-avatar :size="100" :src="formValidate.avatar" style="cursor: pointer"
                    @click.native="openAvatarUpload"/>
       </el-form-item>
       <el-form-item :label="$t('forms.loginNo')" prop="loginNo">
@@ -13,47 +13,47 @@
         <el-select-v2 v-model="currLang" :options="langList" @change="selectLang"/>
       </el-form-item>
       <el-form-item :label="$t('forms.name')" prop="name">
-        <el-input ref="name" type="text" v-model="formValidate.name" @keyup.enter.native="handleSubmit"
-                  :disabled="modal_loading"
-                  :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"/>
+        <el-input ref="name" v-model="formValidate.name" :disabled="modal_loading" :placeholder="$t('forms.pleaseEnter') + $t('forms.name')"
+                  type="text"
+                  @keyup.enter.native="handleSubmit"/>
       </el-form-item>
       <el-form-item :label="$t('forms.mobile')" prop="mobile">
-        <el-input type="text" v-model="formValidate.mobile"
-                  @keyup.enter.native="handleSubmit"
-                  :disabled="modal_loading"
-                  :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"/>
+        <el-input v-model="formValidate.mobile" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.mobile')"
+                  type="text"
+                  @keyup.enter.native="handleSubmit"/>
       </el-form-item>
       <el-form-item :label="$t('forms.changePassword')">
         <el-switch v-model="updatePassword" :disabled="modal_loading"/>
       </el-form-item>
       <el-form-item v-show="updatePassword" :label="$t('forms.old')+$t('forms.password')" prop="oldPassword">
-        <el-input v-model="formValidate.oldPassword" @keyup.enter.native="handleSubmit"
-                  autocomplete="off" type="text" @focus.native="this.type='password'" :disabled="modal_loading"
-                  :placeholder="$t('forms.pleaseEnter') + $t('forms.old')+$t('forms.password')"/>
+        <el-input v-model="formValidate.oldPassword" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.old')+$t('forms.password')" autocomplete="off" type="text" @keyup.enter.native="handleSubmit"
+                  @focus.native="this.type='password'"/>
       </el-form-item>
       <el-form-item v-show="updatePassword" :label="$t('forms.new')+$t('forms.password')" prop="password">
-        <el-input v-model="formValidate.password" :show-password="true"
-                  autocomplete="off" type="text" @focus.native="this.type='password'" :disabled="modal_loading"
-                  @keyup.enter.native="handleSubmit"
-                  :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"/>
+        <el-input v-model="formValidate.password" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')" :show-password="true" autocomplete="off" type="text"
+                  @focus.native="this.type='password'"
+                  @keyup.enter.native="handleSubmit"/>
       </el-form-item>
       <el-form-item v-show="updatePassword" :label="$t('forms.confirmPassword')" prop="repeatPassword">
-        <el-input v-model="formValidate.repeatPassword" :show-password="true"
-                  autocomplete="off" type="text" @focus.native="this.type='password'"
-                  :disabled="modal_loading" @keyup.enter.native="handleSubmit"
-                  :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')"/>
+        <el-input v-model="formValidate.repeatPassword" :disabled="modal_loading"
+                  :placeholder="$t('forms.pleaseEnter') + $t('forms.new')+$t('forms.password')" :show-password="true" autocomplete="off"
+                  type="text" @focus.native="this.type='password'"
+                  @keyup.enter.native="handleSubmit"/>
       </el-form-item>
       <el-form-item>
-        <el-button type="default" @click="handleReset" :loading="modal_loading">
+        <el-button :loading="modal_loading" type="default" @click="handleReset">
           {{ $t('forms.buttons.reset') }}
         </el-button>
-        <el-button type="primary" @click="handleSubmit" :loading="modal_loading"
-                   style="margin-left: 10px">
+        <el-button :loading="modal_loading" style="margin-left: 10px" type="primary"
+                   @click="handleSubmit">
           {{ $t('forms.buttons.submit') }}
         </el-button>
       </el-form-item>
     </el-form>
-    <el-dialog v-model="avatarUpload" :title="$t('forms.avatarUpload')" :fullscreen="true">
+    <el-dialog v-model="avatarUpload" :fullscreen="true" :title="$t('forms.avatarUpload')">
       <cropper :crop-button-text="$t('el.messagebox.confirm')" @on-crop="handleCroped"/>
       <el-backtop :visibility-height="10" target=".el-dialog"/>
     </el-dialog>

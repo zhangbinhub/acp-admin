@@ -1,23 +1,23 @@
 import Mock from 'mockjs'
 
-import { upLoadFile, downLoadFile } from './file/file'
-import { login, logOut, userInfo, menuList, onlineInfo, loginInfo } from './oauth/oauth'
-import { deleteRuntime, queryRuntime, updateRuntime } from './sysconfig/runtime'
-import { getAppList, deleteApp, queryApp, updateApp } from './sysconfig/application'
-import { getOrgList, getOrgInfo, deleteOrg } from './sysconfig/organization'
-import { getModUserList, getUserList, updateUser, deleteUser, resetSuccess } from './sysconfig/user'
-import { getRoleCodeList, getRoleList, getRoleInfo, updateRole, deleteRole, getRoleListOption } from './sysconfig/role'
+import {downLoadFile, upLoadFile} from './file/file'
+import {login, loginInfo, logOut, menuList, onlineInfo, userInfo} from './oauth/oauth'
+import {deleteRuntime, queryRuntime, updateRuntime} from './sysconfig/runtime'
+import {deleteApp, getAppList, queryApp, updateApp} from './sysconfig/application'
+import {deleteOrg, getOrgInfo, getOrgList} from './sysconfig/organization'
+import {deleteUser, getModUserList, getUserList, resetSuccess, updateUser} from './sysconfig/user'
+import {deleteRole, getRoleCodeList, getRoleInfo, getRoleList, getRoleListOption, updateRole} from './sysconfig/role'
 import {
-  getMenuListByAppId,
-  getModuleFuncListByAppId,
-  getModuleFuncCodeList,
+  deleteAuth,
   getAllMenuList,
   getMenuInfo,
-  deleteAuth,
-  getModuleFuncInfo
+  getMenuListByAppId,
+  getModuleFuncCodeList,
+  getModuleFuncInfo,
+  getModuleFuncListByAppId
 } from './sysconfig/auth'
-import { logFileList, downLoadLogFile, queryRouteLog, queryOperateLog, queryLoginLog } from './log/log'
-import { deleteRoute, queryRoute, updateRoute, refreshRoute } from './route/routeConfig'
+import {downLoadLogFile, logFileList, queryLoginLog, queryOperateLog, queryRouteLog} from './log/log'
+import {deleteRoute, queryRoute, refreshRoute, updateRoute} from './route/routeConfig'
 
 // 配置Ajax请求延时，可用来测试网络延迟大时项目中一些效果
 Mock.setup({
@@ -64,7 +64,7 @@ Mock.mock(/\/oauth\/auth\/module-func-list\/.*/, /get/i, getModuleFuncListByAppI
 Mock.mock(/\/oauth\/auth\/module-func-code-list/, /get/i, getModuleFuncCodeList)
 Mock.mock(/\/oauth\/auth\/menu/, /get/i, getAllMenuList)
 Mock.mock(/\/oauth\/auth\/menu/, /put/i, function (options) {
-  return Object.assign({ id: 'testId' }, JSON.parse(options.body))
+  return Object.assign({id: 'testId'}, JSON.parse(options.body))
 })
 Mock.mock(/\/oauth\/auth\/menu\/.*/, /get/i, getMenuInfo)
 Mock.mock(/\/oauth\/auth\/menu/, /patch/i, function (options) {
@@ -72,7 +72,7 @@ Mock.mock(/\/oauth\/auth\/menu/, /patch/i, function (options) {
 })
 Mock.mock(/\/oauth\/auth\/menu/, /delete/i, deleteAuth)
 Mock.mock(/\/oauth\/auth\/module-func/, /get/i, function (options) {
-  return Object.assign({ id: 'testId' }, JSON.parse(options.body))
+  return Object.assign({id: 'testId'}, JSON.parse(options.body))
 })
 Mock.mock(/\/oauth\/auth\/module-func/, /put/i, getModuleFuncInfo)
 Mock.mock(/\/oauth\/auth\/module-func\/.*/, /get/i, getModuleFuncInfo)

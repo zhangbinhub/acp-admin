@@ -1,7 +1,7 @@
 import ApiComm from '../ApiComm'
 import Qs from 'qs'
-import { doDownLoadFile } from '@/libs/tools'
-import { Base64 } from 'js-base64'
+import {doDownLoadFile} from '@/libs/tools'
+import {Base64} from 'js-base64'
 
 export default {
   getLoginInfo: () => {
@@ -22,7 +22,7 @@ export default {
     })
   },
   downLoadFile: (fileName) => {
-    doDownLoadFile(ApiComm.$store.state.app.appInfo.baseURL + '/log/files', 'get', { fileName: Base64.encode(fileName) })
+    doDownLoadFile(ApiComm.$store.state.app.appInfo.baseURL + '/log/files', 'get', {fileName: Base64.encode(fileName)})
   },
   queryRouteLog: (query) => {
     return ApiComm.$http.post('/log/gateway-route-log', query)
