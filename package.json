@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/zhangbin1010/acp-admin"
+    "url": "https://github.com/zhangbinhub/acp-admin"
   },
   "scripts": {
     "start": "vue-cli-service serve",
