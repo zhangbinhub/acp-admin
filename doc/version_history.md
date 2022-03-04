@@ -1,5 +1,11 @@
 ## 版本更新记录
+
+##### v5.1.3
+
+- [Upgrade] 更新依赖插件至最新版本
+
 ##### v5.1.2
+
 - [Upgrade] 更新依赖插件至最新版本
 - [Upgrade] 登录界面隐藏input优化
 - [Upgrade] icon迁移至el-icon
