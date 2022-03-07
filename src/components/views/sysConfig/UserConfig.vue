@@ -12,7 +12,7 @@
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.loginNo')"
                   @keyup.enter.native="handleSearch"/>
       </el-form-item>
-      <el-form-item :label="$t('forms.organization')" prop=".organizationName">
+      <el-form-item :label="$t('forms.organization')" prop="organizationName">
         <el-input v-model="searchFormModel.organizationName" :disabled="modal_loading"
                   :placeholder="$t('forms.pleaseEnter') + $t('forms.organization')"
                   @keyup.enter.native="handleSearch"/>
