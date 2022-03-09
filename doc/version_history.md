@@ -3,6 +3,7 @@
 ##### v5.1.3
 
 - [Upgrade] 更新依赖插件至最新版本
+- [Upgrade] el-config-provider 由 Home.vue 调整至 App.vue
 
 ##### v5.1.2
 

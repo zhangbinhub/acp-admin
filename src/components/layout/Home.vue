@@ -1,5 +1,4 @@
 <template>
-  <el-config-provider :locale="localLangMessage">
     <el-container :class="`home home-${theme}`">
       <el-header>
         <header-bar :full-path="fullPath" :is-mobile="isMobile" :menu-list="menuList" :mini="isMini">
@@ -38,7 +37,6 @@
         </el-container>
       </el-container>
     </el-container>
-  </el-config-provider>
 </template>
 <script>
 import {nextTick, ref} from 'vue'
@@ -100,9 +98,6 @@ export default {
     },
     menuList() {
       return this.$store.state.app.user.menuList
-    },
-    localLangMessage() {
-      return this.$store.state.app.lang.langMessages[this.$store.state.app.lang.lang]
     }
   },
   watch: {
