@@ -1,6 +1,6 @@
 # acp-admin
 
-**此工程已不在更新，由于某些不可抗因素，已转移至https://gitee.com/zhangbinhub/acp-admin**
+**此工程已不再更新，由于某些不可抗因素，已转移至https://gitee.com/zhangbinhub/acp-admin**
 
 ###### v5.1.3 [版本更新日志](doc/version_history.md)
 
